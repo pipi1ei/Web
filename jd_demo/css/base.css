@@ -1,0 +1,68 @@
+/* reset css 重置样式 */
+*,
+::before,
+::after{
+    margin: 0;
+    padding: 0;
+
+    /*针对移动端*/
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    /*去除点击高亮效果*/
+    -webkit-tap-highlight-color: transparent;
+}
+body{
+    font-size: 14px;
+    color: #333;
+    font-family: 'Microsoft YaHei',sans-serif;
+}
+ul,ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #333;
+}
+input,textarea{
+    outline: none;
+    border: none;
+    resize: none;
+    /*清除移动端输入框样式*/
+    -webkit-appearance: none;
+}
+/* common css 通用样式 */
+.f_left{
+    float: left;
+}
+.f_right{
+    float: right;
+}
+.clearfix::before,
+.clearfix::after{
+    content: "";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.ml10{
+    margin-left: 10px;
+}
+.mr10{
+    margin-right: 10px;
+}
+
+.b_left{
+    border-left: 1px solid #ccc;
+}
+.b_right{
+    border-right: 1px solid #ccc;
+}
+.b_top{
+    border-top: 1px solid #ccc;
+}
+.b_bottom{
+    border-bottom: 1px solid #ccc;
+}
