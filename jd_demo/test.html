@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background: red;
+            box-sizing: border-box;
+        }
+        .test1{
+            background: blue;
+            border: 1px solid #ccc;
+            transition: all 2s;
+            -webkit-transition: all 2s;
+        }
+        .test1:hover{
+            width: 300px;
+        }
+        .test2{
+            background: chartreuse;
+            animation: widthAdd200 2s;
+            -webkit-animation: widthAdd200 2s;
+        }
+        @keyframes widthAdd200{
+            from{}
+            to{
+                width: 400px;
+            }
+        }
+        @-webkit-keyframes widthAdd200{
+            from{}
+            to{
+                width: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div class="test1"></div>
+    <div class="test2"></div>
+    <script>
+        var dom = document.querySelector('div');
+        dom.addEventListener('touchstart', function (e) {
+            console.log('touchstart');
+            console.log(e);
+        })
+        dom.addEventListener('touchmove', function (e) {
+            console.log('touchmove');
+    
+        })
+        dom.addEventListener('touchend', function (e) {
+            console.log('touchend');
+            console.log(e);
+        })
+
+        document.querySelector('.test1').addEventListener('transitionend',function(){
+            console.log('transitionEnd');
+        })
+
+        document.querySelector('.test2').addEventListener('animationend',function(){
+            console.log('animationEnd');
+        })
+
+    </script>
+</body>
+
+</html>
