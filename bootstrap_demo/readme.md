@@ -4,4 +4,24 @@
 3.中屏设备：992px-1200px；
 4.大屏设备：1200px以上
 
-### bootstrap用法
+### bootstrap 常用类
+1.container：响应式容器
+2.container-fluid: 流式容器
+3.row：行，可以清除父容器左右15px的内边距
+4.col-*-*：列
+    第一个参数：lg：大屏及以上生效，md：中屏及以上生效，sm：小屏及以上生效，xs：超小屏及以上生效
+    第二个参数：1-12：站一行的12分之几
+5.col-xs-offset-*：偏移，往右偏移几等份
+6.col-xs-push-*：往右位移几等份
+  col-xs-pull-*：往左位移几等份
+7.响应式工具类：
+    .visible-xs-*：只在超小屏可见，其他屏幕隐藏
+    .visible-sm-*：只在小屏可见，其他屏幕隐藏
+    .visible-md-*：只在中屏可见，其他屏幕隐藏
+    .visible-lg-*：只在大屏可见，其他屏幕隐藏
+
+    .hidden-xs：只在超小屏隐藏，其他屏幕可见
+    .hidden-sm：只在小屏隐藏，其他屏幕可见
+    .hidden-md：只在中屏隐藏，其他屏幕可见
+    .hidden-lg：只在大屏隐藏，其他屏幕可见
+
