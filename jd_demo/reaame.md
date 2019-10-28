@@ -69,6 +69,10 @@ tap事件条件：
     console.time(param)：给定一个参数开始记录时间
     console.timeEnd(param)：取出某个参数和现在的时间差，打印只会在console.timeEnd() 方法打印
 11.获取当前时间方法：Date.now()方法
+12.css background属性
+13.overflow:hidden，设置当前容器为绝缘容器，不受其他元素影响，也不影响其他元素。
+14.bfc
+15.两栏自适应方案：一侧固定宽度浮动，另一侧设置overflow:hidden
 
 ### github 用法：
 1.https://www.cnblogs.com/zhixi/p/9584624.html

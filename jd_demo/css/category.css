@@ -1,0 +1,143 @@
+/* 分类页样式 */
+.jd_category{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* 顶部搜索样式 */
+.topBar{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: #f3f4f6;
+}
+.topBar a{
+    width: 40px;
+    height: 40px;
+}
+.topBar a:first-child{
+    float: left;
+    background: url('../images/left_arrow.png') no-repeat center;
+    background-size: 20px 20px;
+}
+.topBar form{
+    width: 100%;
+    height: 40px;
+    padding: 0 40px;
+}
+.topBar form input{
+    width: 100%;
+    height: 30px;
+    border: 1px solid #ccc;
+    margin-top:5px;
+    padding-left: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.topBar a:last-child{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.topBar a:last-child span{
+    /* flex: 1; */
+    display: block;
+    width: 25px;
+    height: 4px;
+    background: #ccc;
+}
+
+
+/* 内容区域 */
+/* 左侧内容 */
+.main{
+    width: 100%;
+    height: 100%;
+    padding-top: 40px;
+}
+.main .cate_left {
+    width: 90px;
+    height: 100%;
+    float: left;
+}
+.main .cate_left ul{
+   width: 100%;
+}
+.main .cate_left ul li{
+   width: 100%;
+   height: 50px;
+   text-align: center;
+   line-height: 50px;
+   border-bottom: 1px solid #ccc;
+   border-right: 1px solid #ccc;
+   background: #f3f4f6;
+}
+.main .cate_left ul li.now{
+   background: transparent;
+   border-right: none;
+}
+.main .cate_left ul li.now a{
+    color: red;
+}
+.main .cate_left ul li a{
+   display: block; 
+}
+
+/* 右侧内容 */
+.main .cate_right {
+    height: 100%;
+    overflow: hidden;
+}
+.cate_right_box{
+    width: 101%;
+    height: 100%;
+}
+.cate_right_box .ad{
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.cate_right_box .ad img{
+    width: 100%;
+    display: block;
+}
+
+.cate_right_box .hot_category{
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.cate_right_box .hot_category ul{
+    width: 100%;
+    margin-top: 10px;
+}
+.cate_right_box .hot_category ul li{
+    width: 33.3333%;
+    float: left;
+    margin-bottom: 10px;
+}
+.cate_right_box .hot_category ul li a{
+    width: 100%;
+    display: block;
+}
+.cate_right_box .hot_category ul li a img{
+    width: 100%;
+    display: block;
+}
+.cate_right_box .hot_category ul li a p{
+    text-align: center;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+}
