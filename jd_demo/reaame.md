@@ -71,7 +71,12 @@ tap事件条件：
 11.获取当前时间方法：Date.now()方法
 12.css background属性
 13.overflow:hidden，设置当前容器为绝缘容器，不受其他元素影响，也不影响其他元素。
-14.bfc
+14.bfc：块级格式化上下文，原则：如果一个元素具有BFC，那么其子元素，不会影响外部元素，计算高度，会加上浮动元素的高度。
+创建BFC:
+    1.float不为none，
+    2.position不为relative和static，
+    3.overflow不为visible，
+    4.display为table-cell,table-caption和inline-block中的任何一个
 15.两栏自适应方案：一侧固定宽度浮动，另一侧设置overflow:hidden
 
 ### github 用法：
