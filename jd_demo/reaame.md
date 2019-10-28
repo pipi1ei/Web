@@ -69,3 +69,6 @@ tap事件条件：
     console.time(param)：给定一个参数开始记录时间
     console.timeEnd(param)：取出某个参数和现在的时间差，打印只会在console.timeEnd() 方法打印
 11.获取当前时间方法：Date.now()方法
+
+### github 用法：
+1.https://www.cnblogs.com/zhixi/p/9584624.html

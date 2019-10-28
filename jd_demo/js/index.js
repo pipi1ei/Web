@@ -27,12 +27,11 @@ var initSearch = function () {
     var opacity = 0;
     // 监听滚动事件
     window.onscroll = function () {
-        var offset_height = document.documentElement.scrollTop; // chrome
-        // var ie_offset_height = document.body.scrollTop; //IE
-        if (offset_height >= banner_height){
+        var scrollTop = document.documentElement.scrollTop || this.document.body.scrollTop; //兼容写法
+        if (scrollTop >= banner_height){
             opacity = 0.85;
         } else {
-            opacity = 0.85 * (offset_height/banner_height);
+            opacity = 0.85 * (scrollTop/banner_height);
         }
 
         e_search.style.background = 'rgba(228,49,48,'+ opacity +')';
