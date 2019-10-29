@@ -318,6 +318,89 @@ fieldset[disabled] .wjs_nav .btn-link:focus {
     height: 20px;
 }
 
+/* 产品模块样式 */
+.wjs_product{
+    background: #f5f5f5;
+}
+.wjs_product .nav-tabs {
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  .wjs_product .nav-tabs > li {
+    float: left;
+    margin-bottom: 0;
+    margin-left: 15px;
+  }
+  .wjs_product .nav-tabs > li > a {
+    margin-right: 0;
+    line-height: 1.42857143;
+    border: none;
+    border-radius: 0;
+  }
+  .wjs_product .nav-tabs > li > a:hover {
+    border-color: none;
+    border-bottom:3px solid red;
+    background: #f5f5f5;
+  }
+  .wjs_product .nav-tabs > li.active > a,
+  .wjs_product .nav-tabs > li.active > a:hover,
+  .wjs_product .nav-tabs > li.active > a:focus {
+    color: #555;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border: none;
+    border-bottom:3px solid red;
+  }
+  .wjs_product .nav-tabs.nav-justified {
+    width: 100%;
+    border-bottom: 0;
+  }
+  .wjs_product .nav-tabs.nav-justified > li {
+    float: none;
+  }
+  .wjs_product .nav-tabs.nav-justified > li > a {
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  .wjs_product .nav-tabs.nav-justified > .dropdown .dropdown-menu {
+    top: auto;
+    left: auto;
+  }
+  @media (min-width: 768px) {
+    .wjs_product .nav-tabs.nav-justified > li {
+      display: table-cell;
+      width: 1%;
+    }
+    .wjs_product .nav-tabs.nav-justified > li > a {
+      margin-bottom: 0;
+    }
+  }
+  .wjs_product .nav-tabs.nav-justified > li > a {
+    margin-right: 0;
+    border-radius: 4px;
+  }
+  .wjs_product .nav-tabs.nav-justified > .active > a,
+  .wjs_product .nav-tabs.nav-justified > .active > a:hover,
+  .wjs_product .nav-tabs.nav-justified > .active > a:focus {
+    /* border: 1px solid #ddd; */
+  }
+  @media (min-width: 768px) {
+    .wjs_product .nav-tabs.nav-justified > li > a {
+      border-bottom: 1px solid #ddd;
+      border-radius: 4px 4px 0 0;
+    }
+    .wjs_product .nav-tabs.nav-justified > .active > a,
+    .wjs_product .nav-tabs.nav-justified > .active > a:hover,
+    .wjs_product .nav-tabs.nav-justified > .active > a:focus {
+      border-bottom-color: #fff;
+    }
+  }
+
+  .wjs_product .nav-tabs-parent{
+      width: 100%;
+      overflow: hidden;
+  }
+
 /* 新闻模块样式 */
 .wjs_news{}
 

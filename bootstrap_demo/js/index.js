@@ -1,5 +1,6 @@
 $(function () { 
     initBanner();
+    initTab();
 })
 
 /* 初始化轮播图，根据屏幕宽度动态加载图片 */
@@ -97,4 +98,26 @@ var initBanner = function () {
         distanceX = 0;
         isMove = false;
     })
+}
+
+var initTab = function(){
+    /* 
+        1.把所有页签在一行显示，设置父容器宽度是所有子容器宽度之和
+        2.满足区域滚动的HTML结构要求，必须有一个大容器套着小容器
+        3.实现滑动功能，使用区域滚动插件 iScroll
+    */
+
+    var tabs = $('.wjs_product .nav-tabs'); //父容器
+    var tabItems = tabs.find('li'); //所有的子容器
+
+    var width = 0;
+    $.each(tabItems,function(i,item){
+        width += $(item).outerWidth(true);
+    })
+    tabs.width(width);
+
+    new IScroll('.nav-tabs-parent',{
+        scrollX:true,
+        scrollY:false
+    });
 }
