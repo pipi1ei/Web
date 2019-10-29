@@ -1,0 +1,326 @@
+/* common css 公用样式 */
+body{
+    font-size: 14px;
+    font-family: 'Microsoft YaHei',sans-serif;
+}
+a{
+    color: #666;
+}
+a:hover{
+    text-decoration: none;
+    color: #666;
+}
+
+/* module css 模块样式 */
+/* 顶部通栏样式 */
+.wjs_topBar{
+    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+}
+.wjs_topBar > .container{
+    line-height: 40px;
+    text-align: center;
+}
+.wjs_topBar > .container > div{
+    height: 40px;
+    text-align: center;
+}
+.wjs_topBar>.container>div + div{
+    border-left: 1px solid #ccc;
+}
+/* app介绍 */
+.wjs_topBar .wjs_introduce{
+    display: block;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wjs_topBar .wjs_introduce .wjs_phone {
+    background: url('../images/phone.png') no-repeat center;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.wjs_topBar .wjs_introduce .wjs_text{
+    margin-right: 5px;;
+}
+.wjs_topBar .wjs_introduce img{
+    display: none;
+    position: absolute;
+    top: 40px;
+    border: 1px solid #ccc;
+    border-top: none;
+    left: 50%;
+    margin-left: -62.5px;
+    z-index: 999;
+}
+.wjs_topBar .wjs_introduce:hover img{
+    display: block;
+}
+
+/* 服务时间 */
+.wjs_topBar .service{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wjs_topBar .service span:first-child{
+    background: url('../images/tel.png') no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+/* 免费注册样式 */
+.wjs_topBar .register{
+    color: white;
+    background: red;
+    padding:5px 10px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+
+/* 导航栏样式 */
+.wjs_nav {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.wjs_nav .navbar-brand {
+    background: url('../images/wjs.jpg') no-repeat center;
+    background-size: 170px 80px;
+    background-clip: content-box;
+    width: 170px;
+    height: 80px;
+    margin: 0;
+    padding: 0 10px;
+    line-height: 80px;
+    display: inline-block;
+    box-sizing: content-box;
+}
+
+.wjs_nav .navbar-brand:hover,
+.wjs_nav .navbar-brand:focus {
+    color: #666;
+    background-color: transparent;
+}
+
+.wjs_nav .navbar-text {
+    color: #777;
+}
+
+.wjs_nav .navbar-nav>li>a {
+    color: #666;
+    height: 80px;
+    line-height: 50px;
+}
+
+.wjs_nav .navbar-nav>li>a:hover,
+.wjs_nav .navbar-nav>li>a:focus {
+    color: #666;
+    background-color: transparent;
+     border-bottom: 3px solid red;
+}
+
+.wjs_nav .navbar-nav>.active>a,
+.wjs_nav .navbar-nav>.active>a:hover,
+.wjs_nav .navbar-nav>.active>a:focus {
+    color: #666;
+    background-color: transparent;
+    border-bottom: 3px solid red;
+}
+
+.wjs_nav .navbar-nav>.disabled>a,
+.wjs_nav .navbar-nav>.disabled>a:hover,
+.wjs_nav .navbar-nav>.disabled>a:focus {
+    color: #ccc;
+    background-color: transparent;
+}
+
+.wjs_nav .navbar-toggle {
+    border-color: #ddd;
+    margin-top: 23px;
+}
+
+.wjs_nav .navbar-toggle:hover,
+.wjs_nav .navbar-toggle:focus {
+    background-color: #ddd;
+}
+
+.wjs_nav .navbar-toggle .icon-bar {
+    background-color: #888;
+}
+
+.wjs_nav .navbar-collapse,
+.wjs_nav .navbar-form {
+    border-color: #e7e7e7;
+}
+
+.wjs_nav .navbar-nav>.open>a,
+.wjs_nav .navbar-nav>.open>a:hover,
+.wjs_nav .navbar-nav>.open>a:focus {
+    color: #555;
+    background-color: #e7e7e7;
+}
+
+@media (max-width: 767px) {
+    .wjs_nav .navbar-nav .open .dropdown-menu>li>a {
+        color: #777;
+    }
+
+    .wjs_nav .navbar-nav .open .dropdown-menu>li>a:hover,
+    .wjs_nav .navbar-nav .open .dropdown-menu>li>a:focus {
+        color: #333;
+        background-color: transparent;
+    }
+
+    .wjs_nav .navbar-nav .open .dropdown-menu>.active>a,
+    .wjs_nav .navbar-nav .open .dropdown-menu>.active>a:hover,
+    .wjs_nav .navbar-nav .open .dropdown-menu>.active>a:focus {
+        color: #555;
+        background-color: #e7e7e7;
+    }
+
+    .wjs_nav .navbar-nav .open .dropdown-menu>.disabled>a,
+    .wjs_nav .navbar-nav .open .dropdown-menu>.disabled>a:hover,
+    .wjs_nav .navbar-nav .open .dropdown-menu>.disabled>a:focus {
+        color: #ccc;
+        background-color: transparent;
+    }
+}
+
+.wjs_nav .navbar-link {
+    color: #777;
+}
+
+.wjs_nav .navbar-link:hover {
+    color: #333;
+}
+
+.wjs_nav .btn-link {
+    color: #777;
+}
+
+.wjs_nav .btn-link:hover,
+.wjs_nav .btn-link:focus {
+    color: #333;
+}
+
+.wjs_nav .btn-link[disabled]:hover,
+fieldset[disabled] .wjs_nav .btn-link:hover,
+.wjs_nav .btn-link[disabled]:focus,
+fieldset[disabled] .wjs_nav .btn-link:focus {
+    color: #ccc;
+}
+
+/* 轮播图样式 */
+.wjs_banner{
+    border-bottom: 1px solid #ccc;
+}
+.wjs_banner .pc_imageBox{
+    width: 100%;
+    height: 360px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.wjs_banner .m_imageBox {
+    width: 100%;
+    display: block;
+}
+.wjs_banner .m_imageBox img{
+    width: 100%;
+    display: block;
+}
+
+/* 信息区域样式 */
+.wjs_info{
+    border-bottom: 1px solid #ccc;
+}
+.wjs_info .container{
+    padding: 20px 80px;
+}
+.wjs_info .media {
+    margin-top: 15px;
+}
+
+.wjs_info .media,
+.wjs_info .media-body {
+    overflow: hidden;
+    zoom: 1;
+}
+
+.wjs_info .media-body {
+    width: 10000px;
+}
+
+.wjs_info .media-object {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.wjs_info .media-object.img-thumbnail {
+    max-width: none;
+}
+
+.wjs_info .media-left,
+.wjs_info .media>.pull-left {
+    padding-right: 10px;
+}
+
+.wjs_info .media-left,
+.wjs_info .media-right,
+.wjs_info .media-body {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.wjs_info .media-heading {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+/* 预约区域样式 */
+.wjs_book{
+    padding: 30px 0;
+    border-bottom: 1px solid #ccc;
+}
+.wjs_book .pull-left span{
+    background: url(../images/naozhong.png) no-repeat center;
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.wjs_book .pull-left a{
+    border-bottom: 1px dashed red;
+    color: red;
+}
+.wjs_book .pull-left a:hover{
+    color: red;
+}
+
+.wjs_book .pull-right span{
+    background: url(../images/camera.png) no-repeat center;
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+/* 新闻模块样式 */
+.wjs_news{}
+
+
+/* 合作伙伴模块样式 */
+.wjs_partner{}
