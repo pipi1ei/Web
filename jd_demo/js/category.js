@@ -56,8 +56,5 @@ var iScrollLeft = function () {
 
 /* 初始化右侧滑动 */
 var initRightSwipe = function () {
-    new IScroll(document.querySelector('.cate_right'),{
-        scrollX:false,
-        scrollY:true
-    });
+    new IScroll(document.querySelector('.cate_right'));
 }
