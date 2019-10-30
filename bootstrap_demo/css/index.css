@@ -527,11 +527,11 @@ a:hover {
 .wjs_partner ul {
     list-style: none;
     padding: 0;
-    display: flex;
-    justify-content: space-around;
+    text-align: center;
 }
 .wjs_partner ul li{
     display: inline-block;
+    padding: 10px 0;
 }
 .wjs_partner ul li a{
     padding: 0 10px;
