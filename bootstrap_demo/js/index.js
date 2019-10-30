@@ -1,10 +1,11 @@
-$(function () { 
+$(function () {
     initBanner();
     initTab();
+    initTooltip();
 })
 
 /* 初始化轮播图，根据屏幕宽度动态加载图片 */
-var initBanner = function () { 
+var initBanner = function () {
     /* 
         1.获取dom元素
         2.模拟后台数据
@@ -45,62 +46,63 @@ var initBanner = function () {
 
 
     //渲染
-    var render = function () { 
+    var render = function () {
         //3.判断当前设备
         var isMobile = e_window.width() < 768 ? true : false;
-        
+
         var pointHtml = '';
         var imageHtml = '';
-        $.each(imagesUrl, function (i, item) { 
+        $.each(imagesUrl, function (i, item) {
             //4.1 点盒子渲染
-            pointHtml += '<li data-target="#carousel-example-generic" data-slide-to="'+i+'" '+(i==0?'class="active"':'')+'></li>';
+            pointHtml += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '" ' + (i == 0 ? 'class="active"' : '') + '></li>';
             //4.2 图片盒子渲染
-            imageHtml += '<div class="item '+(i==0?"active":"")+'">';
-            if(isMobile){
-                imageHtml += '<a class="m_imageBox" href="#"><img src="'+item.m_imageUrl+'"></a>'
-            }else{
-                imageHtml += '<a class="pc_imageBox" href="#" style="background-image:url('+item.pc_imageUrl+')"></a>' 
+            imageHtml += '<div class="item ' + (i == 0 ? "active" : "") + '">';
+            if (isMobile) {
+                imageHtml += '<a class="m_imageBox" href="#"><img src="' + item.m_imageUrl + '"></a>'
+            } else {
+                imageHtml += '<a class="pc_imageBox" href="#" style="background-image:url(' + item.pc_imageUrl + ')"></a>'
             }
             imageHtml += '</div>'
         });
         e_pointBox.html(pointHtml);
         e_imageBox.html(imageHtml);
     }
-    // render();
 
     //6.测试能否响应移动端和非移动端：监听页面尺寸改变重新渲染
-    e_window.on('resize',function () { 
+    e_window.on('resize', function () {
         render();
     }).trigger('resize'); // trigger('resize'): 主动触发resize事件
-    
+
     //7.移动端手势切换功能，左滑、右滑
     var startX = 0;
     var distanceX = 0;
     var isMove = false;
-    e_banner.on('touchstart',function (e) { 
+    e_banner.on('touchstart', function (e) {
         startX = e.originalEvent.touches[0].clientX;
     }).on('touchmove', function (e) {
         isMove = true;
         var moveX = e.originalEvent.touches[0].clientX;
         distanceX = moveX - startX;
-    }).on('touchend', function (e) {
-        if(isMove && Math.abs(distanceX) > 50){
-            if(distanceX > 0){
+    }).on('touchend', function () {
+        if (isMove && Math.abs(distanceX) > 50) {
+            if (distanceX > 0) {
                 //右滑，上一张图片
                 e_banner.carousel('prev');
-            }else{
+            } else {
                 //左滑，下一张图片
                 e_banner.carousel('next');
             }
         }
 
+        /* 重置参数 */
         startX = 0;
         distanceX = 0;
         isMove = false;
     })
 }
 
-var initTab = function(){
+/* 初始化滑动页签 */
+var initTab = function () {
     /* 
         1.把所有页签在一行显示，设置父容器宽度是所有子容器宽度之和
         2.满足区域滚动的HTML结构要求，必须有一个大容器套着小容器
@@ -111,13 +113,18 @@ var initTab = function(){
     var tabItems = tabs.find('li'); //所有的子容器
 
     var width = 0;
-    $.each(tabItems,function(i,item){
+    $.each(tabItems, function (i, item) {
         width += $(item).outerWidth(true);
     })
     tabs.width(width);
 
-    new IScroll('.nav-tabs-parent',{
-        scrollX:true,
-        scrollY:false
+    new IScroll('.nav-tabs-parent', {
+        scrollX: true,
+        scrollY: false
     });
+}
+
+/* 初始化工具提示 */
+var initTooltip = function () {
+    $('.product_box .box_right .tip span').tooltip();
 }
