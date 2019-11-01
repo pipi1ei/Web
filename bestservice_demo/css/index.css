@@ -255,9 +255,14 @@ a{
     display: block;
     font-weight: bold;
 }
+.bs_news .body .title a:visited {
+    color: #555;
+    text-decoration: none;
+}
 .bs_news .body .title a:hover {
     color: red;
 }
+
 .bs_news .body .content img{
     display: block;
     float: left;
