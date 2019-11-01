@@ -1,52 +1,52 @@
 @charset "utf-8";
 /* 样式类名 mixin */
 // 组合样式：左浮动，右浮动 宽度50% 左边框 右边框
-.f_left{
-    float: left;
+.f_left {
+  float: left;
 }
-.f_right{
-    float: right;
+.f_right {
+  float: right;
 }
-.b_left{
-    border-left: 1px solid #ccc;
+.b_left {
+  border-left: 1px solid #ccc;
 }
-.b_bright{
-    border-right: 1px solid #ccc;
+.b_bright {
+  border-right: 1px solid #ccc;
 }
 // 需求：左浮动加左边框的样式，通过使用左浮动和左边框的类名混入到 flbl类名中
-.flbl{
-    .f_left();
-    .b_left();
+.flbl {
+  .f_left();
+  .b_left();
 }
 
 /* 函数 mixin */
 // js 声明函数：var func = function(name){}
 // 类名后加括号，不会编译到css文件中
-.f_left(){
-    float: left;
+.f_left() {
+  float: left;
 }
-.f_right(){
-    float: right;
+.f_right() {
+  float: right;
 }
 
 /* 定义可以传参的方法 */
 // @direction: 定义参数，但必须要有默认值，下例默认值为 bottom
 // 使用 @{} 方法拼接字符串
-.border(@direction: bottom) {
-    border-@{direction}: 1px solid #ccc;
+.border(@direction: bottom,@color: #ccc) {
+  border-@{direction}: 1px solid @color;
 }
-.b_bottom{
-    .border();
+.b_bottom {
+  .border(right, #666);
 }
 
 /* 圆角方法 : 使用这种方式方便多浏览器兼容 */
-.borderRadius(@width: 10px){
-    border-radius: @width;
-    -webkit-border-radius: @width;
-    -moz-border-radius: @width;
-    -ms-border-radius: @width;
-    -o-border-radius: @width;
+.borderRadius(@width: 10px) {
+  border-radius: @width;
+  -webkit-border-radius: @width;
+  -moz-border-radius: @width;
+  -ms-border-radius: @width;
+  -o-border-radius: @width;
 }
-.borderRadius{
-    .borderRadius(100px);
+.borderRadius {
+  .borderRadius(100px);
 }
