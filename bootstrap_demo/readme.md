@@ -38,7 +38,7 @@
           outerWidth: 内容和内边距和边框的宽度
           outerWidth(true): 内容和内边距、边框、外边距的宽度
 5. css box-shadow 
-6. css类型序选择器: E:first-of-type: 通过E找到父元素，然后找到父元素当中索引的E类型的子元素，再                                     找到第一个E元素
+6. css类型序选择器: E:first-of-type: 通过E找到父元素，然后找到父元素当中索引的E类型的子元素，再找到第一个E元素
                    E:last-of-type: 找到最后一个
                    E:nth-of-type: 找到第几个
                    E:nth-last-of-type: 倒数第几个
