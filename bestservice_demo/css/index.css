@@ -82,6 +82,14 @@ a{
     padding: 0;
     border-radius: 0;
 }
+@media (max-width:768px) {
+    .bs_topBar .navbar-default .navbar-nav>li.dropdown ul {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+    }
+}
+
 .bs_topBar .navbar-default .navbar-nav>li.dropdown ul li a {
     height: 40px;
     font-size: 14px;
@@ -150,11 +158,23 @@ a{
     margin: 0;
     border: none;
 }
+@media (min-width: 768px) and (max-width: 992px){
+    .bs_topBar .navbar-form {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
 .bs_topBar .navbar-form .form-group{
     position: relative;
 }
 .bs_topBar .navbar-form .form-group .form-control {
     border-radius: 0;
+   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.bs_topBar .navbar-form .form-group .form-control:focus{
+    border-color:#c8131a;
+    box-shadow: none;
 }
 .bs_topBar .navbar-form .form-group span{
     display: inline-block;
@@ -421,6 +441,7 @@ a{
     line-height: 45px;
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5),
     inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 .fix span{
     font-size: 20px;
