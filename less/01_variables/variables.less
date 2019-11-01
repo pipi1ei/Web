@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* 1.这样的注释是会编译到css文件中 */
+// 2.这种注释是不会编译到css文件中
+
+/* 
+    1.变量
+    @mainColor：#e92322;
+    1.必须以 @ 符号开头
+    2.不能以数字开头
+    3.不能包含特殊字符
+ */
+@mainColor:#e92323;
+body{
+    background-color: @mainColor;
+}
+div{
+    border: 1px solid @mainColor;
+}

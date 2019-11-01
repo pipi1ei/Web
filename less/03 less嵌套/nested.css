@@ -1,0 +1,8 @@
+@charset "utf-8";
+.wjs_partner{padding:30px 0}
+.wjs_partner ul{list-style:none;text-align:center;padding:0}
+.wjs_partner ul li{display:inline-block}
+.wjs_partner ul li a{display:block}
+.wjs_partner ul li a:hover{color:#e92322}
+.wjs_partner ul li a::before{content:""}
+.wjs_partner ul li a .now{color:red}/*# sourceMappingURL=./nested.css.map */
