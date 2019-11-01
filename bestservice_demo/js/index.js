@@ -65,6 +65,7 @@ var initBanner = function () {
         '../images/banner6.jpg',
     ]
 
+    var isMobile = e_window.width() < 768 ? true : false;
     /* 动态渲染，根据后台数据加载图片，非移动端左右控制动态渲染 */
     var render = function(){
         var imageHtml = '';
@@ -75,7 +76,7 @@ var initBanner = function () {
         })
         imageBox.html(imageHtml);
 
-        var isMobile = e_window.width() < 768 ? true : false;
+        
         if (!isMobile) {
             e_banner.on('mouseover', function () {
                 leftControl.css({
@@ -105,6 +106,30 @@ var initBanner = function () {
     e_window.on('resize',function(){
         render();
     }).trigger('resize');
+
+    //添加移动端滑动事件
+    var startX = 0;
+    var distanceX = 0;
+    var isMove = false;
+    e_banner.on('touchstart',function (e) {
+        startX = e.originalEvent.touches[0].clientX;
+    }).on('touchmove', function (e) {
+        var endX = e.originalEvent.touches[0].clientX;
+        distanceX = endX - startX;
+        isMove = true;
+    }).on('touchend', function (e) {
+        if(isMove && isMobile && Math.abs(distanceX) > 50){
+            if(distanceX > 0){
+                e_banner.carousel('prev');
+            }else{
+                e_banner.carousel('next');
+            }
+        }
+
+        startX = 0;
+        distanceX = 0;
+        isMove = false;
+    })
 }
 
 /* 初始化新闻，根据后台数据动态渲染 */
