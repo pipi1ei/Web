@@ -1,0 +1,224 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 14px;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #555;
+}
+input {
+  outline: none;
+  -webkit-appearance: none;
+  border: none;
+}
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+  clear: both;
+}
+@media (max-width: 319px) {
+  html {
+    font-size: 40px;
+  }
+}
+.sn_container {
+  width: 100%;
+  max-width: 750px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding-top: 0.9rem;
+  padding-bottom: 1.2rem;
+}
+.sn_topBar {
+  width: 100%;
+  height: 0.9rem;
+  background: #fabc09;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+.sn_topBar a {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  position: absolute;
+  top: 0;
+}
+.sn_topBar .category {
+  left: 0;
+  text-align: center;
+}
+.sn_topBar .category span {
+  background: url("../../images/category.png") no-repeat center;
+  background-size: 0.55rem 0.55rem;
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin: 0 auto;
+}
+.sn_topBar .category p {
+  font-size: 0.18rem;
+}
+.sn_topBar form {
+  display: inline-block;
+  width: 100%;
+  padding: 0 0.9rem;
+  position: relative;
+}
+.sn_topBar form span {
+  background: url("../../images/search.png") no-repeat center;
+  background-size: 0.5rem 0.5rem;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0 auto;
+  position: absolute;
+  top: 0.2rem;
+  margin-left: 0.05rem;
+}
+.sn_topBar form input {
+  width: 100%;
+  height: 0.7rem;
+  margin-top: 0.1rem;
+  padding-left: 0.65rem;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+  font-size: 0.24rem;
+  background: rgba(255, 255, 255, 0.6);
+}
+.sn_topBar .shop_car {
+  text-align: center;
+  right: 0;
+}
+.sn_topBar .shop_car span {
+  background: url("../../images/shopCar.png") no-repeat center;
+  background-size: 0.55rem 0.55rem;
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin: 0 auto;
+}
+.sn_topBar .shop_car p {
+  font-size: 0.18rem;
+}
+.sn_banner {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.sn_banner ul {
+  list-style: none;
+}
+.sn_banner .pointBox {
+  bottom: 0.3rem;
+  right: 0.5rem;
+  position: absolute;
+  z-index: 999;
+}
+.sn_banner .pointBox li {
+  float: left;
+  width: 0.1rem;
+  height: 0.1rem;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px solid #ccc;
+  margin: 0 0.06rem;
+}
+.sn_banner .pointBox li a {
+  display: block;
+  width: 100%;
+}
+.sn_banner .pointBox li.now {
+  background: #fabc09;
+}
+.sn_banner .imageBox {
+  width: 1000%;
+  transform: translateX(-10%);
+}
+.sn_banner .imageBox li {
+  width: 10%;
+  float: left;
+}
+.sn_banner .imageBox li a {
+  display: block;
+  width: 100%;
+}
+.sn_banner .imageBox li a img {
+  display: block;
+  width: 100%;
+}
+.sn_nav {
+  width: 100%;
+}
+.sn_nav ul {
+  width: 100%;
+  list-style: none;
+}
+.sn_nav ul li {
+  width: 20%;
+  float: left;
+  padding: 0.15rem 0.1rem;
+}
+.sn_nav ul li a {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.sn_nav ul li a img {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+.sn_nav ul li a p {
+  font-size: 0.1rem;
+  margin-top: 0.05rem;
+}
+.sn_tabs {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.2rem;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+.sn_tabs ul {
+  list-style: none;
+  width: 100%;
+}
+.sn_tabs ul li {
+  width: 20%;
+  float: left;
+}
+.sn_tabs ul li a {
+  width: 100%;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+.sn_tabs ul li a img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  padding: 0.05rem 0.1rem;
+}
+.sn_tabs ul li a p {
+  font-size: 0.2rem;
+}

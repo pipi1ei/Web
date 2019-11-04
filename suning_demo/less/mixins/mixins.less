@@ -1,0 +1,30 @@
+@import "../variables/variables.less";
+
+
+// length(@deviceWidthList): less 内置函数，获取数组长度
+// extract(@deviceWidthList,1): 获取数组的值，数组默认下班为1
+// when() : 类似if, 满足这个条件 
+.adapterFun(@index:1) when (@index<=length(@deviceWidthList)){
+    @media (min-width: extract(@deviceWidthList,@index)) {
+        html{
+            font-size: extract(@deviceWidthList,@index)/@psdWidth*@baseSize;
+        }
+    }
+
+    //自调用,但会造成死循环，使用when 添加终止条件
+    .adapterFun(@index+1);
+}
+
+// 设置圆角
+.borderRadius(@size:50%){
+    border-radius: @size;
+    -webkit-border-radius: @size;
+    -moz-border-radius: @size;
+    -o-border-radius: @size;
+}
+
+// 设置背景图片和大小
+.background(@url:"",@width:0,@height:0){
+    background: url(@url) no-repeat center;
+    background-size: @width/@bsRem @height/@bsRem;
+}
