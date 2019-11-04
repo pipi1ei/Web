@@ -28,3 +28,8 @@
 2. 流式布局适配 百分比
 3. 响应式布局 媒体查询
 4. rem适配方式 rem单位，用在内容的宽高自适应 可以结合流式布局和伸缩布局做移动端的整体适配
+
+
+### zepto.js
+zepto: 轻量级的js库，类似于jquery，与jQuery有类似的api，更适用于移动端开发
+中文文档：https://www.html.cn/doc/zeptojs_api/

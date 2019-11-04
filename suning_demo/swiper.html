@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>苏宁</title>
-    <!-- 实际开发中不适用，实际开发中应引入编译后的css文件 -->
-    <!-- <link rel="stylesheet/less" type="text/less" href="./less/main/main.less" /> -->
+    <title>swiper 实现轮播图</title>
+    <link rel="stylesheet" href="../lib/swiper/css/swiper.css">
     <link rel="stylesheet" href="./less/main/main.css">
     <script src="../lib/less/less.js"></script>
 </head>
@@ -31,10 +30,21 @@
             </a>
         </header>
 
+
         <!-- 轮播图 -->
-        <div class="sn_banner">
+        <style>
+            .swiper-container ul {
+                list-style: none;
+            }
+
+            .swiper-container ul img {
+                width: 100%;
+                display: block;
+            }
+        </style>
+        <div class="swiper-container">
             <!-- 点盒子 -->
-            <ul class="pointBox clearfix">
+            <ul class="swiper-pagination">
                 <li class="now"><a href="#"></a></li>
                 <li><a href="#"></a></li>
                 <li><a href="#"></a></li>
@@ -45,17 +55,15 @@
                 <li><a href="#"></a></li>
             </ul>
             <!-- 图片盒子 -->
-            <ul class="imageBox clearfix">
-                <li><a href="#"><img src="./images/banner8.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner1.png" /></a></li>
-                <li><a href="#"><img src="./images/banner2.png" /></a></li>
-                <li><a href="#"><img src="./images/banner3.png" /></a></li>
-                <li><a href="#"><img src="./images/banner4.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner5.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner6.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner7.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner8.jpg" /></a></li>
-                <li><a href="#"><img src="./images/banner1.png" /></a></li>
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide"><a href="#"><img src="./images/banner1.png" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner2.png" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner3.png" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner4.jpg" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner5.jpg" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner6.jpg" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner7.jpg" /></a></li>
+                <li class="swiper-slide"><a href="#"><img src="./images/banner8.jpg" /></a></li>
             </ul>
         </div>
 
@@ -130,7 +138,28 @@
     <script src="../lib/zepto/zepto.min.js"></script>
     <script src="../lib/zepto/src/fx.js"></script>
     <script src="../lib/zepto/src/touch.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="../lib/swiper/js/swiper.js"></script>
 </body>
+
+<script>
+    /* 使用swiper 实现轮播图 */
+    $(function () {
+        new Swiper('.swiper-container', {
+            /* 自动轮播 */
+            autoplay: {
+                delay: 2000,
+                stopOnLastSlide: false,
+                disableOnInteraction: false,
+            },
+            /* 无缝滑动 */
+            loop: true,
+            /* 显示指示器 */
+            pagination: {
+                el: '.swiper-pagination'
+            }
+        });
+    })
+
+</script>
 
 </html>
