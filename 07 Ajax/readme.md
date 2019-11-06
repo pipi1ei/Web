@@ -158,7 +158,7 @@ function myAjax2(obj) {
     //得到params
     var params = '';
     for(var key in defaults.params){
-        params += key += "=" + defaults.params[key] + "&";
+        params += key + "=" + defaults.params[key] + "&";
     }
     if(params){
         params = params.substring(0,params.length - 1);

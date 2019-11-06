@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>百度提示词案例</title>
     <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+    <script src="../../lib/common_js/common.js"></script>
 </head>
 
 <body>
@@ -18,26 +19,45 @@
     <script>
         window.onload = function () {
             $('#btn').on('click', function () {
-
-                window['query'] = function (result) {
-                    // result 就是从淘宝关键词接口获取到的数据
-                    console.log(result);
-                    var ul = document.getElementById('ul');
-                    var keyWords = result.s;
-                    console.log(keyWords);
-                    var liTag = '';
-                    for(var i in keyWords){
-                        liTag += '<li>'+keyWords[i]+'</li>';
+                var keyWord = document.querySelector('#search').value;
+                ajax({
+                    url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    data: {
+                        wd:keyWord
+                    },
+                    dataType: 'jsonp',
+                    jsonp: 'cb',
+                    callback: function(result){
+                        console.log(result);
+                        var ul = document.getElementById('ul');
+                        var keyWords = result.s;
+                        var liTag = '';
+                        for(var i in keyWords){
+                            liTag += '<li>'+keyWords[i]+'</li>';
+                        }
+                        ul.innerHTML = liTag;
                     }
-                    ul.innerHTML = liTag;
-                }
+                })
 
-                var q = document.querySelector('#search').value;
-                var script = document.createElement('script');
-                script.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + q + '&cb=query';
-                console.log(script.src);
-                var head = document.querySelector('head');
-                head.appendChild(script);
+                // window['query'] = function (c) {
+                //     // result 就是从淘宝关键词接口获取到的数据
+                //     console.log(result);
+                //     var ul = document.getElementById('ul');
+                //     var keyWords = result.s;
+                //     console.log(keyWords);
+                //     var liTag = '';
+                //     for(var i in keyWords){
+                //         liTag += '<li>'+keyWords[i]+'</li>';
+                //     }
+                //     ul.innerHTML = liTag;
+                // }
+
+                
+                // var script = document.createElement('script');
+                // script.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + q + '&cb=query';
+                // console.log(script.src);
+                // var head = document.querySelector('head');
+                // head.appendChild(script);
             })
         }
     </script>
