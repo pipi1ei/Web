@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取音乐列表</title>
+</head>
+
+<body>
+    <button id="btn">获取音乐列表</button>
+
+    <script>
+        window.onload = function () {
+            var btn = document.getElementById('btn');
+            btn.onclick = function () {
+                var xhr = null;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else {
+                    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+                }
+                xhr.open('get', 'music_list.xml', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var xml_data = xhr.responseXML;
+                        xml_data = xml_data.getElementsByTagName('TRACK');
+                        console.log(xml_data);
+                        var table = document.createElement('table');
+                        var tableHtml = '';
+                        tableHtml += '<tr><th>Title</th><th>Artist</th></tr>';
+
+                        for(var i=0; i<xml_data.length; i++){
+                            var title = xml_data[i].getElementsByTagName('TITLE');
+                            var artist = xml_data[i].getElementsByTagName('ARTIST')
+                            console.log(title)
+                            tableHtml += '<tr><td>'+title[0].childNodes[0].nodeValue+'</td><td>'+
+                               artist[0].childNodes[0].nodeValue +'</td></tr>'
+                        }
+
+                        table.innerHTML = tableHtml;
+                        console.log(table);
+                        document.body.appendChild(table)
+                    }
+                }
+                xhr.send();
+            }
+        }
+    </script>
+</body>
+
+</html>

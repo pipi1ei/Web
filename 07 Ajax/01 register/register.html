@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户注册</title>
+</head>
+
+<body>
+    <h1>注册界面</h1>
+    <form action="#" method="get">
+        请输入用户名:<input type="text" name="username" id="username">
+        <span id="username_check_result"></span>
+        <br>
+        请输入邮箱:<input type="text" name="email" id="email">
+        <span id="email_check_result"></span><br>
+        请输入手机号:<input type="text" name="phone" id="phone">
+        <span id="phone_check_result"></span>
+        <br />
+        请输入密码:<input type="password" name="password">
+        <br /><br>
+
+        <input type="button" value="验证" id="check">
+
+        <input type="submit" value="注册">
+    </form>
+
+    <script>
+
+        window.onload = function () {
+            var btn_check = document.getElementById('check');
+            btn_check.onclick = function () {
+                var username = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
+                var phone = document.getElementById('phone').value;
+                console.log(username + ";" + email + ";" + phone);
+                var xhr;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else {
+                    xhr = new ActiverXObject("Microsoft.XMLHTTP");
+                }
+
+                /* get 请求方式 */
+                xhr.open('get', 'checkUsername.php?username=' + username + "&email=" + email + "&phone=" + phone, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        console.log(result);
+                        var e_check_result = document.getElementById('username_check_result');
+                        e_check_result.innerHTML = result;
+                    }
+                }
+                xhr.send(null);
+
+                /* post 请求方式 */
+                /* xhr.open('post', 'checkUsername.php', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        console.log(result);
+                        var e_check_result = document.getElementById('check_result');
+                        e_check_result.innerHTML = result;
+                    }
+                }
+                var param = "username=" + username;
+                // post 请求固定写法，设置xhr请求头信息
+                xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+                xhr.send(param); */
+            }
+
+
+            var username = document.getElementById('username');
+            username.onblur = function () {
+                console.log('onblur');
+                var usernameValue = username.value;
+                console.log("usernameValue = " + usernameValue)
+                var xhr = null;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else {
+                    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+                }
+                xhr.open('get', 'checkUsername.php?username=' + usernameValue, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        console.log(result);
+                        if ('OK' == result) {
+                            console.log("ok111")
+                            document.getElementById('username_check_result').innerHTML = "用户名可用";
+                        } else if ('error' == result) {
+                            document.querySelector('#username_check_result').innerHTML = "用户名已存在";
+                        }
+                    }
+                }
+                xhr.send();
+            }
+        }
+
+
+    /* 封装Ajax请求 */
+    var doAjaxRequest = function (method, url, param,value,callback) {
+        var xhr = null;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        }else{
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xhr.open(method,url+"?"+param+"="+value,true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState == 4 && xhr.status == 200){
+                callback;
+            }
+        }
+        xhr.send();
+    }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+        /* 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + q + '&cb=query'; */
+
+        /* 封装跨域方法 */
+        function myAjaxCross (obj){
+            var defaults = {
+                type: 'get',
+                url: '#',
+                data:{},
+                success: function(result){console.log(result)},
+                jsonp: 'callback',
+                jsonpCallback: "foo"
+            }
+
+            for(var key in obj){
+                defaults[key] = obj[key];
+            }
+
+            var params = '';
+            for(var attr in defaults.data){
+                params += "?" + attr + "=" + defaults.data[attr] + "&";
+            }
+            if(params){
+                params = params.substring(0, params.length - 1);
+                defaults.url += "?" + params;
+            }
+            defaults.url += "&" + defaults.jsonp + "=" + defaults.jsonpCallback;
+
+            var script = document.createElement('script');
+            script.src = defaults.url;
+
+            window[defaults.jsonpCallback] = function (data) {
+                defaults.success(data);
+            }   
+
+            var head = document.querySelector('head');
+            head.appendChild(script);
+        }
+    </script>
+
+</body>
+</html>

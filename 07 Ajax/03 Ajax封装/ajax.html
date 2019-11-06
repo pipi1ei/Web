@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id="btn">测试Ajax</button>
+
+    <script>
+
+        window.onload = function(){
+            document.querySelector('#btn').onclick = function () {
+                // myAjax('get', 'test.xml', '', true, 'xml', function (result) {
+                //     var title = result.getElementsByTagName('TRACK')[0].getElementsByTagName('TITLE')[0].childNodes[0].nodeValue;
+                //     console.log(title);
+                //     document.write(title);
+                // });
+
+                myAjax2({
+                    type: 'get',
+                    url: 'test.xml',
+                    params: {},
+                    isAsync: true,
+                    dataType: 'xml',
+                    success: function (result) {
+                        var title = result.getElementsByTagName('TRACK')[0].getElementsByTagName('TITLE')[0].childNodes[0].nodeValue;
+                        console.log('2')
+                        console.log(title);
+                        document.write(title);
+                    }
+                })
+            }
+            
+        }
+
+
+        /* Ajax请求方法
+            @type: 请求方式：'get' 或 'post';
+            @url: 请求的url
+            @params: 请求参数：格式为：username=" + username;
+            @isAsync: 是否异步请求，true：异步，false：同步
+            @dataType: 返回数据类型：'json'：json格式数据, 'xml'：xml格式数据
+            @callback: 请求结果回调
+         */        
+        function myAjax(type, url, params, isAsync, dataType, callback){
+            var xhr = null;
+            if(window.XMLHttpRequest){
+                xhr = new XMLHttpRequest();
+            }else{  
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+
+            if(type.toLowerCase() == 'get'){
+                if(params && params != ''){
+                    url += "?" + params;
+                }
+            }
+            xhr.open(type, url, isAsync);
+            if(type.toLowerCase() == 'get'){
+                xhr.send();
+            }else if(type.toLowerCase() == 'post'){
+                xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+                xhr.send(params);
+            }
+            
+            if(isAsync){
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = null;
+                        if (dataType == 'json') {
+                            result = xhr.responseText;
+                        } else if (dataType == 'xml') {
+                            result = xhr.responseXML;
+                        } else {
+                            result = xhr.responseText;
+                        }
+                        if (callback) {
+                            callback(result);
+                        }
+                    }
+                }
+            }else{
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = null;
+                    if (dataType == 'json') {
+                        result = xhr.responseText;
+                    } else if (dataType == 'xml') {
+                        result = xhr.responseXML;
+                    } else {
+                        result = xhr.responseText;
+                    }
+                    if (callback) {
+                        callback(result);
+                    }
+                }
+            }
+            
+        }
+
+
+
+        function myAjax2(obj) {
+
+            var defaults = {
+                type: 'get',
+                url: '#',
+                params: {},
+                isAsync: true,
+                dataType: 'json',
+                success: function (result) {console.log(result)}
+            }
+
+            //obj 中的属性覆盖到 defaults 中的属性
+            //1.如果有一些属性只存在obj中，会给defaults 中增加属性
+            //2.如果有一些属性在obj和defaults中都存在，会覆盖defaults中的属性
+            //3.如果有一些属性只存在defaults中，会保留 defaults 中的属性
+            for(var key in obj){
+                defaults[key] = obj[key];
+            }
+
+            var xhr = null;
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else {
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+
+            //得到params
+            var params = '';
+            for(var key in defaults.params){
+                params += key += "=" + defaults.params[key] + "&";
+            }
+            if(params){
+                params = params.substring(0,params.length - 1);
+            }
+
+            if(defaults.type.toLowerCase() == 'get'){
+                defaults.url += "?" + params;
+            }
+            xhr.open(defaults.type, defaults.url, defaults.isAsync);
+
+
+            if (defaults.type.toLowerCase() == 'get') {
+                xhr.send();
+            } else if (defaults.type.toLowerCase() == 'post') {
+                xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                xhr.send(params);
+            }
+
+            if (defaults.isAsync) {
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = null;
+                        if (defaults.dataType == 'json') {
+                            result = xhr.responseText;
+                        } else if (defaults.dataType == 'xml') {
+                            result = xhr.responseXML;
+                        } else {
+                            result = xhr.responseText;
+                        }
+                        defaults.success(result);
+                    }
+                }
+            } else {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = null;
+                    if (defaults.dataType == 'json') {
+                        result = xhr.responseText;
+                    } else if (defaults.dataType == 'xml') {
+                        result = xhr.responseXML;
+                    } else {
+                        result = xhr.responseText;
+                    }
+                    defaults.success(result);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

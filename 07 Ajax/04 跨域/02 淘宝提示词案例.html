@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>淘宝提示词案例</title>
+    <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <h1>淘宝提示词案例</h1>
+    <input type="text" id="search">
+    <button>查询</button>
+
+    <script>
+        window.onload = function(){
+            $('#search').on('blur',function(){
+
+                window['query'] = function(result){
+                    // result 就是从淘宝关键词接口获取到的数据
+                    console.log(result);
+                }
+
+                console.log('onblur');
+                var q = document.querySelector('#search').value;
+                var script = document.createElement('script');
+                script.src = 'https://suggest.taobao.com/sug?q='+ q +'&callback=query';
+                var head = document.querySelector('head');
+                head.appendChild(script);
+            })
+        }
+    </script>
+</body>
+</html>
