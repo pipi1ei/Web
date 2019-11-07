@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度提示词案例</title>
+    <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+    <script src="../../lib/common_js/common.js"></script>
+    <script src="../../lib/art-template/template-web.js"></script>
+
+
+    <!-- 定义模板: 1.模板的type=text/html  2.给模板配一个id -->
+    <script type='text/html' id='resultTemplate'>
+        <ul>
+            {{ each s as value i }}
+            <li>
+                <div>
+                    <span>结果{{ i+1 }}：</span>
+                    <span>{{ value }}</span>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+</head>
+
+<body>
+    <h1>百度提示词案例</h1>
+    <input type="text" id="search">
+    <button id="btn">查询</button>
+    <ul id="ul">
+        <li>
+            <div>
+                <span>结果1：</span>
+                <span>1</span>
+            </div>
+        </li>
+    </ul>
+
+    <script>
+        window.onload = function () {
+            $('#btn').on('click', function () {
+                var keyWord = document.querySelector('#search').value;
+                ajax({
+                    url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    data: {
+                        wd: keyWord
+                    },
+                    dataType: 'jsonp',
+                    jsonp: 'cb',
+                    callback: function (result) {
+                        console.log(result);
+
+                        /* template 方法的含义就是将数据和模板结合起来，生成 html 片段 */
+                        var html = template('resultTemplate', result)
+                        console.log(html);
+                        var ul = document.getElementById('ul');
+                        ul.innerHTML = html;
+
+                        // var ul = document.getElementById('ul');
+                        // var keyWords = result.s;
+                        // var liTag = '';
+                        // for (var i in keyWords) {
+                        //     liTag += '<li>' + keyWords[i] + '</li>';
+                        // }
+                        // ul.innerHTML = liTag;
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

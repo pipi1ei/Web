@@ -12,6 +12,29 @@
       <script src="../../lib/html5shiv-3.7.3/src/html5shiv.js"></script>
       <script src="../../lib/respond/respond.min.js"></script>
     <![endif]-->
+
+    <!-- 点盒子模板引擎 -->
+    <script type='text/html' id='pointTemplate'>
+        {{each arr value i}}
+        <li data-target='#carousel-example-generic' data-slide-to='0' {{ if i==0 }}class='active'{{/if}}></li>
+        {{ /each }}
+    </script>
+
+    <!-- 图片盒子模板引擎：移动端和非移动端 -->
+    <script type='text/html' id='imageTemplate'>
+        {{ each arr value i }}
+        <div class='item {{ if i==0 }}active{{ /if }}'>
+            <!-- 移动端 -->
+            {{ if isMobile }}
+            <a class="m_imageBox" href="#"><img src="{{ value.m_imageUrl }}"></a>
+            {{ /if }}
+            <!-- 非移动端 -->
+            {{ if !isMobile }}
+            <a class="pc_imageBox" href="#" style="background-image:url('{{ value.pc_imageUrl }}')"></a>
+            {{ /if }}
+        </div>
+        {{ /each }}
+    </script>
 </head>
 
 <body>
@@ -373,6 +396,7 @@
         </div>
     </footer>
 
+    <script src="../../lib/art-template/template-web.js"></script>
     <script src="../../lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcss.com/iScroll/5.2.0/iscroll.js"></script>

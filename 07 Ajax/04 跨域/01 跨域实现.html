@@ -13,16 +13,16 @@
     </script>
 
     <!-- 1.引入外部 js 文件 -->
-    <script src="http://wwww.lisi.com/test.js"></script>
+    <script src="http://wwww.test.com/test.js"></script>
     <!-- 2. 引入外部php文件 -->
-    <script src="http://wwww.lisi.com/test.php?city=beijing"></script>
+    <script src="http://wwww.test.com/test.php?city=beijing"></script>
     <!-- 3.动态创建s script 标签 -->
     <script>
         window.onload = function () {
             document.querySelector('#btn').onclick = function () {
                 var cityName = document.querySelector('#city').value;
                 var script = document.createElement('script');
-                script.src = 'ttp://wwww.lisi.com/test.php?city='+cityName;
+                script.src = 'http://wwww.test.com/test.php?city='+cityName;
                 var head = document.querySelector('head');
                 head.appendChild(script);
             }
@@ -40,7 +40,7 @@
 
                 var cityName = document.querySelector('#city').value;
                 var script = document.createElement('script');
-                script.src = 'ttp://wwww.lisi.com/test.php?city=' + cityName + "&callback=foo";
+                script.src = 'ttp://wwww.test.com/test.php?city=' + cityName + "&callback=foo";
                 var head = document.querySelector('head');
                 head.appendChild(script);
             }

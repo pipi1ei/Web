@@ -52,7 +52,21 @@ var initBanner = function () {
 
         var pointHtml = '';
         var imageHtml = '';
-        $.each(imagesUrl, function (i, item) {
+
+        // 使用模板引擎动态渲染轮播图
+        // 1.点盒子动态渲染
+        var pointData = {};
+        pointData.arr = imagesUrl;
+        pointHtml = template('pointTemplate',pointData);
+
+        //2.图片盒子动态渲染
+        var imagesData = {}
+        imagesData.isMobile = isMobile;
+        imagesData.arr = imagesUrl;
+        imageHtml = template('imageTemplate',imagesData);
+
+
+        /* $.each(imagesUrl, function (i, item) {
             //4.1 点盒子渲染
             pointHtml += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '" ' + (i == 0 ? 'class="active"' : '') + '></li>';
             //4.2 图片盒子渲染
@@ -63,7 +77,7 @@ var initBanner = function () {
                 imageHtml += '<a class="pc_imageBox" href="#" style="background-image:url(' + item.pc_imageUrl + ')"></a>'
             }
             imageHtml += '</div>'
-        });
+        }); */
         e_pointBox.html(pointHtml);
         e_imageBox.html(imageHtml);
     }

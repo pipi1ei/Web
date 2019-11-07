@@ -237,3 +237,38 @@ jQuery对Ajax方法进行了封装，提供了很多方法供开发者调用
     3.动态创建 script 标签动态传入参数
     4.前端页面决定方法名称
     5.给 window 增加属性进行方法定义
+
+
+
+### 模板引擎的使用
+无论是 Ajax 还是跨域，目的都是为了获取服务器的数据，获取数据之后将前端页面进行渲染。怎么渲染到前端界面呢？前端界面都是由标签构成的，所以前端页面的渲染主要做的就是生成 html 标签。
+生成 html 标签我们可以通过拼接字符串的方式来实现。这种方式在标签结构比较复杂的情况之下很不好操作和后期的维护，并且容易出错。通过使用模板引擎可以很方便的生成 html 标签
+1. 模板引擎的本质：
+    将数据和模板结合起来生成 html 片段。所以模板引擎需要两个组成部分: 模板和数据。通过数据，将模板指定的标签动态生成，方便维护。
+    常见的模板引擎喝多，这里介绍一个效率最高的模板引擎 artTemplate ，这个是腾讯公司出品的开源模板引擎，在 GitHub 上可以下载到源代码。
+2. 使用步骤：
+    1.引入js文件：
+        <script src="../../lib/art-template/template-web.js"></script>
+    2.定义模板：1.模板的type=text/html  2.给模板配一个id
+        <script type='text/html' id='resultTemplate'>
+            <li>
+                <div>
+                    <span>结果1：</span>
+                    <span>1</span>
+                </div>
+            </li>
+        </script>
+    3.将数据和模板结合起来生成 html 片段：
+        var html = template('resultTemplate',data)
+    4.将 html 片段渲染到界面中：
+        var ul = document.getElementById('ul');
+        ul.innerHTML = html;
+
+3. 基本语法：
+    1.得到数据中的值： {{ value }}
+    2.循环操作：
+        {{ each object as value index }} {{/each}} ； object 是要遍历的数组， value 是数组中的值，index是数组的下标, 现在版本的template.js文件 as 可以去掉
+    3.转义：#的使用
+    4.条件判断：{{ if ... }} {{ /if }}
+    5.获取数组长度：{{ array.length }}
+    6.技巧：有时候可能需要对原始数据进行加工操作
