@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js闭包</title>
+</head>
+<body>
+    <script>
+        // 原生的 setTimeout 传递的第一个函数不能带参数
+        setTimeout(function (param) {
+            alert(param)
+        },1000)
+      
+        // 通过js闭包实现传参的效果
+        var func = function (param) {
+            return function () {
+                alert(param)
+            }
+        }
+        setTimeout(func(1),5000);
+
+
+        console.log(Math.max.apply(null, [1, 2, 3]));
+    </script>
+</body>
+</html>

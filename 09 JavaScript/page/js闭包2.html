@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p id="info">123</p>
+    <p>E-mail: <input type="text" id="email" name="email"></p>
+    <p>Name: <input type="text" id="name" name="name"></p>
+    <p>Age: <input type="text" id="age" name="age"></p>
+    
+    <script>
+        function showContent(content) {
+            document.getElementById('info').innerHTML = content;
+        };
+
+        function setContent() {
+            var infoArr = [
+                {'id':'email','content':'your email'},
+                {'id':'name','content':'your name'},
+                {'id':'age','content':'your age'}
+            ];
+            var len = infoArr.length;
+            for(var i = 0; i < len; i++){
+                var item = infoArr[i];
+                document.getElementById(item.id).onfocus = function () {
+                    showContent(item.content);
+                }
+            }
+        }
+        //循环中创建了三个闭包，他们使用了相同的词法环境item，item.content是变化的变量
+        //当onfocus执行时，item.content才确定，此时循环已经结束，三个闭包共享的item已经指向数组最后一项。
+        // setContent();
+
+
+        /* 解决方法1：通过函数工厂，则函数为每一个回调都创建一个新的词法环境 */
+        function showContent2(content) {
+            document.getElementById('info').innerHTML = content;
+        };
+
+        function callback(content) {
+            return function () {
+                showContent2(content);
+            }
+        }
+        function setContent2 () { 
+            var infoArr = [
+                { 'id': 'email', 'content': 'your email' },
+                { 'id': 'name', 'content': 'your name' },
+                { 'id': 'age', 'content': 'your age' }
+            ];
+            var len = infoArr.length;
+            for (var i = 0; i < len; i++) {
+                var item = infoArr[i];
+                document.getElementById(item.id).onfocus = callback(item.content);
+            }
+        };
+        // setContent2();
+
+        /* 解决方法2： 绑定事件放在立即执行函数中 */
+        function showContent3(content) {
+            document.getElementById('info').innerHTML = content;
+        };
+        function setContent3() {
+            var infoArr = [
+                { 'id': 'email', 'content': 'your email' },
+                { 'id': 'name', 'content': 'your name' },
+                { 'id': 'age', 'content': 'your age' }
+            ];
+            var len = infoArr.length;
+            for (var i = 0; i < len; i++) {
+                (function () {  
+                    var item = infoArr[i];
+                    document.getElementById(item.id).onfocus = function (){
+                        showContent3(item.content);
+                    };
+                })(); //放立即执行函数，立即绑定，用每次的值绑定到事件上，而不是循环结束的值
+            }
+        };
+        // setContent3();
+
+        /* 解决方案3： 用ES6声明，避免声明提前，作用域只在当前块内 */
+        function showContent4(content) {
+            document.getElementById('info').innerHTML = content;
+        };
+        function setContent4 () {
+            var infoArr = [
+                { 'id': 'email', 'content': 'your email' },
+                { 'id': 'name', 'content': 'your name' },
+                { 'id': 'age', 'content': 'your age' }
+            ];
+            for(var i = 0; i < infoArr.length; i++){
+                let item = infoArr[i]; // 限制作用域只在当前块内
+                document.getElementById(item.id).onfocus = function () {
+                    showContent4(item.content);
+                }
+            }
+        };
+        setContent4();
+    </script>
+</body>
+</html>

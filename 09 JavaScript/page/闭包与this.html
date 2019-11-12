@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包与this关键字</title>
+</head>
+
+<body>
+
+    <script>
+        var name = 'the window';
+        var obj = {
+            name: 'my object',
+            getName: function () {
+                return function () {
+                    return this.name;
+                }
+            }
+        }
+        //在闭包中使用this对象可能会导致一些问题，因为匿名函数的执行具有全局性，因此其this对象通常指window
+        //alert(obj.getName()()); //结果是 'the window'
+
+
+        var obj2 = {
+            name: 'my object',
+            getName: function () {
+                var that = this;
+                return function () {
+                    return that.name;
+                }
+            }
+        }
+        alert(obj2.getName()()); //结果是 'my object'
+
+    </script>
+
+</body>
+
+</html>

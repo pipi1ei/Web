@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包与内存泄露</title>
+</head>
+<body>
+
+    // 具体来说，如果闭包的作用域中保存着一个html元素，那么就意味着元素无法被销毁
+
+    <script>
+        function assignHandler() {  
+            var element = document.getElementById('someElement');
+            element.onclick = function () {  
+                alert(element.id);
+            }
+        }
+        /* 以上代码创建了一个作为element元素事件处理程序的闭包，而这个闭包则又创建了一个循环引用。由于匿名函数保存了一个对assignHandler()的活动对象的引用，因此会导致无法减少element的引用数。只有匿名函数存在，element的引用数至少也是1，因此他所占用的内存就不会被回收。 */
+        // 可以通过以下方式解决内部不能回收的问题
+        function assignHandler() {
+            var element = document.getElementById('someElement');
+            var id = element.id;
+            element.onclick = function () {
+                alert(id);
+            }
+            element = null;
+        }
+        //以上代码，实现闭包不直接引用element，包含函数的活动对象中也仍然会保存一个引用。因此，有必要把element的变量设置为null,这样就可以回收其占用的内存。
+    </script>
+</body>
+</html>
