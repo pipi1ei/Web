@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cookie相关方法</title>
+</head>
+<body>
+    <script>
+        var setCookie = function (name, value, time) {  
+            var date = new Date();
+            date.setTime(date.getTime() + (time * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + date.toUTCString();
+            console.log('expires=' + expires)
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        var getCookie = function (name) {
+            name = name + '=';
+            var decodedCookie = document.cookie;
+            console.log('decodedCookie: ' , decodedCookie);
+            var ca = decodedCookie.split(';');
+            console.log('decodedCookie: ', ca);
+            var value = "";
+            // " name=lei"
+            for(var i in ca){
+                if(ca[i].indexOf(name) > -1){
+                    value = ca[i].substring(ca[i].indexOf(name)+name.length,ca[i].length);
+                }
+            }
+            return value;
+        }
+        
+
+        var checkCookie = function (key) {  
+            console.log('checkCookie');
+            var value = getCookie(key);
+            if(value != ""){
+                alert('welcome ' + value);
+            }else{
+                value = prompt('please enter you name','');
+                if(value != '' && value != null){
+                    setCookie(key,value,1);
+                }
+            }
+        }
+
+        checkCookie("cc");
+    </script>
+</body>
+</html>

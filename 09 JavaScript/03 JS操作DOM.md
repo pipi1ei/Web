@@ -96,6 +96,14 @@ if (x.addEventListener) {                    // 针对主流浏览器，除了 I
     2.文本节点的 nodeValue 是文本值
     3.属性节点的 nodeValue 是属性值
 3. nodeType 属性：返回节点的类型。nodeType 是只读的。
+    重要的nodeType:  
+       节点	            类型	       例子
+    ELEMENT_NODE	     1	    <h1 class="heading">W3School</h1>
+    ATTRIBUTE_NODE	     2	    class = "heading" （弃用）
+    TEXT_NODE	         3	    W3School
+    COMMENT_NODE	     8	    <!-- 这是注释 -->
+    DOCUMENT_NODE	     9	    HTML 文档本身（<html> 的父）
+    DOCUMENT_TYPE_NODE	 10	    <!Doctype html>
 
 
 ### DOM 集合

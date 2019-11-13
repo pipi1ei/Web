@@ -115,12 +115,16 @@ var zeptoBanner = function () {
         imageBox.animate({ 'transform': 'translateX(' + -index * banner_width + 'px)' }, 200, "linear", function () {
             if (index >= 9) {
                 index = 1;
+                imageBox.css({
+                    'transform': 'translateX(' + -index * banner_width + 'px)'
+                })
             } else if (index <= 0) {
                 index = 8;
+                imageBox.css({
+                    'transform': 'translateX(' + -index * banner_width + 'px)'
+                })
             }
-            imageBox.css({
-                'transform': 'translateX(' + -index * banner_width + 'px)'
-            })
+            
 
             //点盒子对应改变
             points.removeClass("now").eq(index - 1).addClass('now');
