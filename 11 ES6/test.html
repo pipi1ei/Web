@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+<body>
+
+    <div>\\uD834\\uDF06</div>
+
+    <script>
+        function bar(x = y, y = 2) {
+            return [x,y];
+        }
+        // bar();
+
+        if(true){
+            console.log('haha')
+            const MAX = 3;
+            console.log(MAX)
+            var user={
+                name:"pipilei",
+                age:20
+            }
+            console.log(`
+                <ul>
+                    <li>${user.name}</li>
+                    <li>${user.age}</li>
+                </ul>
+            `.trim())
+            document.querySelector('div').innerHTML = `${user.name} this year is ${user.age} old`;
+            // document.querySelector('div').innerHTML = user.name + 'this year is ' + user.age;
+
+
+            let template = `
+                <ul>
+                    <% for (let i = 0; i < data.supplies.length; i++) { %>
+                       <li> <%= data.supplies[i] %> </li>
+                    <% } %>
+                </ul>
+            `;
+
+            let a = 5;
+            let b = 10;
+
+            function tag(s, v1, v2) {  
+                console.log(s[0]);
+                console.log(s[1]);
+                console.log(s[2]);
+                console.log(v1);
+                console.log(v2);
+
+                return 'OK';
+            }
+
+            tag`Hello ${a + b} World ${a * b}  lla`;
+           
+            console.log(String.fromCodePoint('0x20BB7'))
+
+            var tmp = new Date();
+            function f () {  
+                console.log(tmp)
+                if(false){
+                    var tmp = 'hello world';
+                }
+            }
+            f();
+
+            (function(){
+                var aaa = '1';
+                console.log(aaa)
+            }())
+
+            // if(true) {
+            //     console.log(x)
+            //     let x =1;
+            // }
+
+            console.log(Array.prototype.slice(1,3,23,5))
+
+            
+            var values = [2,5,1,6,8,4,3]
+            // 箭头函数
+            var result = values.sort((a,b) => a-b);
+
+            values.map(x => x*x);
+
+
+            function insert(value){
+                return{ 
+                    into:function(array){
+                        return {
+                            after: function(afterValue){
+                                array.splice(array.indexOf(afterValue)+1, 0, value);
+                                return array;
+                            }
+                        }
+                    }
+                }
+            }
+
+            console.log(insert(2).into([1,3]).after(1));
+
+
+            let insertA = (value) => ({
+                into: (array) => ({
+                    after: (afterValue) => {
+                        array.splice(array.indexOf(afterValue) + 1, 0, value)
+                        return array;
+                    }
+                })
+            })
+
+            console.log(insertA(5).into([2,3,8]).after(3));
+        }
+
+    </script>
+</body>
+</html>
