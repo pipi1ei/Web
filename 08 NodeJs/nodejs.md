@@ -212,3 +212,132 @@ package.json 文件中常见的项有哪些
 1. 通过 `npm init -y` 或者 `npm init -yes` 命令创建package.json 文件时没执行命令所在的目录名称中不能包含大写字母
 2. package.json 文件中，项目名称本身不能包含大写字母
 3. npm 更新版本后，项目所在的文件夹如果包含中文等特殊字符，创建的时候不会提示一步一步的数组，直接报错
+
+
+## 一、Node.js 模块分类
+
+### 核心模块 Core Module、内置模块、原生模块
+所有的内置模块在安装node.js  的时候就已经编译成二进制文件，可以直接加载运行（速度较快）
+部分的内置模块，在 node.exe 这个进程启动的时候就已经默认加载了，所有可以直接使用
+
+### 文件模块
+#### 按文件后缀来分
+如果文件加载时，没有指定后缀名，那么就按照如下顺序依次加载相应模块
+1. .js
+2. .json
+3. .node（C/C++ 编写的模块）
+
+### 自定义模块（第三方模块）
+- mime
+- cheerio
+- moment
+- mongo
+- ...
+
+
+## 二、require 加载模块顺序
+1. 看 require() 加载模块时传入的参数是否以 './' 或 '../' 或 '/' 等这样的路径方式开头（相对路径或者绝对路径都可以）
+2. 是，那么会按照传入的路径直接去查询对应的模块。如果有具体的后缀名，如`require('./index.js')` 回去直接加载对应模块，找到了加载成功，找不到加载失败。如果改模块无后缀名，会去找是否有这个文件夹。假设 `require('./index')`： --> package.json --> main（入口文件：app.js） --> index.js/index.json/index.node --> 加载失败。
+3. 如果不是路径，直接是一个模块名称，先在核心模块中查找，是否有和给定名字一样的模块，如果有则直接加载该核心模块，如果核心模块中没有该模块，会认为这个模块是一个第三方模块，先会去在当前js 文件所在的目录下找是否有个 node_modules 文件夹，找不到会找父目录（直到跟目录）。
+
+### requerie 加载模块注意点
+1. 所有模块加载完毕后都会有缓存，二次加载直接读取缓存，避免了二次开销
+    - 因为有缓存，所有模块中的代码只有在第一次加载的时候执行一次
+2. 每次加载模块的时候都优先从缓存中加载，缓存中没有的情况下才会按照 node.js 加载模块的规则去查找
+3. 核心模块在node.js 源码编译的时候，都已经编译为二进制执行文件，所有加载速度较快（核心模块加载的优先级仅次于缓存加载）
+4. 核心模块都是保存在 lib 目录下
+5. 试图加载一个和核心模块同名的自定义模块（第三方模块）是不会成功的
+    + 自定义模块要么名字不要与核心模块同名，要么使用路径的方式加载
+6. 核心模块只能通过模块名称来加载（错误示例：`require('./http');`,这样是无法加载核心模块http的）
+7. require() 加载模块使用 ./ 相对路径时，相对路径是相对当前模块，不受执行 node 命令的路径影响
+8. 建议加载文件模块的时候始终给文件添加后缀名，不要省略。
+
+
+### require 加载模块原理
+1. require('./b.js') ：b.js 中的代码会执行一遍并缓存起来
+
+
+## 三、CommonJS 规范
+1. [CommonJS 规范](http://www.commonjs.org/)
+2. [模块的定义](http://www.commonjs.org/specs/modules/1.0)
+3. 总结：CommonJS 是为 Javascript 语音指定的一种模块规范、编程API规范
+
+## 关于 node.js 中 Module 详细介绍
+[Module](https://nodejs.cn/docs/api/modules.html)
+
+
+## 四、Buffer 介绍
+
+### 类型介绍
+1. JavaScript 语音没有读取或操作二进制数据流的机制。
+2. Node.js 中引入了 Buffer 类型使我们可以操作 TCP 流或 文件流
+3. Buffer 类型的对象类似于整数数组，但Buffer 的大小是固定的、且在 V8 堆外分配物理内存。BUffer 的大小在被创建时确定，且无法调整。（Buffer.length 是固定的，不允许修改）
+4. Buffer 是全局的，所以使用的时候无需 require() 的方式来加载
+
+### 如何创建一个Buffer对象
+常见的 API 介绍：
+1. 创建一个 Buffer 对象
+    ``` javascript
+    //1. 通过 Buffer.from() 创建一个 Buffer 对象
+    //1.1 通过一个字节数组来创建一个 Buffer 对象
+    var array = [0x86, 0x65, 0x6c, 0x6f, 0x20, 0xe4, 0xb8, 0x96, 0xe7, 0x95];
+    var buf = Buffer.from(array);
+    console.log(buf.toString('utf-8));
+
+    //1.2 通过字符串来创建一个 Buffer 对象
+    // Buffer.from(string[, encoding])
+    var buf = Buffer.form('你好世界！Hello World!');
+    console.log(buf);
+    console.log(buf.toString());
+    ```
+
+2. 拼接多个Buffer对象为一个对象
+    ``` javascript
+    // Buffer.concat(list[, totalLength])
+    var bufferList = [];
+    var buf = Buffer.concat(bufferList);
+    ```
+
+3. 获取字符串对应字节个数
+    ``` javascript
+    // Buffer.byteLength(string[, encoding])
+    var len = Buffer.byteLength('你好世界！Hello World!');
+    console.log(len);
+    ```
+
+4. 判断一个对象是否是 Buffer 类型对象
+    ``` javascript
+    // Buffer.isBuffer(obj)
+    ```
+
+5. 获取 Buffer 中的某个字节
+    ``` javascript
+    // 根据索引获取 Buffer 中的莫格字节
+    // buf[index]
+    ```
+
+6. 获取 Buffer 对象中的字节个数
+    ``` javascript
+    buf.length;
+    // 注意: length 属性不可修改
+    ```
+
+### Buffer 对象与编码
+Node.js 目前支持的编码如下：
+1. ascii
+2. utf8
+3. utf16le
+    - ucs2 是 utf16le 的别名
+4. base64
+5. latin1
+    - binary 是 latin1 的别名
+6. hex
+    - 用两位16进制来表示每个字节
+
+示例：
+``` javascript
+var buf = Buffer.from('你好世界！Hello World!');
+console.log(buf.toString('hex'));
+console.log(buf.toString('base64'));
+console.log(buf.toString('utf8'));
+```
