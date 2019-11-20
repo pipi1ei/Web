@@ -12,6 +12,9 @@
     <!-- Vue 实例控制的区域，就是MVVM中的 V -->
     <div id="app">
         <p>{{ msg }}</p>
+        <ul>
+            <li v-for='item in movies'> {{ item }} </li>
+        </ul>
     </div>
 
     <script>
@@ -22,7 +25,8 @@
             el: '#app', // 表示，当前 new 的 Vue实例控制页面上哪个区域
             /* data 就是 MVVM 中的M，专门用来保存每个页面中的数据 */
             data: { // data 属性中，存放的是 el 中要用到的数据
-                msg: 'Hello Vue'  // 通过 vuee 指令，很方便的把数据渲染到页面上，程序员不需要再手动操作 dom 元素【前端的 Vue 之类的框架不提倡手动操作 DOM 元素】
+                msg: 'Hello Vue',  // 通过 vuee 指令，很方便的把数据渲染到页面上，程序员不需要再手动操作 dom 元素【前端的 Vue 之类的框架不提倡手动操作 DOM 元素】
+                movies: ['星际穿越', '大话西游', '盗梦空间', '海王']
             } 
         })
     </script>
