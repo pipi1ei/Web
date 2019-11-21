@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>v-bind 动态绑定class</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+  <style>
+    .active{
+      color: red;
+    }
+  </style>
+<body>
+
+  <div id="app">
+    <!-- <h2 :class="{类名1：boolean, 类名2：boolean}">{{ msg }}</h2> -->
+    <!-- 对象语法 -->
+    <h2 class="title" v-bind:class="{active: isActive}">{{ msg }}</h2>
+
+    <h2 :class="getClasses()">{{ msg }}</h2>
+
+    <!-- 数组语法:用的较少 -->
+    <h2   v-bind:class="[activeObj]">{{ msg }}</h2>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        isActive:true,
+        activeObj:{
+          active: false
+        }
+      },
+      methods: {
+        getClasses: function () {  
+          return { active: this.isActive }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

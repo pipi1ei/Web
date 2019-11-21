@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue 插值操作</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <p>{{ firstName }} {{ lastName }}</p>
+    <p>{{ firstName + ' ' + lastName }}</p>
+    <p>{{ doubleCounter() }}</p>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        message: 'hello Vue',
+        firstName: 'kobe',
+        lastName: 'bryant',
+        counter: 100,
+      },
+      computed: {
+        doubleCounter: function(){
+          return this.counter * 2;
+        },
+        now: function () {  
+          return Date.now();
+        }
+      },
+      methods: {
+        doubleCounter: function () {  
+          return this.counter * 2;
+        },
+        now: function () {  
+          return Date.now();
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

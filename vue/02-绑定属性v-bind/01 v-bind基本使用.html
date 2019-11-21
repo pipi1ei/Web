@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>v-bind 基本使用</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- <img src="{{ src }}" > 错误做法，这里不可以使用 mustache 语法，会被当成字符串 -->
+    <img v-bind:src='url' >
+    <!--  语法糖：简写方式 -->
+    <img :src='url' > 
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        url: 'https://cn.vuejs.org/images/logo.png'
+      }
+    })
+  </script>
+</body>
+
+</html>
