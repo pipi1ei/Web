@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <com></com>
+    <com></com>
+    <com></com>
+    <com></com>
+  </div>
+
+  <script>
+
+    const myCom = Vue.extend({
+      template: `
+        <div>
+          <h1>hello</h1>  
+          <h1>vue</h1>
+        </div>
+      `
+    });
+
+    // 此方式注册为全局组件,可以在多个 vue 实例下使用
+    // Vue.component('com',myCom);
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue'
+      },
+      // 这种方式注册为局部组件
+      components: {
+        com: myCom,
+      }
+    })
+  </script>
+</body>
+
+</html>

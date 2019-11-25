@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 3. 使用组件 -->
+    <my-com></my-com>
+  </div>
+
+  <script>
+
+    /* 1. 创建组件:必须在 new Vue 实例之前创建 */
+    const myComponent = Vue.extend({
+      template: `
+        <div>
+          <h1>你好</h1>  
+          <h2>陈磊</h2>  
+          <h3>哈哈哈</h3>  
+        </div>
+      `
+    });
+
+    /* 2. 注册组件 */
+    Vue.component('my-com', myComponent);
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue'
+      }
+    })
+  </script>
+</body>
+
+</html> 
