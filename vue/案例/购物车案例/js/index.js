@@ -61,10 +61,20 @@ const app = new Vue({
   computed:{
     totalPrice(){
       var result = 0;
-      for (let i in this.books) {
-        result += this.books[i].price * this.books[i].number
-      }
-      return result;
+      // for (let i in this.books) {
+      //   result += this.books[i].price * this.books[i].number
+      // }
+
+      // return this.books.reduce(function(total,book){
+      //   console.log(total);
+      //   return total + (book.number * book.price);
+      // },0)
+
+      /* 箭头函数写法 */
+      return this.books.reduce((total, book) => {
+        return total + (book.price * book.number)
+      }, 0)
+      
     }
   }
 })
