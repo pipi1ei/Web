@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .active{
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 需求：点击哪一项，那一项的颜色变红 -->
+  <div id="app">
+    <ul>
+      <li v-for='(item, i) in movies' :class='{active: i === count}' @click='click(i)'>{{ item }} </li>
+    </ul>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        movies: ['海王','火影忍者','进击的巨人','海尔兄弟'],
+        isActive: false,
+        count: 0
+      },
+      methods: {
+        click: function (index) {
+          this.count = index;
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

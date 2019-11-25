@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <span v-if='isUserName'>
+      <label for="username">用户账号:</label>
+      <!-- 两个 input 的 key 不一样,不会服用input -->
+      <input type="text" placeholder="用户账号" id="username" key='username'>
+    </span>
+    <span v-else>
+      <label for="email">用户邮箱:</label>
+      <input type="text" placeholder="用户邮箱" id="email" key='email'>
+    </span>
+    <button @click='toggle'>切换登录方式</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        isUserName: true
+      },
+      methods: {
+        toggle(){
+          this.isUserName = !this.isUserName;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

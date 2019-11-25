@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <ul>
+      <!-- :key 必须和 后面的数据一一对应,使用 index 不会一一对应,:key的值必须唯一,不呢个相同 -->
+      <li v-for='item in array' :key='item'>{{ item }}</li>
+    </ul>
+    <button @click='click'>点击我</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        array:['A','B','C','D','E']
+      },
+      methods: {
+        click(){
+          /* Vue.set() 方法改变数组值 */
+          /* 参数说明: 第一个参数: 要改变的对象; 第二个参数: 索引值; 第三个参数: 修改后的值 */
+          Vue.set(this.array, 0, 'bbbb')
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

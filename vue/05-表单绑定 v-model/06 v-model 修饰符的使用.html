@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 1. 修饰符: lazy: 点击回车键或者失去焦点会双向绑定数据 -->
+    <input type="text" v-model.lazy='msg'>
+    <h2>msg is : {{msg}}</h2>
+
+    <!-- 2. 修饰符: number -->
+    <input type="number" v-model.number='age'>
+    <h2>age is : {{age}}; typeof: {{ typeof age }}</h2>
+
+    <!-- 2. 修饰符: trim -->
+    <input type="text" v-model.trim='name'>
+    <h2>name is : {{name}}</h2>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        age: 0,
+        name: ''
+      }
+    })
+  </script>
+</body>
+
+</html>

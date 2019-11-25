@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <div @click='divClick'>
+      111111111
+      <!-- 阻止冒泡事件 -->
+      <button @click.stop='btn1Click'>按钮1</button>
+    </div>
+    <!-- 阻止默认行为 -->
+    <form action="www.baidu.com">
+      <input type="submit" value="提交" @click.prevent='btn2Click'></input>
+    </form>
+    <!-- 键盘按键别名,下面例子按下回车键抬起后会触发 -->
+    <input @keyup.enter='onKeyUp'></input>
+
+    <!-- 只触发一次点击事件 -->
+    <button @click.once='onceClick'>只触发一次的按钮</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+      },
+      methods: {
+        divClick(){
+          console.log('divClick');
+        },
+        btn1Click() {
+          console.log('btn1Click');
+        },
+        btn2Click() {
+          console.log('btn2Click');
+        },
+        onKeyUp() {
+          console.log('keyup');
+        },
+        onceClick(){
+          console.log('once');
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

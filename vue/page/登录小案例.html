@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <span>{{ loginText }}:</s'pan>
+    <input type="text" v-model:placeholder="placeHolder">
+    <button @click='toggle'>切换类型</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        loginText: '用户账号',
+        placeHolder: '用户账号'
+      },
+      methods: {
+        toggle(){
+          if(this.loginText === '用户账号'){
+            this.loginText = '用户邮箱';
+            this.placeHolder = '用户邮箱';
+          }else if(this.loginText === '用户邮箱'){
+            this.loginText = '用户账号';
+            this.placeHolder = '用户账号';
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

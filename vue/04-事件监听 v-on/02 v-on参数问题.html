@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 不需要传入参数可以不需要写括号 -->
+    <button @click='btn1Click'>按钮1</button>
+    <!-- 不加括号, 方法中有一个参数, 默认是 event 对象, 如果加了括号不传参数是 undefined -->
+    <!-- 下面例子打印 undefined -->
+    <button @click='btn2Click()'>按钮2</button>
+    <!-- 如果需要传入多个参数,同时需要传入 event 对象, event 以 $event 方式写,如果写成 event 会被当成一个变量,会从vue 实例的 data 和 computed 属性中去找 -->
+    <button @click='btn3Click("abc", $event)'>按钮3</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        counter: 0,
+        counter2: 0,
+        msg: 'hello vue',
+      },
+      computed: {
+        event(){return 'hhhh'}
+      },
+      methods: {
+        // es6 字面量方式写法
+        btn1Click() {
+          console.log('btn1Click');
+        },
+        btn2Click(event) {
+          console.log(event);
+        },
+        btn3Click(abc, event) {
+          console.log('btn3Click');
+          console.log('--------' + abc, event)
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

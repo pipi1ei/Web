@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>{{ msg }}</h1>
+    <h1>{{ counter }}</h1>
+    <button v-on:click='add()'>+</button>
+    <button @click='sub'>-</button>
+
+    <h2>点击次数: {{counter2}}</h2>
+    <button @click='add2'>+</button>
+    <button @click='addTen(10, $event)'>+10</button>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        counter: 0,
+        counter2:0,
+        msg: 'hello vue'
+      },
+      methods: {
+        // es6 字面量方式写法
+        add() {
+          this.counter++;
+        },
+        sub: function () {
+          this.counter--;
+        },
+        add2(event) {
+          console.log(event)
+          this.counter2++;
+        },
+        addTen(count, event){
+          console.log(event);
+          this.counter2 += count;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

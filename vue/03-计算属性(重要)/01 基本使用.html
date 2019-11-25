@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>{{ firstName }} {{ lastName }}</h1>
+    <h1>{{ fullName }}</h1>
+    <h1>{{ getFullName() }}</h1>
+
+    <h2>{{ getTime() }}</h2>
+    <h2>{{ gtime }}</h2>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        firstName: 'Lebron',
+        lastName: 'James',
+        time: ''
+      },
+      computed:{
+        fullName: function (){
+          return this.firstName + ' ' + this.lastName
+        },
+        gtime: function () {  
+          return Date.now()
+        }
+      },
+      methods: {
+        getFullName(){
+          return this.firstName + ' ' + this.lastName
+        },
+        getTime(){
+          this.time = Date.now();
+          return this.time;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
