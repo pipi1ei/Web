@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 这个组件会显示， isShow 是 vue 实例的 isShow，不是组件中的 isShow -->
+    <cpn v-show='isShow'></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h2>我是组件标题</h2>
+      <p>我是组件内容</p>
+      <!-- 这个按钮不会显示 -->
+      <button v-show='isShow'></button>
+    </div>
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data:{
+        isShow: true
+      },
+      components: {
+        cpn: {
+          template: '#cpn',
+          data(){
+            return {
+              isShow: false
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

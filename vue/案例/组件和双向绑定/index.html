@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cmp :number1='num1' :number2='num2' 
+      @dnumber1-changed='num1Changed'
+      @dnumber2-changed='num2Changed'></cmp>
+  </div>
+
+  <template id="cmp">
+    <div>
+      <h1>prpos: {{ number1 }}</h1>
+      <h1>data: {{ dnumber1 }}</h1>
+      <input type="text" :value='dnumber1' @input='dnumber1Input'>
+      <h1>prpos: {{ number2 }}</h1>
+      <h1>data: {{ dnumber2 }}</h1>
+      <input type="text" :value='dnumber2' @input='dnumber2Input'>
+    </div>
+  </template>
+
+  <script>
+    const cmp = {
+      template: '#cmp',
+      props: {
+        number1: Number,
+        number2: {
+          type: Number,
+          require: true
+        }
+      },
+      data(){
+        return {
+          dnumber1: this.number1,
+          dnumber2: this.number2
+        }
+      },
+      methods: {
+        dnumber1Input(event){
+          this.dnumber1 = event.target.value;
+          this.$emit('dnumber1-changed',this.dnumber1);
+          this.dnumber2 = this.dnumber1 * 100;
+          this.$emit('dnumber2-changed', this.dnumber2);
+        },
+        dnumber2Input(event){
+          this.dnumber2 = event.target.value;
+          this.$emit('dnumber2-changed', this.dnumber2);
+          this.dnumber1 = this.dnumber2 / 100;
+          this.$emit('dnumber1-changed', this.dnumber1);
+        }
+      }
+    }
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        num1: 1,
+        num2: 2
+      },
+      components: {
+        cmp
+      },
+      methods: {
+        num1Changed(num1){
+          this.num1 = parseInt(num1);
+        },
+        num2Changed(num2){
+          this.num2 = parseInt(num2);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

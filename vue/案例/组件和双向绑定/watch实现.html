@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cmp :number1='num1' :number2='num2' @dnumber1-changed='num1Changed' @dnumber2-changed='num2Changed'></cmp>
+  </div>
+
+  <template id="cmp">
+    <div>
+      <h1>prpos: {{ number1 }}</h1>
+      <h1>data: {{ dnumber1 }}</h1>
+      <input type="text" v-model='dnumber1'>
+      <h1>prpos: {{ number2 }}</h1>
+      <h1>data: {{ dnumber2 }}</h1>
+      <input type="text" v-model='dnumber2'>
+    </div>
+  </template>
+
+  <script>
+    const cmp = {
+      template: '#cmp',
+      props: {
+        number1: Number,
+        number2: Number
+      },
+      data() {
+        return {
+          dnumber1: this.number1,
+          dnumber2: this.number2
+        }
+      },
+      watch: { 
+        dnumber1(newValue){
+          console.log('watch: dnumber1');
+          this.dnumber2 = newValue * 100;
+          this.$emit('dnumber1-changed',newValue);
+        },
+        dnumber2(newValue){
+          console.log('watch: dnumber2')
+          this.dnumber1 = newValue / 100;
+          this.$emit('dnumber2-changed', newValue);
+        }
+      }
+    }
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        num1: 1,
+        num2: 2
+      },
+      components: {
+        cmp
+      },
+      methods: {
+        num1Changed(num1) {
+          this.num1 = parseInt(num1);
+        },
+        num2Changed(num2) {
+          this.num2 = parseInt(num2);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

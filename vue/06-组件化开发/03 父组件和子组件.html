@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <parentcpn></parentcpn>
+  </div>
+
+  <script>
+    const childCpn = Vue.extend({
+      template: `
+        <div>
+          <h1>我是子组件</h1>  
+          <p>我是子组件的内容</p>
+        </div>
+      `
+    });
+
+    const parentCpn = Vue.extend({
+      template: `
+        <div>
+          <h1>我是父组件</h1>  
+          <p>我是父组件的内容</p>
+          <childcpn></childcpn>
+        </div>
+      `,
+
+      components:{
+        childcpn: childCpn
+      }
+    })
+
+
+    // vue 实例可以看作 root 组件
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue'
+      },
+      components: {
+        parentcpn: parentCpn
+      }
+    })
+  </script>
+</body>
+
+</html>

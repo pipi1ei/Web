@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn ref='aaa'></cpn>
+    <button @click='btnClick'>按钮</button>
+  </div>
+
+  <template id="cpn">
+    <div>我是子组件</div>
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn',
+          data(){
+            return {
+              name: '我是子组件的name'
+            }
+          },
+          methods: {
+            showMessage(){
+              console.log('showMessage');
+            }
+          }
+        }
+      },
+      methods: {
+        btnClick(){
+          /* 使用 $children 方式 */
+          // for(let c of this.$children){
+          //   console.log(c.name);
+          //   c.showMessage();
+          // }
+
+          /* 2. 使用 $refs 方式,必须在组件上添加 ref 属性 */
+          console.log(this.$refs)
+          console.log(this.$refs.aaa.name);
+          this.$refs.aaa.showMessage();
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn :cmovies='movies' :cmsg='msg' :name='name' :age='age' :height='height'></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <ul>
+        <li v-for='item in cmovies'>{{ item }}</li>
+      </ul>
+      <p>{{ cmsg }}</p>
+      <p>姓名： {{ name }}</p>
+      <p>年龄： {{ age }}</p>
+      <p>身高： {{ height }}</p>
+    </div>
+  </template>
+
+  <script>
+    const cpn = {
+      template: '#cpn',
+      // props: ['cmovies','cmsg']
+      props: {
+        name: {
+          type: String,
+          required: true
+        },
+        age: {
+          type: Number,
+          required: true
+        },
+        height:{
+          type: Number,
+          default: 200
+        },
+
+
+        // 1. 类型限制
+        // cmovies: Array,
+        // cmsg: String
+
+        // 提供默认值
+        cmovies: {
+          type: Array,
+          // default: ['A'] // 高版本 vue 会报错
+          default(){
+            return ['A','B']
+          }
+        },
+        cmsg: {
+          type: String,
+          default: 'aaaaa',
+          required: true   // 要求父组件必须传入该值，否则会报错
+        }
+      }
+    }
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        movies: ['海王','海贼王','海尔兄弟','海上钢琴师'],
+        name: 'pipilei',
+        age: 18,
+        height: 188
+      },
+      components:{
+        cpn // 对象字面量写法
+      }
+    })
+  </script>
+</body>
+
+</html>

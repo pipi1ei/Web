@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 驼峰命名使用 - 符号转换，因为 html 元素属性不区分大小写 -->
+    <cpn :c-info='info' :c-my-message='msg'></cpn>
+  </div>
+
+<template id="cpn">
+  <div>
+    <p>{{ cInfo.name }}</p>
+    <p>{{ cInfo.age }}</p>
+    <p>{{ cInfo.height }}</p>
+    <p>{{ cMyMessage }}</p>
+  </div>
+</template>
+
+  <script>
+    const cpn = {
+      template: '#cpn',
+      props: {
+        cInfo: {
+          type: Object,
+          default: {}
+        },
+        cMyMessage: {
+          type: String,
+          default: ''
+        }
+      }
+    }
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        info: {
+          name: 'pipilei',
+          age: 18,
+          height: 188
+        }
+      },
+      components: {
+        cpn
+      }
+    })
+  </script>
+</body>
+
+</html>

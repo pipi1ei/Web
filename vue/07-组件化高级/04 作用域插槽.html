@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <button @click='click'>按钮</button>
+    <cpn></cpn>
+    <cpn>
+      <template slot-scope='slot'>
+        <span v-for='item in slot.data'>{{ item }} - </span>
+      </template>
+    </cpn>
+    <!-- 使用父组件访问子组件会报错-->
+    <!-- <cpn ref='cl'>
+      <span v-for='item in this.$refs.cl'>{{ item }} * </span>
+    </cpn> -->
+  </div>
+
+  <template id="cpn">
+    <div>
+      <slot :data='pLanguages'>
+        <ul>
+          <li v-for='item in pLanguages'>{{ item }}</li>
+        </ul>
+      </slot>
+    </div>
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        
+      },
+      components: {
+        cpn: {
+          template: '#cpn',
+          data() {
+            return {
+              pLanguages: ['Java', 'C++', 'C#','JS','Python']
+            }
+          }
+        }
+      },
+      methods: {
+        click(){
+          console.log(this.$refs.cl.pLanguages)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

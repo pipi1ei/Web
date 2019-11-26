@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn></cpn>
+    <cpn>
+      <button slot='left'>返回</button>
+    </cpn>
+    <cpn>
+      <span slot='center'>替换中间</button>
+    </cpn>
+    <cpn>
+      <h4 slot='right'>替换右边</h4>
+    </cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <slot name='left'><span>左边</span></slot>
+      <slot name='center'><span>中间</span></slot>
+      <slot name='right'><span>右边</span></slot>
+    </div>
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn'
+        }  
+      }
+    })
+  </script>
+</body>
+
+</html>

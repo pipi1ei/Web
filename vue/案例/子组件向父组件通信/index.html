@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn @cpn-add='cpnAdd' @cpn-sub='cpnSub'></cpn>
+    <h1>点击次数：{{ counter }}</h1>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <button @click='add'>+</button>
+      <button @click='sub'>-</button>
+    </div>
+  </template>
+
+  <script>
+    const cpn = {
+      template: '#cpn',
+      methods: {
+        add(){
+          this.$emit('cpn-add');
+        },
+        sub(){
+          this.$emit('cpn-sub');
+        }
+      }
+    }
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        counter: 0
+      },
+      components:{
+        cpn
+      },
+      methods: {
+        cpnAdd(){
+          this.counter ++;
+        },
+        cpnSub(){
+          this.counter--;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

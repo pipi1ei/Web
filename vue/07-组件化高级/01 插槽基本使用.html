@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn></cpn>
+    <cpn>
+      <p>我是p</p>
+    </cpn>
+    <cpn>
+      <span>我是span</span>
+    </cpn>
+    <cpn>
+      <i>我是i</i>
+      <h6>我是h6</h6>
+      <span>我是span</span>
+    </cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h1>我是组件标题</h1>
+      <p>我是组件内容</p>
+      <slot>
+        <button>按钮</button>
+      </slot>
+    </div>
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

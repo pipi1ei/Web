@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <cpn></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      我是子组件
+      <button @click='btnClick'>按钮</button>
+    </div>
+    
+  </template>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data:{
+        name: '我是父组件的name'
+      },
+      components: {
+        cpn: {
+          template: '#cpn',
+          methods: {
+            btnClick(){
+              // 访问父组件
+              console.log(this.$parent);
+              console.log(this.$parent.name);
+
+              // 访问跟组件 $root
+              console.log(this.$root);
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
