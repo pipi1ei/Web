@@ -270,5 +270,25 @@ module.exports = {
   + 使用 loader 可以解决这些问题
 - loader 使用过程
   + 1. 通过 npm 安装需要使用的 loader
-  + 2. 在 webpack.config.js 中的 modules 关键字下进行配置
+  + 2. 在 webpack.config.js 中的 module 关键字下进行配置
+
+  ### ES6 语法处理
+  - 在webpack 打包后的js文件中，并没有将 ES6 语法转换成 ES5，那么一些不支持 ES6 语法的浏览器就没办法很好的运行js代码
+  - 如果想把 ES6 语法转换成 ES5 语法，就需要使用 babel
+    + 在 webpack 中，直接使用 babel 对于的 loader 就可以了
+      npm install --save-dev babel-loader@7 babel-core babel-preset-es2015
+  - 配置webpack.config.js 文件
+    ``` javascript
+    {
+      test: '/\.m?js$/',
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015']
+        }
+      }
+    }
+    ```
+  - 重新打包，产看打包后的js文件，其中的内容就变成了 ES5 的语法
 
