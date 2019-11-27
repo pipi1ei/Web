@@ -280,7 +280,7 @@ module.exports = {
   - 配置webpack.config.js 文件
     ``` javascript
     {
-      test: '/\.m?js$/',
+      test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       use: {
         loader: 'babel-loader',
@@ -291,4 +291,184 @@ module.exports = {
     }
     ```
   - 重新打包，产看打包后的js文件，其中的内容就变成了 ES5 的语法
+
+### webpack 配置vue
+1. 在当前项目下本地安装vue: npm install --save vue
+2. 在入口js 文件导入vue 并创建 vue 实例，如果此时直接运行会报错，提示 runtime only
+3. 在 webpack.config.js 文件中添加 resolve 配置：
+  ``` javascript
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  }
+  ```
+
+  ### 创建 vue 时 el 和 template 的区别
+  + webpack 配置vue 正常运行之后，我们来考虑一个问题：
+    - 如果希望将 data 中的数据显示在界面中，就必须修改 index.html
+    - 如果定义了组件，也必须修改 index.html 来使用组件
+    - 但是 html 模板在之后的开发中，我并不希望手动的频繁修改，该怎么做？
+  + 定义 template 属性
+    - 在之前的 vue 实例中，我们定义的 el 属性，用于和 index.html 中的 #app 进行绑定。让 Vue 实例之后可以管理它其中的内容
+    - 这里，我们可以将 div 元素中的 {{message}} 内容删掉，只保留一个基本的 id 为 app div的元素
+    - 但是如果依然希望在其中显示 {{message}} 的内容，应该怎么处理?
+    - 可以再定义一个 template 属性，代码如下：
+      ``` javascript
+      new Vue({
+        el: '#app',
+        template: '<div id="app">{{message}}</div>',
+        data: {
+          message: 'hello vue'
+        }
+      })
+      ```
+### .vue 文件封装处理
++ 一个组件以一个 js 对象的形式进行组织和使用的时候时非常不方便的
+  - 一方面编写 template 代码非常麻烦
+  - 另一方面如果有样式的化，在哪写比较合适呢？
++ 通过一种全新的方式（.vue文件）来组织一个 vue 的组件，但这个时候会报错
++ 需要使用 vue-loader 和 vue-template-compiler 
++ 安装 vue-loader 和 vue-template-compiler : `npm install vue-loader vue-template-compiler --save-dev`  vue-loader版本要小于14.0.0，否则需要插件
+
+### webpack plugin 使用
++ plugin 和 loader 的区别：
+  - loader 主要用于转换某些类型的模块，它是一个转换器
+  - plugin 是插件，它是对 webpack 本身的扩展，是一个扩展器
++ plugin 使用步骤：
+  1. 通过 npm 安装需要使用的 plugins（某些webpack 已经内置的插件不需要安装）
+  2. 在 webpack.config.js 中的 plugins 中配置插件
++ 常用的 webpack 插件：
+  1. 打包 html 文件的插件：
+    - 目前 index.html 文件时放在项目的跟目录下的，在真实发布项目时，发布的是dist文件夹下的内容，但dist文件夹中没有index.html 文件，那么打包的js文件也就没有意义了，所以需要使用 HtmlWebpackPlugin插件将index.html 文件打包到 dist 文件夹下
+    - HtmlWebpackPlugin插件可以做这些事：
+      1. 自动生成一个index.html 文件（可以指定模板来生成）
+      2. 将打包的js文件，自动通过script标签插入到body中
+    - 使用步骤：
+      1. 安装：npm install html-webpack-plugin --save-dev
+      2. 使用：在 webpack.config.js 文件导入 :`const htmlWebpackPlugin = require('html-webpack-plugin')`
+          修改 webpack.config.js 文件中的plugins 部分内容：
+          ```javascript
+          plugins: [
+            new htmlWebpackPlugin({
+              template: 'index.html'
+            })
+          ]
+          ```
+          这里的template表示根据什么模板来生成 index.html，另外，我们需要删除之前在 output 中添加的 publicPath 属性，否则插入的script 标签中的 scr 可能会有问题
+
+  2. js 压缩的插件
+    - 在项目发布之前，需要对js文件进行压缩处理，这里使用第三方插件 uglifyjs-webpack-plugin，并且指定版本号 1.1.1，和 CLI2 保持一直
+    - 安装： npm install uglifyjs-webpack-plugin@1.1.1 --save-dev
+    - 使用：
+      + 在webpack.config.js 文件导入该插件：`const uglifyJsPlugin = require('uglifyjs-webpack-plugin')`
+      + 修改 webpack.config.js 文件中的plugins 部分内容：
+          ```javascript
+          plugins: [
+            new uglifyJsPlugin()
+          ]
+          ```
+
+### 搭建本地服务器
+- webpack 提供了一个可选的本地开发服务器，这个本地服务器基于 node.js 搭建，内部使用 Express 框架，可以实现我们想要的让浏览器自动刷新显示我们修改后的结果
+- 不过它是一个单独的模块，在 webpack 中使用之前需要先安装：
+  `npm install --save-dev webpack-dev-server@2.9.1`
+- deserver 也是作为一个 webpack 中的选项，选项本身可以设置如下属性：
+  + contentBase: 为哪一个文件夹提供本地服务，默认是根文件夹，我们这里填写 ./dist
+  + port: 端口号
+  + inline: 页面实时刷新
+  + historyApiFallback: 在 SPA 页面中，依赖 HTML5的history模式
+- webpack.config.js 文件配置修改如下：
+  ```javascript
+    devServer: {
+      contentBase: './dist',
+      inline: true
+    }
+  ```
+- 我们可以在 package.json 文件配置另外一个 scripts:
+  + `"dev": "webpack-dev-server --open"` ; --open 参数表示直接打开浏览器
+
+
+
+## Vue CLI
+
+### Vue CLI 简介
+- 使用 Vue.js 开发大型应用时，我们需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等事情。
+- 如果每个项目都要手动完成这些工作，那效率会比较低，所以通常使用一些脚手架工具来帮助完成这些事情。
+
+- CLI 是什么意思？
+  + CLI 是 Command-Line Interface, 翻译为命令行界面，但俗称脚手架
+  + Vue CLI 是官方发布的一个 vue.js 项目脚手架
+  + 使用 vue-cli 可以快速搭建 Vue 开发环境以及对于的 webpack 配置
+
+
+  new Vue({
+    el: '#app',
+    // components: { App },
+    // template: '<App/>'
+    render: function (creatElement) {
+      //1.普通用法： creatElement('标签'，{标签的属性}， [''])
+      return creatElement('h2', 
+        { class: 'box' },
+        ['hello pipilei', creatElement('button', ['按钮'])]
+      )
+    }
+  })
+
++ runtime-compiler 和 runtime-only 的区别：
+  - 如果在开发中，依然使用 template，就需要选择 runtime-compiler
+  - 如果在开发中，使用的是 .vue 文件来开发，那么可以选择runtime-only
+
+### vue-cli 3 和 vue-cli 2 的区别
+1. vue-cli 3 是基于 webpack 4 打造， vue-cli 2 是 webpack3
+2. vue-cli 3 的设计原则是 “0配置”，移除的配置文件根目录下的 build 和 config 等目录
+3. vue-cli 3 提供了 vue ui 命令，提供了可视化配置，更加人性化
+4. 移除了 static 文件夹，新增了 public 文件夹，并且 index.html 移动到 public 中
+
+
+
+## Vue Router
+
+### 什么是路由
+- 路由就是通过互联的网络把信息从源地址传输到目的地址的活动
+- 路由器提供了两种机制：路由和转送
+  + 路由是决定数据包从来源到目的地的路径
+  + 转送将传输端的数据转移到合适的输出端
+- 路由中有一个重要的概念叫路由表，路由表本质上就是一个映射表，决定了数据包的指向
+
+### 认识 vue-router
+- vue-router 是基于路由和组件的
+  + 路由用于设定访问路径，将路径和组件映射起来
+  + 在 vue-router 的单页面应用中，页面的路径的改变就是组件的切换
+
+### 安装和使用 vue-router
++ 因为已经学习过 webpack，后续开发中我们主要是通过工程化的方式进行开发的，在后续步骤中，直接使用 npm 来安装路由即可
+  - 步骤一：安装 vue-router： npm install vue-router --save
+  - 步骤二：在模块化工程中使用它（因为它是一个插件，所以可以通过 Vue.use() 来安装路由功能）
+    1. 第一步：导入路由对象，并且调用 Vue.use(Router)
+    2. 第二步：创建路由实例，并且传入路由映射配置
+    3. 第三步：在Vue 实例中挂载创建的路由实例
+
++ 使用 vue-router 步骤
+  - 第一步： 创建路由组件
+  - 第二步： 配置路由映射：组件和路由映射关系
+  - 第三步： 使用路由：通过<router-link> 和 <router-view>
+    + <router-link> 标签是 vue-router 中已经内置的一个组件，它会被渲染成一个 a 标签
+    + <router-view> 标签会根据当前的路径，动态渲染出不同的组件
+    + 网页的其他内容，比如顶部的标题、导航，或者底部的一些版权信息等会和<router-view> 处于同一个等级
+    + 在路由切换时，切换的时 <router-view> 挂载的组件，其他内容不会发生改变
+
+### 路由的默认路径
++ 默认情况下，进入网站的首页，我们希望 <router-view> 渲染首页的内容，但上面的情况没有显示首页组件，必须让用户点击 首页 才能显示
++ 如何让路径默认跳到首页，并且 <router-view> 渲染首页组件？
+  - 只需要多配置一个映射就可以了
+  ``` javascript 
+  const routes = [
+    {
+      path: '/',
+      redirect: './home' 
+    },
+  ]
+  ```
+  - 配置解析：  在 routers 中又配置了一个映射，path配置是根路径：/ ，redirect 是重定向，也就是我们将根路径重定向到 /home 的路径下，这样就可以得到我们想要的结果了
 
