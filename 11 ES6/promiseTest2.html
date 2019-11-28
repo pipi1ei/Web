@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // 需求：模拟网络请求，一秒后打印 helloWorld, 打印完一秒后再打印 helloPromise,打印完之后过一秒再打印 helloJS
+
+    // setTimeout(() => {
+    //   console.log('helloWorld')
+    //   setTimeout(() => {
+    //     console.log('helloPromise')
+    //     setTimeout(() => {
+    //        console.log('helloJs') 
+    //     }, 1000);
+    //   }, 1000);
+    // }, 1000);
+
+    // 使用 promise 解决
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, 1000);
+    }).then(() => {
+      console.log('helloWorld')
+
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, 1000);
+      })
+    }).then(() => {
+      console.log('helloPromise')
+
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, 1000);
+      })
+    }).then(() => {
+      console.log('helloJs')
+    })
+  </script>
+</body>
+
+</html>

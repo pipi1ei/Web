@@ -1,7 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
-import About from '../components/About'
+
+// 这几种导入路由方式不是懒加载方式
+// import Home from '../components/Home'
+// import About from '../components/About'
+// import User from '../components/User'
+
+// 懒加载导入路由组件
+const Home = () => import('../components/Home')
+const About = () => import('../components/About')
+const User = () => import('../components/User')
 
 // 通过 vue.use() 来安装插件
 Vue.use(Router);
@@ -18,6 +26,10 @@ const routes = [
   {
     path: '/about',
     component: About
+  },
+  {
+    path: '/user/:id',
+    component: User
   }
 ]
 
