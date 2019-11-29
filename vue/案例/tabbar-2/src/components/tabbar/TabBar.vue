@@ -1,12 +1,23 @@
 <template>
-  <div id="tab-bar">
+  <div id="tab-bar" :style="'background-color:'+finnalBackgroundColor">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TabBar'
+  name: 'TabBar',
+  props: {
+    backgroundColor: {
+      type: String,
+      defalut: '#f5f5f5'
+    }
+  },
+  computed: {
+    finnalBackgroundColor(){
+      return this.backgroundColor
+    }
+  }
 }
 </script>
 

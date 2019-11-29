@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>promise all() 方法</title>
+</head>
+<body>
+  
+  <script>
+    // promise all() 方法
+    Promise.all([
+      // 第一个网络请求
+      new Promise((resolve, reject) => {
+        // $.ajax({
+        //   url: 'url1',
+        //   success(res){
+        //     resolve(res)
+        //   }
+        // })
+
+        // 使用setTimeout 模拟网络请求
+        setTimeout(() => {
+          resolve({
+            name: 'pipilei',
+            age: 18
+          })
+        }, 2000);
+      }),
+      // 第二个网络请求
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            name: 'guapi',
+            age: 19
+          })
+        }, 1000);
+      })
+    ]).then(results => {
+      //这里的results是数组，result[0] 是第一个网络请求返回的数据，result[1] 是第二个网络请求返回的数据
+      console.log(results)
+    })
+  </script>
+</body>
+</html>

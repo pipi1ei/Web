@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    // 第一种链式调用
+    // new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('aaa')
+    //   }, 1000);
+    // }).then(res => {
+    //   console.log(res, '第一层')
+    //   return new Promise(resolve => {
+    //     resolve(res + 111)
+    //   })
+    // }).then(res => {
+    //   console.log(res,'第二层')
+    //   return new Promise(resolve => {
+    //     resolve(res + 222)
+    //   })
+    // }).then(res => {
+    //   console.log(res,'第三层')
+    // })
+
+
+    // 简写1
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('aaa')
+      }, 1000);
+    }).then(res => {
+      console.log(res, '第一层')
+      // return Promise.reject('error message')
+      throw 'error message'
+    }).then(res => {
+      console.log(res, '第二层')
+      return Promise.resolve(res + 222)
+    }).then(res => {
+      console.log(res, '第三层')
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+    // 简写2
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('aaa')
+      }, 1000);
+    }).then(res => {
+      console.log(res, '第一层')
+      return (res + 111)
+    }).then(res => {
+      console.log(res, '第二层')
+      return (res + 222)
+    }).then(res => {
+      console.log(res, '第三层')
+    })
+  </script>
+</body>
+</html>
