@@ -10,13 +10,14 @@
       <el-col :span='14'>
         <el-input v-model='searchText' 
           placeholder='请按名称搜索媒资' 
-          suffix-icon="el-icon-search">
+          suffix-icon="el-icon-search"
+          @keyup.enter.native="btnClick">
         </el-input>
       </el-col>
-      <el-col :span='3' :offset='2'>
+      <el-col :span='3' :offset='3'>
         <el-button @click="btnClick" type="primary" style="width:100px">搜索</el-button>
       </el-col>
-      <el-col :span='2' :offset='3'>
+      <el-col :span='1' :offset='2'>
         <!-- <el-button type="info" icon="el-icon-setting" circle></el-button> -->
         <el-dropdown @command="handleCommand">
           <el-button type="info" circle>

@@ -82,8 +82,6 @@ export default {
         if (valid) {
           // 表单验证通过，发起 axios 请求
           login(this.formData.userName, this.formData.password).then(res => {
-            console.log(res)
-            console.log(res.data.provideId)
             this.$store.commit('updateProvideId',res.data.provideId)
             window.sessionStorage.setItem('provideId', res.data.provideId)
             this.$router.push('/home')
@@ -92,8 +90,6 @@ export default {
           .catch(err => {
             console.log(err)
           })
-
-          // that.$router.push("/home");
         }
       });
     },

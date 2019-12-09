@@ -14,7 +14,6 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => {
   NProgress.done()
-  // console.log(response)
   const res = response.data;
   if (res.code == '0000') {
     return res

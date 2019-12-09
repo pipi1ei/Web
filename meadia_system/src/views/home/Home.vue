@@ -6,19 +6,18 @@
 </template>
 
 <script>
-import HomeSlide from './children/HomeSlide'
+import HomeSlide from "./children/HomeSlide";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HomeSlide,
+    HomeSlide
   }
-}
+};
 </script>
 
 <style lang="less">
-  .home-container{
-    height: 100% !important;
-  } 
- 
+.home-container {
+  height: 100% !important;
+}
 </style>

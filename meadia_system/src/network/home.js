@@ -1,4 +1,4 @@
-import {request} from './request'
+import { request } from './request'
 
 export function getMediaList(searchParam) {
 
@@ -9,7 +9,7 @@ export function getMediaList(searchParam) {
     name: ''
   }
 
-  for(let key in searchParam){
+  for (let key in searchParam) {
     defaults[key] = searchParam[key]
   }
 
@@ -24,7 +24,7 @@ export function getMediaList(searchParam) {
   })
 }
 
-export function getMediaDetails(provideId,mediaId) {
+export function getMediaDetails(provideId, mediaId) {
   return request({
     url: '/' + provideId + '/getMediaById',
     method: 'post',
