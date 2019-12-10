@@ -81,6 +81,7 @@ export default {
     .poster {
       min-width: 120px;
       max-width: 150px;
+      margin: auto 0;
       margin-right: 10px;
       height: 100%;
 

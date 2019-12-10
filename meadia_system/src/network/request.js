@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 
-axios.defaults.baseURL = 'http://10.1.17.45:8093/IPTV-Media-Check'
+axios.defaults.baseURL = 'http://172.31.4.64:8333/IPTV-Media-Check'
 
 axios.interceptors.request.use(config => {
   NProgress.start();
