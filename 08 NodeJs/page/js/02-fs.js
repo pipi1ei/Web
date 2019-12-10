@@ -12,7 +12,7 @@ var msg = 'hello world';
 // })
 
 // 此处的 ./ 相对路径，相对的是执行 node 命令的路径，而不是相对于正在执行的 js 文件来查找hello.text
-fs.readFile('./hello.txt', 'utf8', function (err, data) {
+fs.readFile('../hello.txt', 'utf8', function (err, data) {
     if (err === null) {
         console.log(typeof data)
         console.log(data)
@@ -28,7 +28,7 @@ fs.readFile('./hello.txt', 'utf8', function (err, data) {
 console.log(__dirname);
 console.log(__filename);
 
-var filename = __dirname + '\\' + 'hello.txt';
+var filename = __dirname + '/../' + 'hello.txt';
 fs.readFile(filename, 'utf8', function (err, data) {
     if (err === null) {
         console.log(typeof data)

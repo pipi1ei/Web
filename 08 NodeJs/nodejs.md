@@ -127,10 +127,10 @@ fs.mkdir('test-mkdir',function(err){
 
 ### 案例3：通过 node.js 编写http服务程序 -- 极简版本
 步骤：
-1. 加载 http 模块
-2. 创建 http 服务
-3. 为 http 服务对象添加 request 事件处理程序
-4. 开启 http 服务监听，准备接受客户端请求
+1. 加载 http 模块:  `const http = require('http')`
+2. 创建 http 服务:  `const server = http.createServer()`
+3. 为 http 服务对象添加 request 事件处理程序:  `server.on('request', (req, res) => {})`
+4. 开启 http 服务监听，准备接受客户端请求:  `server.listen(8080,() => {console.log("http://localhost:8080")})`
 
 注意：
 1. 浏览器的显示可能是乱码，所以可以通过 `res.setHeader('Content-type','text/plain; charset=utf-8');` 设置浏览器显示时所使用的编码
@@ -143,12 +143,13 @@ fs.mkdir('test-mkdir',function(err){
 模拟apache 服务器：
 1. 加载http模块
 2. 下载第三方插件 mime， npm install mime
+  + 使用 mime.getType() 方法获取对应文件mime类型，使用 seres.setHeader('content-type', mime.getType(fileName)) 设置响应报文头
 3. 将所有静态资源放在一个文件夹下（public）
 4. 响应给浏览器的数据都从这个静态资源的文件夹下去返回
 
 
 ### HTTP request（http.IncomingMessage） 对象和 response(http.ServerResponse) 对象
-1. request：request 对象继承子 stream.Readable ,包含了用户请求报文中的所有内容， 通过 request 对象可以获取用户提交过来的所有数据
+1. request：request 对象继承自5 stream.Readable ,包含了用户请求报文中的所有内容， 通过 request 对象可以获取用户提交过来的所有数据
  + request 对象常用成员
   - `request.headers`： 客户端请求报文头，返回一个对象，
   - `request.rawHeaders`：客户端原生的请求报文头，返回一个数组
@@ -157,11 +158,11 @@ fs.mkdir('test-mkdir',function(err){
   - `request.url`：客户端请求路径，不包含主机名称、端口号、协议
 2. response 对象用来向用户响应一些数据，当服务器要向客户端响应数据的时候必须使用 response 对象
  + response 对象常用成员
-  - `response.writeHead(statusCode[, statusMessage][,Headers])`: 这个方法在每次请求响应前都必须被调用（之呢个调用一次）。并且必须在end（）方法调用前调用；如果在调用writeHead() 方法之前调用了write() 或 end() 方法，系统会自动帮你调用writeHead() 方法，并且会生成默认的响应头  
+  - `response.writeHead(statusCode[, statusMessage][,Headers])`: 这个方法在每次请求响应前都必须被调用（只能调用一次）。并且必须在end（）方法调用前调用；如果在调用writeHead() 方法之前调用了write() 或 end() 方法，系统会自动帮你调用writeHead() 方法，并且会生成默认的响应头  
   - `respond.end([data][,encoding][,callback])`: 此方法向服务器发出信号，表明已发送所有响应头和主体，该服务器应该视为此消息已完成。 必须在每个响应上调用此 response.end() 方法。如果指定了 data，则相当于调用 response.write(data, encoding) 之后再调用 response.end(callback)。
-  - response.setHeader(name, value): 为隐式响应头设置单个响应头的值。 如果此响应头已存在于待发送的响应头中，则其值将被替换。 在这里可以使用字符串数组来发送具有相同名称的多个响应头。 非字符串值将被原样保存。 因此 response.getHeader() 可能返回非字符串值。 但是非字符串值将转换为字符串以进行网络传输。
-  - res.statusCode: 设置 http 响应状态码
-  - res.statusMessage: 设置 http 响应状态码对象消息
+  - `response.setHeader(name, value)`: 为隐式响应头设置单个响应头的值。 如果此响应头已存在于待发送的响应头中，则其值将被替换。 在这里可以使用字符串数组来发送具有相同名称的多个响应头。 非字符串值将被原样保存。 因此 response.getHeader() 可能返回非字符串值。 但是非字符串值将转换为字符串以进行网络传输。
+  - `res.statusCode`: 设置 http 响应状态码
+  - `res.statusMessage`: 设置 http 响应状态码对象消息
 
 ### node.js 错误调试
 1. 当开启服务后，在浏览器输入地址，如果出现浏览问题，首先看服务器控制台是否报错。如果报错，可以直接根据错误提示排错
