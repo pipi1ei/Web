@@ -239,7 +239,7 @@ package.json 文件中常见的项有哪些
 ## 二、require 加载模块顺序
 1. 看 require() 加载模块时传入的参数是否以 './' 或 '../' 或 '/' 等这样的路径方式开头（相对路径或者绝对路径都可以）
 2. 是，那么会按照传入的路径直接去查询对应的模块。如果有具体的后缀名，如`require('./index.js')` 回去直接加载对应模块，找到了加载成功，找不到加载失败。如果改模块无后缀名，会去找是否有这个文件夹。假设 `require('./index')`： --> package.json --> main（入口文件：app.js） --> index.js/index.json/index.node --> 加载失败。
-3. 如果不是路径，直接是一个模块名称，先在核心模块中查找，是否有和给定名字一样的模块，如果有则直接加载该核心模块，如果核心模块中没有该模块，会认为这个模块是一个第三方模块，先会去在当前js 文件所在的目录下找是否有个 node_modules 文件夹，找不到会找父目录（直到跟目录）。
+3. 如果不是路径，直接是一个模块名称，先在核心模块中查找，是否有和给定名字一样的模块，如果有则直接加载该核心模块，如果核心模块中没有该模块，会认为这个模块是一个第三方模块，先会去在当前js 文件所在的目录下找是否有个 node_modules 文件夹，找不到会找父目录（直到磁盘跟目录）。
 
 ### requerie 加载模块注意点
 1. 所有模块加载完毕后都会有缓存，二次加载直接读取缓存，避免了二次开销
@@ -266,11 +266,14 @@ package.json 文件中常见的项有哪些
 ## 关于 node.js 中 Module 详细介绍
 [Module](https://nodejs.cn/docs/api/modules.html)
 
+### module.exports 和 exports 的区别
+1. 默认情况下会把 module.exports 赋值给 exports变量，所以 module.exports 和 exports 指向的是同一个对象，当别的值赋值给 exports 时，此时module.exports 和 exports 指向的不是同一个对象。而 require 方法返回的是 module.exports，所有最终返回的是module.exports指向的值。 exports 可以认为是 module.exports 的快捷方式
+
 
 ## 四、Buffer 介绍
 
 ### 类型介绍
-1. JavaScript 语音没有读取或操作二进制数据流的机制。
+1. JavaScript 语言没有读取或操作二进制数据流的机制。
 2. Node.js 中引入了 Buffer 类型使我们可以操作 TCP 流或 文件流
 3. Buffer 类型的对象类似于整数数组，但Buffer 的大小是固定的、且在 V8 堆外分配物理内存。BUffer 的大小在被创建时确定，且无法调整。（Buffer.length 是固定的，不允许修改）
 4. Buffer 是全局的，所以使用的时候无需 require() 的方式来加载

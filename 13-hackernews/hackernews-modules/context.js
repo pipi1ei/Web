@@ -11,10 +11,10 @@ var _ = require('underscore');
 
 // 让当前模块对外暴露一个函数，通过这个函数将 index.js 中的 req 和 res 传递到当前 context.js 模块中
 module.exports = function (req, res) {
-    var urlObj = url.parse(req.url.toLowerCase());
+    var urlObj = url.parse(req.url.toLowerCase(), true);
 
     req.query = urlObj.query;
-    req.method = req,method.toLowerCase();
+    req.method = req.method.toLowerCase();
     req.pathname = urlObj.pathname;
 
     res.render = function (filename, tplData) {
