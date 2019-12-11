@@ -10,10 +10,10 @@
         </el-table-column>
         <el-table-column prop="name" label="媒资名称"></el-table-column>
         <el-table-column label="导演">
-          <template slot-scope="scope">{{ array2String(scope.row.director) }}</template>
+          <template slot-scope="scope">{{ getInfo(scope.row.director) }}</template>
         </el-table-column>
         <el-table-column label="演员">
-          <template slot-scope="scope">{{ array2String(scope.row.actor) }}</template>
+          <template slot-scope="scope">{{ getInfo(scope.row.actor) }}</template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
@@ -116,10 +116,15 @@ export default {
 
     /* 字符串去除数组符号，双引号 */
     array2String(str) {
-      return str
-        .replace("[", "")
-        .replace("]", "")
-        .replace(new RegExp('"', "g"), "");
+      let array = JSON.parse(str || '[]')
+      return array.join(',')
+    },
+    getInfo(info) {
+      if (this.array2String(info) === "") {
+        return "空";
+      } else {
+        return this.array2String(info);
+      }
     }
   },
   created() {

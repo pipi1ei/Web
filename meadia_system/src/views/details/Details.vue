@@ -10,7 +10,7 @@
           <span slot="releaseDate">{{getYear(beforeCompletion.releaseDate)}}年</span>
           <span slot="director">{{getInfo(beforeCompletion.director)}}</span>
           <span slot="actor">{{getInfo(beforeCompletion.actor)}}</span>
-          <span slot="introduction">{{array2String(beforeCompletion.introduction)}}</span>
+          <span slot="introduction">{{beforeCompletion.introduction}}</span>
         </details-item>
       </el-col>
 
@@ -45,7 +45,7 @@
             <span style="color: #f00">区域：</span>
             {{ getInfo(afterCompletion.region) }}
           </div>
-          <span slot="introduction">{{array2String(afterCompletion.introduction)}}</span>
+          <span slot="introduction">{{afterCompletion.introduction}}</span>
         </details-item>
       </el-col>
     </el-row>
@@ -69,12 +69,17 @@ export default {
   },
   methods: {
     array2String(str) {
-      if (str) {
-        return str
-          .replace("[", "")
-          .replace("]", "")
-          .replace(new RegExp('"', "g"), "");
+      let array = JSON.parse(str || '[]')
+      // return array.join(',')
+
+      let result = ''
+      for(let value of array){
+        // 后台接口返回的数组中有空值，使用join 方法会多出 ","
+        if(value){
+          result += (value + ',')
+        }
       }
+      return result.substring(0, result.length -1)
     },
     getYear(date) {
       let d = new Date(date);
