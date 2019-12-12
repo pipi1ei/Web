@@ -29,7 +29,7 @@ var express = require('express');
 
 var app = express();
 // 注册路由
-// 设置 app 与 router 关联
+// 设置 app 与 router 关联 app.use(router);
 app.use('/',router);
 
 app.listen(config.port, () => {

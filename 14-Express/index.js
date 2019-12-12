@@ -6,16 +6,16 @@ const app = express();
 
 // 通过中间件监听指定的路由请求
 // 下面代码处理 get请求且路径为 '/'， function () {} 就是中间件
-// app.get('/index',(req, res) => res.send('Hello World!'));
+app.get('/index',(req, res) => res.send('Hello World!'));
 
 // // 在进行路由匹配是不限定方法，用什么请求都可以
 // // 请求路径中第一部分为 '/index' ，并不要求请求路径完全匹配
-// app.use('/index',function (req, res) {  
+app.use('/index',function (req, res) {  
     
-//     req.params
+    req.params
 
-//     res.send('hello index');
-// })
+    res.send('hello index');
+})
 
 // 在进行路由匹配是不限定方法，用什么请求都可以
 // 请求路径必须完全匹配
@@ -24,7 +24,7 @@ app.all('/',(req, res) => {
 })
 
 // 请求路径还可以是正则表达式
-// app.get(/^\/index(\/.+)*$/, (req, res) => res.send('hello /index/'));
+app.get(/^\/index(\/.+)*$/, (req, res) => res.send('hello /index/'));
 
 
 app.get('/news/:year/:month/:day',function (req, res) {  
