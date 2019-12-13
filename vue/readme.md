@@ -217,7 +217,7 @@ template: '#cpn2'
   - 当子组件需要向父组件传递数据时，就要用到自定义事件
   - v-on 不仅可以监听 DOM 事件，还可以用于监听组件之间的自定义事件
 - 自定义事件流程：
-  - 在子组件中，通过 $emit() 来触发事件
+  - 在子组件中，通过 \$emit() 来触发事件
   - 在父组件中，通过 v-on 来监听子组件事件
 
 ### 组件中 props 属性驼峰名的问题：
@@ -523,152 +523,170 @@ const routes = [
     }
   ```
   2. AMD 写法
-  ``` javascript
+  ```javascript
     const About = resolve = > require(['../components/About.vue'], resolve);
   ```
   3. 在 ES6 种，可以使用更加简单的写法来组织 Vue 异步组件和 Webpack 的代码分割
-  ``` javascript
+  ```javascript
     const Home = () = > import('../components/About.vue');
   ```
 
 ### 嵌套路由
-+ 嵌套路由是一个很常见的功能，比如在home 页面种，我们希望通过 /home/news 和 /home/message 访问一些内容；一个路径映射一个组件，访问这两个路径也会分别渲染两个组件
-+ 实现路由嵌套：
+
+- 嵌套路由是一个很常见的功能，比如在 home 页面种，我们希望通过 /home/news 和 /home/message 访问一些内容；一个路径映射一个组件，访问这两个路径也会分别渲染两个组件
+- 实现路由嵌套：
   1. 创建对应的子组件，并且在路由映射中配置对应的子路由
-    {
-      path: '/home',
-      component: Home,
-      children: [
-        {
-          path: '',
-          redirect: 'news'
-        },
-        {
-          path: 'news',
-          component: HomeNews
-        },
-        {
-          path: 'message',
-          component: HomeMessage
-        }
-      ]
-    },
+     {
+     path: '/home',
+     component: Home,
+     children: [
+     {
+     path: '',
+     redirect: 'news'
+     },
+     {
+     path: 'news',
+     component: HomeNews
+     },
+     {
+     path: 'message',
+     component: HomeMessage
+     }
+     ]
+     },
   2. 在组件内部使用 <router-view> 标签
 
 ### 路由参数的传递
-+ 传递参数主要有两种方式：params 和 query
-+ params 方式：
+
+- 传递参数主要有两种方式：params 和 query
+- params 方式：
   1. 配置路由格式： /router/:id
-  2. 传递的方式：在path 后面跟上对应的值
+  2. 传递的方式：在 path 后面跟上对应的值
   3. 传递后形成的路径： /router/123 , /router/abc
-+ query 方式：
+- query 方式：
   1. 配置路由格式：/router，也就是普通路由
   2. 传递的方式：对象中使用 query 的 key 作为传递方式
   3. 传递后形成的路径： /router?id=123 或 /router?id=abc
 
 ### keep-alive
-+ keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染
+
+- keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染
   - 它有两个非常重要的属性：
     1. include: 字符串或正则表达式，只有匹配的组件会被缓存
     2. exclude：字符串或表达式，任何匹配的组件都不会被缓存
-+ router-view 也是一个组件，如果之间被包在 keep-alive 里，所有路径匹配到的视图组件都会被缓存
+- router-view 也是一个组件，如果之间被包在 keep-alive 里，所有路径匹配到的视图组件都会被缓存
 
 ### 完成 tabBar 案例
-
 
 ### promise
 
 ## Vuex
 
 ### vuex 简介
+
 - Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式
-  + 它采用*集中式存储管理*应用的所有组件的状态，并以相应的规则保证状态以一种可以预测的方式发生变化.
-  + Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel 调试，状态快速导入导出等高级调试功能
+  - 它采用*集中式存储管理*应用的所有组件的状态，并以相应的规则保证状态以一种可以预测的方式发生变化.
+  - Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel 调试，状态快速导入导出等高级调试功能
 - 状态管理 是什么？
-  + 状态管理模式、集中式存储管理 这些名词看不懂
-  + 可以简单的将其看成把需要多个组件共享的变量全部存储在一个对象里面
-  + 然后，将这个对象放在顶层的 vue 实例中，让其他组件可以使用
-  + 那么，多个组件就可以共享这个对象中的所有变量属性  
+  - 状态管理模式、集中式存储管理 这些名词看不懂
+  - 可以简单的将其看成把需要多个组件共享的变量全部存储在一个对象里面
+  - 然后，将这个对象放在顶层的 vue 实例中，让其他组件可以使用
+  - 那么，多个组件就可以共享这个对象中的所有变量属性
 - 哪些状态需要在多个组件间共享呢？
-  + 用户登录状态、用户名称、头像、地理位置等信息
-  + 商品的收藏、购物车中的物品等
-  + 这些状态信息，都可以放在一个同意的地方，对它进行保存和管理，而且它们还是响应式的
+  - 用户登录状态、用户名称、头像、地理位置等信息
+  - 商品的收藏、购物车中的物品等
+  - 这些状态信息，都可以放在一个同意的地方，对它进行保存和管理，而且它们还是响应式的
 
 ### Vuex 核心概念
+
 1. state: 单一状态树，保存状态相关信息
 2. getters: 类似于组件中的计算属性
-3. mutations: 定义一些方法，可以改变state 中的属性
-  - Vuex.store 状态更新唯一方式：提交mutation
-  - mutation 主要包括两个部分：
-    + 字符串的事件类型（type）
-    + 一个回调函数（handler），该回调函数的第一个参数是 state
-    mutation 提交风格：
-      1. this.$store.commit('add',param)
-        add(state,param){}
-      2. this.$store.commit({
-          type: 'add',
-          count: 100
-        })
-        add(state,payload)
-4. actions: 做异步操作
-  - 通常情况下，Vuex 要求mutations 中的方法必须是同步方法，主要原因是当我们使用 devtools 时，devtools 可以捕获到 mutation 的快照，但如果 mutations 中式异步操作，就不能被 devtools 追踪，所以官方建议将 异步操作 放在 actions 中执行
-  - action 类似于 mutation，但是是用来代替 mutation 中进行异步操作的
-5. modules: 划分模块
+3. mutations: 定义一些方法，可以改变 state 中的属性
 
+- Vuex.store 状态更新唯一方式：提交 mutation
+- mutation 主要包括两个部分：
+  - 字符串的事件类型（type）
+  - 一个回调函数（handler），该回调函数的第一个参数是 state
+    mutation 提交风格：
+    1. this.\$store.commit('add',param)
+       add(state,param){}
+    2. this.\$store.commit({
+       type: 'add',
+       count: 100
+       })
+       add(state,payload)
+
+4. actions: 做异步操作
+
+- 通常情况下，Vuex 要求 mutations 中的方法必须是同步方法，主要原因是当我们使用 devtools 时，devtools 可以捕获到 mutation 的快照，但如果 mutations 中式异步操作，就不能被 devtools 追踪，所以官方建议将 异步操作 放在 actions 中执行
+- action 类似于 mutation，但是是用来代替 mutation 中进行异步操作的
+
+5. modules: 划分模块
 
 ## 网络请求的封装
 
-### axios的功能特点
+### axios 的功能特点
+
 1. 在浏览器中发送 XMLHttpRequest 请求
 2. 在 node.js 中发送 http 请求
 3. 支持 Promise API
 4. 拦截请求和响应
 5. 转换请求和响应数据
 6. 支持多种请求方式
-  - axios(config)
-  - axios.request(config)
-  - axios.get(url[,config])
-  - axios.delete(url[,config])
-  - axios.head(url[,config])
-  - axios.post(url[,data[,config]])
-  - axios.put(url[,data[,config]])
-  - axios.patch(url[,data[,config]])
+
+- axios(config)
+- axios.request(config)
+- axios.get(url[,config])
+- axios.delete(url[,config])
+- axios.head(url[,config])
+- axios.post(url[,data[,config]])
+- axios.put(url[,data[,config]])
+- axios.patch(url[,data[,config]])
 
 ### axios 常见的配置选项
+
 - 请求地址：url: '/user'
 - 请求类型：method: 'get'
 - 请求根路径：baseURL: 'http://www.mt.com/api'
 - 请求前的数据处理：transformRequest: [function(data){}]
 - 请求后的数据处理：transformResponse: [function(data){}]
 - 自定义请求头：headers: {'x-Requested-With':'XMLHttpRequest'}
-- URL查询对象：params:{id:12}
+- URL 查询对象：params:{id:12}
 - 查询对象序列化函数：paramsSerializer: function(params){}
 - request body：data:{key:'aaa'}
-- 超时设置s：timeout:1000
-- 跨域是否带Token：withCredentials:false
+- 超时设置 s：timeout:1000
+- 跨域是否带 Token：withCredentials:false
 - 自定义请求处理：adapter:function(resolve,reject,config){}
 - 身份验证信息：auth:{uname:'pipilei',pwd:'123'}
 - 响应的数据格式 json/blob/document/arraybuffer/text/stream：responseType:'json'
 
 ### axios 拦截器
+
 axios 提供了拦截器，用于我们在发送每次请求或者得到响应后，进行对应的处理
 如何使用拦截器？
-``` javascript
-axios.interceptors.request.use(config =>{
-  console.log('来到了 request 拦截 success中')
-  // 比如config中的信息不符合服务器要求，可以添加额外参数
-  // 发送请求是在界面显示请求图标
-  return config
-}, err => {
-  console.log('来到了 request 拦截 failure中')
-  return err
-})
 
-axios.interceptors.response.use(response => {
-  console.log('来到了 response 拦截 success中')
-  return response.data
-}, err => {
-  console.log('来到了 response 拦截 failure中')
-  return err
-})
+```javascript
+axios.interceptors.request.use(
+  config => {
+    console.log("来到了 request 拦截 success中");
+    // 比如config中的信息不符合服务器要求，可以添加额外参数
+    // 发送请求是在界面显示请求图标
+    return config;
+  },
+  err => {
+    console.log("来到了 request 拦截 failure中");
+    return err;
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    console.log("来到了 response 拦截 success中");
+    return response.data;
+  },
+  err => {
+    console.log("来到了 response 拦截 failure中");
+    return err;
+  }
+);
 ```
