@@ -1,8 +1,8 @@
 <template>
-  <div class="content-box">
+  <div class="content-box" ref="table">
     <!-- 表格展示部分 -->
     <div class="content-table">
-      <el-table :data="tableData" border height="100%" max-height="100%" style="width: 100%">
+      <el-table  :data="tableData" border :height='tableHeight' style="width: 100%;">
         <el-table-column prop="thumbnails" label="媒资海报" width="120">
           <template slot-scope="scope">
             <img style="width: 100%" :src="scope.row.thumbnails" alt />
@@ -28,7 +28,7 @@
     </div>
 
     <!-- 分页部分 -->
-    <div class="content-pagination">
+    <div class="content-pagination" ref="pagination">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -59,8 +59,17 @@ export default {
       pageSize: 10, // 每页展示多少条数据
       searchName: "", // 当前搜索的媒资名称
 
-      tableData: []
+      tableData: [],
+      tableHeight: '450'
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let self = this
+      console.log(this.$refs)
+      console.log("-->",this.$refs.table.offsetHeight - this.$refs.pagination.offsetHeight)
+      this.tableHeight = this.$refs.table.offsetHeight - this.$refs.pagination.offsetHeight;
+    })
   },
   components: {
     SearchDetails
