@@ -13,6 +13,25 @@ msg: 'hello world!'
 
 ### vue 声明周期
 
+### 插值操作
+1. v-once: 使用了v-once 属性的标签，其内容不会再响应式变化
+  <h1 v-once>{{ msg }}
+2. v-html: 使用 v-html 属性可以解析字符串中的HTML标签
+  <p v-html="msg2"></p>
+3. v-text: 使用v-text 属性可以展示字符串，效果和 {{}} 相同，一般不用该方式
+  <h1 v-text='msg'></h1>
+4. v-pre: 使用了 v-pre 属性的标签会原封不动的展示其中的内容，不会解析 {{}} 语法
+  <h1 v-pre>{{ msg }}</h1> //h1 中展示的内容就是 {{ msg }}，并不会解析 {{}} 语法
+5. v-cloak: 使用了 v-cloak 属性的元素，当vue实例创建好之后会删除该属性，可以防止闪动效果
+  <style>
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+  <div id="app" v-cloak>
+    <h1>{{ msg }}</h1>
+  </div>
+
 ### v-bind 介绍
 
 1. 插值操作注意是将值插入到模板的内容中，有些属性也需要动态改变，就要用到 v-bind 指令，比如动态绑定 a 元素的 href 属性， img 元素的 src 属性等。
