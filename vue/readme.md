@@ -65,12 +65,12 @@ msg: 'hello world!'
 1.  基本用法: 在 vue 实例中定义 computed 属性: computed:{ fullName: function(){ return this.firstName + ' ' + this.lastName } }
 2.  计算属性的 getter 和 setter:
     computed: {
-    // 完整写法,计算属性一般没有 set 方法, 只读属性
-    fullName: {
-    //getter
-    get: function () {
-    return this.firstName + ' ' + this.lastName
-    },
+      // 完整写法,计算属性一般没有 set 方法, 只读属性
+      fullName: {
+        //getter
+        get: function () {
+          return this.firstName + ' ' + this.lastName
+        },
 
         //setter
         set: function (newValue) {
@@ -79,8 +79,7 @@ msg: 'hello world!'
           this.firstName = names[0];
           this.lastName = names[names.length - 1];
         }
-
-    }
+      } 
     }
 
 3.  计算属性和 methods 对比: 计算属性效率更高
@@ -212,7 +211,7 @@ template: '#cpn2'
 
 1. 组件对象有一个 data 属性，但这个 data 属性必须是一个函数，返回一个对象，对象内部保存着属性
 2. 组件中的 data 属性为什么是函数？
-   当服用该组件时，会创建多个该组件的实例，每次都会调用 data 函数去返回一个对象，如果 data 属性是一个对象，那么每次都会返回这一个对象，多个 组件 实例去改变 data 中的值会相互影响，从而造成连锁反应，而 data 是函数的话每次都会返回不同的对象，各个组件之间互不影响
+   当复用该组件时，会创建多个该组件的实例，每次都会调用 data 函数去返回一个对象，如果 data 属性是一个对象，那么每次都会返回这一个对象，多个 组件 实例去改变 data 中的值会相互影响，从而造成连锁反应，而 data 是函数的话每次都会返回不同的对象，各个组件之间互不影响
 
 ### 父子组件的通信
 
@@ -236,7 +235,7 @@ template: '#cpn2'
   - 当子组件需要向父组件传递数据时，就要用到自定义事件
   - v-on 不仅可以监听 DOM 事件，还可以用于监听组件之间的自定义事件
 - 自定义事件流程：
-  - 在子组件中，通过 \$emit() 来触发事件
+  - 在子组件中，通过 $emit() 来触发事件
   - 在父组件中，通过 v-on 来监听子组件事件
 
 ### 组件中 props 属性驼峰名的问题：
@@ -259,6 +258,7 @@ template: '#cpn2'
 1. 基本用法：在组件模板中添加 <slot></slot> 标签
 2. 插槽的默认值： <slot><button>按钮</button></slot>
 3. 如果有多个值，同时放入到组件进行替换是，一起作为替换元素
+4. 作用域插槽：父组件替换插槽的标签，但是内容由子组件来提供
 
 ## Webpack
 
