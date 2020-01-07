@@ -126,7 +126,7 @@ export default {
     .poster {
       min-width: 120px;
       // max-width: 150px;
-      width: 25%;
+      width: 28%;
       
       margin-right: 20px;
       border-radius: 5px;
@@ -136,7 +136,7 @@ export default {
         margin: auto 0;
         width: 100%;
         border-radius: 5px;
-        // position: relative;
+        position: relative;
         img {
           width: 100%;
           border-radius: 5px;

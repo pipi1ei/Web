@@ -266,6 +266,26 @@ template: '#cpn2'
   2. 解决方式：在每个js 文件中使用闭包 function(){ ... }(), 这个后不存在共享变量的问题，但右存在代码无法复用的问题
   3. 最基本模块化解决方案：var moduleA = function(){ var obj = {} ...  return obj }(), 在其他js 文件中使用 moduleA.flag 就可以放文到 moduleA 模块中的变量了
 
+
+### ES6 模块化
+前提： 在script 标签中添加 type="module"
+  <script src="./aaa.js" type="module"></script>
+1. 导出： 在 js 文件中使用 export 关键字导出 变量、函数、类
+    var name = 'pipilei'
+    var sum = function(num1, num2){ return num1 + num2 }
+    export {name,sum} 
+
+    或者：
+
+    export var name = 'pipilei'
+    export var sum = function(num1, num2){ return num1 + num2 }
+
+2. 导入： 
+    import {name,sum} from 'a.js'
+
+3. export default:
+    某些情况下，一个模块中包含某些功能，我们并不希望给这个功能命名，而是让导入者可以自己命名，这个时候就可以使用 export default，在一个模块中，export default 只能向外暴露一次
+
 ## Webpack
 
 ### 起步
@@ -288,7 +308,7 @@ module.exports = {
 };
 ```
 
-通过 npm init 命令创建 package.json 文件，在 script 字段中添加 'build':'webpack' ，就可以使用 npm run build 命令来执行 webpack 命令
+通过 npm init 命令创建 package.json 文件，在 script 字段中添加 'build':'webpack' ，就可以使用 npm run build 命令来执行 webpack 命令, 而且这里执行的命令是优先找本地的 webpack，如果直接在终端输入 webpack 是使用的全局的 webpack
 
 ### webpack 的 loader
 
@@ -445,16 +465,34 @@ el: '#app',
 // template: '<App/>'
 render: function (creatElement) {
 //1.普通用法： creatElement('标签'，{标签的属性}， [''])
-return creatElement('h2',
-{ class: 'box' },
-['hello pipilei', creatElement('button', ['按钮'])]
-)
+  return creatElement('h2',
+    { class: 'box' },
+    ['hello pipilei', creatElement('button', ['按钮'])]
+  )
 }
 })
 
 - runtime-compiler 和 runtime-only 的区别：
   - 如果在开发中，依然使用 template，就需要选择 runtime-compiler
   - 如果在开发中，使用的是 .vue 文件来开发，那么可以选择 runtime-only
+
+### vue-cli2 目录结构解析
+为什么谷歌浏览器速度比较快？
+  一边浏览器会将 js 文件解析成字节码文件，然后将字节码解析成二进制文件，而谷歌使用 v8 引擎直接将 js 文件解析成二进制文件，省去了解析成字节码的步骤，所有速度快
+1. package.json： 入口文件，执行 npm run build 命令时会去执行 build 目录下的 build.js 文件
+    执行 rm 方法，先删除原先打包好的 dist 文件夹，然后执行 webpack 相关配置
+2. build 目录：配置相关文件
+3. config 目录：配置相关文件，定义一些变量
+4. src 目录：我们代码存放的目录
+5. static 目录：静态资源文件，执行 npm run build 命令时不会打包 static 文件夹下的文件，会原封不动的将 static 文件夹复制到打包生成的 dist 文件夹中
+6. .babelrc 文件：配置 ES6 转 ES5 
+7. .editorconfig 文件：设置代码编写规范，设置 charset，代码缩进等
+8. .gitignore 文件：git 提交时忽略的文件
+9. .postcssrc.js 文件：css 转化时的配置文件，一搬不用改
+10. index.html 文件: html 模板文件，打包时会根据这个模板在 dist 文件夹下创建 index.html 文件
+11. package-lock.json 文件：映射 package.json 文件中引入的依赖
+12. package.json 文件：是一个包说明文件（项目描述文件），用来管理组织一个包（一个项目）
+
 
 ### vue-cli 3 和 vue-cli 2 的区别
 

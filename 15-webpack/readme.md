@@ -168,7 +168,16 @@ name=[hash:8]-[name].[ext]: 会在图片前加上8位的hash 值
       {
         test: /\.(png|jpg|gif|jpeg)$/,
         use: ['url-loader?limit=***&name=[hash:8]-[name].[ext]']
-      }
+        或
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: 'img/[name].[hash:8].[ext]'
+            }
+          }
+      ]
     ]
   }
 

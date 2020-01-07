@@ -22,7 +22,7 @@
       </el-col>
 
       <!-- 多牌照下拉框 -->
-      <!-- <el-col :span='3' :offset='11'>
+      <el-col :span='3' :offset='11'>
         <el-dropdown  trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             {{productName}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -31,18 +31,7 @@
             <el-dropdown-item v-for="item in $store.state.productName" :key="item" :command='item'>{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </el-col> -->
-
-      <!-- <el-col :span='1' :offset='2'>
-        <el-dropdown @command="handleCommand">
-          <el-button type="info" circle>
-            <i class=" el-icon-setting"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command='logout'>退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col> -->
+      </el-col>
     </el-row>
     
     
