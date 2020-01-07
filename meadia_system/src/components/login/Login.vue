@@ -82,8 +82,11 @@ export default {
         if (valid) {
           // 表单验证通过，发起 axios 请求
           login(this.formData.userName, this.formData.password).then(res => {
-            this.$store.commit('updateProvideId',res.data.provideId)
-            window.sessionStorage.setItem('provideId', res.data.provideId)
+            // console.log(res)
+            // this.$store.commit('updateProvideId',res.data.provideId)
+            // window.sessionStorage.setItem('provideId', res.data.provideId)
+            this.$store.commit('updateProductName',res.data)
+            window.sessionStorage.setItem('productName', res.data)
             this.$router.push('/home')
             this.$Message.success('登录成功')
           })

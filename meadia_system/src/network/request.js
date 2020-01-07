@@ -3,8 +3,9 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 
-axios.defaults.baseURL = 'http://interface.iflytekxiri.ahydnet.com:9090/IPTV-Media-Check'
-
+// axios.defaults.baseURL = 'http://interface.iflytekxiri.ahydnet.com:9090/IPTV-Media-Check'
+axios.defaults.baseURL = window.g.requestUrl
+// axios.defaults.baseURL = 'http://10.1.17.45:8093/IPTV-Media-Check'\
 axios.interceptors.request.use(config => {
   NProgress.start();
   return config
@@ -17,7 +18,7 @@ axios.interceptors.response.use(response => {
   const res = response.data;
   if (res.code == '0000') {
     return res
-  } else if (res.code == '0010') {
+  } else if (res.code == '0103') {
     Message({
       message: '账号或者密码错误，请重新登录',
       type: 'error',

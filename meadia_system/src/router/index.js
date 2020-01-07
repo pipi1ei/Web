@@ -7,6 +7,11 @@ const HomeMain = () => import('views/home/children/HomeMain')
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
@@ -25,11 +30,11 @@ const routes = [
 
 const router = new Router({
   routes,
-  mode: 'history'
+  mode: 'hash'
 })
 
 router.beforeEach((to, from, next) => {
-  const token = window.sessionStorage.getItem('provideId')
+  const token = window.sessionStorage.getItem('productName')
   if (token) {
     next()
   } else if (to.path === '/login') {

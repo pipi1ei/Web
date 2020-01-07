@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    provideId: ''
+    productName: []
   },
   mutations: {
-    updateProvideId(state, value) {
-      state.provideId = value
+    updateProductName(state, value) {
+      state.productName = value
     }
   }
 })

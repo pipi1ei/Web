@@ -23,7 +23,7 @@ html,body,#app{
 
 body{
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Mircrosoft YaHei", "微软雅黑", Arial, sans-serif;
-  user-select: none; /* 禁止用户鼠标在页面上选中文字 */
+  /* user-select: none; 禁止用户鼠标在页面上选中文字 */
   -webkit-tap-highlight-color: transparent; /* 去除点击高亮效果 */
   background: var(--color-background);
   color: var(--color-text);

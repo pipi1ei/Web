@@ -1,54 +1,38 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" width="80%" top="10vh">
-    <el-row :gutter="20" class="details-container">
-      <!-- 补全前媒资 -->
-      <el-col :span="12">
-        <details-item>
-          <h2 slot="title">媒资补全前</h2>
-          <img slot="poster" :src="beforeCompletion.thumbnails" alt />
-          <div slot="name">{{ beforeCompletion.name }}</div>
-          <span slot="releaseDate">{{getYear(beforeCompletion.releaseDate)}}年</span>
-          <span slot="director">{{getInfo(beforeCompletion.director)}}</span>
-          <span slot="actor">{{getInfo(beforeCompletion.actor)}}</span>
-          <span slot="introduction">{{beforeCompletion.introduction}}</span>
-        </details-item>
-      </el-col>
-
-      <!-- 补全后媒资 -->
-      <el-col :span="12">
-        <details-item>
-          <h2 slot="title">媒资补全后</h2>
-
-          <img slot="poster" :src="afterCompletion.thumbnails" alt />
-          <div slot="poster" id="hot" v-if="afterCompletion.hot && afterCompletion.hot > 0"></div>
-          <div
-            slot="poster"
-            id="hot-value"
-            v-if="afterCompletion.hot && afterCompletion.hot > 0"
-          >{{afterCompletion.hot}}</div>
-          <div
-            slot="poster"
-            id="score"
-            v-if="afterCompletion.grade && afterCompletion.grade > 0"
-          >{{afterCompletion.grade}}</div>
-
-          <div slot="name">{{ afterCompletion.name }}</div>
-          <span slot="releaseDate">{{getYear(afterCompletion.releaseDate)}}年</span>
-          <span slot="director">{{getInfo(afterCompletion.director)}}</span>
-          <span slot="actor">{{getInfo(afterCompletion.actor)}}</span>
-          <div slot="language">
-            <span style="color: #f00">语言：</span>
-            {{ getInfo(afterCompletion.language) }}
+  <el-dialog :visible.sync="dialogVisible" width="80%" top="5vh">
+    <div class="d-box">
+      <!-- 补全前媒资数据 -->
+      <div class="before">
+        <h2 style="text-align:center; margin-bottom:10px;">before</h2>
+        <details-item :data='beforeCompletion'>
+          <div v-if="beforeCompletion.thumbnails" slot="poster">
+            <img :src="beforeCompletion.thumbnails" />
           </div>
-
-          <div slot="region">
-            <span style="color: #f00">区域：</span>
-            {{ getInfo(afterCompletion.region) }}
-          </div>
-          <span slot="introduction">{{afterCompletion.introduction}}</span>
         </details-item>
-      </el-col>
-    </el-row>
+      </div>
+
+      <!-- 中间右箭头 -->
+      <div class="center">
+        <img src="~assets/images/details/right_arrow.png" alt="">
+      </div>
+
+      <!-- 补全后媒资数据 -->
+      <div class="after">
+        <h2 style="text-align:center; margin-bottom:10px;">after</h2>
+        <details-item :data='afterCompletion'>
+          <div v-if="afterCompletion.thumbnails" slot="poster">
+            <img :src="afterCompletion.thumbnails" />
+            <div id="hot" v-if="afterCompletion.hot && afterCompletion.hot > 0">
+              <img src="~assets/images/home/hot.png" alt="">
+              {{afterCompletion.hot}}</div>
+            <div
+              id="score"
+              v-if="afterCompletion.grade && afterCompletion.grade > 0"
+            >{{afterCompletion.grade}}</div>
+          </div>
+        </details-item>
+      </div>
+    </div>
   </el-dialog>
 </template>
 
@@ -67,34 +51,34 @@ export default {
   components: {
     DetailsItem
   },
-  methods: {
-    array2String(str) {
-      let array = JSON.parse(str || '[]')
-      // return array.join(',')
-
-      let result = ''
-      for(let value of array){
-        // 后台接口返回的数组中有空值，使用join 方法会多出 ","
-        if(value){
-          result += (value + ',')
-        }
-      }
-      return result.substring(0, result.length -1)
-    },
-    getYear(date) {
-      let d = new Date(date);
-      return d.getFullYear();
-    },
-    getInfo(info) {
-      if (this.array2String(info) === "") {
-        return "空";
-      } else {
-        return this.array2String(info);
-      }
-    }
-  }
 };
 </script>
 
 <style lang="less">
+  .el-dialog__body{
+    padding-top: 0;
+  }
+  .d-box{
+    width: 100%;
+    display: flex;
+
+    .center{
+      width: 60px;
+      position: relative;
+      img{
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -20px;
+        margin-left: -20px;
+      }
+    }
+
+    .before,
+    .after{
+      flex: 1;
+    }
+  }
 </style>

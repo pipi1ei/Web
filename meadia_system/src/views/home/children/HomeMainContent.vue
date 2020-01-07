@@ -2,10 +2,10 @@
   <div class="content-box" ref="table">
     <!-- 表格展示部分 -->
     <div class="content-table">
-      <el-table  :data="tableData" border :height='tableHeight' style="width: 100%;">
+      <el-table :data="tableData" border :height="tableHeight" max-height="100%" style="width: 100%">
         <el-table-column prop="thumbnails" label="媒资海报" width="120">
           <template slot-scope="scope">
-            <img style="width: 100%" :src="scope.row.thumbnails" alt />
+            <img style="width: 100%" :src="scope.row.thumbnails" alt='' />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="媒资名称"></el-table-column>
@@ -64,10 +64,10 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
+      this.$nextTick(() => {
       let self = this
-      console.log(this.$refs)
-      console.log("-->",this.$refs.table.offsetHeight - this.$refs.pagination.offsetHeight)
+      // console.log(this.$refs)
+      // console.log("-->",this.$refs.table.offsetHeight - this.$refs.pagination.offsetHeight)
       this.tableHeight = this.$refs.table.offsetHeight - this.$refs.pagination.offsetHeight;
     })
   },
