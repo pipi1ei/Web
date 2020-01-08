@@ -459,23 +459,6 @@ resolve: {
   - Vue CLI 是官方发布的一个 vue.js 项目脚手架
   - 使用 vue-cli 可以快速搭建 Vue 开发环境以及对于的 webpack 配置
 
-new Vue({
-el: '#app',
-// components: { App },
-// template: '<App/>'
-render: function (creatElement) {
-//1.普通用法： creatElement('标签'，{标签的属性}， [''])
-  return creatElement('h2',
-    { class: 'box' },
-    ['hello pipilei', creatElement('button', ['按钮'])]
-  )
-}
-})
-
-- runtime-compiler 和 runtime-only 的区别：
-  - 如果在开发中，依然使用 template，就需要选择 runtime-compiler
-  - 如果在开发中，使用的是 .vue 文件来开发，那么可以选择 runtime-only
-
 ### vue-cli2 目录结构解析
 为什么谷歌浏览器速度比较快？
   一边浏览器会将 js 文件解析成字节码文件，然后将字节码解析成二进制文件，而谷歌使用 v8 引擎直接将 js 文件解析成二进制文件，省去了解析成字节码的步骤，所有速度快
@@ -490,8 +473,29 @@ render: function (creatElement) {
 8. .gitignore 文件：git 提交时忽略的文件
 9. .postcssrc.js 文件：css 转化时的配置文件，一搬不用改
 10. index.html 文件: html 模板文件，打包时会根据这个模板在 dist 文件夹下创建 index.html 文件
-11. package-lock.json 文件：映射 package.json 文件中引入的依赖
+11. package-lock.json 文件：映射 package.json 文件中引入的依赖我，同时加快下载速度
 12. package.json 文件：是一个包说明文件（项目描述文件），用来管理组织一个包（一个项目）
+
+new Vue({
+  el: '#app',
+  // components: { App },
+  // template: '<App/>'
+  render: function (createElement) {
+    //1.普通用法： createElement('标签'，{标签的属性}， [''])
+    return createElement('h2',
+      { class: 'box' },
+      ['hello pipilei', createElement('button', ['按钮'])]
+    )
+    // 2.传入组件对象
+    return createElement(App)
+  }
+})
+
+- .vue 文件中的 template 是由 vue-template-compiler 解析成了 render 函数
+
+- runtime-compiler 和 runtime-only 的区别：
+  - 如果在开发中，依然使用 template，就需要选择 runtime-compiler
+  - 如果在开发中，使用的是 .vue 文件来开发，那么可以选择 runtime-only
 
 
 ### vue-cli 3 和 vue-cli 2 的区别
@@ -500,6 +504,11 @@ render: function (creatElement) {
 2. vue-cli 3 的设计原则是 “0 配置”，移除的配置文件根目录下的 build 和 config 等目录
 3. vue-cli 3 提供了 vue ui 命令，提供了可视化配置，更加人性化
 4. 移除了 static 文件夹，新增了 public 文件夹，并且 index.html 移动到 public 中
+
+
+## 箭头函数中的 this 是如何查找的？
+向外层作用域中，一层层查找this，直到有 this 的定义
+
 
 ## Vue Router
 
@@ -510,6 +519,48 @@ render: function (creatElement) {
   - 路由是决定数据包从来源到目的地的路径
   - 转送将传输端的数据转移到合适的输出端
 - 路由中有一个重要的概念叫路由表，路由表本质上就是一个映射表，决定了数据包的指向
+
+- 内网 IP 地址：
+  A类网：10.0.0.0 ~ 10.255.255.255 
+  B类网：172.16.0.0 ~ 172.31.255.255
+  C类网：192.168.0.0 ~ 192.168.255.255
+
+### 前端路由和后端路由，前端渲染和后端渲染
+- 后端路由阶段：
+  + 后端路由：后端处理 URL 和页面之间的映射关系
+  + 后端渲染：
+    早期的网站开发整个 HTML 页面都是由服务器进行渲染的，浏览器将 URL 发送到服务器，服务器解析 URL 并直接渲染好对应的 HTML 页面，返回给浏览器进行展示，后端渲染 JSP 技术：HTML + CSS + JAVA
+    一个网站，这么多页面服务器是如何处理的呢？
+    1. 一个页面有对应的网址，也就是URL
+    2. URL 会被发送到服务器，服务器通过正则对该 URL 进行匹配，并交给一个 Controller 进行处理
+    3. Controller 进行各种处理，最终生成一个 HTML 返回给前端
+    4. 这就完成了一个 IO 操作
+    这种情况下渲染好的页面不需要单独加载任何的 js 和 css，可以直接交给浏览器展示，这样也有利于 SEO 的优化
+
+  + 后端路由的缺点：
+    1. 整个页面的模块是由后端人员来编写和维护的
+    2. 如果前端人员要开发页面，需要通过 PHP 或 JAVA 等语言来编写页面代码
+    3. 这种情况下 HTML 代码和数据以及对应的逻辑会混在一起，编写和维护都是很麻烦的事情
+
+- 前后端分离阶段：
+  1. 随着 Ajax 的出现，有了前后端分离的开发模式
+  2. 后端只提供 API 来返回数据，前端通过 Ajax 获取数据，并且可以通过 JS 将数据渲染到页面中
+  + 前后的分离的优点：
+    1. 前后的的责任更清晰，后端专注于数据，前端专注于交互和可视化上
+    2. 并且当移动端出现后，后端不需要进行任何处理，依然使用之前的一套 API 即可
+
+  过程：
+  1. 用户在浏览器输入URL后。浏览器将URL发送到静态资源服务器，静态资源服务器返回 HTML + css + js，浏览器直接渲染 html 和 css ，并执行 js 文件，当 js 文件中有 ajax 请求时，在将 请求的 URL 发送到 API 服务器，api 服务器返回接口数据，浏览器再将数据渲染到 html 中
+  2. 这个过程就是前端渲染：浏览器中显示的网页中的大部分内容都是由前端写的 js 代码在浏览器中执行，最终渲染出来的网页
+
+- 前端路由阶段（单页面富应用阶段）：
+  SPA（single page web application）: 单页面Web应用，整个网页只要有一个 html 页面，SPA 最主要的特点就是在前后的分离的基础上加了一层前端路由，也就是前端来维护一套路由规则
+  过程：静态资源服务器上只会有一个HTML 文件，一个或多个css、js 文件，用户输入 URL 地址时，浏览器会去静态资源服务器请求全部的 HTML，css，js 文件，当URL 后面的路径不同时，通过js代码判断显示不同的数据，这就是前端路由
+2. 前端路由：浏览器处理 URL 和页面之间的映射关系，前端路由的核心时改变URL，但是页面不进行整体的刷新
+  + 如何实现？通过 url 的 hash 和 HTML5 的 history
+  1. 修改 url 的hash：location.hash = 'aaa'
+  2. 使用 HTML5 的history ： history.pushState({},'','aaa')： 类似于入栈，可以点击浏览器的返回，
+    或 history.replaceState({},'','aaa')：类似于直接替换栈顶内容
 
 ### 认识 vue-router
 
@@ -531,7 +582,12 @@ render: function (creatElement) {
   - 第一步： 创建路由组件
   - 第二步： 配置路由映射：组件和路由映射关系
   - 第三步： 使用路由：通过<router-link> 和 <router-view>
-    - <router-link> 标签是 vue-router 中已经内置的一个组件，它会被渲染成一个 a 标签
+    - <router-link> 标签是 vue-router 中已经内置的一个组件，它默认会被渲染成一个 a 标签
+      <router-link> 标签属性：
+        1. to：设置对应的路由路径, to='/home'
+        2. tag: 将<router-link> 渲染成指定标签，tag='button',这时将被渲染成按钮
+        3. replace：replace 不会留下 history 记录，所有指定 replace 的情况下，后退键返回不能返回到上一个页面中
+        4. active-class: 当<router-link> 对应的路由匹配成功时，会自动给当前元素设置一个 router-link-active 的 class，设置 active-class 可以修改默认的名称
     - <router-view> 标签会根据当前的路径，动态渲染出不同的组件
     - 网页的其他内容，比如顶部的标题、导航，或者底部的一些版权信息等会和<router-view> 处于同一个等级
     - 在路由切换时，切换的时 <router-view> 挂载的组件，其他内容不会发生改变
@@ -564,11 +620,23 @@ const routes = [
   }
 ];
 ```
+```html
+<router-link to='/user/zs' />
+```
+
+### $router 和 $route 的区别
+1. $router 时 VueRouter 对象
+2. $route 是当前活跃的路由
+
+### 为什么使用 $router 时能拿到 VueRouter 对象？
+1. 所有的组件都继承自 vue 的原型
+2. 在 vue-router 的源码中会使用 Vue.prototype.$router = VueRouter, 所以使用 $router 能拿到VueRouter。
+3. 在 VueRouter 的源码中会使用 Vue.component('RouterLink',link),Vue.component('RouterView',link),注册这两个全局组件，所以能使用 <router-link> 和 <router-view> 这两个组件
 
 ### 路由的懒加载
 
 - 官方解释：
-  - 当打包构建应用时，JavaScript 包会变得非常打，影响页面加载
+  - 当打包构建应用时，JavaScript 包会变得非常大，影响页面加载
   - 如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了
 - 路由懒加载做了什么？
   - 路由懒加载的主要作用就是将路由对应的组件打包成一个个的 js 代码块
@@ -600,22 +668,22 @@ const routes = [
 - 实现路由嵌套：
   1. 创建对应的子组件，并且在路由映射中配置对应的子路由
      {
-     path: '/home',
-     component: Home,
-     children: [
-     {
-     path: '',
-     redirect: 'news'
-     },
-     {
-     path: 'news',
-     component: HomeNews
-     },
-     {
-     path: 'message',
-     component: HomeMessage
-     }
-     ]
+      path: '/home',
+      component: Home,
+      children: [
+        {
+          path: '',
+          redirect: 'news'
+        },
+        {
+          path: 'news',
+          component: HomeNews
+        },
+        {
+          path: 'message',
+          component: HomeMessage
+        }
+      ]
      },
   2. 在组件内部使用 <router-view> 标签
 
@@ -631,13 +699,27 @@ const routes = [
   2. 传递的方式：对象中使用 query 的 key 作为传递方式
   3. 传递后形成的路径： /router?id=123 或 /router?id=abc
 
+### 路由的导航守卫
+1. 为什么使用导航守卫？
+  + 现在有个需求：在一个SPA 应用中，如何改变网页的标题呢？
+    - 网页标题是通过<title> 来显示的，但SPA 只有一个固定的 html 页面，切换不同的路由是，标题并不会改变
+    - 但我们可以通过 js 来修改 <title> 中的内容，通过 window.document.title = "新的标题"
+    - 那么在 vue 项目中，在哪里修改？什么时候修改比较合适呢？这时候就可以使用路由的导航守卫
+2. 使用方法：在 router 文件夹下的 index.js 文件中添加下面方法
+    router.beforeEach((to, from, next))
+    to: 下一个路由
+    from: 源路由，当前导航即将要离开的路由
+    next: 方法，必须调用，调用该方法后才能进入下一个钩子
+
+
+
 ### keep-alive
 
 - keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染
   - 它有两个非常重要的属性：
     1. include: 字符串或正则表达式，只有匹配的组件会被缓存
     2. exclude：字符串或表达式，任何匹配的组件都不会被缓存
-- router-view 也是一个组件，如果之间被包在 keep-alive 里，所有路径匹配到的视图组件都会被缓存
+- router-view 也是一个组件，如果直接被包在 keep-alive 里，所有路径匹配到的视图组件都会被缓存
 
 ### 完成 tabBar 案例
 
