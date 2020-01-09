@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<base>
+    <channel>
+        <province>云南</province>
+        <operator>移动</operator>
+        <store>http://wap.yn.10086.cn/mall/item/ASA176.html?rollbak=http://wap.yn.10086.cn/mall/szzq/znjgzq.html</store>
+    </channel>
+    <channel>
+        <province>福建</province>
+        <operator>移动</operator>
+        <store>http://www.hejihui.cn/portal/static/www/279373349325410310.html?merchandiseCode=279373349325410310</store>
+    </channel>
+    <channel>
+        <province>山东</province>
+        <operator>移动</operator>
+        <store>http://m.sd.10086.cn/mallwap/goods/goodsDetail.html?categoryNum=D6B80F8AD4FD4E2B8A537486B8FF37B4</store>
+    </channel>
+    <channel>
+        <province>广东</province>
+        <operator>移动</operator>
+      <store>http://gd.hejihui.cn/portal/static/gd/274295861935116291.html?merchandiseCode=274295861935116291</store>
+    </channel>
+    <channel>
+        <province>江苏</province>
+        <operator>移动</operator>
+        <store>http://wap.js.10086.cn/mall//mo_goods_detail.jsp?atomsNum=cloZ&amp;loginWay=wap&amp;channelNum=mosh&amp;from=singlemessage&amp;isappinstalled=0</store>
+    </channel>
+</base>

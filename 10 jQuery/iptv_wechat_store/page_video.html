@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>购买语音遥控器</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/video.css">
+    <script src="js/common.js"></script>
+    <script src="js/video.js"></script>
+    <script src="jquery/jquery-3.3.1.min.js"></script>
+    <script src="http://api.html5media.info/1.1.8/html5media.min.js"></script>
+</head>
+<body>
+<div class="background">
+    <!-- 使用背景图片代替文字-->
+    <div class="title_bg"><img src="images/title.png" alt=""></div>
+    <div class="video-box">
+        <video id="video" src="video/video.mp4" controls onplay="onVideoPlay()" poster="images/video.jpg">
+            你的浏览器不支持播放视频
+        </video>
+        <!--<div id="icon_play"></div>-->
+    </div>
+    <div class="btn"><button>我知道了</button></div>
+    <div class="logo"><img src="images/logo.png" alt=""></div>
+</div>
+
+<script>
+    /*$("#icon_play").click(function () {
+        $(this).hide();
+        $("#video")[0].play();
+    });
+
+    $("#video")[0].onended = function(){
+        console.log("视频播放完了");
+        $("#icon_play").show();
+    };*/
+    $("button")[0].onclick = function () {
+        window.history.back();
+        //window.history.go(-1);
+    }
+</script>
+</body>
+</html>

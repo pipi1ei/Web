@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>购买语音遥控器</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sorry.css">
+    <script src="js/common.js"></script>
+    <script src="js/sorry.js"></script>
+</head>
+<body>
+<div class="body">
+    <div class="text">
+        <p>
+            尊敬的用户，您好：<br>
+            很抱歉，您选择的渠道暂未开通线上商
+            城，可拨打运营商热线或前往附近营业
+            厅购买。
+        </p>
+    </div>
+    <div class="tel"><p id="tel"></p></div>
+    <div class="btn_more"><button id="btn_click" onclick="jumpTo()">了解语音遥控器</button></div>
+    <div class="logo"><img src="images/logo.png" alt=""></div>
+</div>
+
+<script>
+    /*
+     * 监听页面返回事件
+     */
+    pushHistory(); 
+    window.addEventListener("popstate", function(e) { 
+        location.href="page_buy.html?source=back";
+        // history.go(-2);
+    }, false); 
+
+    function pushHistory() { 
+        var state = { 
+            title: "title", 
+            url: "#"
+        }; 
+        window.history.pushState(state, "title", "#"); 
+    } 
+   
+</script>
+</body>
+</html>

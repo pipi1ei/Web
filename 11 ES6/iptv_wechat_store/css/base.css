@@ -1,0 +1,121 @@
+/* reset css 重置样式*/
+
+/* 选中所有元素和伪元素*/
+*,
+::before,
+::after{
+    margin: 0;
+    padding: 0;
+    /*针对移动端设置*/
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box; /* 主流移动端浏览器兼容*/
+    /* 点击高亮效果清除*/
+    -webkit-tap-highlight-color: transparent;
+}
+
+/*body{
+    font-size: 14px;
+    color: #333;
+    font-family: 'Microsoft Yahei',sans-serif;
+}*/
+
+ul,ol{
+   list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #333333;
+}
+
+input,textarea{
+    outline: none; /* 选中时样式none*/
+    border: none;
+    resize: none; /* 禁止改变textarea大小*/
+    /* 清除移动端输入框特有的样式*/
+    -webkit-appearance: none;
+}
+
+select {
+    /*将默认的select选择框样式清除*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+button{
+    margin: 0;
+    padding: 0;
+    border: none;
+    /*border: 1px solid transparent;  //自定义边框*/
+    outline: none;    //消除默认点击蓝色边框效果
+}
+
+/* common css 通用样式*/
+/* 向左浮动*/
+.f_left{
+    float: left;
+}
+/*向右浮动*/
+.f_right{
+    float: right;
+}
+/* 清除浮动样式*/
+.clearfix::before,
+.clearfix::after{
+    content: "";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    clear: both;
+}
+/*左边距10*/
+.ml10{
+    margin-left: 10px;
+}
+/*右边距10*/
+.mr10{
+    margin-right: 10px;
+}
+
+.m_0auto{
+    margin: 0 auto;
+}
+
+html,body{
+    height: 100%;
+    width: 100%;
+}
+
+/* ai电视助手图标*/
+.logo{
+    position: absolute;
+    bottom: 4.9%;
+    left: 50%;
+    width: 50%;
+    height: 2.5%;
+    margin-left: -25%;
+    /*background: url("../images/logo.png") no-repeat center center;
+    background-size: 6.12rem 0.96rem;*/
+}
+.logo img{
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+}
+
+/* 购买页和视频页背景图片*/
+.background{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background: url("../images/buy_bg.jpg") no-repeat center center;
+    /*background-size: 21.6rem 38.4rem;*/
+    background-size: 100% 100%;
+    min-width: 320px;
+    max-width: 1080px;
+    max-height: 1920px;
+}

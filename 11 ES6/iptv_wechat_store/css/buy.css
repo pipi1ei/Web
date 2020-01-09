@@ -1,0 +1,265 @@
+/*.background{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background: url("../images/buy_bg.jpg") no-repeat center center;
+    !*background-size: 21.6rem 38.4rem;*!
+    background-size: 100% 100%;
+    min-width: 320px;
+    max-width: 1080px;
+}*/
+.background {
+    display: none;
+}
+
+/* 文字部分*/
+.text1 {
+    width: 80%;
+    height: 4.48%;
+    left: 17.31%;
+    top: 13.13%;
+    position: absolute;
+    font-size: 1.8rem;
+    /*font-family:FZLTTHK--GBK1-0;*/
+    font-weight: 800;
+    color: rgba(255, 255, 255, 1);
+}
+
+.text2 {
+    width: 80%;
+    height: 4.48%;
+    position: absolute;
+    top: 19.95%;
+    left: 17.31%;
+    font-size: 1.8rem;
+    /*font-family:FZLTTHK--GBK1-0;*/
+    font-weight: 800;
+    color: rgba(255, 255, 255, 1);
+}
+
+/* 下拉框和选择部分*/
+.common {
+    position: absolute;
+    left: 15.97%;
+}
+
+.province {
+    width: 63.15%;
+    height: 6.77%;
+    top: 33.59%;
+    background: url('../images/triangle.png') no-repeat right center transparent;
+    background-size: 0.65rem 0.37rem;
+}
+
+.operator {
+    width: 63.15%;
+    height: 6.77%;
+    top: 43.07%;
+    background: url('../images/triangle.png') no-repeat right center transparent;
+    background-size: 0.65rem 0.37rem;
+}
+
+.province select,
+.operator select {
+    width: 107.77%;
+    /* 宽度比父容器宽，使右边框距离三角符号有一定距离*/
+    height: 100%;
+    border-radius: 0.4rem;
+
+    background: url("../images/input.png") no-repeat transparent;
+    background-size: 100% 100%;
+    border: none;
+
+    font-size: 1rem;
+    /*font-family:FZLTHJW--GB1-0;*/
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    text-align-last: center;
+}
+
+select option,
+select optgroup {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 97, 97, 1);
+    opacity: 0.3;
+}
+
+.button {
+    width: 68.06%;
+    height: 7.4%;
+    top: 54.48%
+}
+
+.button button {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(149, 64, 255, 1), rgba(75, 40, 255, 1));
+    border-radius: 0.4rem;
+    box-shadow: 0 0.6rem 0.8rem 0 rgba(0, 0, 0, 0.6);
+    opacity: 0.5;
+
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+}
+
+/* 二维码*/
+.qr_code {
+    /*width: 8rem;
+    height: 9.2rem;*/
+    width: 37.04%;
+    height: 23.96%;
+    position: absolute;
+    top: 66.66%;
+    bottom: 9.38%;
+    left: 31.48%;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 0.4rem;
+
+}
+
+.qr_code div {
+    position: absolute;
+    top: 6.52%;
+    /*height: 7.04rem;*/
+    height: 76.52%;
+    width: 100%;
+}
+
+.qr_code div img {
+    display: block;
+    /*width: 7.04rem;*/
+    height: 100%;
+    margin: 0 auto;
+}
+
+.qr_code p {
+    position: absolute;
+    bottom: 4.35%;
+    width: 100%;
+    font-size: 0.8rem;
+    /*font-family:FZLTHJW--GB1-0;*/
+    font-weight: 400;
+    color: rgba(1, 1, 1, 1);
+    margin: 0 auto;
+    text-align: center;
+    
+}
+
+/*机器人*/
+.robot {
+    position: absolute;
+    height: 16.35%;
+    /*width: 6.28rem;*/
+    /*height: 6.28rem;*/
+    right: 4.72%;
+    bottom: 9.38%;
+}
+
+.robot img {
+    display: block;
+    /*width: 6.28rem;*/
+    height: 100%;
+}
+
+/* ai电视助手图标*/
+.logo {
+    position: absolute;
+    bottom: 4.9%;
+    left: 50%;
+    width: 50%;
+    height: 2.5%;
+    margin-left: -25%;
+    /*background: url("../images/logo.png") no-repeat center center;
+    background-size: 6.12rem 0.96rem;*/
+}
+
+.logo img {
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.load {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(19, 19, 19, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+.load-box {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    top: 50%;
+    left: 50%;
+    margin-top: -2rem;
+    margin-left: -2rem;
+}
+
+.load-box div {
+    /*display: inline-block;*/
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: rgb(165, 61, 245);
+    top: 50%;
+    margin-top: -0.3rem;
+}
+
+.load_item1 {
+    left: 0;
+}
+
+.load_item2 {
+    left: 50%;
+    margin-left: -0.3rem;
+}
+
+.load_item3 {
+    right: 0;
+}
+
+@keyframes loading {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.8);
+    }
+}
+
+@-webkit-keyframes loading {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.8);
+    }
+}
+
+.load_item1 {
+    -webkit-animation: loading 1s 0s linear alternate infinite;
+    animation: loading 1s 0s linear alternate infinite;
+}
+
+.load_item2 {
+    -webkit-animation: loading 1s 0.3333s linear alternate infinite;
+    animation: loading 1s 0.3333s linear alternate infinite;
+}
+
+.load_item3 {
+    -webkit-animation: loading 1s 0.6666s linear alternate infinite;
+    animation: loading 1s 0.6666s linear alternate infinite;
+}

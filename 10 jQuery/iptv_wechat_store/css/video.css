@@ -1,0 +1,71 @@
+/* 标题背景*/
+.title_bg{
+    position: relative;
+    top: 13.07%;
+    width: 80%;
+    height: 16.62%;
+    left: 50%;
+    margin-left: -40%;
+}
+.title_bg img{
+    display: block;
+    /*width: 11.3rem;*/
+    height: 100%;
+    margin: auto;
+}
+
+/* 视频区域 */
+.video-box{
+    width: 84.26%;
+    height: 28.13%;
+    position: absolute;
+    left: 7.87%;
+    top: 34.43%;
+    border-radius: 0.4rem;
+
+    background:rgba(21,21,21,1);
+    border:1px solid;
+    border-image:linear-gradient(-42deg, rgba(240,24,182,1), rgba(83,23,255,1)) 2 2;
+
+}
+.video-box video{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.video-box div{
+    width: 3rem;
+    height: 3rem;
+    background: url("../images/play_btn.png") no-repeat center center;
+    background-size: 2.32rem 2.48rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1.5rem;
+    margin-top: -1.6rem;
+    z-index: 999;
+}
+
+/* 按钮 */
+.btn{
+    width: 68.06%;
+    height: 7.4%;
+    position: absolute;
+    left: 16.02%;
+    top: 73.18%;
+}
+.btn button{
+    width: 100%;
+    height:100%;
+    background:linear-gradient(90deg,rgba(149,64,255,1),rgba(75,40,255,1));
+    border-radius: 0.4rem;
+    box-shadow:0 0.6rem 0.8rem 0 rgba(0, 0, 0, 0.6);
+
+    font-size:1.2rem;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height: 1.28rem;
+}
+
+
