@@ -22,7 +22,7 @@
       </el-col>
 
       <!-- 多牌照下拉框 -->
-      <el-col :span='3' :offset='11'>
+      <el-col :span='3' :offset='11' v-if="$store.state.productName.length > 1">
         <el-dropdown  trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             {{productName}}<i class="el-icon-arrow-down el-icon--right"></i>
