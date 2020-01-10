@@ -37,7 +37,7 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    aUpdateInfo(context, payload){
+    aUpdateInfo(context, payload){ 
       return new Promise(resolve => {
         setTimeout(() => {
           context.commit('updateInfo')
@@ -49,12 +49,15 @@ const store = new Vuex.Store({
   },
   // 类似于组件中的计算属性
   getters: {
+    // 参数 state 就是 Vuex.Store 实例中的 state
     powCounter(state){
       return state.counter * state.counter
     },
     ageHeigh20(state) {
       return state.students.filter(value => value.age > 20)
     },
+
+    // getters 就是当前的 getters 对象
     ageHeigh20Counts(state, getters){
       return getters.ageHeigh20.length
     },

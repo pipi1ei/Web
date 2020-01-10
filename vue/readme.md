@@ -4,33 +4,36 @@
 
 <div id='app'>{{ msg }}</div>
 
+```javascript
 let app = new Vue({
-el: '#app', // 该属性决定了这个 Vue 对象挂载到哪一个元素上
-data: {
-msg: 'hello world!'  
- }
+  el: '#app', // 该属性决定了这个 Vue 对象挂载到哪一个元素上
+  data: {
+    msg: 'hello world!'  
+  }
 })
+```
 
 ### vue 声明周期
 
 ### 插值操作
-1. v-once: 使用了v-once 属性的标签，其内容不会再响应式变化
-  <h1 v-once>{{ msg }}
-2. v-html: 使用 v-html 属性可以解析字符串中的HTML标签
-  <p v-html="msg2"></p>
-3. v-text: 使用v-text 属性可以展示字符串，效果和 {{}} 相同，一般不用该方式
-  <h1 v-text='msg'></h1>
+
+1. v-once: 使用了 v-once 属性的标签，其内容不会再响应式变化
+   <h1 v-once>{{ msg }}
+2. v-html: 使用 v-html 属性可以解析字符串中的 HTML 标签
+   <p v-html="msg2"></p>
+3. v-text: 使用 v-text 属性可以展示字符串，效果和 {{}} 相同，一般不用该方式
+   <h1 v-text='msg'></h1>
 4. v-pre: 使用了 v-pre 属性的标签会原封不动的展示其中的内容，不会解析 {{}} 语法
-  <h1 v-pre>{{ msg }}</h1> //h1 中展示的内容就是 {{ msg }}，并不会解析 {{}} 语法
-5. v-cloak: 使用了 v-cloak 属性的元素，当vue实例创建好之后会删除该属性，可以防止闪动效果
-  <style>
-    [v-cloak]{
-      display: none;
-    }
-  </style>
-  <div id="app" v-cloak>
-    <h1>{{ msg }}</h1>
-  </div>
+   <h1 v-pre>{{ msg }}</h1> //h1 中展示的内容就是 {{ msg }}，并不会解析 {{}} 语法
+5. v-cloak: 使用了 v-cloak 属性的元素，当 vue 实例创建好之后会删除该属性，可以防止闪动效果
+   <style>
+     [v-cloak]{
+       display: none;
+     }
+   </style>
+   <div id="app" v-cloak>
+     <h1>{{ msg }}</h1>
+   </div>
 
 ### v-bind 介绍
 
@@ -64,6 +67,7 @@ msg: 'hello world!'
 
 1.  基本用法: 在 vue 实例中定义 computed 属性: computed:{ fullName: function(){ return this.firstName + ' ' + this.lastName } }
 2.  计算属性的 getter 和 setter:
+```javascript
     computed: {
       // 完整写法,计算属性一般没有 set 方法, 只读属性
       fullName: {
@@ -79,8 +83,9 @@ msg: 'hello world!'
           this.firstName = names[0];
           this.lastName = names[names.length - 1];
         }
-      } 
+      }
     }
+  ```
 
 3.  计算属性和 methods 对比: 计算属性效率更高
     我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。然而，不同的是计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
@@ -124,6 +129,7 @@ msg: 'hello world!'
 5. splice 方法
 6. sort 方法
 7. reverse 方法
+其他数组方法不是响应式的，如果想要使用响应式，可以使用 Vue.set() 方法
 
 ### v-model 原理
 
@@ -136,7 +142,7 @@ v-model 用于表单元素双向绑定数据
 
 - v-model 修饰符:
   1. lazy: 默认情况下. v-model 是在 input 事件中同步输入框中的数据的,使用 lazy 修饰符时可以让数据在失去焦点或回车时才会刷新
-  2. number: 默认情况下,在输入框中无论输入字母还是数字都会被当成字符串类型进行处理,使用 number 属性可以让数据编程 number 类型
+  2. number: 默认情况下,在输入框中无论输入字母还是数字都会被当成字符串类型进行处理,使用 number 属性可以让数据变成 number 类型
   3. trim: 如果输入的内容收尾有多个空格,使用 trim 可以将其去除
 
 ## Vue 组件化
@@ -144,7 +150,7 @@ v-model 用于表单元素双向绑定数据
 ### vue 组件化思想:
 
 - 组件化是 Vue.js 中的重要思想
-  - 它提供了一种抽象,让我们可以开发出一个个独立可服用的小组件来构造我们的应用.
+  - 它提供了一种抽象,让我们可以开发出一个个独立可复用的小组件来构造我们的应用.
   - 任何的应用都会被抽象成一颗组件树
 - 组件化思想的应用:
   - 有了组件化的思想,我们在之后的开发中就要充分的利用它
@@ -170,13 +176,13 @@ v-model 用于表单元素双向绑定数据
 1. 之前注册组件的方式有些繁琐，Vue 使用语法糖的形式省去了 Vue.extend() 的步骤，之间在注册组件的时候使用一个对象来代替
 2. 语法糖注册全局组件：
    Vue.component('cpn1',{
-   template: `<div> <h1>我是标题1</h1> <p>我是哈哈哈</p> </div>`
+    template: `<div> <h1>我是标题1</h1> <p>我是哈哈哈</p> </div>`
    })
 3. 语法糖注册局部组件：
    components: {
-   cpn2: {
-   template: `<div> <h1>我是标题2</h1> <p>我是呵呵呵</p> </div>`
-   }
+    cpn2: {
+      template: `<div> <h1>我是标题2</h1> <p>我是呵呵呵</p> </div>`
+    }
    }
 
 ### 组件模板抽离的写法
@@ -189,9 +195,11 @@ v-model 用于表单元素双向绑定数据
      </div>
    </script>
 
-Vue.component('cpn1', {
-template: '#cpn1'
-})
+```javascript
+  Vue.component('cpn1', {
+    template: '#cpn1'
+  })
+```
 
 2. 使用 template 标签，提供一个 id，用于注册的时候绑定模板
    <template id="cpn2">
@@ -201,11 +209,13 @@ template: '#cpn1'
      </div>
    </template>
 
-components: {
-cpn2: {
-template: '#cpn2'
-}
-}
+```javascript
+  components: {
+    cpn2: {
+      template: '#cpn2'
+    }
+  }
+```
 
 ### 组件数据的存放
 
@@ -261,30 +271,34 @@ template: '#cpn2'
 4. 作用域插槽：父组件替换插槽的标签，但是内容由子组件来提供
 
 ## 前端模块化
-### 多个JS文件带来的问题：
-  1. 小明写了 a.js ,并在其中定义了 变量 flag, 然后又写了 b.js ,想要使用 flag 这个变量，但这时小红也创建了一个 x.js 文件，并在其中定义了 flag 变量，这时候小明使用的 flag 可能会变成小红定义的 flag
-  2. 解决方式：在每个js 文件中使用闭包 function(){ ... }(), 这个后不存在共享变量的问题，但右存在代码无法复用的问题
-  3. 最基本模块化解决方案：var moduleA = function(){ var obj = {} ...  return obj }(), 在其他js 文件中使用 moduleA.flag 就可以放文到 moduleA 模块中的变量了
 
+### 多个 JS 文件带来的问题：
+
+1. 小明写了 a.js ,并在其中定义了 变量 flag, 然后又写了 b.js ,想要使用 flag 这个变量，但这时小红也创建了一个 x.js 文件，并在其中定义了 flag 变量，这时候小明使用的 flag 可能会变成小红定义的 flag
+2. 解决方式：在每个 js 文件中使用闭包 function(){ ... }(), 这个后不存在共享变量的问题，但右存在代码无法复用的问题
+3. 最基本模块化解决方案：var moduleA = function(){ var obj = {} ... return obj }(), 在其他 js 文件中使用 moduleA.flag 就可以放文到 moduleA 模块中的变量了
 
 ### ES6 模块化
-前提： 在script 标签中添加 type="module"
+
+前提： 在 script 标签中添加 type="module"
+
   <script src="./aaa.js" type="module"></script>
+
 1. 导出： 在 js 文件中使用 export 关键字导出 变量、函数、类
-    var name = 'pipilei'
-    var sum = function(num1, num2){ return num1 + num2 }
-    export {name,sum} 
+   var name = 'pipilei'
+   var sum = function(num1, num2){ return num1 + num2 }
+   export {name,sum}
 
-    或者：
+   或者：
 
-    export var name = 'pipilei'
-    export var sum = function(num1, num2){ return num1 + num2 }
+   export var name = 'pipilei'
+   export var sum = function(num1, num2){ return num1 + num2 }
 
-2. 导入： 
-    import {name,sum} from 'a.js'
+2. 导入：
+   import {name,sum} from 'a.js'
 
 3. export default:
-    某些情况下，一个模块中包含某些功能，我们并不希望给这个功能命名，而是让导入者可以自己命名，这个时候就可以使用 export default，在一个模块中，export default 只能向外暴露一次
+   某些情况下，一个模块中包含某些功能，我们并不希望给这个功能命名，而是让导入者可以自己命名，这个时候就可以使用 export default，在一个模块中，export default 只能向外暴露一次
 
 ## Webpack
 
@@ -457,46 +471,48 @@ resolve: {
 - CLI 是什么意思？
   - CLI 是 Command-Line Interface, 翻译为命令行界面，但俗称脚手架
   - Vue CLI 是官方发布的一个 vue.js 项目脚手架
-  - 使用 vue-cli 可以快速搭建 Vue 开发环境以及对于的 webpack 配置
+  - 使用 vue-cli 可以快速搭建 Vue 开发环境以及对应的 webpack 配置
 
 ### vue-cli2 目录结构解析
+
 为什么谷歌浏览器速度比较快？
-  一边浏览器会将 js 文件解析成字节码文件，然后将字节码解析成二进制文件，而谷歌使用 v8 引擎直接将 js 文件解析成二进制文件，省去了解析成字节码的步骤，所有速度快
+一般浏览器会将 js 文件解析成字节码文件，然后将字节码解析成二进制文件，而谷歌使用 v8 引擎直接将 js 文件解析成二进制文件，省去了解析成字节码的步骤，所以速度快
+
 1. package.json： 入口文件，执行 npm run build 命令时会去执行 build 目录下的 build.js 文件
-    执行 rm 方法，先删除原先打包好的 dist 文件夹，然后执行 webpack 相关配置
+   执行 rm 方法，先删除原先打包好的 dist 文件夹，然后执行 webpack 相关配置
 2. build 目录：配置相关文件
 3. config 目录：配置相关文件，定义一些变量
 4. src 目录：我们代码存放的目录
 5. static 目录：静态资源文件，执行 npm run build 命令时不会打包 static 文件夹下的文件，会原封不动的将 static 文件夹复制到打包生成的 dist 文件夹中
-6. .babelrc 文件：配置 ES6 转 ES5 
+6. .babelrc 文件：配置 ES6 转 ES5
 7. .editorconfig 文件：设置代码编写规范，设置 charset，代码缩进等
 8. .gitignore 文件：git 提交时忽略的文件
-9. .postcssrc.js 文件：css 转化时的配置文件，一搬不用改
+9. .postcssrc.js 文件：css 转化时的配置文件，一般不用改
 10. index.html 文件: html 模板文件，打包时会根据这个模板在 dist 文件夹下创建 index.html 文件
 11. package-lock.json 文件：映射 package.json 文件中引入的依赖我，同时加快下载速度
 12. package.json 文件：是一个包说明文件（项目描述文件），用来管理组织一个包（一个项目）
 
-new Vue({
-  el: '#app',
-  // components: { App },
-  // template: '<App/>'
-  render: function (createElement) {
-    //1.普通用法： createElement('标签'，{标签的属性}， [''])
-    return createElement('h2',
-      { class: 'box' },
-      ['hello pipilei', createElement('button', ['按钮'])]
-    )
-    // 2.传入组件对象
-    return createElement(App)
-  }
-})
-
+```javascript
+  new Vue({
+    el: '#app',
+    // components: { App },
+    // template: '<App/>'
+    render: function (createElement) {
+      //1.普通用法： createElement('标签'，{标签的属性}， [''])
+      return createElement('h2',
+        { class: 'box' },
+        ['hello pipilei', createElement('button', ['按钮'])]
+      )
+      // 2.传入组件对象
+      return createElement(App)
+    }
+  })
+```
 - .vue 文件中的 template 是由 vue-template-compiler 解析成了 render 函数
 
 - runtime-compiler 和 runtime-only 的区别：
   - 如果在开发中，依然使用 template，就需要选择 runtime-compiler
   - 如果在开发中，使用的是 .vue 文件来开发，那么可以选择 runtime-only
-
 
 ### vue-cli 3 和 vue-cli 2 的区别
 
@@ -505,10 +521,33 @@ new Vue({
 3. vue-cli 3 提供了 vue ui 命令，提供了可视化配置，更加人性化
 4. 移除了 static 文件夹，新增了 public 文件夹，并且 index.html 移动到 public 中
 
-
 ## 箭头函数中的 this 是如何查找的？
-向外层作用域中，一层层查找this，直到有 this 的定义
 
+向外层作用域中，一层层查找 this，直到有 this 的定义
+
+```javascript
+setTimeout(function() {
+  console.log(this); // window
+}, 1000);
+
+setTimeout(() => {
+  console.log(this); // window
+}, 1000);
+
+var obj = {
+  a() {
+    setTimeout(function() {
+      console.log(this); // window
+    }, 1000);
+  },
+
+  b() {
+    setTimeout(() => {
+      console.log(this); // obj
+    }, 1000);
+  }
+};
+```
 
 ## Vue Router
 
@@ -521,46 +560,55 @@ new Vue({
 - 路由中有一个重要的概念叫路由表，路由表本质上就是一个映射表，决定了数据包的指向
 
 - 内网 IP 地址：
-  A类网：10.0.0.0 ~ 10.255.255.255 
-  B类网：172.16.0.0 ~ 172.31.255.255
-  C类网：192.168.0.0 ~ 192.168.255.255
+  A 类网：10.0.0.0 ~ 10.255.255.255
+  B 类网：172.16.0.0 ~ 172.31.255.255
+  C 类网：192.168.0.0 ~ 192.168.255.255
 
 ### 前端路由和后端路由，前端渲染和后端渲染
+
 - 后端路由阶段：
-  + 后端路由：后端处理 URL 和页面之间的映射关系
-  + 后端渲染：
+
+  - 后端路由：后端处理 URL 和页面之间的映射关系
+  - 后端渲染：
     早期的网站开发整个 HTML 页面都是由服务器进行渲染的，浏览器将 URL 发送到服务器，服务器解析 URL 并直接渲染好对应的 HTML 页面，返回给浏览器进行展示，后端渲染 JSP 技术：HTML + CSS + JAVA
     一个网站，这么多页面服务器是如何处理的呢？
-    1. 一个页面有对应的网址，也就是URL
+
+    1. 一个页面有对应的网址，也就是 URL
     2. URL 会被发送到服务器，服务器通过正则对该 URL 进行匹配，并交给一个 Controller 进行处理
     3. Controller 进行各种处理，最终生成一个 HTML 返回给前端
     4. 这就完成了一个 IO 操作
-    这种情况下渲染好的页面不需要单独加载任何的 js 和 css，可以直接交给浏览器展示，这样也有利于 SEO 的优化
+       这种情况下渲染好的页面不需要单独加载任何的 js 和 css，可以直接交给浏览器展示，这样也有利于 SEO 的优化
 
-  + 后端路由的缺点：
+  - 后端路由的缺点：
     1. 整个页面的模块是由后端人员来编写和维护的
     2. 如果前端人员要开发页面，需要通过 PHP 或 JAVA 等语言来编写页面代码
     3. 这种情况下 HTML 代码和数据以及对应的逻辑会混在一起，编写和维护都是很麻烦的事情
 
 - 前后端分离阶段：
+
   1. 随着 Ajax 的出现，有了前后端分离的开发模式
   2. 后端只提供 API 来返回数据，前端通过 Ajax 获取数据，并且可以通过 JS 将数据渲染到页面中
-  + 前后的分离的优点：
+
+  - 前后的分离的优点：
     1. 前后的的责任更清晰，后端专注于数据，前端专注于交互和可视化上
     2. 并且当移动端出现后，后端不需要进行任何处理，依然使用之前的一套 API 即可
 
   过程：
-  1. 用户在浏览器输入URL后。浏览器将URL发送到静态资源服务器，静态资源服务器返回 HTML + css + js，浏览器直接渲染 html 和 css ，并执行 js 文件，当 js 文件中有 ajax 请求时，在将 请求的 URL 发送到 API 服务器，api 服务器返回接口数据，浏览器再将数据渲染到 html 中
+
+  1. 用户在浏览器输入 URL 后。浏览器将 URL 发送到静态资源服务器，静态资源服务器返回 HTML + css + js，浏览器直接渲染 html 和 css ，并执行 js 文件，当 js 文件中有 ajax 请求时，在将 请求的 URL 发送到 API 服务器，api 服务器返回接口数据，浏览器再将数据渲染到 html 中
   2. 这个过程就是前端渲染：浏览器中显示的网页中的大部分内容都是由前端写的 js 代码在浏览器中执行，最终渲染出来的网页
 
 - 前端路由阶段（单页面富应用阶段）：
-  SPA（single page web application）: 单页面Web应用，整个网页只要有一个 html 页面，SPA 最主要的特点就是在前后的分离的基础上加了一层前端路由，也就是前端来维护一套路由规则
-  过程：静态资源服务器上只会有一个HTML 文件，一个或多个css、js 文件，用户输入 URL 地址时，浏览器会去静态资源服务器请求全部的 HTML，css，js 文件，当URL 后面的路径不同时，通过js代码判断显示不同的数据，这就是前端路由
-2. 前端路由：浏览器处理 URL 和页面之间的映射关系，前端路由的核心时改变URL，但是页面不进行整体的刷新
-  + 如何实现？通过 url 的 hash 和 HTML5 的 history
-  1. 修改 url 的hash：location.hash = 'aaa'
-  2. 使用 HTML5 的history ： history.pushState({},'','aaa')： 类似于入栈，可以点击浏览器的返回，
-    或 history.replaceState({},'','aaa')：类似于直接替换栈顶内容
+  SPA（single page web application）: 单页面 Web 应用，整个网页只要有一个 html 页面，SPA 最主要的特点就是在前后的分离的基础上加了一层前端路由，也就是前端来维护一套路由规则
+  过程：静态资源服务器上只会有一个 HTML 文件，一个或多个 css、js 文件，用户输入 URL 地址时，浏览器会去静态资源服务器请求全部的 HTML，css，js 文件，当 URL 后面的路径不同时，通过 js 代码判断显示不同的数据，这就是前端路由
+
+2. 前端路由：浏览器处理 URL 和页面之间的映射关系，前端路由的核心时改变 URL，但是页面不进行整体的刷新
+
+- 如何实现？通过 url 的 hash 和 HTML5 的 history
+
+1. 修改 url 的 hash：location.hash = 'aaa'
+2. 使用 HTML5 的 history ： history.pushState({},'','aaa')： 类似于入栈，可以点击浏览器的返回，
+   或 history.replaceState({},'','aaa')：类似于直接替换栈顶内容
 
 ### 认识 vue-router
 
@@ -584,10 +632,10 @@ new Vue({
   - 第三步： 使用路由：通过<router-link> 和 <router-view>
     - <router-link> 标签是 vue-router 中已经内置的一个组件，它默认会被渲染成一个 a 标签
       <router-link> 标签属性：
-        1. to：设置对应的路由路径, to='/home'
-        2. tag: 将<router-link> 渲染成指定标签，tag='button',这时将被渲染成按钮
-        3. replace：replace 不会留下 history 记录，所有指定 replace 的情况下，后退键返回不能返回到上一个页面中
-        4. active-class: 当<router-link> 对应的路由匹配成功时，会自动给当前元素设置一个 router-link-active 的 class，设置 active-class 可以修改默认的名称
+      1. to：设置对应的路由路径, to='/home'
+      2. tag: 将<router-link> 渲染成指定标签，tag='button',这时将被渲染成按钮
+      3. replace：replace 不会留下 history 记录，所有指定 replace 的情况下，后退键返回不能返回到上一个页面中
+      4. active-class: 当<router-link> 对应的路由匹配成功时，会自动给当前元素设置一个 router-link-active 的 class，设置 active-class 可以修改默认的名称
     - <router-view> 标签会根据当前的路径，动态渲染出不同的组件
     - 网页的其他内容，比如顶部的标题、导航，或者底部的一些版权信息等会和<router-view> 处于同一个等级
     - 在路由切换时，切换的时 <router-view> 挂载的组件，其他内容不会发生改变
@@ -609,7 +657,7 @@ new Vue({
 
 ### 动态路由
 
-- 在默写情况下，一个页面的 path 路径可能是不确定的，比如进入用户界面是，希望如下路径“
+- 在有些情况下，一个页面的 path 路径可能是不确定的，比如进入用户界面是，希望如下路径“
   - /user/aaa 或 /user/bbb ；除了前面的 user 之外。后面还跟上了用户的 ID，这种 path 和 Component 的匹配关系，称之为动态路由
 
 ```javascript
@@ -620,17 +668,20 @@ const routes = [
   }
 ];
 ```
+
 ```html
-<router-link to='/user/zs' />
+<router-link to="/user/zs" />
 ```
 
 ### $router 和 $route 的区别
-1. $router 时 VueRouter 对象
-2. $route 是当前活跃的路由
 
-### 为什么使用 $router 时能拿到 VueRouter 对象？
+1. \$router 时 VueRouter 对象
+2. \$route 是当前活跃的路由
+
+### 为什么使用 \$router 时能拿到 VueRouter 对象？
+
 1. 所有的组件都继承自 vue 的原型
-2. 在 vue-router 的源码中会使用 Vue.prototype.$router = VueRouter, 所以使用 $router 能拿到VueRouter。
+2. 在 vue-router 的源码中会使用 Vue.prototype.$router = VueRouter, 所以使用 $router 能拿到 VueRouter。
 3. 在 VueRouter 的源码中会使用 Vue.component('RouterLink',link),Vue.component('RouterView',link),注册这两个全局组件，所以能使用 <router-link> 和 <router-view> 这两个组件
 
 ### 路由的懒加载
@@ -667,6 +718,7 @@ const routes = [
 - 嵌套路由是一个很常见的功能，比如在 home 页面种，我们希望通过 /home/news 和 /home/message 访问一些内容；一个路径映射一个组件，访问这两个路径也会分别渲染两个组件
 - 实现路由嵌套：
   1. 创建对应的子组件，并且在路由映射中配置对应的子路由
+  ```javascript
      {
       path: '/home',
       component: Home,
@@ -685,6 +737,7 @@ const routes = [
         }
       ]
      },
+  ```
   2. 在组件内部使用 <router-view> 标签
 
 ### 路由参数的传递
@@ -697,21 +750,22 @@ const routes = [
 - query 方式：
   1. 配置路由格式：/router，也就是普通路由
   2. 传递的方式：对象中使用 query 的 key 作为传递方式
-  3. 传递后形成的路径： /router?id=123 或 /router?id=abc
+  3. 传递后形成的路径： /router?id=123&name=pipilei 或 /router?id=abc
 
 ### 路由的导航守卫
+
 1. 为什么使用导航守卫？
-  + 现在有个需求：在一个SPA 应用中，如何改变网页的标题呢？
-    - 网页标题是通过<title> 来显示的，但SPA 只有一个固定的 html 页面，切换不同的路由是，标题并不会改变
-    - 但我们可以通过 js 来修改 <title> 中的内容，通过 window.document.title = "新的标题"
-    - 那么在 vue 项目中，在哪里修改？什么时候修改比较合适呢？这时候就可以使用路由的导航守卫
+
+- 现在有个需求：在一个 SPA 应用中，如何改变网页的标题呢？
+  - 网页标题是通过<title> 来显示的，但 SPA 只有一个固定的 html 页面，切换不同的路由是，标题并不会改变
+  - 但我们可以通过 js 来修改 <title> 中的内容，通过 window.document.title = "新的标题"
+  - 那么在 vue 项目中，在哪里修改？什么时候修改比较合适呢？这时候就可以使用路由的导航守卫
+
 2. 使用方法：在 router 文件夹下的 index.js 文件中添加下面方法
-    router.beforeEach((to, from, next))
-    to: 下一个路由
-    from: 源路由，当前导航即将要离开的路由
-    next: 方法，必须调用，调用该方法后才能进入下一个钩子
-
-
+   router.beforeEach((to, from, next))
+   to: 下一个路由
+   from: 源路由，当前导航即将要离开的路由
+   next: 方法，必须调用，调用该方法后才能进入下一个钩子
 
 ### keep-alive
 
@@ -724,6 +778,32 @@ const routes = [
 ### 完成 tabBar 案例
 
 ### promise
+
+- promise 介绍和基本使用
+
+  - ES6 中一个非常重要和好用的特性就是 Promise，Promise 是异步编程的一种解决方案
+  - 一种常见的异步场景就是网络请求了，我们封装一个网络请求函数，因为不能立即得到结果，所有往往会传入另外一个函数，在数据请求成功时，将数据通过传入的函数回调出去，但当网络请求非常复杂时，就会出现回调地狱
+
+- new Promise() 时做了哪些操作：
+  new -> 执行 Promise 构造函数（1. 保存一些状态信息。 2. 执行传入的函数）
+  在执行传入的回调函数时，会传入两个参数：resolve，reject，而 resolve 和 reject 本身又是函数，在回调函数中可以执行异步操作
+
+  ```javascript
+  new Promise((resolve, reject) => {
+    // 执行异步操作
+  })
+    .then(res => {
+      // 调用了 resolve(res) 会到这里执行
+    })
+    .catch(err => {
+      // 调用了 reject(err) 会到这里执行
+    });
+  ```
+
+- promise 三种状态
+  1. pending: 等待状态，比如正在进行网络请求，或者定时器没有到时间
+  2. fulfill：满足状态，当我们主动回调了 resolve 时，就处于该状态，并且会回调 .then()
+  3. reject: 拒绝状态，当我们主动回调了 reject 时，就处于该状态，并且会回调 .catch()
 
 ## Vuex
 
@@ -753,13 +833,16 @@ const routes = [
   - 字符串的事件类型（type）
   - 一个回调函数（handler），该回调函数的第一个参数是 state
     mutation 提交风格：
-    1. this.\$store.commit('add',param)
+    ```javascript
+    1. this.$store.commit('add',param)
        add(state,param){}
-    2. this.\$store.commit({
+
+    2. this.$store.commit({
        type: 'add',
        count: 100
        })
        add(state,payload)
+    ```
 
 4. actions: 做异步操作
 
