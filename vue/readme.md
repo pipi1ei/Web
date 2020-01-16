@@ -918,3 +918,11 @@ axios.interceptors.response.use(
   }
 );
 ```
+
+
+## Vue 项目目录结构划分
+1. src 下的 assets 目录创建 css 和 img 用于存放 css 文件和图片文件
+2. 在 src 下创建 views 目录用于存放视图组件，components 目录存放公共组件，components 目录下新建 common 和 content 目录，common 目录存放公共组件，可以在任何项目使用的组件，content 存放只能在当前项目可复用的组件
+3. 在 src 下新建 network 文件夹用于存放网络请求相关代码
+4. src 下的router 文件夹新建 index.js 写路由相关代码，store 目录下存放 vuex 代码
+5. 在 src 下创建 common 文件夹，存放一些公共的 js 文件，可以存放一些常量、工具函数
