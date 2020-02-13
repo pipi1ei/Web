@@ -926,3 +926,38 @@ axios.interceptors.response.use(
 3. 在 src 下新建 network 文件夹用于存放网络请求相关代码
 4. src 下的router 文件夹新建 index.js 写路由相关代码，store 目录下存放 vuex 代码
 5. 在 src 下创建 common 文件夹，存放一些公共的 js 文件，可以存放一些常量、工具函数
+
+
+### vue 组件之间如果想要复用代码可以通过 mixin 的方式复用
+```javascript
+  const mixin = {
+    created(){
+      console.log(1)
+    }
+  }
+  new Vue({
+    mixins: [mixin]
+  })
+```
+
+
+
+## 监听图片加载完成：
+1. 原生 js 监听图片加载完成: img.onload = function(){}
+2. vue 中监听：在 img 标签中添加 @load 事件： @load = "方法名"
+
+
+## js 防抖函数
+```javascript
+  debounce(func, delay){
+    let timer = null
+    return function(...args){
+      if(timer){
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {
+        func.apply(this, args)
+      },delay)
+    }
+  }
+```

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>a</li>
+    <li>c</li>
+    <li>b</li>
+    <li>d</li>
+  </ul>
+
+
+  <script>
+    var xx = (1,2,3,4,5)
+    console.log('xx = ' + xx)
+
+    function fooo(){
+      console.log(arguments)
+    }
+
+    foo(true)
+
+     var obj = {
+        name: 'pipilei',
+        age: 18,
+        __proto__: {
+          lastName: 'chen'
+        }
+      }
+      console.log(obj)
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          console.log(obj[prop])  // pipilei, 18
+        }
+      }
+
+    var num = new Number(123)
+    console.log(num)
+    console.log(num.toString)
+
+    function Grand() { }
+      Grand.prototype.lastName = 'chen'
+      var grand = new Grand()
+
+      function Father() { this.name = 'lei' }
+      Father.prototype = grand
+      var father = new Father()
+
+      function Son() { this.hobby = 'play' }
+      Son.prototype = father
+      var son = new Son()
+      console.log(son)
+
+
+    P.prototype.name = 'hehe'
+    var person1 = new P()  // person1.name = 'hehe'
+    var person2 = new P()  // person2.name = 'hehe'
+
+    // 求一个字符串字节数长度
+    function getStrByteLength(str){
+      var length = str.length
+      for(var i = 0; i < str.length; i++){
+        if (str.charCodeAt(i) > 255){
+          length++
+        }
+      }
+      return length
+    }
+    console.log(getStrByteLength('你好啊abc'))
+
+    // 题1
+    function foo(x) {  
+      console.log(arguments)
+      return x
+    }
+    foo(1,2,3,4,5)  // [1,2,3,4,5]
+
+    // 题2
+    var x = 1, y = z = 0;
+    function add(n) { return n = n + 1 }
+    y = add(x)
+    function add(n){ return n = n + 3 }
+    z = add(x)
+    console.log('x = ' + x)  // 1
+    console.log('y = ' + y)  // 4
+    console.log('z = ' + z)  // 4
+
+    // 题3
+    /**
+     * GO{
+     *  a: 5,
+     *  test: function(){....}
+     * }
+     * AO{
+     *  a: 0
+     * }
+     * */
+
+    var a = 5
+    function test1() {  
+      a = 0;
+      console.log(a)     // 0
+      console.log(this.a) // 5
+      var a
+      console.log(a)  // 0
+    }
+    test1()
+
+    // 题4
+    var str = 'adc'
+    str += 1
+    var test = typeof (str)
+    if (test.length == 6) {
+      test.sign = 'typeof 的返回结果可能为 String'
+    }
+    console.log(test.sign)  // undefined
+    console.log(test)  // 'string'
+    console.log(str)  // 'abc1'
+
+    // 题5
+    function Person(){
+      this.say = function () {  
+        console.log(this.say)
+      }
+    }
+    new Person().say()
+
+    // 题6
+    function callback(i){
+      return function () {  
+        console.log(i)
+      }
+    }
+
+    // window.onload = function(){
+    //   var liList = document.getElementsByTagName('li')
+    //   for(var i = 0; i < liList.length; i++){
+    //     (function(j){
+    //       liList[j].onclick = function () {
+    //         console.log(j)
+    //       }
+    //     }(i))
+        
+    //   }
+    // }
+    
+  window.onload = function () {
+    var liList = document.getElementsByTagName('li')
+    for (var i = 0; i < liList.length; i++) {
+        liList[i].onclick = callback(i)
+        }
+
+    }
+  
+
+
+    // function test(){
+    //   var arr = []
+    //   for(var i = 0; i < 10; i++){
+    //     arr[i] = function () {  
+    //       document.write(i + " ")
+    //     }
+    //   }
+    //   return arr
+    // }
+
+    // 方案一：工厂函数回调，创建新的词法环境
+    // function callback(i) {  
+    //   return function(){
+    //     document.write(i + ' ')
+    //   }
+    // }
+
+    // function test() {
+    //     var arr = []
+    //     for (var i = 0; i < 10; i++) {
+    //       arr[i] = callback(i)
+    //     }
+    //     return arr
+    //   }
+
+    // 方案二：立即执行函数
+
+    function test() {
+      var arr = []
+      for (var i = 0; i < 10; i++) {
+        (function(){
+          var j = i
+          arr[i] = function () {
+            document.write(j + '*')
+          }
+        }())
+      }
+      
+      return arr
+    }
+
+    var myArr = test()
+    for(var i = 0; i < 10; i++){
+      myArr[i]()
+    }
+
+  </script>
+</body>
+</html>

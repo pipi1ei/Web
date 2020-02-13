@@ -1,0 +1,20 @@
+/* 
+    Document   : template
+    Created on : 2013-2-21, 11:34:46
+    Author     : Ztian
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.divWrapper { 
+    text-align: center;
+    margin: auto;
+	margin-bottom: 10px;
+    overflow: auto;
+}
+
+.imageWrapper img {
+	width: 100%;
+}
+
+
