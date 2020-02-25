@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单元素</title>
+  <style>
+    fieldset{
+      display: inline-block;
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <div>
+      <fieldset>
+        <legend>必填信息</legend>
+        <div>
+          <span>手机：</span>
+          <input type="text" maxlength="11">
+        </div>
+        <div>
+          <span>密码：</span>
+          <input type="password">
+        </div>
+        <div>
+          <span>验证码：</span>
+          <input type="text">
+          <input type="button" value="获取验证码">
+        </div>
+      </fieldset>
+    </div>
+    
+    <div>
+      <fieldset>
+        <legend>选填信息</legend>
+        <div>
+          <span>照片：</span>
+          <input type="file" value="选择文件">
+        </div>
+        <div>
+          <span>性别:</span>
+          <label for="male">
+            <span>男</span>
+            <input type="radio" name="sex" id="male" checked>
+          </label>
+          <label for="female">
+            <span>女</span>
+            <input type="radio" name="sex" id="female">
+          </label>
+        </div>
+        <div>
+          <span>兴趣：</span>
+          <label for="lanqiu">
+            <span>篮球</span>
+            <input type="checkbox" name="hobby" checked id="lanqiu">
+          </label>
+          <label for="soccer">
+            <span>足球</span>
+            <input type="checkbox" name="hobby" id="soccer">
+          </label>
+          <label for="run">
+            <span>跑步</span>
+            <input type="checkbox" name="hobby" id="run">
+          </label>
+        </div>
+        <div>
+          <span>学历:</span>
+          <select name="xueli" id="">
+            <option value="高中">高中</option>
+            <option value="初中">初中</option>
+            <option value="本科">本科</option>
+          </select>
+        </div>
+        <div>
+          <span>简介：</span>
+          <textarea name="" id="" cols="20" rows="3"></textarea>
+        </div>
+      </fieldset>
+    </div>
+    
+    <div>
+      <input type="reset" value="重置"">
+      <input type="submit" value="注册">
+    </div>
+  </form>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  
+    .main{
+      text-align: center;
+    }
+    table{
+      margin: 20px auto;
+      border: 1px solid #333;
+      border-collapse: collapse;
+    }
+    table tr:nth-of-type(even){
+      background-color: rgba(248, 227, 226, 0.801);
+    }
+    table tr:nth-of-type(odd){
+      background-color: rgba(199, 247, 253, 0.849);
+    }
+
+    table tr td{
+      padding: 5px 30px;
+      border: 1px solid #333;
+    }
+    table tr.title{
+      font-weight: 700;
+    }
+    .buy{
+      padding: 5px;
+      background-color: red;
+      color: #fff;
+      border-radius: 5px;
+    }
+    .price{
+      color: #f00;
+      font-weight: 700;
+    }
+    p{
+      padding: 3px 0;
+    }
+    .start-time{
+      font-weight: 700;
+    }
+    .end-time{
+      color: #999;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <td></td>
+        ...
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        ...
+      </tr>
+      ...
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        ...
+      </tr>
+    </tfoot>
+  </table>
+
+
+  <div class="main">
+    <h2>影院电影放映列表</h2>
+    <table>
+      <tr class="title">
+        <td>放映时间</td>
+        <td>语言版本</td>
+        <td>放映厅</td>
+        <td>售价（元）</td>
+        <td>选座购票</td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p class="start-time">13:15</p>
+            <p class="end-time">15:00散场</p>
+          </div>
+        </td>
+        <td>国语3D</td>
+        <td>2号厅</td>
+        <td class="price">48.5</td>
+        <td>
+          <span class="buy">选座购票</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p class="start-time">13:15</p>
+            <p class="end-time">15:00散场</p>
+          </div>
+        </td>
+        <td>国语3D</td>
+        <td>2号厅</td>
+        <td  class="price">48.5</td>
+        <td>
+          <span class="buy">选座购票</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p class="start-time">13:15</p>
+            <p class="end-time">15:00散场</p>
+          </div>
+        </td>
+        <td>国语3D</td>
+        <td>2号厅</td>
+        <td  class="price">48.5</td>
+        <td>
+          <span class="buy">选座购票</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p class="start-time">13:15</p>
+            <p class="end-time">15:00散场</p>
+          </div>
+        </td>
+        <td>国语3D</td>
+        <td>2号厅</td>
+        <td  class="price">48.5</td>
+        <td>
+          <span class="buy">选座购票</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p class="start-time">13:15</p>
+            <p class="end-time">15:00散场</p>
+          </div>
+        </td>
+        <td>国语3D</td>
+        <td>2号厅</td>
+        <td  class="price">48.5</td>
+        <td>
+          <span class="buy">选座购票</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

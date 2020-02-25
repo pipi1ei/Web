@@ -5,147 +5,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .wrapper .content{
+      width: 200px;
+      height: 200px;
+      border: 1px solid red;
+    }
+
+    button.active{
+      background-color: aqua;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrapper">
+    <button class="active">111</button>
+    <button>222</button>
+    <button>333</button>
+    <div class="content"></div>
+  </div>
   <script>
-    // 字符串去重
-    String.prototype.strUnique = function(){
-      var obj = {}
-      var str = ""
-      for (let i = 0; i < this.length; i++) {
-        if (!obj[this[i]]) {
-          obj[this[i]] = '#'
-          str += this[i]
+    let btns = document.getElementsByTagName('button')
+    let content = document.querySelector('.content')
+
+    const btnsLength = btns.length
+    for(let i = 0; i < btnsLength; i++){
+      btns[i].onclick = function(){
+        for(let j = 0; j < btnsLength; j++){
+          btns[j].classList.remove('active')
         }
-      }
-      return str
-    }
-
-    const inherit = (function () {
-      function F() { }
-      return function (Target, Origin) {
-        F.prototype = Origin.prototype
-        Target.prototype = new F()
-        Target.prototype.constructor = Target
-        Target.prototype.uber = Origin.prototype
-      }
-    }())
-    function Person() { }
-    Person.prototype.name = 123
-
-    function Student() { }
-    inherit(Student, Person)
-    var obj1 = new Student()
-    console.log(obj1)
-
-    Array.prototype.unique = function () {
-      let arr = []
-      const length = this.length
-      for (let i = 0; i < length; i++) {
-        const value = this[i]
-
-        for (let j = i + 1; j < length; j++) {
-          if (value == this[j]) {
-            arr.push(value)
-          }
-        }
-      }
-      return arr
-    }
-    var arr = [1, 3, 3, 5, 6, 7, 5, 3]
-    console.log(arr.unique())
-
-    var obj = {
-      '1': 'a',
-      '2': 'b',
-      '3': 'c',
-      length: 3,
-      name: 'pipilei',
-      age: 18,
-      push: Array.prototype.push,
-      splice: Array.prototype.splice
-    }
-    console.log(obj)
-
-
-    if (true) {
-      var aaa;
-      function b() { }  // 错误
-    }
-
-    console.log(typeof (aaa))  // 返回 "undefined"  字符串undefined
-
-    var bar = { a: '002' }
-    function print() {
-      bar.a = 'a'
-      Object.prototype.b = 'b'
-      return function inner() {
-        console.log(bar.a)  // a
-        console.log(bar.b)  // b
+        this.classList.add('active')
+        content.innerHTML = `${i+1}${i+1}${i+1}`
       }
     }
-    print()()
-
-    var bar = { a: '002' }
-    function print() {
-      bar.a = 'a'
-      Object.prototype = {
-        b: 'b'
-      }
-      return function inner() {
-        console.log(bar.a)  // a
-        console.log(bar.b)  // undefined
-      }
-    }
-    print()()
-
-    var name = '222'
-    var a = {
-      name: '111',
-      say() {
-        console.log(this.name)
-      }
-    }
-
-    var fun = a.say
-    fun() // 222
-
-    a.say() // 111
-
-    var b = {
-      name: '333',
-      say(fun) {
-        fun()
-      }
-    }
-
-    b.say(a.say) // 222
-    b.say = a.say
-    b.say()  // 333
-
-    function test() {
-      console.log(arguments.callee)  // test(){ console.log(arguments.callee) }
-      console.log(arguments.callee == test)  // true
-    }
-    test()
-
-    var result = (function (n) {
-      if (n == 1) {
-        return 1
-      }
-      return n * arguments.callee(n - 1)
-    }(10))
-    console.log(result)
-
-    function test() {
-      foo()
-    }
-    function foo() {
-      console.log(foo.caller)
-    }
-
-    test()
   </script>
 </body>
 

@@ -75,57 +75,55 @@ Ajax 简单的来说，就是一个异步的 JavaScript 请求，用来获取后
     @callback: 请求结果回调
     */        
 function myAjax(type, url, params, isAsync, dataType, callback){
-    var xhr = null;
-    if(window.XMLHttpRequest){
-        xhr = new XMLHttpRequest();
-    }else{  
-        xhr = new ActiveXObject('Microsoft.XMLHTTP');
-    }
+  var xhr = null;
+  if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();
+  }else{  
+    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+  }
 
-    if(type.toLowerCase() == 'get'){
-        if(params && params != ''){
-            url += "?" + params;
-        }
+  if(type.toLowerCase() == 'get'){
+    if(params && params != ''){
+      url += "?" + params;
     }
-    xhr.open(type, url, isAsync);
-    if(type.toLowerCase() == 'get'){
-        xhr.send();
-    }else if(type.toLowerCase() == 'post'){
-        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
-        xhr.send(params);
-    }
+  }
+  xhr.open(type, url, isAsync);
+  if(type.toLowerCase() == 'get'){
+    xhr.send();
+  }else if(type.toLowerCase() == 'post'){
+    xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+    xhr.send(params);
+  }
     
-    if(isAsync){
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var result = null;
-                if (dataType == 'json') {
-                    result = xhr.responseText;
-                } else if (dataType == 'xml') {
-                    result = xhr.responseXML;
-                } else {
-                    result = xhr.responseText;
-                }
-                if (callback) {
-                    callback(result);
-                }
-            }
+  if(isAsync){
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var result = null;
+        if (dataType == 'xml') {
+          result = xhr.responseXML;
+        } else {
+          result = xhr.responseText;
         }
-    }else{
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var result = null;
-            if (dataType == 'json') {
-                result = xhr.responseText;
-            } else if (dataType == 'xml') {
-                result = xhr.responseXML;
-            } else {
-                result = xhr.responseText;
-            }
-            if (callback) {
-                callback(result);
-            }
+        if (callback) {
+          callback(result);
         }
+      }
     }
+  }else{
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var result = null;
+      if(dataType == 'json'){
+        result = JSON.parse(xhr.responseXML);
+      }else if (dataType == 'xml') {
+        result = xhr.responseXML;
+      } else {
+        result = xhr.responseText;
+      }
+      if (callback) {
+        callback(result);
+      }
+    }
+  }
 }
 
 该封装方式有两个缺点：1. 参数的顺序不可以改变； 2. 参数没有默认值，每次都得传递。这两个缺点通过一个小技巧就可以解决，我们将封装的参数变为一个对象即可。得到如下代码：
@@ -238,6 +236,8 @@ jQuery对Ajax方法进行了封装，提供了很多方法供开发者调用
     4.前端页面决定方法名称
     5.给 window 增加属性进行方法定义
 
+4. JSONP 方式跨域的本质是服务器返回了一个方法的调用，但有的服务器返回的并不是一个方法的调用，这样jsonp跨域的方式就无法使用，受到同源策略的影响，也不能够使用ajax的方式去获取服务器数据，这是应该借助自己的本地服务器做一个中转，本地服务器获取到第三反服务器数据后，前端通过ajax的方式访问本地服务器获取到数据
+
 
 
 ### 模板引擎的使用
@@ -245,7 +245,7 @@ jQuery对Ajax方法进行了封装，提供了很多方法供开发者调用
 生成 html 标签我们可以通过拼接字符串的方式来实现。这种方式在标签结构比较复杂的情况之下很不好操作和后期的维护，并且容易出错。通过使用模板引擎可以很方便的生成 html 标签
 1. 模板引擎的本质：
     将数据和模板结合起来生成 html 片段。所以模板引擎需要两个组成部分: 模板和数据。通过数据，将模板指定的标签动态生成，方便维护。
-    常见的模板引擎喝多，这里介绍一个效率最高的模板引擎 artTemplate ，这个是腾讯公司出品的开源模板引擎，在 GitHub 上可以下载到源代码。
+    常见的模板引擎很多，这里介绍一个效率最高的模板引擎 artTemplate ，这个是腾讯公司出品的开源模板引擎，在 GitHub 上可以下载到源代码。
 2. 使用步骤：
     1.引入js文件：
         <script src="../../lib/art-template/template-web.js"></script>
