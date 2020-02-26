@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .test{
+      width: 100px;
+      height: 100px;
+      background-color: #ff0000;
+    }
+
+    .box{
+      width: 200px;
+      height: 200px;
+      background-color: yellow;
+    }
+
+    .inner{
+      width: 100px;
+      height: 100px;
+      background-color: green;
+
+      /* 设置左右margin不会传递到父元素 */
+      margin-left: 20px;
+
+      /* 设置上下的margin 会传递到父元素 */
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test"></div>
+  <div class="box">
+    <div class="inner"></div>
+  </div>
+</body>
+</html>

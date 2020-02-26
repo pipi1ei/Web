@@ -7,6 +7,7 @@ var moduleB = (function () {
   var obj = {}
   obj.name = name;
   obj.flag = flag;
+  return obj
 })();
 
 
