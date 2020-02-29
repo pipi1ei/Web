@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      sub{
+        position: relative;
+        /* bottom: 5px; */
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      请计算n<sub>1</sub>  + n<sub>2</sub>  + n<sup>2</sup>  的值
+    </div>
+
+    <script>
+      String.prototype.unique = function(){
+        let obj = {}
+        let str = ''
+        for (let index = 0; index < this.length; index++) {
+          if (!obj[this[index]]) {
+            obj[this[index]] = "#";
+            str += this[index];
+          }
+        }
+        return str;
+      }
+
+      var str = 'abcaaacsccs'
+      console.log(str.unique())
+    </script>
+  </body>
+</html>

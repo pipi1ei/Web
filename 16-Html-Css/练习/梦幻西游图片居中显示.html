@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    .box{
+      height: 400px;
+      min-width: 1000px;
+      background-image: url("../images/mhxy.jpg");
+      background-position: center -81px;
+    }
+
+    .box2{
+      overflow: hidden;
+      min-width: 1000px;
+    }
+    .box2 img{
+      position: relative;
+      /* 向左移动图片宽度的一半 */
+      /* left: -960px; */
+      transform: translateX(-50%);
+      
+      /* 向右移动父元素宽度的一半，而设置margin的值为百分比是相对父元素的 */
+      margin-left: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+
+  <!-- 使用定位实现 -->
+  <div class="box2">
+    <img src="../images/mhxy.jpg" alt="">
+  </div>
+</body>
+</html>

@@ -1,0 +1,312 @@
+/* 顶部广告相关样式 */
+#header .ad{
+  min-width: 1100px;
+  overflow: hidden;
+}
+
+#header .ad a img{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
+/* 顶部导航栏样式 */
+/* 左边部分 */
+#header .nav{
+  background-color: #000;
+}
+#header .nav .wrap{
+  background-color: #000;
+}
+#header .nav .group1{
+  float: left;
+}
+#header .nav .group1 li{
+  color: #999;
+  float: left;
+  line-height: 30px;
+  /* padding: 0 15px; */
+  margin-right: 30px;
+  position: relative;
+}
+#header .nav .group1 li .welcome{
+  cursor: text;
+}
+
+#header .nav .group1 li a:hover{
+  color: #fff;
+}
+
+/* 手机考拉二维码 */
+#header .phone{
+  display: none;
+  background-color: #fff;
+  padding: 0 5px;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  border: 1px solid #ededee;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 999;
+}
+
+#header .nav  .group1 .last:hover .phone{
+  display: block;
+}
+
+#header .phone .arrow{
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-top: 1px solid #ededee;
+  border-left: 1px solid #ededee;
+  position: absolute;
+  transform: rotate(45deg) translate(-50%);
+  top: -2px;
+  left: 50%;
+}
+
+#header .phone img{
+  width: 116px;
+}
+
+#header .phone p{
+  color: #000;
+  font-size: 14px;
+}
+
+/* 右边部分 */
+#header .nav .wrap .group2{
+  float: right;
+}
+#header .nav .wrap .group2 > li{
+  float: left;
+  position: relative;
+}
+
+#header .nav .wrap .group2 > li > a{
+  padding: 0 12px;
+  line-height: 30px;
+  display: block;
+}
+#header .nav .wrap .group2 .more:hover{
+  background-color: #fff;
+}
+#header .nav .wrap .group2 .more:hover > a{
+  color: #ff1e32;
+}
+
+#header .nav .wrap .group2 > li:nth-child(-n+2) a:hover{
+  color: #fff;
+}
+
+/* 下箭头样式 */
+#header .nav .group2 li:hover i{
+  border-top-color: #ff1e32;
+  transform: rotate(180deg);
+}
+
+/* 下拉更多样式 */
+#header .nav .group2 .more-list{
+  position: absolute;
+  padding: 5px 15px;
+  border: 1px solid #ededee;
+  border-top: none;
+  display: none;
+}
+
+#header .nav .group2 .more-list.right{
+  right: 0;
+}
+
+
+#header .nav .group2 .more:hover .more-list{
+  display: block;
+}
+
+#header .nav .group2 .more-list > li{
+  padding: 5px 0;
+}
+
+#header .nav .group2 .more-list > li.line::after{
+  content: "";
+  display: block;
+  border-bottom: 1px solid #ededee;
+  position: relative;
+  bottom: -5px;
+}
+
+#header .nav .group2 .more-list > li > a{
+  color: #666;
+  white-space: nowrap;
+}
+
+#header .nav .group2 .more-list > li > a:hover{
+  color: #ff1e32;
+  cursor: pointer;
+}
+
+
+/* 搜索栏部分 */
+/* logo 样式 */
+#header .search-box{
+  height: 100px;
+  position: relative;
+}
+#header .search-box .logo{
+  height: 100px;
+  float: left;
+}
+#header .search-box .logo a{
+  display: block;
+  height: 100px;
+}
+#header .search-box .logo a img{
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 搜索框样式 */
+#header .search-box .search{
+  box-sizing: border-box;
+  width: 510px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #ff1e32;
+  border-radius: 20px;
+  padding: 8px;
+}
+#header .search-box .search form{
+  width: 410px;
+  height: 20px;
+  margin-left: 25px;
+}
+#header .search-box .search form input{
+  width: 100%;
+  height: 100%;
+}
+
+#header .search-box .search .icon-search{
+  position: absolute;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: url("../images/sprite.png") no-repeat -466px -667px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#header .search-box .search .icon-search-large{
+  display: block;
+  width: 50px;
+  padding: 0 3px 0 5px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: -2px;
+  border-radius: 20px;
+  background: url("../images/header/icon_search.png") no-repeat center center #ff1e32;
+}
+
+#header .search-box .search .icon-search-large:hover{
+  cursor: pointer;
+}
+
+/* 购物车样式 */
+#header .search-box .shop-cart{
+  width: 110px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 2px solid #ff1e32;;
+  border-radius: 20px;
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+}
+#header .search-box .shop-cart a{
+  line-height: 36px;
+  color: #333333;
+  font-size: 14px;
+  display: block;
+  text-align: right;
+}
+#header .search-box .shop-cart i{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("../images/header/shop_cart.png") no-repeat;
+  position: absolute;
+  top: 17px;
+  left: 14px;
+  transform: translateY(-50%);
+}
+
+/* 分类栏样式 */
+/* 所有分类样式 */
+#header .category-box{}
+#header .category-box .category{
+  float: left;
+  width: 164px;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #ff5160;
+  background: linear-gradient(90deg,red,#ff3264);
+  text-align: center;
+  position: relative;
+}
+#header .category-box .category div{
+  position: absolute;
+  width: 15px;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+#header .category-box .category div span{
+  display: block;
+  width: 15px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 3px;
+}
+#header .category-box .category div span:last-child{
+  margin-bottom: 0;
+}
+#header .category-box .category span{
+  color: #fff;
+  font-size: 14px;
+}
+
+/* 导航样式 */
+#header .category-box .nav{
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #fff;
+}
+#header .category-box .nav ul{
+  float: left;
+  margin-left: 25px;
+}
+#header .category-box .nav ul li{
+  float: left;
+  padding: 0 20px;
+}
+#header .category-box .nav ul li a{
+  color: #333;
+}
+#header .category-box .nav ul li a:hover{
+  color: #ff1e32;
+}
+#header .category-box .nav ul li a.active{
+  color: #ff1e32;
+}

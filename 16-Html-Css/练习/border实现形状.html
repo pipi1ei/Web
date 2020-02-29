@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>border 实现形状</title>
+
+  <style>
+    [class^='box']{
+      width: 0;
+      height: 0;
+      margin: 50px;
+    }
+
+    /* 实现上三角形 */
+    .box1{
+      border-top: 150px solid red;
+      /* border-left: 50px solid green; */
+      /* 将 border-left 的color 改成透明 */
+      border-left: 150px solid transparent;
+
+      transform: rotate(-45deg);
+    }
+
+    /* 实现下三角形 */
+    .box2{
+      border-width: 100px;
+      border-style: solid;
+
+      border-top-color: red;
+      /* border-right-color: yellow;
+      border-bottom-color: blue;
+      border-left-color: green; */
+
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+
+    .box3{
+      width: 100px;
+      height: 100px;
+      background-color: skyblue;
+      border-top: 20px solid red;
+      border-left: 20px solid yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="box1"></div>
+
+  <div class="box2"></div>
+
+  <div class="box3"></div>
+</body>
+</html>

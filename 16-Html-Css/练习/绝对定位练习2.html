@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .box{
+      width: 600px;
+      height: 600px;
+      background-color: #f00;
+
+      position: relative;
+    }
+    .box .inner{
+      height: 200px;
+      background-color: yellowgreen;
+      /* 占满整行 */
+      /* left: 0;
+      right: 0; */
+
+      /* 水平居中显示 */
+      /* left: 0;
+      right: 0;
+      width: 200px;
+      margin: 0 auto; */
+
+      /* 水平、垂直居中 */
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 200px;
+      margin: auto;
+
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="inner"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .box{
+      width: 500px;
+      background-color: skyblue;
+      border: 1px solid red;
+      margin-bottom: 50px;
+    }
+
+    .inner{
+      width: 50px;
+      height: 50px;
+      background-color: yellow;
+      display: inline-block;
+      float: left;
+    }
+
+    .box2 span{
+      background-color: yellow;
+    }
+    .box2 a{
+      background-color: red;
+      float: left;
+    }
+    .box2 strong{
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <!-- 行内级元素、inline-block 元素浮动后，其顶部将与所在行的顶部对齐 -->
+  <div class="box">
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    <img src="../images/qrCode.png" alt="">
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    <div class="inner"></div>
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+    我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，我是文字，
+  </div>
+
+  <!-- 浮动元素不能与行内级内容层叠，行内级内容将会被浮动元素推出去 -->
+  <div class="box2">
+    <span>我是span元素</span>
+    <strong>我是Strong</strong>
+    <a href="#">我是a元素</a>
+  </div>
+</body>
+</html>

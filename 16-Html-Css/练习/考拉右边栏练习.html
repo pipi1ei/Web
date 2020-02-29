@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* reset css */
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    a{
+      text-decoration: none;
+      color: #333;
+    }
+
+    .right-slide{
+      position: fixed;
+      right: 20px;
+      top: 100px;
+      border: 1px solid #eaeaea;
+    }
+
+    .right-slide a{
+      display: block;
+      width: 86px;
+      height: 66px;
+      margin: 10px auto 0;
+      text-align: center;
+      border-bottom: 1px solid #eaeaea;
+    }
+    .right-slide a i{
+      display: block;
+      width: 20px;
+      height: 20px;
+      background-color: #f00;
+      margin: 0 auto 5px;
+    }
+    .right-slide a.top{
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="right-slide">
+    <a href="#">
+      <i></i>
+      <span>签到</span>
+    </a>
+    <a href="#">
+      <i></i>
+      <span>购物车</span>
+    </a>
+    <a href="#">
+      <i></i>
+      <span>我的</span>
+    </a>
+    <a href="#" class="top">
+      <i></i>
+      <span>TOP</span>
+    </a>
+  </div>
+</body>
+</html>

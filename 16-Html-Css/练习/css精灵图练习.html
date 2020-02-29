@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    /* reset css */
+    ul{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    h5,p,body{
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li, h5, p{
+      display: inline-block;
+    }
+
+    /* common css */
+    .wrap{
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    ul{
+      text-align: center;
+    }
+
+    ul li{
+      height: 42px;
+      line-height: 42px;
+      margin-left: 12px;
+      margin-right: 25px;
+    }
+
+    p{
+      color: #444;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    h5{
+      /* text-indent: -999px; */
+      color: transparent;
+      width: 36px;
+      height: 42px;
+      background-image: url("../images/sprite.png");
+    }
+
+    ul li:nth-child(1) h5{
+      background-position: 0 -192px;
+    }
+    ul li:nth-child(2) h5{
+      background-position: -41px -192px;
+    }
+    ul li:nth-child(3) h5{
+      background-position: -82px -192px;
+    }
+    ul li:nth-child(4) h5{
+      background-position: -123px -192px;
+    }
+  </style>
+</head>
+<body>
+  <ul class="wrap">
+    <li>
+      <h5>多</h5>
+      <p>品类齐全，轻松购物</p>
+    </li>
+    <li>
+      <h5>快</h5>
+      <p>多仓直发，极速配送</p>
+    </li>
+    <li>
+      <h5>好</h5>
+      <p>正品行货，精致服务</p>
+    </li>
+    <li>
+      <h5>省</h5>
+      <p>天天低价，畅选无忧</p>
+    </li>
+  </ul>
+</body>
+</html>
