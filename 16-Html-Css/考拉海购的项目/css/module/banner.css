@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* 轮播图部分样式 */
+/* 图片样式 */
+#banner {
+  overflow: hidden;
+  position: relative;
+}
+#banner .swiper {
+  width: 500%;
+  transform: translate(-20%);
+}
+#banner .swiper li {
+  float: left;
+  width: 20%;
+}
+#banner .swiper li a {
+  display: block;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  overflow: hidden;
+}
+#banner .swiper li a img {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+/* 指示器样式 */
+#banner .indicator {
+  position: absolute;
+  width: 1100px;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-left: 220px;
+  box-sizing: border-box;
+}
+#banner .indicator li {
+  float: left;
+}
+#banner .indicator li a {
+  display: block;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  margin: 0 8px;
+  background-color: #fff;
+}
+#banner .indicator li a.active,
+#banner .indicator li a:hover {
+  background-color: #ff1e32;
+}
+
+/* 左右控制样式 */
+#banner .left a,
+#banner .right a {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 68px;
+  background: url("../../images/sprite.png") no-repeat;
+}
+
+#banner .left {
+  width: 1100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#banner:hover .left a,
+#banner:hover .right a {
+  display: block;
+}
+
+#banner .left a {
+  background-position: -625px -68px;
+  left: 170px;
+}
+
+#banner .left a:hover {
+  background-position: -625px -153px;
+}
+
+#banner .right a {
+  background-position: -670px -67px;
+  right: 50px;
+}
+
+#banner .right a:hover {
+  background-position: -670px -153px;
+}
+
+
+/* 底部高斯模糊效果 */
+#banner .service{
+  height: 45px;
+  line-height: 45px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+#banner .service .blur{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url("../../images/bannner/banner1.jpg") center bottom;
+  filter: blur(5px);
+}
+#banner .service .content{
+  position: relative;
+  z-index: 1;
+}
+#banner .service .content .left-desc li{
+  float: left;
+  margin-right: 40px;
+}
+#banner .service .content .left-desc li a{
+  color: #fff;
+}
+#banner .service .content .left-desc li a:hover,
+#banner .service .content .right-desc a:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#banner .service .content .right-desc{
+  float: right;
+}
+#banner .service .content .right-desc a{
+  color: #fff;
+}

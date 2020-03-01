@@ -1,4 +1,8 @@
 /* 顶部广告相关样式 */
+#header{
+  border-bottom: 2px solid #ededee;
+}
+
 #header .ad{
   min-width: 1100px;
   overflow: hidden;
@@ -116,6 +120,8 @@
   border: 1px solid #ededee;
   border-top: none;
   display: none;
+  z-index: 1001;
+  background-color: #fff;
 }
 
 #header .nav .group2 .more-list.right{
@@ -193,13 +199,17 @@
   width: 100%;
   height: 100%;
 }
+#header .search-box .search form input::placeholder{
+  font-style: oblique;
+  color: #999;
+}
 
 #header .search-box .search .icon-search{
   position: absolute;
   display: inline-block;
   width: 14px;
   height: 14px;
-  background: url("../images/sprite.png") no-repeat -466px -667px;
+  background: url("../../images/sprite.png") no-repeat -466px -667px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -213,7 +223,7 @@
   right: 0;
   top: -2px;
   border-radius: 20px;
-  background: url("../images/header/icon_search.png") no-repeat center center #ff1e32;
+  background: url("../../images/header/icon_search.png") no-repeat center center #ff1e32;
 }
 
 #header .search-box .search .icon-search-large:hover{
@@ -244,7 +254,7 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url("../images/header/shop_cart.png") no-repeat;
+  background: url("../../images/header/shop_cart.png") no-repeat;
   position: absolute;
   top: 17px;
   left: 14px;
@@ -253,7 +263,6 @@
 
 /* 分类栏样式 */
 /* 所有分类样式 */
-#header .category-box{}
 #header .category-box .category{
   float: left;
   width: 164px;
@@ -283,6 +292,58 @@
 #header .category-box .category span{
   color: #fff;
   font-size: 14px;
+}
+
+/* 所有分类列表样式 */
+#header .category-box .category .list{
+  position: absolute;
+  z-index: 1000;
+  background: linear-gradient(90deg,red,#ff3264);
+  margin: 0;
+  left: 0;
+  right: 0;
+}
+#header .category-box .category .list li{
+  margin: 0 3px 0 1px;
+  border-bottom: 1px solid #ff5160;;
+}
+#header .category-box .category .list li a{
+  position: relative;
+  display: block;
+}
+#header .category-box .category .list li a:hover{
+  background-color: #fff;
+}
+#header .category-box .category .list li a:hover .desc{
+  color: #ff1e32;
+}
+#header .category-box .category .list li a .icon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url("../../images/header/category_list_icon1.png") no-repeat center center;
+}
+#header .category-box .category .list li a:hover .icon{
+  background: url("../../images/header/category_list_icon1_hover.png") no-repeat center center/20px 20px;
+}
+#header .category-box .category .list li a .right-arrow{
+  display: inline-block;
+  border-width: 1px;
+  border-style: solid;
+  border-top-color: #ff96ad;
+  border-right-color: #ff96ad;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg) translateY(-50%);
+  position: absolute;
+  right: 25px;
+  top: 50%;
 }
 
 /* 导航样式 */

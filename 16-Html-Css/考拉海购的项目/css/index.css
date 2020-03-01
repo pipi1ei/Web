@@ -1,3 +1,6 @@
 @charset "utf-8";
 
-@import "./header.css"
+@import "./module/header.css";
+@import "./module/banner.css";
+@import "./module/main.css";
+@import "./module/footer.css";

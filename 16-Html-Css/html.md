@@ -164,3 +164,51 @@
 12. img元素
   - <img> 是一个可替换元素。它的 display 属性的默认值是 inline，但是它的默认分辨率是由被嵌入的图片的原始宽高来确定的，使得它就像 inline-block 一样。你可以为 <img> 设置 border/border-radius、padding/margin、width、height 等等的 CSS 属性。
   - <img> 没有基线（baseline），这意味着，当在一个行内格式的上下文（an inline formatting context）中使用 vertical-align: baseline 时，图像的底部将会与容器的文字基线对齐。
+
+
+## HTML5
++ html5是定义HTML标准的最新版本，该术语通过两个不同的概念来表现：
+  - 狭义的HTML5说的是HTML5新的元素和属性
+  - 广义的HTML5说的是HTML5的新标准，包括新的HTML元素，css新特性和JavaScript
+
+### 语义化元素
+  + 在HTML5之前，我们的网站分布层级通常包括：header、nav、main、footer
+
+  + HTML5新增了语义化的元素：
+    - <header>：头部元素
+    - <nav>：导航元素
+    - <section>：定义文档某个区域的元素
+    - <article>：内容元素
+    - <aside>：侧边栏元素
+    - <footer>：尾部元素
+
+  + 媒体元素：HTML5 增加了对媒体类型的支持（在HTML5之前是通过flash或者其他插件实现的）
+    - <video>：用于在HTML 或者 XHTML 文档中嵌入媒体播放器，用于支持文档内的视频播放 。video 元素常见属性：
+      1. src：媒体的来源
+      2. controls：增加控制工具栏
+      3. autoplay：自动播放，但存在兼容性问题
+      4. muted：静音，增加后静音并且自动播放会生效
+      5. loop：循环播放
+
+    - <audio>：用于在文档中表示音频内容，常见属性：
+      1. src：媒体的来源
+      2. controls：增加控制工具栏
+      3. autoplay：自动播放，但存在兼容性问题
+      4. muted：静音
+      5. loop：循环播放
+
+    - <source>元素：video 和 audio 标签的子元素，如果存在兼容性问题（浏览器不支持某些格式的视频），可以将多个视频格式的的数据源放到<source> 中，通过 src 属性指定数据的来源
+
+  + HTML5 对表单元素的扩展
+    - placeholder：输入框的占位文字
+    - multiple：多个值
+    - autofocus：
+    对input的type值也有很多扩展：
+      - date：日期，用户可以选择日期
+      - time：时间，用户可以选择时间
+      - number：数字,要求用户只能输入数字
+      - tel：电话
+      - color：颜色，用户可以选择颜色
+      - email：邮箱，要求用户输入的内容中必须有 @ 符号
+      - 等等...
+    

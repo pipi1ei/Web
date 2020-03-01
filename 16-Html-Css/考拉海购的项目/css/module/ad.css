@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+/* 广告样式 */
+#main .ad{
+  overflow: hidden;
+}
+#main .ad > a{
+}
+#main .ad > a > img{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

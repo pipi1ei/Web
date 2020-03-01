@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+#footer .btm-list{
+  padding: 40px 30px;
+  border-bottom: 1px solid #ededed;
+}
+#footer .btm-list ul li{
+  float: left;
+  width: 25%;
+  color: #333;
+}
+#footer .btm-list ul li > span{
+  float: left;
+  text-align: center;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid #d6d6d6;
+  border-radius: 46px;
+  margin-right: 15px;
+}
+#footer .btm-list ul li > div{
+  float: left;
+}
+#footer .btm-list ul li > div p:first-child{
+  font-size: 18px;
+  font-weight: 700;
+}
+#footer .btm-list ul li > div p:last-child{
+  font-size: 14px;
+}

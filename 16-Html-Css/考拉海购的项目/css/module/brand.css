@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+/* 热门品牌相关样式 */
+#main .brand{
+  margin-bottom: 50px;
+}
+
+/* 头部样式 */
+#main .brand .header{
+  height: 50px;
+  vertical-align: baseline;
+  margin-top: 30px;
+}
+#main .brand .header h2{
+  font-size: 14px;
+  color: #999; 
+  font-weight: normal;
+}
+#main .brand .header h2 > span{
+  font-size: 22px;
+  color: #333;
+  font-weight: 700;
+  margin-right: 20px;
+}
+#main .brand .header a{
+  float: right;
+}
+
+/* 内容样式 */
+#main .brand .content .line{
+  height: 3px;
+  width: 66.666%;
+  background-color: #f00;
+}
+/* 左边内容 */
+#main .brand .content .left{
+  float: left;
+  box-sizing: border-box;
+  width: 220px;
+  height: 353px;
+  background-color: #333;
+  position: relative;
+  text-align: center;
+  border-right: 1px solid #ededee;
+}
+#main .brand .content .left a{
+  display: block;
+  width: 100%;
+}
+#main .brand .content .left img{
+  width: 100%;
+}
+#main .brand .content .left .info{
+  color: #fff;
+}
+#main .brand .content .left .info p:first-child{
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 30px;
+}
+#main .brand .content .left .info p:last-child{
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* 右边内容 */
+#main .brand .content .right{
+  float: left;
+  width: 880px;
+  border-top: 1px solid #ededee;
+  background-color: #fff;
+}
+#main .brand .content .right li{
+  box-sizing: border-box;
+  float: left;
+  width: 220px;
+  height: 176px;
+  border-bottom: 1px solid #ededee;
+  border-right: 1px solid #ededee;
+  text-align: center;
+  position: relative;
+}
+#main .brand .content .right li img{
+  display: block;
+  margin: 15px auto 8px;
+  transition: transform .2s linear;
+  transform-origin: center 0;
+}
+#main .brand .content .right li:hover img{
+  transform: scale(0.66);
+}
+#main .brand .content .right li p{
+  font-weight: 700;
+  font-size: 14px;
+  opacity: 1;
+  transition: opacity .2s linear;
+}
+#main .brand .content .right li:hover > p{
+  opacity: 0;
+}
+#main .brand .content .right li .hidden{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity .2s linear;
+}
+#main .brand .content .right li:hover .hidden{
+  opacity: 1;
+}
+#main .brand .content .right li .hidden .focus{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-block;
+  width: 54px;
+  height: 22px;
+  line-height: 22px;
+  box-sizing: border-box;
+  border: 1px solid #aaa;
+  border-radius: 11px;
+}
+#main .brand .content .right li .hidden p{
+  font-size: 14px;
+  color: #999;
+  font-weight: normal;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+}
+#main .brand .content .right li .hidden .in{
+  display: inline-block;
+  width: 80px;
+  height: 36px;
+  line-height: 32px;
+  font-size: 15px;
+  box-sizing: border-box;
+  border: 2px solid #f00;
+  border-radius: 18px;
+  color: #f00;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}

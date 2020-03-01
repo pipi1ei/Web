@@ -387,6 +387,7 @@
 
 ### css 属性 transform
 + css transform 属性允许你旋转、缩放、倾斜或平移给定元素。transform 是形变的意思,形变之后元素可能会发生位移、变大，但形变的元素占据自己原来的位置。
++ *注意*：该属性对行内元素（inline element）无效，对块级元素，inline-block 元素有效
 + 常见的函数 transform function 有：
   - 平移：translate(x, y)。
     可以只写一个值，一个值就表示水平方向的平移。除了可以设置具体的值，也可以设置百分比，设置百分比参照的是元素本身宽高
@@ -457,3 +458,55 @@
   - 角度决定了渐变的方向，角度为0是从下往上渐变
   - 颜色1决定了渐变开始的颜色
   - 颜色2决定了渐变结束的颜色
+
+### css 高斯模糊效果
++ 通过css 属性 filter来设置
+  - filter: blur(8px);
+  - blur 是一个css函数，8px是模糊半径
+
+### 元素隐藏方式
+1. display: none;
+2. visibility: hidden;
+3. opacity: 0;
+
+
+## CSS3
++ 目前并不存在真正意义上的css3，只是对某些 Module Level3 的统称
+  - 关于某些 level3 是否已经成为标准，还需多查阅文档
+  - 可以通过caniuse查看浏览器的兼容性问题
+
+
+## flex 布局
++ flex 布局是目前 web 开发中使用最多的布局方案，目前在移动端使用特别多，现在PC端用的也越来越多了
++ 两个重要概念：
+  - 开启了 flex 布局的元素叫 `flex container`
+  - flex container 里面的*直接子元素*叫做 `flex items`
++ 设置 display 属性为 flex 或者 inline-flex 可以成为 flex container
+  - flex：flex container 以 block-level 形式存在
+  - inline-flex：flex container 以 inline-level 形式存在
+
++ 应用在 flex container 上的css属性
+  - flex-flow
+  - flex-direction：flex items 默认都是沿着 main axis（主轴）从 main start 开始往 main end 方向排布。flex-direction 决定了 main axis 的方向，有4个取值：
+    1. row：默认值，主轴方向从左到右
+    2. row-reverse：主轴方向与 row 方向相反，方向从右到左
+    3. column：主轴方向从上到下
+    4. column-reverse：主轴方向与 column 方向相反，方向从下到上
+  - flex-wrap
+  - justify-content：决定了 flex items 在 main axis 上的对齐方式，有以下几个取值：
+    1. flex-start：默认值，与main start 对齐
+    2. flex-end：与 main end 对齐
+    3. center：居中对齐
+    4. space-between：flex items 之间距离相等，与 main start、main end 两端对齐
+    5. space-evenly：flex items 之间距离相等，flex items 与 main start、main end 之间的距离等于 flex items 之间的距离
+    6. spance-around：flex items 之间距离相等，flex items 与 main start、main end 之间的距离等于 flex items 之间距离的一半
+  - align-items
+  - align-content
+
++ 应用在 flex items 上的css属性
+  - flex
+  - flex-grow
+  - flex-basis
+  - flex-shrink
+  - order
+  - align-self
