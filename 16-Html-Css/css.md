@@ -68,10 +68,10 @@
       - :nth-last-of-type(): 语法与:nth-of-type()一样，只不过从最后一个子元素开始计数
       - :first-child：选中第一个子元素，等同于:nth-child(1)
       - :last-child：选中最后一个子元素，等同于:nth-last-child(1)
-      - first-of-type： 等同于:nth-of-type(1)
-      - last-of-type;：等同于:nth-last-of-type(1)
+      - :first-of-type： 等同于:nth-of-type(1)
+      - :last-of-type;：等同于:nth-last-of-type(1)
       - :only-child：是父元素中的唯一子元素（父元素下只有一个子元素）
-      - only-of-type：是父元素中的唯一的这种类型的子元素
+      - :only-of-type：是父元素中的唯一的这种类型的子元素
       - :root：根元素，就是 HTML 元素
       - :empty：选中元素内容为空的元素。
         <div>
@@ -88,6 +88,7 @@
     ::first-letter：选中第一个字母，只有*字体属性、颜色属性、背景属性、margin 属性、padding 属性、border 属性*可以应用在::first-letter 上
     ::before：content 属性不能省略
     ::after：content 属性不能省略
+    ::placeholder：input元素的伪元素，可以设置 placeholder 的样式
 
 13. css 选择器权重
   !important：10000
@@ -411,7 +412,7 @@
   - 两个值：设置x轴和y轴的原点
   - 必须是<length>，<percentage>或left、center、right、top、bottom关键字中的一个
     - <length>：从左上角开始计算
-    - 百分比：参考元素本省大小
+    - 百分比：参考元素本身大小
 
 
 ### css 属性 transition
@@ -437,7 +438,7 @@
 
 + 元素默认是基线对齐的，对于行内块级（inline-block）元素，没有文本的情况下，它的基线就是margin-bottom的底部。有文本的情况下，基线在最后一行文字的基线。块级元素的基线在块级元素的底部的上面一点，因为要给文字留出一部分距离
 
-+ vertical-align 的取值（在当前的行盒中的对齐）
++ vertical-align 的取值
   - baseline（默认值）：基线对齐
   - top：把行内级盒子的顶部和line boxes（行盒）顶部对齐
   - middle：行内级盒子的中心点与父盒基线加上 X height一半的线对齐
@@ -455,7 +456,7 @@
 
 ### 颜色渐变
 + 背景颜色肩膀：background: linear-gradient(角度，颜色1，颜色2)。
-  - 角度决定了渐变的方向，角度为0是从下往上渐变
+  - 角度决定了渐变的方向，角度为 0deg 是从下往上渐变
   - 颜色1决定了渐变开始的颜色
   - 颜色2决定了渐变结束的颜色
 
@@ -486,27 +487,208 @@
   - inline-flex：flex container 以 inline-level 形式存在
 
 + 应用在 flex container 上的css属性
-  - flex-flow
+  - flex-flow：是 flex direction 和 flex wrap 的缩写属性
+    1. 可以省略，顺序任意
+
   - flex-direction：flex items 默认都是沿着 main axis（主轴）从 main start 开始往 main end 方向排布。flex-direction 决定了 main axis 的方向，有4个取值：
     1. row：默认值，主轴方向从左到右
     2. row-reverse：主轴方向与 row 方向相反，方向从右到左
     3. column：主轴方向从上到下
     4. column-reverse：主轴方向与 column 方向相反，方向从下到上
-  - flex-wrap
+
+  - flex-wrap：默认情况下，所有的 flex items 都会在同一行显示。flex-wrap 决定了 flex items 是单行还是多行
+    1. nowrap：默认值，单行显示，父元素宽度不够时会将 flex items 的宽度压缩，使所有的 flex items 都能在父元素中一行显示
+    2. wrap：多行显示
+    3. wrap-reserve：多行显示（对比 wrap， cross start 与 cross end 相反。交叉轴方向翻转排列）
+
   - justify-content：决定了 flex items 在 main axis 上的对齐方式，有以下几个取值：
     1. flex-start：默认值，与main start 对齐
     2. flex-end：与 main end 对齐
     3. center：居中对齐
     4. space-between：flex items 之间距离相等，与 main start、main end 两端对齐
     5. space-evenly：flex items 之间距离相等，flex items 与 main start、main end 之间的距离等于 flex items 之间的距离
-    6. spance-around：flex items 之间距离相等，flex items 与 main start、main end 之间的距离等于 flex items 之间距离的一半
-  - align-items
-  - align-content
+    6. space-around：flex items 之间距离相等，flex items 与 main start、main end 之间的距离等于 flex items 之间距离的一半
+
+  - align-items：决定了flex items 在 cross axis 上的对齐方式，有以下几个取值
+    1. normal：在弹性布局中，效果和 stretch 一样
+    2. stretch：当 flex items 在 cross axis 方向的 size 为 auto 时，会自动拉伸至填充 flex container
+    3. flex-start：与 cross start 对齐
+    4. flex-end：与 cross end 对齐
+    5. center：居中对齐
+    6. baseline：与基准线对齐，flex 布局中基线是第一行文本的基线
+
+  - align-content：决定了*多行 flex items*在 cross axis 上的对齐方式，用法与 justify-content 类似
+    1. stretch：默认值，与 align-items 的 stretch 类似
+    2. flex-start：与 cross start 对齐
+    3. flex-end：与 cross end 对齐，但多行仍然是从 cross start 向 cross end 排列
+    4. center：居中对齐
+    5. space-between：flex-items 之间距离相等，与 cross start ， cross end 两端对齐
+    6. space-evenly：flex-items 之间距离相等，与 cross start ， cross end 之间的距离等于flex items 之间的距离
+    6. space-around：flex-items 之间距离相等，与 cross start ， cross end 之间的距离等于flex items 之间的距离的一半
 
 + 应用在 flex items 上的css属性
-  - flex
-  - flex-grow
-  - flex-basis
-  - flex-shrink
-  - order
-  - align-self
+  - flex：该属性是 flex-grow | flex-shrink | flex-basis 属性的简写，flex 属性可以指定 1个、2个 或3个值
+    1. 单值语法：值必须为以下其中之一
+      - 一个无单位数，它会被当成 flex-grow 的值
+      - 一个有效的宽度值，它会被当成 flex-basis 的值
+      - 关键字：none，auto，initial
+    2. 双值语法：第一个值必须是无单位数，并且会被当成 flex-grow 的值。第二个值必须为以下之一：
+      - 一个无单位数，它会被当成 flex-shrink 的值
+      - 一个有效的宽度值，它会被当成 flex-basis 的值
+    3. 三值语法：
+      - 第一个必须是无单位数值，它会被当成 flex-grow 的值
+      - 第二个值必须是无单位数值，它会被当成 flex-shrink 的值
+      - 第三个值必须是一个有效的宽度值，它会被当成 flex-basis 的值
+
+  - order：决定了 flex items 的排布顺序
+    1. 可以设置任意整数（整数、负数、0），值越小就越排在前面
+    2. 默认值是 0
+
+  - flex-grow：决定了 flex items 如何扩展
+    1. 可以设置任意非负数字（正小数、正整数、0），默认值是 0 
+    2. 当 flex container 在 main axis 上有剩余 size 时，flex-grow 属性才生效
+    3. 如果所有的 flex items 的 flex-grow 总和(sum)超过1，每个 flex item 扩展的 size 为：
+      - flex container 的剩余 size*flex-grow/sum
+    4. 如果所有的 flex items 的 flex-grow 总和(sum)不超过1，每个 flex item 扩展的 size 为：
+      - flex container 的剩余 size * flex-grow
+    5. flex items 扩展后的最终 size 不过超过 max-width 和 max-height
+
+  - flex-shrink：决定了 flex items 如何收缩
+    1. 可以设置任意非负数字（正小数、正整数、0），默认值是 1
+    2. 当 flex items 在 main axis 上超过 flex container 的 size 时，flex-shrink 属性才生效
+    3. 如果所有的 flex items 的 flex-shrink 总和(sum)超过1，每个 flex item 收缩的 size 为：
+      - flex items 超出 flex container 的 size * 收缩比例 / 所有 flex item 的收缩比例之和
+    4. 如果所有的 flex items 的 flex-shrink 总和(sum)不超过1，每个 flex item 收缩的 size 为：
+      - flex items 超出 flex container 的 size * sum * 收缩比例/所有 flex item 的收缩比例之和
+      - 收缩比例 = flex-shrink * flex item 的 base size。 base size 就是 flex item 放入 flex container 之前的 size。
+      - 这种情况下 flex items 有部分内容会超出 flex container
+    5. flex items 收缩后的 size 不能小于 元素的 min-width 和 min-height
+
+  - flex-basis：设置 flex items 在 main axis 方向上的 base size。可以设置以下值
+    1. auto：默认值
+    2. 具体的宽度数值
+
+    - 决定 flex items 最终 base size 的因素，从优先级高到低：
+      1. max-width、max-height、min-width、min-height
+      2. flex-basis
+      3. width、height
+      4. 内容本身的 size
+
+  - align-self：可以通过该属性覆盖 flex container 设置的 align-items
+    1. auto：默认值，遵从flex container 的 align-items 设置
+    2. stretch、flex-start、flex-end、center、baseline，效果和 align-items 一致
+
+  
+## 网络字体
+### @font-face 可以让网页支持网络字体（Web Font），不再局限于系统自带的字体
+
++ 常见的字体种类：
+  - TrueType字体：拓展名是 .ttf
+  - OpenType字体：拓展名是 .ttf, .otf。建立在 TrueType 字体之上
+  - Embedded OpenType字体：拓展名是 .eot  OpenType字体的压缩版
+  - SVG字体：拓展名是 .svg, .svgz
+  - Web开放字体：拓展名是 .woff ，建立在TrueType 字体之上
+
++ 但并不是所有浏览器都支持以上字体
+
++ 字体下载：[https://fonts.google.com]
+
++ @font-face 的使用
+  <style>
+    @font-face {
+        /* 字体名称，可以随便起，但建议跟原字体名称一致 */
+        font-family: "pipilei";
+        /* 浏览器会加载每一个字体文件，直到找到它支持的字体 */
+        src: url("fonts/mini_black.test-f"),
+             url("fonts/mini_black.test-f");
+      }
+
+    div{
+      font-family: "迷你简立黑";
+      font-size: 50px;
+    }
+  </style>
+
++ 字体图标的好处：
+  - 放大不会失真
+  - 可以切换任意颜色
+  - 用到很多个图标时，文件相对图片较小
+
+### 关键帧动画
+  + 之前可以使用 transition 来进行过渡动画，但是过渡动画只能控制首位两个值
+    - 从关键帧动画的角度相当于只定义了两帧的状态：第一帧和最后一帧
+    - 如果我们希望可以有更多状态的变化，可以直接使用关键帧动画
+
+  + 关键帧动画使用 @keyframe 来定义多个变化状态，并且使用 animation-name 来声明匹配
+    1. 使用 @keyframes 创建一个规则
+    2. @keyframes 中使用百分比定义各个阶段的样式
+    3. 通过 animation 将动画添加到属性上
+
+  + css animation 属性是 animation-name、animation-duration、animation-timing-function、animation-delay、animation-iteration-count、animation-direction、animation-fill-mode 和 animation-play-state 属性的一个简写形式
+    - animation-name：指定执行哪一个关键帧动画
+    - animation-duration：指定动画的持续时间
+    - animation-timing-function：指定动画的变化曲线
+    - animation-delay：指定延迟执行的时间
+    - animation-iteration-count：指定动画执行的次数，执行 infinite 表示无限动画
+    - animation-direction：指定动画执行的方向，常用值 normal 和 reverse
+    - animation-fill-mode：执行动画最后保留哪一个值
+      - none：回到没有执行动画的位置
+      - forwards：动画最后一帧的位置
+      - backwards：动画第一帧的位置
+    - animation-play-state：指定动画运行或暂停（在 JavaScript 中使用，用于暂停动画）
+      - play：执行动画
+      - pause：暂停动画
+
+    eg:
+    .box:hover{
+      animation: test 4s linear;
+    }
+
+    @keyframes test {
+      0% {
+        transform: translate(0,0);
+      }
+      25%{
+        transform: translate(200px,0);
+      }
+      50%{
+        transform: translate(200px,200px);
+      }
+      75%{
+        transform: translate(0,200px);
+      }
+      100%{
+        transform: translate(0,0);
+      }
+    }
+
+
+### 3D动画
++ css 实现3D
+  1. transform-style: preserve-3d，开启3d效果
+  2. perspective: z轴距我们的距离，一般给父元素设置
+
++ JS 实现 3D 的库
+  - three.js
+
+### CSS知识补充
+  + white-space：用于设置空白处理和换行规则
+    - normal：默认值。合并所有连续的空白，允许单词超屏时自动换行
+    - nowrap：合并所有连续的空白，不允许单词超屏时自动换行
+
+  + text-overflow：通常用来设置文字溢出时的处理行为（处理那部分不可见的内容）
+    - clip：溢出的内容直接裁剪掉（字符可能会显示不完整）
+    - ellipsis：溢出的那行的结尾处用省略号表示
+  + text-overflow 生效的前提时 overflow 不为 visible
+
+  + 如果想让一个有固定宽度的元素永远只显示一行文字，并且溢出结尾处显示省略号，可以设置以下样式
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+  + 如果想让文字最多显示几行可以通过设置 line-clamp 属性，但这个属性的浏览器支持率很低，IE不支持该属性，其他浏览器需要加前端
+    - -webkit-line-clamp: 2; // 最多显示两行文字,并且超出部分显示省略号
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    console.log('3'-'2');
+    console.log('3aa'-'2');
+    console.log('3'+'2');
+    console.log(true-'2');
+
+    var num = 100;
+    console.log(num++ + 10);
+
+    var num1 = 100;
+    console.log(++num1 + 10);
+
+    var a = 10;
+    var b = a++ + a++;
+    console.log(a)  // 12
+    console.log(b)  // 21
+
+    var c = ++a + a++;  // 22
+    var d = ++a + ++a;  // 23
+
+    var a = NaN;
+    var b = NaN;
+    console.log(a == b);   // false
+    console.log(a === b);  // false
+    console.log(Object.is(a,b))  // true
+
+    console.log(+'1', typeof(+'1'));
+
+    console.log(null.toString())// 报错
+  </script>
+</body>
+</html>

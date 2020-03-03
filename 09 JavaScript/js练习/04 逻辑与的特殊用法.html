@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    var obj = {
+      name:'pipilei',
+      age: 18,
+      height: 188,
+      eating(){
+        console.log("吃东西")
+      }
+    }
+    // 如果想要调用 eating 方法
+    if(obj.eating){
+      obj.eating()
+    }
+    // 可以写成
+    obj.eating && obj.eating()
+
+    // 逻辑或特殊用法：依次访问 obj 中的属性，如果有就返回属性值，没有访问下一个属性
+    var result = obj.name || obj.age || obj.height
+    console.log(result)
+  </script>
+</body>
+</html>

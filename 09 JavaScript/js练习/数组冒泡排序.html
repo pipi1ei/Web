@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>冒泡排序</title>
+</head>
+<body>
+  <script>
+    var arr = [10, 8, 8, 66, 99, 3, 8, 123, 321321, 321, 32, 355];
+    // 第一次排序
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] > arr[i+1]) {
+        var temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+      }
+    }
+    console.log(arr)
+
+    // 第二次排序
+    for (let i = 0; i < arr.length - 2; i++) {
+      if (arr[i] > arr[i+1]) {
+        var temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+      }
+    }
+    console.log(arr)
+
+    // .... 多次排序
+
+    // 最终代码
+    for (var j = arr.length - 1; j > 0; j--) {
+      for (let i = 0; i < j; i++) {
+        if(arr[i] > arr[i+1]){
+          var temp = arr[i];
+          arr[i] = arr[i + 1];
+          arr[i + 1] = temp;
+        }
+      }
+    }
+    console.log(arr)
+  </script>
+</body>
+</html>

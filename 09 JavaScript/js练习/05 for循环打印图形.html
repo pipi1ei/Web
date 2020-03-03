@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <script>
+    for(var i = 1; i <= 6; i++){
+      for(var j = 0; j < i; j++){
+        document.write("💗")
+      }
+      // debugger
+      document.writeln("<br>")
+    }
+
+    // 显示九九乘法表
+    for(let i = 1; i <= 9; i++){
+      for(let j = 1; j <= i; j++){
+        document.write(`${j}*${i}=${j*i} &nbsp;&nbsp;`)
+      }
+      document.write("<br>")
+    }
+
+    var arr = [1,2,3,4,5,6,7,8,9]
+    var max_value = -Infinity
+    for(let i = 0; i < arr.length; i ++){
+      if(arr[i]>max_value){
+        max_value = arr[i]
+      }
+    }
+    console.log(max_value)
+
+    // 数组翻转
+    for(let i = 0; i < arr.length/2; i++){
+      var temp = arr[i];
+      arr[i] = arr[arr.length-i-1];
+      arr[arr.length-i-1] = temp
+    }
+    console.log(arr)
+  </script>
+</body>
+</html>

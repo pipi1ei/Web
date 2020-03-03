@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    .box{
+      width: 100px;
+      height: 100px;
+      background-color: #f00;
+      margin: 100px auto;
+    }
+    .box:hover{
+      /* animation: test1 4s linear; */
+      animation: test2 4s linear;
+    }
+
+    @keyframes test1 {
+      0% {
+        transform: translate(0,0);
+      }
+      25%{
+        transform: translate(200px,0);
+      }
+      50%{
+        transform: translate(200px,200px);
+      }
+      75%{
+        transform: translate(0,200px);
+      }
+      100%{
+        transform: translate(0,0);
+      }
+    }
+
+    @keyframes test2 {
+      0% {
+        transform: scale(1,1);
+      }
+      25%{
+        transform: scale(2,1);
+      }
+      50%{
+        transform: scale(2,2);
+      }
+      75%{
+        transform: scale(1,2);
+      }
+      100%{
+        transform: scale(1,1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+</body>
+</html>
