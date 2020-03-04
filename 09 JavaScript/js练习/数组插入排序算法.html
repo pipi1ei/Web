@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    var arr = [1,2,8,6,4,9,3,12,5,23];
+    //可以认为 1, 2 已经是有序的
+    // for(var i = 1; i < arr.length-1; i++){
+    //   // 记录选出的元素，放在temp中
+    //   var j = i;
+    //   var temp = arr[i]
+
+    //   // 内层循环：不确定循环的次数，最后使用 while 循环
+    //   while(j > 0 && arr[j-1] > temp){
+    //     arr[j] = arr[j-1]
+    //     j--
+    //   }
+    //   // 将选出的 j 位置，放入 temp 元素
+    //   arr[j] = temp
+    // }
+
+    console.log(arr)
+
+    for(var i = 1; i < arr.length; i ++){
+      // 记录当前选中元素
+      var temp = arr[i]
+
+      for(var j = i; j > 0 && arr[j-1] > temp; j--){
+        arr[j] = arr[j-1]
+      }
+      arr[j] = temp
+    }
+
+    console.log(arr)
+  </script>
+</body>
+</html>

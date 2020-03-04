@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>优先级队列</title>
+</head>
+<body>
+  <script>
+
+    function PriorityQueue(){
+      // 可以理解成内部类
+      function QueueElement(element, priority){
+        this.element = element;
+        this.priority = priority;
+      }
+
+      this._items = []
+
+      // 有序队列插入方法
+      PriorityQueue.prototype.enqueue = function(element, priority){
+        // 根据传过来的数据创建优先级队列中的 item
+        var queueElement = new QueueElement(element, priority);
+        // 判断当前队列是否为空，是：直接插入，不是：比较优先级
+        if(this._items.length === 0){
+          this._items.push(queueElement);
+        }else{
+          var added = false;  // 记录元素是否被插入过
+          for(let i in this._items){
+            if(queueElement.priority < this._items[i].priority){
+              this._items.splice(i, 0, queueElement);
+              added = true;
+              break;
+            }
+          }
+          if(!added){
+            this._items.push(queueElement);
+          }
+        }
+      }
+
+      PriorityQueue.prototype.toString = function () {
+        var resultStr = "";
+        for (var i in this._items) {
+          resultStr += this._items[i].element + "-" + this._items[i].priority + " ";
+        }
+        return resultStr.substring(0, resultStr.length - 1);
+      }
+    }
+
+    var pq = new PriorityQueue();
+    pq.enqueue('laoren', 1)
+    pq.enqueue('abc', 5)
+    pq.enqueue('add', 9)
+    pq.enqueue('aea', 2)
+    console.log(pq.toString())
+  </script>
+</body>
+</html>

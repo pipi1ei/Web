@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    function Queue() {  
+      this._items = [];
+
+      // 将一个或多个元素插入到队列中
+      Queue.prototype.enqueue = function(...elements){
+        this._items.push(...elements);
+      }
+
+      //删除队列第一个元素并返回
+      Queue.prototype.dequeue = function(){
+        return this._items.shift();
+      }
+
+      // 返回队列第一个元素
+      Queue.prototype.front = function () {  
+        return this._items[0];
+      }
+
+      // 判断队列是否为空
+      Queue.prototype.isEmpty = function(){
+        return this._items.length === 0;
+      }
+
+      // 返回队列包含元素的个数
+      Queue.prototype.size = function () {  
+        return this._items.length;
+      }
+
+      // 将队列中的内容，转成字符串形式
+      Queue.prototype.toString = function () {  
+        var resultStr = "";
+        for(var i in this._items){
+          resultStr += this._items[i] + " ";
+        }
+        return resultStr.substring(0, resultStr.length - 1);
+      }
+    }
+
+
+    var queue = new Queue();
+    queue.enqueue(1,3,5,2)
+    console.log(queue.toString())  //1,3,5,2
+    queue.dequeue()
+    console.log(queue.toString())  // 3,5,2
+    queue.dequeue()
+    console.log(queue.toString()) // 5,2
+    console.log(queue.front())    // 5
+    console.log(queue.isEmpty())  // false
+    console.log(queue.size())  //2
+
+    /* 击鼓传花 */
+    function passGame(nameList, num) {  
+      var _queue = new Queue();
+      for(var i in nameList){
+        _queue.enqueue(nameList[i]);
+      }
+      
+      while(_queue.size() > 1){
+        for (var j = 1; j < num; j++) {
+          _queue.enqueue(_queue.dequeue());
+        }
+        _queue.dequeue();
+      }
+      return _queue.front();
+    }
+
+    var nameList = ['小李', '小王', '小陈', '小张', '小周']
+    console.log(passGame(nameList, 5));
+  </script>
+</body>
+</html>

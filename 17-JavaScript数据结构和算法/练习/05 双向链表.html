@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>双向链表</title>
+</head>
+<body>
+  
+  <script>
+
+    function DoublyLinkedList(){
+      function Node(data) {  
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+      }
+
+      // 属性
+      this.head = null;  // 指向链表的头部
+      this.tail = null;  // 指向链表的尾部
+      this.length = 0;   // 链表节点个数
+
+      //方法
+      /* 向链表尾部添加一个新的项 */
+      DoublyLinkedList.prototype.append = function (data) {  
+        // 1. 创建新节点
+        let newNode = new Node(data);
+        // 如果插入的是第一个节点
+        if(this.length === 0){
+          this.head = newNode;  // head 指向这个节点
+          this.tail = newNode;  // tail 指向这个节点
+        }else{    // 不是第一个节点
+          this.tail.next = newNode;   // 原先最后一个节点的 next 指向 newNode
+          newNode.prev = this.tail;    // newNode 的 prev 指向原先的最后一个节点
+          this.tail = newNode;        // tail 指向 newNode
+        }
+        this.length++;  // 链表节点个数加1
+      }
+
+      /* 向链表的特定位置插入一个新的项 */
+      DoublyLinkedList.prototype.insert = function (position, data) {  
+        // 1. 越界判断
+        if(position < 0 || position > this.length) return false;
+
+        // 2. 找到对应位置，插入 data
+        let newNode = new Node(data);
+        // 原链表是空的
+        if(this.length === 0){
+           this.head = newNode;  // head 指向这个节点
+          this.tail = newNode;  // tail 指向这个节点
+        }else{
+          if (position === 0) {  //在最前面插入
+            newNode.next = this.head;  // 要插入的节点的next指向原先第一个节点
+            this.head.prev = newNode;  // 原先第一个节点的prev 指向要插入的节点
+            this.head = newNode;       // head 指向要插入的节点
+          } else if (position === this.length) {  // 在最后插入
+            this.tail.next = newNode;   // 原先最后一个节点的 next 指向 newNode
+            newNode.prev = this.tail;   // newNode 的 prev 指向原先的最后一个节点
+            this.tail = newNode;        // tail 指向 newNode
+          } else {
+            // 在中间插入
+            if (this.length - position > this.length / 2) {
+              // 从前找
+              let index = 0;
+              let current = this.head;
+              while (index++ < position) {
+                current = current.next;
+              }
+              current.prev.next = newNode;  // position 前面的节点的 nex 指向 newNode
+              newNode.prev = current.prev;  // newNode 的prev 指向position 前面的节点
+              newNode.next = current;       // newNode 的nex 指向 position位置的节点
+              current.prev = newNode;       // position位置的节点的 prev 指向newNode
+            } else {
+              // 从后找
+              let index = this.length - 1;
+              let current = this.tail;
+              while (index-- > position) {
+                current = current.prev;
+              }
+              current.prev.next = newNode;  // position 前面的节点的 nex 指向 newNode
+              newNode.prev = current.prev;  // newNode 的prev 指向position 前面的节点
+              newNode.next = current;       // newNode 的nex 指向 position位置的节点
+              current.prev = newNode;       // position位置的节点的 prev 指向newNode
+            }
+          }
+        }
+
+        this.length++;
+        return true;
+      }
+
+      /* 获取对应位置的元素 */
+      DoublyLinkedList.prototype.get = function (position) {  
+        // 1. 越界判断
+        if(position < 0 || position >= this.length) return null;
+        // 2.找到对应位置
+        let index = 0;
+        let current = this.head;
+        while(index++ < position){
+          current = current.next;
+        }
+        // 3.取出对应位置的值并返回
+        return current.data;
+      }
+
+      /* 返回元素在链表中的索引。如果没有返回 - 1 */
+      DoublyLinkedList.prototype.indexOf = function (data) {  
+        let index = 0;
+        let current = this.head;
+        while(current){
+          if(current.data === data){
+            return index;
+          }
+          current = current.next;
+          index++
+        }
+        return -1;
+      }
+
+      /* 修改某个位置的元素 */
+      DoublyLinkedList.prototype.update = function (position, newData) {  
+        // 1.越界判断
+        if(position < 0 || position >= this.length) return false;
+        // 2. 找出对应位置的元素
+        let index = 0;
+        let current = this.head;
+        while(index++ < position){
+          current = current.next;
+        }
+        // 3. 改变对应位置的元素
+        current.data = newData;
+        return true;
+      }
+
+      /* 从链表的特定位置移除一项，返回移除的数据 */
+      DoublyLinkedList.prototype.removeAt = function (position) {  
+        // 1. 越界判断
+        if(position < 0 || position >= this.length) return null;
+        let data = null; // 要返回的数据
+        // 2. 找到对应位置的元素
+        if(this.length === 1){  // 链表只有一个元素
+          data = this.head.data;
+          this.head = null;
+          this.tail = null;
+        }else{
+          if (position === 0) {   // 2.1 如果是删除第 0 个位置的元素
+            data = this.head.data;
+            this.head.next.prev = null;  // 第二个节点的 prev 为空
+            this.head = this.head.next;   // head 指向原先的第二个节点
+          } else if (position === this.length - 1) {  // 2.2 如果删除最后一个元素
+            data = this.tail.data;
+            this.tail.prev.next = null;  // 倒数第二个节点的 next 为空
+            this.tail = this.tail.prev;   // tail 指向倒数第二个节点
+          } else {    // 其他情况
+            let index = 0;
+            let current = this.head;
+            while (index++ < position) {
+              current = current.next;
+            }
+            data = current.data;
+            current.prev.next = current.next;  // 对应位置的上一个节点的next指向对应位置的下一个节点
+            current.next.prev = current.prev;  // 对应位置的下一个节点的next指向对应位置的上一个节点
+          }
+        }
+        this.length--;
+        return data;
+      }
+
+      /* 从链表中移除该项，如果链表中有这个数据返回 true，没有返回 false */
+      DoublyLinkedList.prototype.remove = function (data) {  
+        // 1. 找到data 所在的位置
+        let index = 0;
+        let current = this.head;
+        while(current){
+          if(current.data === data){
+            // 2.找到对应元素并删除
+            if(index === 0){  // 2.1 如果是删除第一元素
+              this.head.next.prev = null;  // 第二个节点的 prev 为空
+              this.head = this.head.next;   // head 指向原先的第二个节点
+            }else if(index === this.length-1){  // 2.2 如果是删除最后一个
+              this.tail.prev.next = null;  // 倒数第二个节点的 next 为空
+              this.tail = this.tail.prev;   // tail 指向倒数第二个节点
+            }else{  // 其他情况
+              var temp = current;
+              current.prev.next = current.next;  // 对应位置的上一个节点的next指向对应位置的下一个节点
+              current.next.prev = current.prev;  // 对应位置的下一个节点的next指向对应位置的上一个节点
+            }
+            // 3. 链表长度减一
+            this.length--;
+            return true;
+          }
+          current = current.next;
+          index++;
+        }
+        // 没找到 data 返回 false
+        return false;
+      }
+
+      /* 如果链表不包含任何元素，返回true，如果链表的长度大于 0 返回 false */
+      DoublyLinkedList.prototype.isEmpty = function () {  
+        return this.length === 0;
+      }
+
+      /* 返回链表包含元素的个数 */
+      DoublyLinkedList.prototype.size = function () {  
+        return this.length;
+      }
+
+      /* 返回正向遍历的节点字符串形式 */
+      DoublyLinkedList.prototype.forwardString = function () {  
+        let index = 0;
+        let current = this.head;
+        let resultString = "";
+        while (index++ < this.length) {
+          resultString += current.data + " ";
+          current = current.next;
+        }
+        return resultString.substring(0, resultString.length - 1);
+      }
+
+      /* 返回反向遍历的节点字符串形式 */
+      DoublyLinkedList.prototype.backwardString = function () {  
+        let index = this.length;
+        let current = this.tail;
+        let resultString = "";
+        while(index-- > 0){
+          resultString += current.data + " ";
+          current = current.prev;
+        }
+        return resultString.substring(0, resultString.length - 1);
+      }
+
+      /* 由于链表使用了Node类，就需要重写继承自Javascript对象默认的toString方法，让其只输入元素的值 */
+      DoublyLinkedList.prototype.toString = function(){
+        return this.forwardString();
+      }; 
+    }
+
+    let list = new DoublyLinkedList();
+    
+    list.append("a");
+    console.log(list.toString());
+    alert(list)
+    list.append("b");
+    list.append("c");
+    list.append("ce");
+    list.append("cf"); 
+    console.log(list.insert(0, "11"))
+    console.log(list.forwardString())
+    console.log(list.insert(2,"xx"))
+    console.log(list.forwardString())
+    console.log(list.insert(5,"yy"))
+    console.log(list.forwardString())
+    // console.log(list.backwardString())
+    console.log(list.get(0))
+    console.log(list.get(3))
+    console.log(list.indexOf("11"))
+    console.log(list.indexOf("cf"))
+    console.log(list.indexOf("b"))
+    console.log(list.update(0, 'pipi'))
+    console.log(list.update(7, 'zz'))
+    console.log(list.update(2, 'haha'))
+    console.log(list.forwardString())
+    console.log(list.removeAt(2))
+    console.log(list.forwardString())
+    console.log(list.remove("b"))
+    console.log(list.forwardString())
+    console.log(list)
+    console.log(list.removeAt(0));
+    console.log(list.toString());
+  </script>
+</body>
+</html>
