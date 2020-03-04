@@ -245,7 +245,7 @@
 + 链表的优势：
   - 不同于数组，链表中的元素在内存中不必是连续的空间
   - 链表的每个元素由一个 *存储元素本身的节点* 和一个 *指向下一个元素的引用* （有些语言称为指针或链接）组成
-+ 相对数组，链表的一些有点：
++ 相对数组，链表的一些优点：
   - 内存空间不需要必须是连续的，可以充分利用计算机的内存、实现灵活的*内存动态管理*
   - 链表*不必在创建的时候就确定大小*，并且大小可以*无限的延伸*下去
   - 链表在*插入和删除*数据时，时间复杂度可以达到O(1)，相对数组效率高很多
@@ -286,7 +286,7 @@
           this.head = newNode;
         }else{
           // 找到最后一个节点
-          var current = head;
+          var current = this.head;
           while(current.next){
             current = current.next;
           }
@@ -362,11 +362,12 @@
       // removeAt(position)：从链表的特定位置移除一项，返回倍移除的数据，如果位置不对返回 false
       LinkedList.prototype.removeAt = function (position) {
         // 1. 越界判断
-        if(position < 0 || position >= this.length) return false;
-        if(position === 0){
+        if (position < 0 || position >= this.length) return false;
+        let data = null;
+        if (position === 0) {
+          data = this.head.data;
           this.head = this.head.next;
-          return this.head.data;
-        }else{
+        } else {
           var index = 0;
           var current = this.head;  // 用于找到对应位置的元素
           var previous = null;      // 用于找到对应位置的前一个元素
@@ -374,12 +375,13 @@
             previous = current;
             current = current.next;
           }
+          data = current.data;
           previous.next = current.next;  // 让position前一个元素指向对应元素的后一个元素
-          current.next = null;          // 对应元素的next 赋空
+          current.next = null;          // 对应元素的next 赋空,可以不写，该对象会被回收
         }
-        
+
         this.length--;                // 删除后链表长度减一
-        return current.data;          // 返回对应元素的数据
+        return data;                  // 返回对应元素的数据
       }
 
       // remove(element)：从链表中移除该项
@@ -390,7 +392,7 @@
         while(index++ < this.length){
           if(current.data === data){
             previous.next = current.next;
-            current.nex = null;
+            current.next = null;
             this.length--;
             return true;
           }
@@ -424,8 +426,8 @@
 
 ### 双向链表
 + 单向链表：
-  - 只能从*头遍历到尾*或者从尾遍历到头（一般从头到尾），也就是链表相连的过程是单向的
-  - 实现的原理是上一个链表中有一个指向下一个的引用
+  - 只能从 *头遍历到尾* 或者从尾遍历到头（一般从头到尾），也就是链表相连的过程是单向的
+  - 实现的原理是上一个节点中有一个指向下一个的引用
 + 单向链表有个比较明显的缺点：
   - 我们可以轻松的到达下一个节点，但是回到上一个节点是很难的，但是，在实际开发中，经常会遇到需要回到上一个节点的情况。如果想回到上一个节点还需再从头开始
 
@@ -519,7 +521,7 @@
             while (index++ < position) {
               current = current.next;
             }
-            current.prev.next = newNode;  // position 前面的节点的 nex 指向 newNode
+            current.prev.next = newNode;  // position 前面的节点的 next 指向 newNode
             newNode.prev = current.prev;  // newNode 的prev 指向position 前面的节点
             newNode.next = current;       // newNode 的nex 指向 position位置的节点
             current.prev = newNode;       // position位置的节点的 prev 指向newNode
@@ -530,7 +532,7 @@
             while (index-- > position) {
               current = current.prev;
             }
-            current.prev.next = newNode;  // position 前面的节点的 nex 指向 newNode
+            current.prev.next = newNode;  // position 前面的节点的 next 指向 newNode
             newNode.prev = current.prev;  // newNode 的prev 指向position 前面的节点
             newNode.next = current;       // newNode 的nex 指向 position位置的节点
             current.prev = newNode;       // position位置的节点的 prev 指向newNode
@@ -611,8 +613,8 @@
             current = current.next;
           }
           data = current.data;
-          current.prev.next = current.next;  // 对应位置的上一个节点的next指向对应位置的下一个节点
-          current.next.prev = current.prev;  // 对应位置的下一个节点的next指向对应位置的上一个节点
+          current.prev.next = current.next;  // 对应位置的上一个节点的 next 指向对应位置的下一个节点
+          current.next.prev = current.prev;  // 对应位置的下一个节点的 prev 指向对应位置的上一个节点
         }
       }
       this.length--;
@@ -635,8 +637,8 @@
             this.tail = this.tail.prev;   // tail 指向倒数第二个节点
           }else{  // 其他情况
             var temp = current;
-            current.prev.next = current.next;  // 对应位置的上一个节点的next指向对应位置的下一个节点
-            current.next.prev = current.prev;  // 对应位置的下一个节点的next指向对应位置的上一个节点
+            current.prev.next = current.next;  // 对应位置的上一个节点的 next 指向对应位置的下一个节点
+            current.next.prev = current.prev;  // 对应位置的下一个节点的 prev 指向对应位置的上一个节点
           }
           // 3. 链表长度减一
           this.length--;

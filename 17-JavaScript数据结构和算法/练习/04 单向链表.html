@@ -100,11 +100,12 @@
       // removeAt(position)：从链表的特定位置移除一项，返回倍移除的数据，如果位置不对返回 false
       LinkedList.prototype.removeAt = function (position) {
         // 1. 越界判断
-        if(position < 0 || position >= this.length) return false;
-        if(position === 0){
+        if (position < 0 || position >= this.length) return false;
+        let data = null;
+        if (position === 0) {
+          data = this.head.data;
           this.head = this.head.next;
-          return this.head.data;
-        }else{
+        } else {
           var index = 0;
           var current = this.head;  // 用于找到对应位置的元素
           var previous = null;      // 用于找到对应位置的前一个元素
@@ -112,12 +113,13 @@
             previous = current;
             current = current.next;
           }
+          data = current.data;
           previous.next = current.next;  // 让position前一个元素指向对应元素的后一个元素
           current.next = null;          // 对应元素的next 赋空,可以不写，该对象会被回收
         }
-        
+
         this.length--;                // 删除后链表长度减一
-        return current.data;          // 返回对应元素的数据
+        return data;                  // 返回对应元素的数据
       }
 
       // remove(element)：从链表中移除该项
@@ -128,7 +130,7 @@
         while(index++ < this.length){
           if(current.data === data){
             previous.next = current.next;
-            current.nex = null;
+            current.next = null;
             this.length--;
             return true;
           }
@@ -173,14 +175,16 @@
     console.log(linkedList.indexOf("ac"));
 
     console.log(linkedList.toString())
-    console.log(linkedList.removeAt(2))
-    console.log(linkedList.toString())
-    console.log(linkedList.remove("xx"))
-    console.log(linkedList.toString())
-    console.log(linkedList.update(1, "xx"))
-    console.log(linkedList.toString())
+    console.log(linkedList.size())
     console.log(linkedList.removeAt(0))
+    console.log(linkedList.size())
     console.log(linkedList.toString())
+    // console.log(linkedList.remove("xx"))
+    // console.log(linkedList.toString())
+    // console.log(linkedList.update(1, "xx"))
+    // console.log(linkedList.toString())
+    // console.log(linkedList.removeAt(0))
+    // console.log(linkedList.toString())
   </script>
 </body>
 </html>
