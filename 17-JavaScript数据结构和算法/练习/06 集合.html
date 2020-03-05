@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>集合</title>
+</head>
+<body>
+  <script>
+
+    function Set(){
+      this._items = {};
+
+      /* 向集合中添加一个新的项 */
+      Set.prototype.add = function (value) {  
+        // 1. 先判断集合中有没有这个值，有的话返回 false，表示未添加成功
+        if(this.has(value)){
+          return false;
+        }
+        // 2. 往集合中添加一个值
+        this._items[value] = value;
+        return true;
+      }
+
+      /* ：从集合中移除一个值 */
+      Set.prototype.remove = function(value){
+        if(this.has(value)){
+          delete this._items[value];
+          return true;
+        }
+        return false;
+      }
+
+      /* 判断集合中是否存在该值 */
+      Set.prototype.has = function (value) {  
+        return this._items.hasOwnProperty(value);
+      }
+
+      /* 移除集合中的所有项 */
+      Set.prototype.clear = function () {  
+        this._items = {}
+        return true;
+      }
+
+      /* 返回集合所包含元素的数量 */
+      Set.prototype.size = function () {  
+        return Object.keys(this._items).length;
+      }
+
+      /* 返回一个包含集合中所有值的数组 */
+      Set.prototype.values = function () {
+        return Object.keys(this._items);
+      }
+    }
+
+    function log(message){
+      console.log(message);
+    }
+
+    var set = new Set();
+    set.add(123);
+    set.add("add");
+    set.add(true);
+    log(set.values());
+    log(set.remove(123))
+    log(set.size())
+    log(set.clear())
+    log(set.size())
+    
+
+  </script>
+</body>
+</html>

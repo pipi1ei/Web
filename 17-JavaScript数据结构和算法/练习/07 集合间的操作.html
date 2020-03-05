@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>集合间的操作</title>
+</head>
+<body>
+  <script>
+    /* 求并集 */
+    Set.prototype.union = function (otherSet) {
+      const newSet = new Set();
+
+      const set1Values = this.values();
+      const set2Values = otherSet.values();
+
+      for (let value of set1Values) {
+        newSet.add(value);
+      }
+      for (let value of set2Values) {
+        newSet.add(value);
+      }
+      return newSet;
+    }
+
+    /* 求交集 */
+    Set.prototype.intersection = function (otherSet) {  
+      const newSet = new Set();
+      for(let value of this.values()){
+        if(otherSet.has(value)){
+          newSet.add(value);
+        }
+      }
+      return newSet;
+    }
+
+    /* 求差集 */
+    Set.prototype.difference = function(otherSet){
+      const newSet = new Set();
+      for(let value of this.values()){
+        if(!otherSet.has(value)){
+          newSet.add(value);
+        }
+      }
+      return newSet;
+    }
+
+    /* 判断一个集合是否是另一个集合的子集 */
+    Set.prototype.isChild = function(otherSet){
+      for(let value of this.values()){
+        if(!otherSet.has(value)){
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function Set() {
+        this._items = {};
+
+        /* 向集合中添加一个新的项 */
+        Set.prototype.add = function (value) {
+          // 1. 先判断集合中有没有这个值，有的话返回 false，表示未添加成功
+          if (this.has(value)) {
+            return false;
+          }
+          // 2. 往集合中添加一个值
+          this._items[value] = value;
+          return true;
+        }
+
+        /* ：从集合中移除一个值 */
+        Set.prototype.remove = function (value) {
+          if (this.has(value)) {
+            delete this._items[value];
+            return true;
+          }
+          return false;
+        }
+
+        /* 判断集合中是否存在该值 */
+        Set.prototype.has = function (value) {
+          return this._items.hasOwnProperty(value);
+        }
+
+        /* 移除集合中的所有项 */
+        Set.prototype.clear = function () {
+          this._items = {}
+          return true;
+        }
+
+        /* 返回集合所包含元素的数量 */
+        Set.prototype.size = function () {
+          return Object.keys(this._items).length;
+        }
+
+        /* 返回一个包含集合中所有值的数组 */
+        Set.prototype.values = function () {
+          return Object.keys(this._items);
+        }
+      }
+
+    function log(message) {
+      console.log(message);
+    }
+
+
+
+    const set1 = new Set();
+    const set2 = new Set();
+    set1.add("adc");
+    set1.add("bcd");
+    set1.add("aaa");
+    log(set1.values());
+    set2.add("aaa");
+    set2.add("xxx");
+    set2.add("yyy");
+    set2.add("adc");
+    set2.add("bcd");
+    log(set2.values());
+    log(set1.union(set2).values());
+    log(set1.intersection(set2).values());
+    log(set2.difference(set1).values());
+    log(set1.isChild(set2));
+    log(set1.isChild(set1));
+  </script>
+</body>
+</html>
