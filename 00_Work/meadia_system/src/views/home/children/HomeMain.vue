@@ -5,22 +5,20 @@
     </el-header>
     <el-main>
       <!-- <home-main-content ref="content" /> -->
-      <home-content2 ref="content"></home-content2>
+      <home-content ref="content"></home-content>
     </el-main>
   </el-container>
 </template>
 
 <script>
 import HomeMainHeader from "./HomeMainHeader";
-import HomeMainContent from "./HomeMainContent";
-import HomeContent2 from "./HomeContent2";
+import HomeContent from "./HomeContent";
 
 export default {
   name: "HomeMain",
   components: {
     HomeMainHeader,
-    HomeMainContent,
-    HomeContent2
+    HomeContent
   },
   methods: {
     getMediaByName(name) {

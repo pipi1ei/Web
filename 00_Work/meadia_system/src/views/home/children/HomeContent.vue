@@ -9,7 +9,6 @@
     <div v-else class="content-x">
       <el-row :gutter="20">
         <el-col v-for="item in data" :key="item.id" :xs="24" :sm="12" :lg="8" :xl="6">
-          <!-- <home-card :mediaData='item' @showDetails="showDetails(item)"></home-card> -->
           <media-card :mediaData="item" @showDetails="showDetails(item)"></media-card>
         </el-col>
       </el-row>
@@ -35,7 +34,6 @@
 
 <script>
 import MediaCard from "components/MediaCard";
-import HomeCard from "./HomeCard";
 import SearchDetails from "views/details/Details";
 
 import { getMediaList, getMediaDetails } from "network/home.js";
@@ -56,7 +54,6 @@ export default {
   },
   components: {
     MediaCard,
-    HomeCard,
     SearchDetails
   },
   methods: {
