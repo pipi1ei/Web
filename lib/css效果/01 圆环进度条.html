@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>圆形进度条</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      margin: 100px auto;
+      position: relative;
+    }
+
+    .left,
+    .right {
+      width: 99px;
+      height: 99px;
+      border-radius: 50%;
+      background-color: #000;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+
+    .left {
+      clip: rect(0 50px auto 0);
+    }
+
+    .right {
+      clip: rect(0 auto auto 50px);
+    }
+
+    .content {
+      width: 90px;
+      height: 90px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      z-index: 10000;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 90px;
+      text-align: center;
+    }
+
+    .inner {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #fff;
+    }
+
+    .left .inner {
+      clip: rect(0 50px auto 0);
+      /* transform: rotate(180deg); */
+    }
+
+    .right .inner {
+      clip: rect(0 auto auto 50px);
+      transform: rotate(60deg);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 可以通过js动态改变进度条颜色和进度 -->
+  <div class="box">
+    <div class="right">
+      <div class="inner"></div>
+    </div>
+    <div class="left">
+      <div class="inner"></div>
+    </div>
+
+    <div class="content">
+      24天
+    </div>
+  </div>
+</body>
+
+</html>
