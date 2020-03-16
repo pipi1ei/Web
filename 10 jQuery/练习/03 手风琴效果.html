@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    ul {
+      list-style: none;
+      margin: 100px auto;
+      background-color: skyblue;
+      border: 1px solid red;
+      width: 200px;
+      padding: 0;
+    }
+
+    ul li {
+      width: 200px;
+      padding: 5px;
+      border-bottom: 1px solid black;
+      box-sizing: border-box;
+    }
+
+    ul li div{
+      height: 200px;
+      line-height: 200px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>
+      标题1
+      <div>我是弹出来的div1</div>
+    </li>
+    <li>
+      标题2
+      <div>我是弹出来的div2</div>
+    </li>
+    <li>
+      标题3
+      <div>我是弹出来的div3</div>
+    </li>
+    <li>
+      标题4
+      <div>我是弹出来的div4</div>
+    </li>
+    
+  </ul>
+
+  <script>
+    $(function () {
+      $('ul li').mouseenter(function () {
+        $(this).css('opacity', '1').siblings().css('opacity', '0.4')
+      }).click(function () {  
+        $(this).children().css('display','block');
+        $(this).siblings().children().css('display','none')
+      })
+      $('ul').mouseleave(function () {
+        $(this).find('li').css('opacity', '1')
+      })
+    })
+
+  </script>
+</body>
+
+</html>

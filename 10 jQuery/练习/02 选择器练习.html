@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    body{
+      background-color: #000;
+    }
+
+    ul{
+      list-style: none;
+      width: 600px;
+      margin: 100px auto;
+    }
+
+    ul li{
+      width: 200px;
+      height: 200px;
+      box-sizing: border-box;
+      float: left;
+      border: 1px solid red;
+      margin-left: -1px;
+      margin-bottom: -1px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <script>
+    $(function () {  
+      $('ul li').mouseenter(function () {
+        $(this).css('opacity','1').siblings().css('opacity','0.4')
+      })
+      $('ul').mouseleave(function () {  
+        $(this).find('li').css('opacity', '1')
+      })
+    })
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+  <Style>
+    h2{color: #f00;}
+  </Style>
+</head>
+<body>
+  <button>关灯</button>
+  <button>开灯</button>
+  <h2>我是标题</h2>
+
+  <script>
+    $(function () {  
+      var $buttons = $('button');
+      console.log($buttons)
+      var $body = $('body')
+      $buttons[0].onclick = function () {
+        $body.css('backgroundColor','#000')
+      }
+      $($buttons[1]).click(function () {
+        $body.css('backgroundColor', '#fff')
+      })
+    })
+  </script>
+</body>
+</html>
