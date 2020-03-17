@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+  <style>
+    #container {
+      width: 500px;
+      margin: 100px auto;
+    }
+
+    table {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+    }
+
+    table tr td,
+    th {
+      padding: 5px 15px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    thead>tr {
+      background-color: skyblue;
+    }
+
+    th {
+      color: white;
+      font-weight: 700;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .7);
+      display: none;
+    }
+
+    .mask>.container {
+      width: 350px;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+    }
+
+    .mask>.container .title {
+      background-color: #bbb;
+      padding: 10px;
+    }
+
+    .mask>.container .title .right {
+      float: right;
+      color: #000;
+    }
+
+    .mask>.container .content {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .mask>.container .content div {
+      margin: 20px 0;
+    }
+
+    .mask>.container .content .opt button {
+      width: 100px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <input class="c1" name="c1" type="checkbox">
+          </th>
+          <th>所属学院</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input class="c2" name="c2" type="checkbox">
+          </td>
+          <td>css</td>
+          <td>传智播客-前端与移动开发学院</td>
+        </tr>
+        <tr>
+          <td>
+            <input class="c2" name="c2" type="checkbox">
+          </td>
+          <td>html</td>
+          <td>传智播客-前端与移动开发学院</td>
+        </tr>
+        <tr>
+          <td>
+            <input class="c2" name="c2" type="checkbox">
+          </td>
+          <td>jquery</td>
+          <td>传智播客-前端与移动开发学院</td>
+        </tr>
+        <tr>
+          <td>
+            <input class="c2" name="c2" type="checkbox">
+          </td>
+          <td>JavaScript</td>
+          <td>传智播客-前端与移动开发学院</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $(function () {  
+      $('.c1').click(function () {  
+        var isChecked = $(this).prop('checked')
+        $('.c2').prop('checked', isChecked)
+      })
+
+      $('.c2').click(function () {  
+        // 方案1
+        // var isAllChecked = true;
+        // for(let i = 0;i < $('.c2').length; i++){
+        //   if(!($('.c2').eq(i).prop('checked'))){
+        //     isAllChecked = false;
+        //   }
+        // }
+        // $('.c1').prop('checked', isAllChecked)
+
+        // 方案2
+        var numOfAll = $('.c2').length;
+        var numOfChecked = $('.c2:checked').length;
+        $('.c1').prop('checked', numOfAll == numOfChecked)
+        
+      })
+    })
+
+    
+  </script>
+</body>
+
+</html>

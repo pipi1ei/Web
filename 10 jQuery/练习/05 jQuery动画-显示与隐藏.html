@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    #test{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      display: none;
+    }
+  </style>
+  
+</head>
+<body>
+  <button id="show">显示</button>
+  <button id="hide">隐藏</button>
+  <button id="toggle">切换</button>
+
+  <div id="test"></div>
+
+  <script>
+    $(function(){
+      var j = jQuery.noConflict()
+      j('#show').click(function () {  
+        j('#test').show(1000,function () {  
+          alert('div show')
+        })
+      })
+      j('#hide').click(function () {  
+        j('#test').hide(1000,function () {  
+          alert('div hide')
+        })
+      })
+      j('#toggle').click(function () {  
+        j('#test').toggle(1000,function () {  
+          alert('div toggle')
+        })
+      })
+    })
+  </script>
+</body>
+</html>

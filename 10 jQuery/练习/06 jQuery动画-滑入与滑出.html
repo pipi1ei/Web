@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    #test{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      display: none;
+    }
+  </style>
+  
+</head>
+<body>
+  <button id="slidedown">滑入</button>
+  <button id="slideup">滑出</button>
+  <button id="toggle">切换</button>
+
+  <div id="test"></div>
+
+  <script>
+    $(function(){
+      var j = jQuery.noConflict()
+      j('#slidedown').click(function () {  
+        j('#test').slideDown(1000,function () {  
+          alert('div slidedown')
+        })
+      })
+      j('#slideup').click(function () {  
+        j('#test').slideUp(1000,function () {  
+          alert('div slideup')
+        })
+      })
+      j('#toggle').click(function () {  
+        j('#test').slideToggle(1000,function () {  
+          alert('div slidetoggle')
+        })
+      })
+    })
+  </script>
+</body>
+</html>

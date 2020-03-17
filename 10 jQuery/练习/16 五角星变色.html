@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+  <style>
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul > li{
+      float: left;
+      font-size: 30px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <!-- <li>★</li> -->
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+    <li>☆</li>
+  </ul>
+
+  <script>
+    $(function () {  
+      $('li').on('mouseenter',function (e) {
+        $(this).text("★").prevAll().text("★");
+      }).on('mouseleave',function(e){
+        $(this).parent().children().text("☆");
+        $('li[current]').text("★").prevAll().text("★");
+        $('li').removeAttr('current');
+      }).on('click',function(){
+        $(this).text("★").prevAll().text("★");
+        $(this).attr('current','pipilei').siblings().removeAttr('current');
+      })
+    })
+  </script>
+</body>
+</html>

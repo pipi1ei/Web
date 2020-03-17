@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+
+  <style>
+    body,p{
+      margin: 0;
+      padding: 0;
+    }
+    .container{
+      width: 100%;
+      height: 100%;
+    }
+    .container img{
+      width: 100%;
+    }
+
+    .tabbar{
+      width: 100%;
+      height: 50px;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    .third{
+      background-color: aqua;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="image" src="../img/img1.png" alt="">
+    <div class="tabbar">
+      <p>我是tab栏</p>
+    </div>
+    <div class="third">
+      <h2>我是第三部分内容</h2>
+    </div>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+  </div>
+
+  <script>
+    $(function () {  
+      $(window).scroll(function(){
+        var $imageHeight = $('.image').height();
+        var wScrollTop = $(window).scrollTop()
+        var tabbarHeight = $('.tabbar').height()
+        if($imageHeight <= wScrollTop){
+          $('.tabbar').css({
+            'position':'fixed',
+            'top':'0',
+            'left':'0'
+          })
+          $('.third').css({
+            'marginTop': tabbarHeight
+          })
+        }else{
+          $('.tabbar').css({
+            'position': 'static'
+          })
+          $('.third').css({
+            'marginTop': 0
+          })
+        }
+      })
+    })
+  </script>
+</body>
+</html>

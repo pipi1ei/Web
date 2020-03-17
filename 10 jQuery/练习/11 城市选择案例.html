@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    select{
+      background-color: skyblue;
+      width: 200px;
+      height: 200px;
+      font-size: 20px;
+    }
+    .opt{
+      display: inline-block;
+      vertical-align: top;
+    }
+    .opt button{
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>城市选择：</h1>
+    <select name="left" id="left" multiple>
+      <option value="1">北京</option>
+      <option value="1">上海</option>
+      <option value="1">深圳</option>
+      <option value="1">广州</option>
+      <option value="1">西红柿</option>
+    </select>
+    <div class="opt">
+      <button class="opt1">&gt;&gt;</button>
+      <button class="opt2">&lt;&lt;</button>
+      <button class="opt3">&gt;</button>
+      <button class="opt4">&lt;</button>
+    </div>
+    <select name="right" id="right" multiple></select>
+  </div>
+
+  <script>
+    $(function(){
+      $('.opt1').click(function () {  
+        $('#left>option').appendTo($('#right'))
+      });
+      $('.opt2').click(function () {
+        $('#right>option').appendTo($('#left'))
+      });
+      $('.opt3').click(function () {
+        $('#left>option:selected').appendTo($('#right'))
+      });
+      $('.opt4').click(function () {
+        $('#right>option:selected').appendTo($('#left'))
+      });
+    })
+  </script>
+</body>
+</html>

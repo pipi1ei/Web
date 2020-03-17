@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+  <style>
+    .container{
+      width: 300px;
+      text-align: center;
+      margin: 100px auto;
+    }
+    .content{
+      background-color: skyblue;
+      height: 200px;
+      line-height: 200px;
+      font-size: 25px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>按键改变颜色</h1>
+    <div class="content">
+      keyCode为：
+      <span class="keycode"></span>
+    </div>
+  </div>
+
+  <script>
+    $(function () {  
+      var $content = $('.content');
+      var $keyCodeValue = $('.keycode')
+      $(window).on('keydown',function(e){
+        console.log(e.keyCode)
+        switch(e.keyCode){
+          case 82:
+            $content.css('backgroundColor', 'red')
+            $keyCodeValue.text(e.keyCode)
+            break;
+          case 71:
+            $content.css('backgroundColor', 'green')
+            $keyCodeValue.text(e.keyCode)
+            break;
+          case 80:
+            $content.css('backgroundColor', 'pink')
+            $keyCodeValue.text(e.keyCode)
+            break;
+          case 89:
+            $content.css('backgroundColor', 'yellow')
+            $keyCodeValue.text(e.keyCode)
+            break;
+          case 66:
+            $content.css('backgroundColor', 'blue')
+            $keyCodeValue.text(e.keyCode)
+            break;
+          default:
+            $content.css('backgroundColor','skyblue')
+            $keyCodeValue.text('查无此键')
+            break;
+        }
+      })
+    })
+  </script>
+</body>
+</html>

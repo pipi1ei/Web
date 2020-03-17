@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+  <style>
+    #container{
+      width: 500px;
+      margin: 100px auto;
+    }
+
+    table{
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+    }
+    table tr{}
+    table tr td{
+      padding: 3px 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <button class="start">生成表格</button>
+  </div>
+
+  <script>
+    $(function(){
+      var data = [
+        {
+          name: '传智播客',
+          url: 'http://www.itheima.com',
+          type: '中国最强培训机构'
+        },
+        {
+          name: '黑马程序员',
+          url: 'http://www.itheima.com',
+          type: '大学生IT培训机构'
+        },
+        {
+          name: '传智前端学院',
+          url: 'http://www.itcast.com',
+          type: '前端的黄埔军校'
+        }
+      ];
+      var flag = false;
+      $('.start').click(function () {  
+        if(flag) return;
+        var $table = $('<table></table>');
+        for(let i = 0; i < data.length; i++){
+          var $tr = $('<tr></tr>');
+          for(let prop in data[i]){
+            var $td = $('<td></td>');
+            $td.html(data[i][prop])
+            $tr.append($td)
+          }
+          $table.append($tr)
+        }
+        $('#container').append($table);
+        flag = true;
+      })
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    .test{
+      width: 100px;
+      height: 100px;
+      background-color: skyblue;
+      position: absolute;
+      top: 50px;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <button class="start">开始动画</button>
+  <div class="test"></div>
+
+  <script>
+    $(function(){
+      $('.start').click(function () {  
+        $('.test').animate({
+          left: 800,
+          width: 200,
+          height: 200
+        },2000).animate({
+          left:400
+        },1000,'linear').animate({
+          width:100,
+          height:100
+        })
+      })
+    })
+  </script>
+</body>
+</html>

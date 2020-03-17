@@ -455,7 +455,7 @@
   - 方式二：给图片设置 position: relative; top: 50%; transform: translate(0, -50%); 推荐这种方式
 
 ### 颜色渐变
-+ 背景颜色肩膀：background: linear-gradient(角度，颜色1，颜色2)。
++ 背景颜色渐变：background: linear-gradient(角度，颜色1，颜色2)。
   - 角度决定了渐变的方向，角度为 0deg 是从下往上渐变
   - 颜色1决定了渐变开始的颜色
   - 颜色2决定了渐变结束的颜色

@@ -28,6 +28,10 @@
       line-height: 200px;
       display: none;
     }
+
+    .active{
+      display: block;
+    }
   </style>
 </head>
 
@@ -57,8 +61,10 @@
       $('ul li').mouseenter(function () {
         $(this).css('opacity', '1').siblings().css('opacity', '0.4')
       }).click(function () {  
-        $(this).children().css('display','block');
-        $(this).siblings().children().css('display','none')
+        // $(this).children().css('display','block');
+        // $(this).siblings().children().css('display','none')
+        $(this).children().toggleClass('active')
+          .parent().siblings().children().removeClass('active')
       })
       $('ul').mouseleave(function () {
         $(this).find('li').css('opacity', '1')

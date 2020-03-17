@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <title>Document</title>
+  <style>
+    #container {
+      width: 500px;
+      margin: 100px auto;
+    }
+
+    table {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+    }
+
+    table tr td,th {
+      padding: 5px 15px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    thead>tr{
+      background-color: skyblue;
+    }
+
+    th{
+      color: white;
+      font-weight: 700;
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <button class="start">删除表格</button>
+    <table>
+      <thead>
+        <tr>
+          <th>课程名称</th>
+          <th>所属学院</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>css</td>
+          <td>传智播客-前端与移动开发学院</td>
+          <td><a href="#">DELETE</a></td>
+        </tr>
+        <tr>
+          <td>html</td>
+          <td>传智播客-前端与移动开发学院</td>
+          <td><a href="#">DELETE</a></td>
+        </tr>
+        <tr>
+          <td>jquery</td>
+          <td>传智播客-前端与移动开发学院</td>
+          <td><a href="#">DELETE</a></td>
+        </tr>
+        <tr>
+          <td>JavaScript</td>
+          <td>传智播客-前端与移动开发学院</td>
+          <td><a href="#">DELETE</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $(function () {
+      $('.start').click(function () {
+        $('table > tbody').remove()
+      })
+      $('table tr > td > a').click(function () {  
+        $(this).parent().parent().remove();
+      })
+    })
+  </script>
+</body>
+
+</html>
