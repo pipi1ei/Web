@@ -63,8 +63,10 @@
       }).click(function () {  
         // $(this).children().css('display','block');
         // $(this).siblings().children().css('display','none')
-        $(this).children().toggleClass('active')
-          .parent().siblings().children().removeClass('active')
+        // $(this).children().toggleClass('active')
+        //   .parent().siblings().children().removeClass('active')
+        $(this).children().slideToggle(300)
+          .parent().siblings().children().slideUp(300);
       })
       $('ul').mouseleave(function () {
         $(this).find('li').css('opacity', '1')

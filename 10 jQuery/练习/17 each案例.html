@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+  <style>
+
+    .clear-fix::after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .wrap{
+      margin: 100px auto;
+      padding: 0;
+      width: 1040px;
+    }
+
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      margin-right: -10px;
+    }
+
+    ul > li{
+      float: left;
+      width: 200px;
+      box-sizing: border-box;
+      height: 200px;
+      line-height: 200px;
+      background-color: palevioletred;
+      text-align: center;
+      border: 1px solid #999;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="clear-fix">
+      <li>li1</li>
+      <li>li2</li>
+      <li>li3</li>
+      <li>li4</li>
+      <li>li5</li>
+      <li>li6</li>
+      <li>li7</li>
+      <li>li8</li>
+      <li>li9</li>
+      <li>li10</li>
+    </ul>
+  </div>
+ 
+
+  <script>
+    $(function(){
+      $('ul > li').each(function (index, element) {  
+        $(element).css('opacity',0.1*(index+1))
+      })
+    })
+
+    Object.prototype.log = function () {  
+      console.log(this)
+    }
+
+    var string = 'aaa'
+    string.log()
+
+    Number(123).log();
+  </script>
+</body>
+</html>

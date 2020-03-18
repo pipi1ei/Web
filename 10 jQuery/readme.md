@@ -27,12 +27,12 @@
   ```
   - jQuery 入口函数和 window.onload 的区别
     1. jQuery 入口函数可以写多个，window.onload 只能写一个
-    2. 执行时机不同：jQuery入口函数（等待页面上dom树加载完成后执行）先于 window.onload（等待页面上所有的资源加载完毕，包括dom树，外包css/js文件，图片） 执行
+    2. 执行时机不同：jQuery入口函数（等待页面上dom树加载完成后执行）先于 window.onload（等待页面上所有的资源加载完毕，包括dom树，外部css/js文件，图片） 执行
 
 + jQuery 文件结构：是一个立即执行函数
   - jQuery 是一个函数，参数传递不同，效果也不一样
     1. 如果参数是一个匿名函数，那么jQuery是一个入口函数
-    2. 如果传递的参数是一个字符串，jQuery是一个选择器函数，会选中对于的元素
+    2. 如果传递的参数是一个字符串，jQuery是一个选择器函数，会选中对应的元素
     3. 如果传递的参数是一个dom对象，那么会将这个dom对象转成 jQuery 对象
   ```javascript
   (function(){
@@ -173,7 +173,7 @@
       - 第一个参数：是否清除队列
       - 第二个参数：是否跳转到最终效果
       - 不传参数的话默认两个参数都是 false
-
+  - 自定义动画不能改变背景颜色，如果想要改变背景颜色，需要安装插件
 
 ### jQuery 节点操作
 + 创建节点
@@ -195,6 +195,18 @@
   - clone(includeEvents)：会克隆元素及其下面的所有元素，只存在内存中，如果要在页面中显示需要追加.
     + 参数如果是 true，会把事件也克隆
     + 参数如果是 false，会把克隆事件，默认值是 false
+
++ 替换节点
+  - replaceWith()：将匹配到的元素替换成指定的html或dom元素
+    $("p").replaceWith("<strong>我是strong元素</strong>")：将 p 元素替换成 strong 元素
+  - replaceAll()：与 replaceWith() 作用相同，知识颠倒了replaceWith() 的操作
+    $("<strong>我是strong元素</strong>").replaceAll("p")
+  - 如果在替换之前已经为元素绑定了事件，替换后原先绑定的事件将会和被替换一起消失
+
++ 包裹节点
+  - wrap()：$('strong').wrap('<b></b>')：每一个strong都会被一个b元素把包裹起来
+  - wrapAll()：$('strong').wrapAll('<b></b>')：用一个b元素把所有的strong包起来
+  - wrapInner()：$('strong').wrapInner('<b></b>')：用 strong 元素把 b 元素包裹起来
 
 
 ### jQuery 属性操作
@@ -319,3 +331,12 @@
   - $(selector).each(function(index,element){})
     + 参数1表示当前元素在所有匹配元素中的索引号
     + 参数2表示当前元素（DOM对象）
+
++ 如何查看jQuery版本
+  - jQuery.fn.jquery
+  - jQuery.prototype.jquery
+  - $.fn.jquery
+  - $.prototype.jquery
+
++ 自己封装 jQuery 插件
+  -  如何自己封装插件：1.给 jQuery 原型添加方法。2.直接给 jQuery 添加方法

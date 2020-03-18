@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <style>
+    .container {
+      width: 500px;
+      margin: 100px auto;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 400px;
+      border: 1px solid #ccc;
+    }
+
+    ul>li {
+      float: left;
+      width: 100px;
+      height: 50px;
+      line-height: 47px;
+      text-align: center;
+      box-sizing: border-box;
+      border-top: 3px solid transparent;
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+      height: 0;
+      visibility: hidden;
+    }
+
+    .active {
+      border-top: 3px solid red;
+      background-color: aqua;
+    }
+
+    .product {
+      border: 1px solid black;
+      margin-top: -1px;
+      height: 300px;
+      line-height: 300px;
+    }
+
+    .main {
+      display: none;
+    }
+
+    .selected {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <ul class="clearfix">
+      <li class="active">国际大牌</li>
+      <li>国妆名牌</li>
+      <li>清洁用品</li>
+      <li>男士精品</li>
+    </ul>
+    <div class="product">
+      <div class="main selected">product1</div>
+      <div class="main">product2</div>
+      <div class="main">product3</div>
+      <div class="main">product4</div>
+    </div>
+  </div>
+
+
+
+  <script src="../plugins/tabs/jQuery-tabs.js"></script>
+  <script>
+    $(function () {
+      $('.container').tabs({
+        tabHeads: 'ul > li',
+        tabHeadsClass: 'active',
+        tabBodys: '.product .main',
+        tabBodysClass: 'selected'
+      })
+    })
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="table"></div>
+
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" href="../plugins/table/table.css">
+  <script src="../plugins/table/jQuery-table.js"></script>
+  <script>
+    $(function () {  
+      $('#table').table(['序号','姓名','年龄','性别'],[{
+        name: 'zs',
+        age: 18,
+        sex: 'male'
+      },{
+        name: 'ls',
+        age: 20,
+        sex: 'male'
+      },{
+        name: 'ww',
+        age: 22,
+        sex: 'female'
+      }]);
+    })
+  </script>
+</body>
+</html>
