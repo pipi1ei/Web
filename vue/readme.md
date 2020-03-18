@@ -13,7 +13,7 @@ let app = new Vue({
 })
 ```
 
-### vue 声明周期
+### vue 生命周期
 
 ### 插值操作
 
@@ -37,7 +37,7 @@ let app = new Vue({
 
 ### v-bind 介绍
 
-1. 插值操作注意是将值插入到模板的内容中，有些属性也需要动态改变，就要用到 v-bind 指令，比如动态绑定 a 元素的 href 属性， img 元素的 src 属性等。
+1. 插值操作主要是将值插入到模板的内容中，有些属性也需要动态改变，就要用到 v-bind 指令，比如动态绑定 a 元素的 href 属性， img 元素的 src 属性等。
 
 - 作用：动态绑定属性
 - 缩写：`:`
@@ -111,7 +111,7 @@ let app = new Vue({
   <button @submit.prevent></button>
   <!-- 串联修饰符 -->
   <button @click.stop.prevent='doThis'></button>
-- .{keyCode | keyAlias}: 只当事件从特定键触发式才触发回调
+- .{keyCode | keyAlias}: 只当事件从特定键触发时才触发回调
   <!-- 键修饰符,键别名 -->
   <input @keyup.enter='onEnter'></input>
   <!-- 键修饰符,键代码 -->
@@ -413,7 +413,7 @@ resolve: {
 
   1. 打包 html 文件的插件：
 
-  - 目前 index.html 文件时放在项目的跟目录下的，在真实发布项目时，发布的是 dist 文件夹下的内容，但 dist 文件夹中没有 index.html 文件，那么打包的 js 文件也就没有意义了，所以需要使用 HtmlWebpackPlugin 插件将 index.html 文件打包到 dist 文件夹下
+  - 目前 index.html 文件是放在项目的跟目录下的，在真实发布项目时，发布的是 dist 文件夹下的内容，但 dist 文件夹中没有 index.html 文件，那么打包的 js 文件也就没有意义了，所以需要使用 HtmlWebpackPlugin 插件将 index.html 文件打包到 dist 文件夹下
   - HtmlWebpackPlugin 插件可以做这些事：
     1. 自动生成一个 index.html 文件（可以指定模板来生成）
     2. 将打包的 js 文件，自动通过 script 标签插入到 body 中

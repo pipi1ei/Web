@@ -36,9 +36,12 @@
           //   result += this.books[i].price;
           // }
 
-          for (book of this.books) {
+          // for (book of this.books) {
+          //   result += book.price;
+          // }
+          this.books.forEach(book => {
             result += book.price;
-          }
+          })
           return result;
         }
       }

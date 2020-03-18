@@ -21,6 +21,7 @@
     <h2 class="title" v-bind:class="{active: isActive}">{{ msg }}</h2>
 
     <h2 :class="getClasses()">{{ msg }}</h2>
+    <h2 :class="classes">{{ msg }}</h2>
 
     <!-- 数组语法:用的较少 -->
     <h2   v-bind:class="[activeObj]">{{ msg }}</h2>
@@ -39,6 +40,11 @@
       methods: {
         getClasses: function () {  
           return { active: this.isActive }
+        }
+      },
+      computed: {
+        classes(){
+          return { active: !this.isActive }
         }
       }
     })
