@@ -599,10 +599,10 @@ var obj = {
   2. 这个过程就是前端渲染：浏览器中显示的网页中的大部分内容都是由前端写的 js 代码在浏览器中执行，最终渲染出来的网页
 
 - 前端路由阶段（单页面富应用阶段）：
-  SPA（single page web application）: 单页面 Web 应用，整个网页只要有一个 html 页面，SPA 最主要的特点就是在前后的分离的基础上加了一层前端路由，也就是前端来维护一套路由规则
+  SPA（single page web application）: 单页面 Web 应用，整个网页只要有一个 html 页面，SPA 最主要的特点就是在前后端分离的基础上加了一层前端路由，也就是前端来维护一套路由规则
   过程：静态资源服务器上只会有一个 HTML 文件，一个或多个 css、js 文件，用户输入 URL 地址时，浏览器会去静态资源服务器请求全部的 HTML，css，js 文件，当 URL 后面的路径不同时，通过 js 代码判断显示不同的数据，这就是前端路由
 
-2. 前端路由：浏览器处理 URL 和页面之间的映射关系，前端路由的核心时改变 URL，但是页面不进行整体的刷新
+2. 前端路由：浏览器处理 URL 和页面之间的映射关系，前端路由的核心是改变 URL，但是页面不进行整体的刷新
 
 - 如何实现？通过 url 的 hash 和 HTML5 的 history
 
@@ -675,7 +675,7 @@ const routes = [
 
 ### $router 和 $route 的区别
 
-1. \$router 时 VueRouter 对象
+1. \$router 是 VueRouter 对象
 2. \$route 是当前活跃的路由
 
 ### 为什么使用 \$router 时能拿到 VueRouter 对象？
@@ -708,14 +708,14 @@ const routes = [
   ```javascript
     const About = resolve = > require(['../components/About.vue'], resolve);
   ```
-  3. 在 ES6 种，可以使用更加简单的写法来组织 Vue 异步组件和 Webpack 的代码分割
+  3. 在 ES6 中，可以使用更加简单的写法来组织 Vue 异步组件和 Webpack 的代码分割
   ```javascript
     const Home = () = > import('../components/About.vue');
   ```
 
 ### 嵌套路由
 
-- 嵌套路由是一个很常见的功能，比如在 home 页面种，我们希望通过 /home/news 和 /home/message 访问一些内容；一个路径映射一个组件，访问这两个路径也会分别渲染两个组件
+- 嵌套路由是一个很常见的功能，比如在 home 页面中，我们希望通过 /home/news 和 /home/message 访问一些内容；一个路径映射一个组件，访问这两个路径也会分别渲染两个组件
 - 实现路由嵌套：
   1. 创建对应的子组件，并且在路由映射中配置对应的子路由
   ```javascript
@@ -757,7 +757,7 @@ const routes = [
 1. 为什么使用导航守卫？
 
 - 现在有个需求：在一个 SPA 应用中，如何改变网页的标题呢？
-  - 网页标题是通过<title> 来显示的，但 SPA 只有一个固定的 html 页面，切换不同的路由是，标题并不会改变
+  - 网页标题是通过<title> 来显示的，但 SPA 只有一个固定的 html 页面，切换不同的路由时，标题并不会改变
   - 但我们可以通过 js 来修改 <title> 中的内容，通过 window.document.title = "新的标题"
   - 那么在 vue 项目中，在哪里修改？什么时候修改比较合适呢？这时候就可以使用路由的导航守卫
 
