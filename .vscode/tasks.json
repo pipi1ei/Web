@@ -1,0 +1,18 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "Run HTML file with Chrome",
+    "type": "process",
+    "command": "chrome",
+    "args": ["${file}"],
+    "windows": {
+      "command": "D:/Chrome6103163100x86/GoogleChrome_61.0.3163.100_x86/ChromePortable/App/Google Chrome/chrome.exe"
+    },
+    "group": {
+      "kind": "build",
+      "isDefault": true
+    }
+  }]
+}
