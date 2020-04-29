@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组解构赋值</title>
+</head>
+<body>
+  <script>
+    // function log() {  
+    //   console.log.apply(console,arguments);
+    // }
+
+    // 解构写法：
+    const {log} = console;
+
+    let [a, b, c] = [1,2,3];
+    console.log(a,c,b);
+
+    let [x,[,[y]],z] = [1,[2,[3]],3]
+    log(x,y,z)
+
+    let [foo, ...bar] = [1,2,3,4]
+    log(foo)
+    log(bar)
+  </script>
+</body>
+</html>

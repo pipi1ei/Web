@@ -233,3 +233,13 @@ section.main-box .column:nth-child(2) {
     transform: translate(-50%, -50%) rotate(-360deg);
   }
 }
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 42px !important;
+  }
+}
+@media screen and (min-width: 1920px) {
+  html {
+    font-size: 80px !important;
+  }
+}

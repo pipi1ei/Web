@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象解构赋值</title>
+</head>
+<body>
+  <script>
+    const { log } = console;
+
+    // 解构嵌套了对象，如果子对象的父属性不存在会报错
+    // let { foo: {bar}} = {baz: 'aaa'}
+
+    let {foo: abc} = {foo: '123'}
+    log(abc)
+  </script>
+</body>
+</html>

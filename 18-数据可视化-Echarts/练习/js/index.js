@@ -28,6 +28,12 @@ function initEcharts() {
   initRightBar();
   // 初始化左边折线图
   initLeftLine();
+  // 初始化右边折线图
+  initRightLine();
+  // 初始化左边饼形图
+  initLeftPie();
+  // 初始化右边边饼形图
+  initRightPie();
 
   function initLeftBar() {
     var leftBar = echarts.init(document.querySelector('.left-bar .chart'));
@@ -308,5 +314,263 @@ function initEcharts() {
     })
   }
 
+  function initRightLine(){
+    var rightLine = echarts.init(document.querySelector('.right-line .chart'));
+    var option = {
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        top: '0%',
+        textStyle: {
+          color: 'rgba(255,255,255,.5)',
+          fontSize: 12
+        }
+      },
+      grid: {
+        left: '10',
+        top: '30',
+        right: '10',
+        bottom: '10',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "26", "28", "29", "30"],
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            textStyle: {
+              color: 'rgba(255,255,255,.6)',
+              fontSize: 12
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255,255,255,.1)'
+            }
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            textStyle: {
+              color: 'rgba(255,255,255,.6)',
+              fontSize: 12
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255,255,255,.1)'
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: 'rgba(255,255,255,.1)'
+            }
+          }
+        }
+      ],
+      series: [
+        {
+          name: '播放量',
+          type: 'line',
+          smooth: true,
+          // 单独修改线的样式
+          lineStyle: {
+            color: '#0184d5'
+          },
+          // 填充区域
+          areaStyle: {
+            //渐变颜色
+            color: new echarts.graphic.LinearGradient(0,0,0,1, [
+              {
+                offset: 0,
+                color: 'rgba(1,132,213,.4)'   //渐变色的起始颜色
+              },
+              {
+                offset: 0.8,
+                color: 'rgba(1,132,213,.1)'   //渐变色的结束颜色
+              },
+            ],false),
+            shadowColor: 'rgba(0,0,0,.1)'
+          },
+          // 拐点设置
+          symbol: 'circle',
+          // 拐点大小
+          symbolSize: 5,
+          // 设置拐点颜色以及边框值
+          itemStyle: {
+            color: '#0184d5',
+            borderColor: 'rgba(221,220,107,.1)',
+            borderWidth: 8
+          },
+          // 设置开始不显示拐点
+          showSymbol: false,
+          data: [30, 40, 30, 40, 30, 40, 30, 60, 20, 40, 30, 40, 30, 40, 30, 40, 30, 60, 20, 40, 30, 40, 30, 40, 30, 40, 20, 60, 50, 40]
+        },
+        {
+          name: '转发量',
+          type: 'line',
+          smooth: true,
+          lineStyle: {
+            color: '#0184d5'
+          },
+          // 填充区域
+          areaStyle: {
+            //渐变颜色
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(0,216,135,.4)'   //渐变色的起始颜色
+              },
+              {
+                offset: 0.8,
+                color: 'rgba(0,216,135,.1)'   //渐变色的结束颜色
+              },
+            ], false),
+            shadowColor: 'rgba(0,0,0,.1)'
+          },
+          // 拐点设置
+          symbol: 'circle',
+          // 拐点大小
+          symbolSize: 5,
+          // 设置拐点颜色以及边框值
+          itemStyle: {
+            color: '#00d887',
+            borderColor: 'rgba(221,220,107,.1)',
+            borderWidth: 8
+          },
+          // 设置开始不显示拐点
+          showSymbol: false,
+          data: [130, 10, 20, 40, 30, 40, 80, 60, 20, 40, 90, 40, 20, 140, 30, 40, 130, 20, 20, 40, 80, 70, 30, 40, 30, 120, 20, 99, 50, 20]
+        }
+      ]
+    };
 
+    rightLine.setOption(option);
+
+    window.addEventListener('resize',function () {  
+      rightLine.resize();
+    })
+  }
+
+  function initLeftPie(){
+    var leftPie = echarts.init(document.querySelector('.left-pie .chart'));
+    var option = {
+      color: [
+        "#065aab",
+        "#066eab",
+        "#0682ab",
+        "#0696ab",
+        "#06a0ab",
+      ],
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
+      },
+      legend: {
+        bottom: '0%',
+        // 设置小图标的宽度和高度
+        itemWidth: 10,
+        itemHeight: 10,
+        textStyle: {
+          color: 'rgba(255,255,255,.5)',
+          fontSize: 10
+        },
+      },
+      series: [
+        {
+          name: '访问来源',
+          type: 'pie',
+          radius: ['40%', '60%'],
+          center: ['50%','45%'],
+          avoidLabelOverlap: false,
+          // 不显示标签文字
+          label: {
+            show: false,
+          },
+          // 不显示标签连接线
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 1, name: "0岁以下" },
+            { value: 4, name: "20-29岁" },
+            { value: 2, name: "30-39岁" },
+            { value: 2, name: "40-49岁" },
+            { value: 1, name: "50岁以上" }
+          ]
+        }
+      ]
+    };
+
+    leftPie.setOption(option);
+    
+    window.addEventListener('resize',function(){
+      leftPie.resize();
+    })
+  }
+
+
+  function initRightPie(){
+    var rightPie = echarts.init(document.querySelector('.right-pie .chart'));
+    var option = {
+      color: ['#006cff', '#60cda0', '#ed8884', '#ff9f7f', '#0096ff', '#9fe6b8', '#32c5e9', '#1d9dff'],
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      legend: {
+        bottom: '0%',
+        itemWidth: 5,
+        itemHeight: 5,
+        textStyle: {
+          color: 'rgba(255,255,255,.5)',
+          fontSize: 12
+        }
+      },
+      series: [
+        {
+          name: '地区分布',
+          type: 'pie',
+          radius: ['10%', '70%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
+          label:{
+            fontSize: 10
+          },
+          labelLine: {
+             // 连接扇形图线长
+            length: 6,
+            // 连接文字线长
+            length2: 8
+          },
+          data: [
+            { value: 20, name: '云南' },
+            { value: 26, name: '北京' },
+            { value: 24, name: '山东' },
+            { value: 25, name: '河北' },
+            { value: 20, name: '江苏' },
+            { value: 25, name: '浙江' },
+            { value: 30, name: '四川' },
+            { value: 42, name: '湖北' }
+          ]
+        }
+      ]
+    };
+    rightPie.setOption(option);
+
+    window.addEventListener('resize', function () {
+      rightPie.resize();
+    })
+  }
 }
