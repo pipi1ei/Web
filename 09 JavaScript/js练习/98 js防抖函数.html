@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  
+  <input class="search" type="text">
+  <button class="cancel">取消</button>
+
+  <script>
+    const {log} = console;
+  // 1. 最简单的防抖函数
+  // function debounce(fn, delay) {
+  //   var timer = null;
+  //   return function () {  
+  //     if(timer){
+  //       clearTimeout(timer);
+  //     }
+  //     timer = setTimeout(function () {  
+  //       fn()
+  //     },delay);
+  //   }
+  // }
+
+  // 2. 优化参数和 this
+  // function debounce(fn,delay) {  
+  //   var timer = null;
+  //   return function () {  
+  //     // 获取 this 和 arguments
+  //     var _this = this;
+  //     var _arguments = arguments;
+  //     console.log(arguments)
+  //     if(timer) clearTimeout(timer);
+  //     timer = setTimeout(function(){
+  //       fn.apply(_this, _arguments);
+  //     },delay)
+  //   }
+  // }
+
+  // 3. 优化取消功能
+  // function debounce(fn, delay){
+  //   var timer = null;
+  //   var handleFn = function () {  
+  //     if(timer) clearTimeout(timer);
+
+  //     var _this = this;
+  //     var _arguments = arguments;
+  //     timer = setTimeout(function () {  
+  //       fn.apply(_this,_arguments)
+  //     },delay)
+  //   }
+
+  //   handleFn.cancel = function () {  
+  //     log('取消执行')
+  //     if(timer) clearTimeout(timer);
+  //   }
+  //   return handleFn;
+  // } 
+
+  // 4.优化立即执行
+  // function debounce(fn, delay, leading){
+  //   var timer = null;
+  //   leading = leading || false;
+  //   function handleFn(){
+  //     if(timer) clearTimeout(timer);
+
+  //     var _this = this;
+  //     var _arguments = arguments;
+
+  //     if(leading){
+  //       // 通过一个变量来记录是否立即执行
+  //       var isInvoke = false;
+  //       if(!timer){
+  //         fn.apply(_this,_arguments);
+  //         isInvoke = true;
+  //       }
+  //       timer = setTimeout(function(){
+  //         timer = null;
+  //         if(!isInvoke){
+  //           fn.apply(_this,_arguments);
+  //         }
+  //       },delay)
+  //     }else{
+  //       timer = setTimeout(function () {  
+  //         fn.apply(_this, _arguments);
+  //       },delay)
+  //     }
+  //   }
+
+  //   handleFn.cancel = function () {  
+  //     if(timer) clearTimeout(timer);
+  //   }
+
+  //   return handleFn;
+  // }
+
+  // 5.1 Promise 优化返回值
+  // function debounce(fn, delay, leading) {  
+  //   var timer = null;
+  //   function handleFn(){
+  //     return new Promise((resolve, reject) => {
+  //       if (timer) clearTimeout(timer);
+  //       var _this = this;
+  //       var _arguments = arguments;
+  //       log(_arguments)
+  //       if (leading) {
+  //         var isInvoke = false;
+  //         if (!timer) {
+  //           resolve(fn.apply(_this, _arguments));
+  //           isInvoke = true;
+  //         }
+  //         timer = setTimeout(function () {
+  //           timer = null;
+  //           if (!isInvoke) {
+  //             resolve(fn.apply(_this, _arguments));
+  //           }
+  //         }, delay);
+  //       } else {
+  //         timer = setTimeout(function () {
+  //           resolve(fn.apply(_this, _arguments));
+  //         }, delay)
+  //       }
+  //     })
+  //   }
+
+  //   handleFn.cancel = function () {
+  //     if (timer) clearTimeout(timer);
+  //   }
+
+  //   return handleFn;
+  // }
+
+  // 5.2 回调函数处理返回值
+  function debounce(fn,delay,option){
+    var timer = null;
+    if(!option) option = {};
+    var leading = option.leading || false;
+    var result = option.result || null;
+    function handleFn() {  
+      if(timer) clearTimeout(timer)
+      var _this = this;
+      var _arguments = arguments;
+
+      if(leading){
+        var isInvoke = false;
+        if(!timer){
+          callFn(_this, _arguments)
+          isInvoke = true;
+        }
+        timer = setTimeout(function () {
+          timer = null;
+          callFn(_this, _arguments)
+        }, delay);
+      }else{
+        timer = setTimeout(function(){
+          callFn(_this, _arguments)
+        }, delay);
+      }
+    }
+
+    handleFn.cancel = function () {
+      if (timer) clearTimeout(timer);
+    }
+
+    function callFn(context, argument){
+      var res = fn.apply(context, argument)
+      if(result){
+        result(res)
+      }
+    }
+
+    return handleFn;
+  }
+
+  
+  var searchEle = document.querySelector('.search');
+  var cancelEle = document.querySelector('.cancel');
+  var count = 0;
+  var searchChange = function (e) {
+    count++;
+    log(this)
+    log(e)
+    // console.log(e.target.value);
+    log('第 ' + count + ' 次网络请求')
+    return 'searchChange 返回的结果'
+  }
+
+  // searchEle.oninput = debounce(searchChange,500);
+
+  var _searchChange = debounce(searchChange, 500,true);
+  searchEle.oninput = _searchChange;
+  // searchEle.oninput(123).then(res => {
+  //   log(res)
+  // })
+  cancelEle.onclick = function(e){
+    _searchChange.cancel();
+  } 
+  // searchEle.oninput = searchChange
+
+  document.addEventListener('focusin',function (e) {  
+    log(e)
+    log(e.elem)
+  })
+  </script>
+</body>
+</html>

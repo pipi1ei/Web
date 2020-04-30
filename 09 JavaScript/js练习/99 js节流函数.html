@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <input type="text" class="search">
+  
+  <script>
+    const {log} = console;
+
+    // 1.基本封装
+    // function throttle(fn, interval){
+    //   var last = 0;
+    //   return function () {  
+    //     // this和 arguments
+    //     var _this = this;
+    //     var _arguments = arguments;
+
+    //     var now = new Date().getTime();
+    //     if(now - last > interval){
+    //       fn.apply(_this, arguments);
+    //       last = now;
+    //     }
+    //   }
+    // }
+
+    // 2.优化最后执行
+    function throttle(fn, interval) {  
+      var last = 0;
+      var timer = null;
+
+      return function () {  
+        var _this = this;
+        var _arguments = arguments;
+
+        var now = new Date().getTime();
+        if(now - last > interval){
+          if(timer){
+            clearTimeout(timer)
+            timer = null
+          }
+          fn.apply(_this, _arguments)
+          last = now;
+        }else if(timer === null){
+          timer = setTimeout(function () {  
+            timer = null;
+            fn.apply(_this, _arguments);
+          },interval)
+        }
+      }
+    }
+
+    var searchEle = document.querySelector('.search')
+    var count = 0;
+    function searchChange() {  
+      count++;
+      log(log('第 ' + count + ' 次网络请求'))
+    }
+    searchEle.oninput = throttle(searchChange, 500)
+  </script>
+</body>
+</html>
