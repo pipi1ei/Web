@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="page-view-size" content="1920*1080"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AI客厅</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/children.css">
+    <script>  (function (w, d, s) {
+        var l = 'IFlyCollector', f = d.getElementsByTagName(s)[0], j = d.createElement(s), w = window;
+        w[l] = {};
+        var c = w[l];
+        c._o = function (a) {
+            return function () {
+                (c._e = c._e || []).push([a, arguments])
+            }
+        };
+        var e = ['init', 'onEvent', 'onError', 'bindUser', 'updateCustomConfig', 'setChannel', 'setAppVersion'];
+        for (var i = 0; i < e.length; i++) {
+            c[e[i]] = c._o.call(null, e[i])
+        }
+        j.async = true;
+        j.src = 'http://logconf.iflytek.com/entry.js';
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script');</script>
+</head>
+
+<body>
+<div class="body">
+    <div class="btn-1 focusElement" id="btn-1" right="btn-2"></div>
+    <div class="btn-2 focusElement" id="btn-2" left="btn-1" right="btn-3"></div>
+    <div class="btn-3 focusElement" id="btn-3" left="btn-2" right="btn-4"></div>
+    <div class="btn-4 focusElement" id="btn-4" left="btn-3"></div>
+</div>
+
+<div id="search-result" class="search-result">
+    <div id="search-logo"></div>
+    <div id="search-tip">为您找到以下相关内容</div>
+    <div id="search-left"></div>
+    <div id="search-right"></div>
+    <div id="search-list">
+        <div id="search-list-wrap">
+        </div>
+    </div>
+</div>
+
+<script id="searchModel" type="text/html">
+    {{each data value i}}
+    <div class="search-item focusElement" id="search-item-{{i}}"
+         left="search-item-{{i-1}}" right="search-item-{{i+1}}" data-index="{{i}}"
+         data-actname="{{value.name}}" data-posid="search-{{i+1}}"
+         data-accessOpen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=play-code-aiArea&code={{value.code}}","type":"String"}]}'
+    >
+        <div class="search-item-img" style="background-image:url({{imgUrl}}{{value.thumbHD}})">
+            <img src="./assets/images/focus-img/search.png" alt="">
+        </div>
+        <div class="search-item-title text-overflow-hidden scroll_title">{{value.name}}</div>
+    </div>
+    {{/each}}
+</script>
+<script src="./config.js"></script>
+<script src="./assets/config.js"></script>
+<script src="./assets/js/baseLib.js"></script>
+<script src="./assets/js/commom.js"></script>
+<script src="./assets/js/keys.js"></script>
+<script src="./assets/js/keyboard.js"></script>
+<script src="./assets/js/arttemplate.js"></script>
+<script src="./assets/js/webxiri_1.1.0.js"></script>
+<script src="./assets/js/openPlatform.js"></script>
+<script src="./assets/js/jquery.md5.js"></script>
+<script src="./assets/js/WebViewJavascriptBridge.js"></script>
+<script src="./assets/js/jquery-3.3.1.min.js"></script>
+<script src="./assets/js/children.js"></script>
+<script src="./assets/js/search.js"></script>
+</body>
+
+</html>

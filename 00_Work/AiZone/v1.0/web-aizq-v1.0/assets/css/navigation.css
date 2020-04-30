@@ -1,0 +1,260 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 12px;
+    font-size: 1.2rem;
+    width: 128rem;
+    height: 72rem;
+    background-image: url("../images/nav-bg.jpg");
+    background-size: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav {
+    position: absolute;
+    width: 32rem;
+    height: 72rem;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.nav-title {
+    position: absolute;
+    left: 10rem;
+    top: 6.7rem;
+    height: 3.2rem;
+    font-size: 32px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+    line-height: 1;
+}
+
+.nav-line {
+    position: absolute;
+    top: 13.8rem;
+    left: 0;
+    width: 32rem;
+    height: 2px;
+    background: rgba(49, 64, 100, 1);
+}
+
+.nav .focusElement {
+    position: absolute;
+    top: 16.7rem;
+    left: 8rem;
+    text-align: center;
+    width: 16rem;
+    height: 5.6rem;
+    font-size: 30px;
+    color: rgba(158, 164, 181, 1);
+    line-height: 5.6rem;
+    font-weight: 600;
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.nav #nav-2 {
+    top: 23.5rem;
+}
+
+.nav #nav-3 {
+    top: 30.4rem;
+}
+
+.nav #nav-4 {
+    top: 37.3rem;
+}
+
+.nav .selected {
+    color: rgba(68, 133, 255, 1);
+}
+
+.nav .currentFocusElement {
+    background: -webkit-linear-gradient(131deg, rgba(75, 240, 255, 1), rgba(103, 62, 247, 1), rgba(252, 101, 255, 1));
+    background: linear-gradient(131deg, rgba(75, 240, 255, 1), rgba(103, 62, 247, 1), rgba(252, 101, 255, 1));
+}
+
+.nav .currentFocusElement > div {
+    color: #ffffff;
+    background: rgba(68, 133, 255, 1);
+    line-height: 5rem;
+    position: absolute;
+    top: 0.3rem;
+    left: 0.3rem;
+    right: 0.3rem;
+    bottom: 0.3rem;
+    border-radius: 0.7rem;
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 32rem;
+    padding: 0 0 0 3.6rem;
+}
+
+.content > div {
+    display: none;
+    padding-top: 1rem;
+    position: relative;
+}
+
+.content > div#nav-1-content {
+    padding-top: 21rem;
+}
+
+.content.currentFocusElement {
+    position: relative;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+.content .content-img {
+    border-radius: 0.7rem;
+    background-color: rgba(236, 235, 244, 0.1);
+    background-image: url(../images/placeholder.png);
+    /* background-size: 22.4rem 9.7rem; */
+    background-size: 50%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.7rem;
+}
+
+.content .item-head {
+    width: 76rem;
+    height: 16rem;
+    position: absolute;
+    top: 5rem;
+    left: 6rem;
+    border-radius: 0.7rem;
+}
+
+.content .item-head.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 86.3rem;
+    height: 19.4rem;
+    left: -5.1rem;
+    top: -1.7rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/nav-head-f.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.show {
+    display: block !important;
+}
+
+.item-app {
+    float: left;
+    margin-left: 6rem;
+    margin-top: 4rem;
+    position: relative;
+    width: 35.4rem;
+    height: 16rem;
+    background: rgba(236, 235, 244, 0.1);
+    border-radius: 0.7rem;
+}
+
+.item-app-img {
+    position: relative;
+    top: 3rem;
+    left: 3.3rem;
+    width: 10rem;
+    height: 10rem;
+    background-color: rgba(236, 235, 244, 0.1);
+    background-image: url("../images/app-placeholder.png");
+    background-size: 7.2rem 3.1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.item-app-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.item-app-title {
+    position: absolute;
+    top: 4.8rem;
+    left: 15.8rem;
+    height: 26px;
+    line-height: 1;
+    font-size: 26px;
+    font-weight: 600;
+    width: 20rem;
+    color: #ffffff;
+}
+
+.item-app-microphone {
+    position: absolute;
+    width: 1.9rem;
+    height: 2.5rem;
+    top: 9.1rem;
+    left: 15.4rem;
+}
+
+.item-app-tips {
+    position: absolute;
+    top: 9.3rem;
+    left: 18rem;
+    width: 16rem;
+    height: 20px;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 200;
+    color: rgba(228, 228, 228, 1);
+}
+
+.item-app.currentFocusElement {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.item-app.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 40.7rem;
+    height: 19.4rem;
+    left: -2.6rem;
+    top: -1.85rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/14.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.item-app.icon_HOT::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 30.4rem;
+    width: 4rem;
+    height: 2rem;
+    background-image: url(../images/hot.png);
+    background-size: 100% 100%;
+}
+
+.item-app.icon_NEW::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 30.4rem;
+    width: 4rem;
+    height: 2rem;
+    background-image: url(../images/new.png);
+    background-size: 100% 100%;
+}

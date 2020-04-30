@@ -1,0 +1,56 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 12px;
+  font-size: 1.2rem;
+  width: 128rem;
+  height: 72rem;
+  background-size: 100%;
+  position: relative;
+}
+#page1,
+#page2,
+#page3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 128rem;
+  height: 72rem;
+  background-size: 100%;
+  display: none;
+}
+#page1 {
+  background-image: url("../images/help-1.jpg");
+}
+#page2 {
+  background-image: url("../images/help-2.jpg");
+}
+#page3 {
+  background-image: url("../images/help-3.jpg");
+}
+.show {
+  display: block !important;
+}
+
+.focusElement {
+  position: absolute;
+  width: 22.4rem;
+  height: 9rem;
+  top: 60.2rem;
+  background-size: 100%;
+}
+.btn-1 {
+  left: 35.1rem;
+  background-image: url("../images/help-btn-1.png");
+}
+.btn-2 {
+  left: 70.7rem;
+  background-image: url("../images/help-btn-2.png");
+}
+.btn-1.currentFocusElement {
+  background-image: url("../images/help-btn-1-f.png");
+}
+.btn-2.currentFocusElement {
+  background-image: url("../images/help-btn-2-f.png");
+}

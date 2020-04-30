@@ -1,0 +1,49 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 12px;
+  font-size: 1.2rem;
+  width: 128rem;
+  height: 72rem;
+  background-image: url("../images/children/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: relative;
+}
+
+.body .focusElement {
+  position: absolute;
+  width: 33rem;
+  height: 42rem;
+  top: 8.4rem;
+  background-size: 100%;
+}
+.btn-1 {
+  left: 9.7rem;
+  background-image: url("../images/children/1.png");
+}
+.btn-2 {
+  left: 35.7rem;
+  background-image: url("../images/children/2.png");
+}
+.btn-3 {
+  left: 61.7rem;
+  background-image: url("../images/children/3.png");
+}
+.btn-4 {
+  left: 87.7rem;
+  background-image: url("../images/children/4.png");
+}
+.btn-1.currentFocusElement {
+  background-image: url("../images/children/1-f.png");
+}
+.btn-2.currentFocusElement {
+  background-image: url("../images/children/2-f.png");
+}
+.btn-3.currentFocusElement {
+  background-image: url("../images/children/3-f.png");
+}
+.btn-4.currentFocusElement {
+  background-image: url("../images/children/4-f.png");
+}

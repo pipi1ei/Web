@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="page-view-size" content="1920*1080"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AI客厅</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+
+    <script src="./assets/js/commom.js"></script>
+    <script>
+        // 从其它页面返回，跳到之前原页面
+        if (utils.queryString()['source'] === 'back' && localStorage.getItem('jump_out_url')) {
+            location.href = localStorage.getItem('jump_out_url');
+        }
+    </script>
+    <script>  (function (w, d, s) {
+        var l = 'IFlyCollector', f = d.getElementsByTagName(s)[0], j = d.createElement(s), w = window;
+        w[l] = {};
+        var c = w[l];
+        c._o = function (a) {
+            return function () {
+                (c._e = c._e || []).push([a, arguments])
+            }
+        };
+        var e = ['init', 'onEvent', 'onError', 'bindUser', 'updateCustomConfig', 'setChannel', 'setAppVersion'];
+        for (var i = 0; i < e.length; i++) {
+            c[e[i]] = c._o.call(null, e[i])
+        }
+        j.async = true;
+        j.src = 'http://idatalogconf.iflysec.com/entry.js';
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script');</script>
+</head>
+
+<body>
+<div class="fixed_robot">
+    <div class="robot_img" id="robot_img"></div>
+    <div class="robot_tip" id="robot_tip" style="opacity: 0;"></div>
+</div>
+<div class="content" id="content">
+    <!-- header 部分（爱玩，爱看，我的，帮助） -->
+    <div class="header">
+        <img class="header-bg" src="./assets/images/head-bg.png" alt="">
+        <img class="header-logo" src="./assets/images/logo.png" alt="">
+        <span class="header-subtitle text-overflow-hidden"></span>
+        <div class="header-aw header-icon btn focusElement" id="header-aw" right="header-ak" down="main-3"
+             data-accessopen='{"opType":"app","pkgName":"com.iflytek.yyt","clsName":"com.iflytek.yyt.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=more_game","type":"String"}]}'>
+            <img src="./assets/images/aw.png" alt="">
+        </div>
+        <div class="header-ak header-icon btn focusElement" id="header-ak" left="header-aw" right="header-mine"
+             down="main-3"
+             data-accessopen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=collectRecommend","type":"String"}]}'>
+            <img src="./assets/images/ak.png" alt="">
+        </div>
+        <div class="header-mine header-icon btn focusElement" id="header-mine" left="header-ak" right="header-help"
+             down="main-3"
+             data-accessopen='{"opType":"app","pkgName":"com.iflytek.yyt","clsName":"com.iflytek.yyt.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=game_clean","type":"String"}]}'>
+            <img src="./assets/images/wd.png" alt="">
+        </div>
+        <div class="header-help header-icon btn focusElement" id="header-help" left="header-mine" down="main-3"
+             data-actName="帮助"
+             data-accessopen='{"operateType":"href","linkUrl":"./help.html?openSource=voiceArea"}'>
+            <img src="./assets/images/bz.png" alt="">
+        </div>
+    </div>
+    <!-- 首屏推荐 -->
+    <div class="main" id="main">
+        <!-- main -->
+        <div class="main-1 img-btn focusElement" id="main-1" up="header-aw" right="main-2" down="main-4">
+            <img src="" alt="">
+        </div>
+        <div class="main-2 img-btn focusElement" id="main-2" up="header-aw" right="main-3" left="main-1"
+             down="nav-game">
+            <img src="" alt="">
+        </div>
+        <div class="main-3 img-btn focusElement" id="main-3" up="header-ak" left="main-2" down="main-6">
+            <img src="" alt="">
+        </div>
+        <div class="main-4 img-btn focusElement" id="main-4" up="main-1" right="main-5" down="nav-children">
+            <img src="" alt="">
+        </div>
+        <div class="main-5 img-btn focusElement" id="main-5" up="main-1" right="main-2" left="main-4"
+             down="nav-enlightenment">
+            <img src="" alt="">
+        </div>
+        <div class="main-6 img-btn focusElement" id="main-6" up="main-3" left="main-2" down="nav-skill">
+            <img src="" alt="">
+        </div>
+
+        <!-- 导航部分 -->
+        <div class="nav-item nav-children focusElement" id="nav-children" up="main-4" right="nav-book"
+             down="toplist-1-1" data-actname="交互卡通" data-to="children-1">
+            <img src="./assets/images/nav-children.png" alt="">
+        </div>
+        <div class="nav-item nav-book focusElement" id="nav-book" left="nav-children" up="main-4"
+             right="nav-enlightenment"
+             down="toplist-1-1" data-actname="互动绘本" data-to="book-1">
+            <img src="./assets/images/nav-book.png" alt="">
+        </div>
+        <div class="nav-item nav-enlightenment focusElement" id="nav-enlightenment" left="nav-book" up="main-5"
+             right="nav-tx"
+             down="toplist-2-1" data-actname="亲子启蒙" data-to="enlightenment-1">
+            <img src="./assets/images/nav-enlightenment.png" alt="">
+        </div>
+        <div class="nav-item nav-tx focusElement" id="nav-tx" left="nav-enlightenment" up="main-5"
+             right="nav-game"
+             down="toplist-2-1" data-actname="AI童学" data-to="tx-1">
+            <img src="./assets/images/nav-tx.png" alt="">
+        </div>
+        <div class="nav-item nav-game focusElement" id="nav-game" left="nav-tx" up="main-2" right="nav-life"
+             down="toplist-2-1" data-actname="声控游戏" data-to="game-1">
+            <img src="./assets/images/nav-game.png" alt="">
+        </div>
+        <div class="nav-item nav-life focusElement" id="nav-life" left="nav-game" up="main-6" right="nav-skill"
+             down="toplist-3-1" data-actname="生活服务" data-to="weather">
+            <img src="./assets/images/nav-life.png" alt="">
+        </div>
+        <div class="nav-item nav-skill focusElement" id="nav-skill" left="nav-life" up="main-6" right="nav-skill"
+             down="toplist-3-1" data-actname="实用技能" data-to="skill-1">
+            <img src="./assets/images/nav-skill.png" alt="">
+        </div>
+    </div>
+
+    <!-- TOP榜单 -->
+    <div class="toplist" id="toplist">
+        <!-- header -->
+        <div class="toplist-head module-head">
+            <img class="toplist-logo" src="" alt="">
+            <span class="toplist-title"></span>
+            <span class="toplist-subtitle"></span>
+        </div>
+
+        <!-- 内容部分 -->
+        <div class="toplist-item">
+            <div class="toplist-item-title" style="display: none;"></div>
+            <div class="toplist-item-1 should_auto_height img-btn focusElement" id="toplist-1-1" up="nav-children"
+                 right="toplist-2-1"
+                 down="toplist-1-2">
+                <img src="" alt="">
+                <img class="toplist-item-icon" src="./assets/images/icon-1.png" alt="" up="main-9"
+                     right="toplist-3-1" left="toplist-1-1" down="toplist-2-2">
+            </div>
+            <div class="toplist-item-text toplist-item-2 focusElement" id="toplist-1-2" up="toplist-1-1"
+                 right="toplist-2-2" down="toplist-1-3">
+                <img class="toplist-item-icon" src="./assets/images/icon-2.png" alt="">
+                <div>第2名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-3 focusElement" id="toplist-1-3" up="toplist-1-2"
+                 right="toplist-2-3" down="toplist-1-4">
+                <img class="toplist-item-icon" src="./assets/images/icon-3.png" alt="">
+                <div>第3名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-4 focusElement" id="toplist-1-4" up="toplist-1-3"
+                 right="toplist-2-4" down="children-more">
+                <img class="toplist-item-icon" src="./assets/images/icon-4.png" alt="">
+                <div>第4名</div>
+            </div>
+        </div>
+        <div class="toplist-item">
+            <div class="toplist-item-title" style="display: none;"></div>
+            <div class="toplist-item-1 should_auto_height img-btn focusElement" id="toplist-2-1" up="nav-tx"
+                 right="toplist-3-1"
+                 down="toplist-2-2" left="toplist-1-1">
+                <img src="" alt="">
+                <img class="toplist-item-icon" src="./assets/images/icon-1.png" alt="">
+            </div>
+            <div class="toplist-item-text toplist-item-2 focusElement" id="toplist-2-2" up="toplist-2-1"
+                 right="toplist-3-2" down="toplist-2-3" left="toplist-1-2">
+                <img class="toplist-item-icon" src="./assets/images/icon-2.png" alt="">
+                <div>第2名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-3 focusElement" id="toplist-2-3" up="toplist-2-2"
+                 right="toplist-3-3" down="toplist-2-4" left="toplist-1-3">
+                <img class="toplist-item-icon" src="./assets/images/icon-3.png" alt="">
+                <div>第3名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-4 focusElement" id="toplist-2-4" up="toplist-2-3"
+                 right="toplist-3-4" down="children-more" left="toplist-1-4">
+                <img class="toplist-item-icon" src="./assets/images/icon-4.png" alt="">
+                <div>第4名</div>
+            </div>
+        </div>
+        <div class="toplist-item">
+            <div class="toplist-item-title" style="display: none;"></div>
+            <div class="toplist-item-1 should_auto_height img-btn focusElement" id="toplist-3-1" up="nav-life"
+                 down="toplist-3-2"
+                 left="toplist-2-1">
+                <img src="" alt="">
+                <img class="toplist-item-icon" src="./assets/images/icon-1.png" alt="">
+            </div>
+            <div class="toplist-item-text toplist-item-2 focusElement" id="toplist-3-2" up="toplist-3-1"
+                 down="toplist-3-3" left="toplist-2-2">
+                <img class="toplist-item-icon" src="./assets/images/icon-2.png" alt="">
+                <div>第2名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-3 focusElement" id="toplist-3-3" up="toplist-3-2"
+                 down="toplist-3-4" left="toplist-2-3">
+                <img class="toplist-item-icon" src="./assets/images/icon-3.png" alt="">
+                <div>第3名</div>
+            </div>
+            <div class="toplist-item-text toplist-item-4 focusElement" id="toplist-3-4" up="toplist-3-3"
+                 down="children-more" left="toplist-2-4">
+                <img class="toplist-item-icon" src="./assets/images/icon-4.png" alt="">
+                <div>第4名</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 交互少儿 -->
+    <div class="children" id="children">
+        <!-- head -->
+        <div class="children-head module-head">
+            <img class="children-logo" src="" alt="">
+            <span class="children-title"></span>
+            <span class="children-subtitle"></span>
+            <div class="children-more focusElement" id="children-more" up="toplist-3-4" down="children-3"
+                 data-actName="交互少儿更多"
+                 data-accessopen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=story","type":"String"}]}'>
+            </div>
+        </div>
+
+
+        <div class="children-1 img-btn focusElement" id="children-1" up="children-more" right="children-2"
+             down="children_ip-1">
+            <img src="" alt="">
+        </div>
+        <div class="children-2 img-btn focusElement" id="children-2" up="children-more" right="children-3"
+             down="children-4" left="children-1">
+            <img src="" alt="">
+        </div>
+        <div class="children-3 img-btn focusElement" id="children-3" up="children-more" left="children-2"
+             down="children_ip-5">
+            <img src="" alt="">
+        </div>
+        <div class="children-4 img-btn focusElement" id="children-4" up="children-2" left="children-1"
+             right="children-5" down="children_ip-3">
+            <img src="" alt="">
+        </div>
+        <div class="children-5 img-btn focusElement" id="children-5" up="children-2" left="children-4"
+             right="children-3" down="children_ip-4">
+            <img src="" alt="">
+        </div>
+
+
+        <div class="children_ip children_ip-1 focusElement" id="children_ip-1" up="children-1"
+             right="children_ip-2" down="book-more">
+            <img src="" alt="">
+        </div>
+        <div class="children_ip children_ip-2 focusElement" id="children_ip-2" up="children-1"
+             right="children_ip-3" left="children_ip-1" down="book-more">
+            <img src="" alt="">
+        </div>
+        <div class="children_ip children_ip-3 focusElement" id="children_ip-3" up="children-4"
+             right="children_ip-4" left="children_ip-2" down="book-more">
+            <img src="" alt="">
+        </div>
+        <div class="children_ip children_ip-4 focusElement" id="children_ip-4" up="children-5"
+             right="children_ip-5" left="children_ip-3" down="book-more">
+            <img src="" alt="">
+        </div>
+        <div class="children_ip children_ip-5 focusElement" id="children_ip-5" up="children-3"
+             right="children_ip-6" left="children_ip-4" down="book-more">
+            <img src="" alt="">
+        </div>
+        <div class="children_ip children_ip-6 focusElement" id="children_ip-6" up="children-3"
+             left="children_ip-5" down="book-more">
+            <img src="" alt="">
+        </div>
+    </div>
+
+    <!-- 互动绘本 -->
+    <div class="book" id="book">
+        <div class="book-head module-head">
+            <img class="book-logo" src="" alt="">
+            <span class="book-title"></span>
+            <span class="book-subtitle"></span>
+            <div class="book-more focusElement" id="book-more" up="children_ip-6" down="book-4"
+                 data-actName="互动绘本更多"
+                 data-accessopen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=Picture","type":"String"}]}'>
+            </div>
+        </div>
+        <div class="book-item book-1 img-btn focusElement" id="book-1" up="book-more" right="book-2"
+             down="enlightenment-1">
+            <img src="" alt="">
+        </div>
+        <div class="book-item book-2 img-btn focusElement" id="book-2" up="book-more" right="book-3"
+             down="book-5" left="book-1">
+            <img src="" alt="">
+        </div>
+        <div class="book-item book-3 img-btn focusElement" id="book-3" up="book-more" right="book-4" left="book-2"
+             down="enlightenment-2">
+            <img src="" alt="">
+        </div>
+        <div class="book-item book-4 img-btn focusElement" id="book-4" up="book-more" left="book-3"
+             down="book-6">
+            <img src="" alt="">
+        </div>
+        <div class="book-item book-5 img-btn focusElement" id="book-5" up="book-2" left="book-1"
+             right="book-3" down="enlightenment-1">
+            <img src="" alt="">
+        </div>
+        <div class="book-item book-6 img-btn focusElement" id="book-6" up="book-4" left="book-3"
+             down="enlightenment-3">
+            <img src="" alt="">
+        </div>
+    </div>
+    <!-- 亲子启蒙 -->
+    <div class="enlightenment" id="enlightenment">
+        <div class="enlightenment-head module-head">
+            <img class="enlightenment-logo" src="" alt="">
+            <span class="enlightenment-title"></span>
+            <span class="enlightenment-subtitle"></span>
+            <!--                    <div class="enlightenment-more focusElement" id="enlightenment-more" up="book-6" down="enlightenment-3"-->
+            <!--                         data-actName="亲子启蒙更多"-->
+            <!--                         data-accessopen=''>-->
+            <!--                    </div>-->
+        </div>
+        <div class="enlightenment-item enlightenment-1 img-btn focusElement" id="enlightenment-1"
+             up="book-1"
+             right="enlightenment-2"
+             down="tx-more">
+            <img src="" alt="">
+        </div>
+        <div class="enlightenment-item enlightenment-2 img-btn focusElement" id="enlightenment-2"
+             up="book-5"
+             right="enlightenment-3"
+             down="enlightenment-4" left="enlightenment-1">
+            <img src="" alt="">
+        </div>
+        <div class="enlightenment-item enlightenment-3 img-btn focusElement" id="enlightenment-3"
+             up="book-6"
+             left="enlightenment-2"
+             down="tx-more">
+            <img src="" alt="">
+        </div>
+        <div class="enlightenment-item enlightenment-4 img-btn focusElement" id="enlightenment-4" up="enlightenment-2"
+             left="enlightenment-1"
+             right="enlightenment-3" down="tx-more">
+            <img src="" alt="">
+        </div>
+    </div>
+
+    <!-- AI童学 -->
+    <div class="tx" id="tx">
+        <div class="tx-head module-head">
+            <img class="tx-logo" src="" alt="">
+            <span class="tx-title"></span>
+            <span class="tx-subtitle"></span>
+            <div class="tx-more focusElement" id="tx-more" up="enlightenment-3" down="tx-3"
+                 data-actName="AI童学更多"
+                 data-accessopen=''>
+            </div>
+        </div>
+        <div class="tx-item tx-1 img-btn focusElement" id="tx-1"
+             up="tx-more"
+             right="tx-2"
+             down="tx-4">
+            <img src="" alt="">
+        </div>
+        <div class="tx-item tx-2 img-btn focusElement" id="tx-2"
+             up="tx-more"
+             right="tx-3"
+             down="game-more" left="tx-1">
+            <img src="" alt="">
+        </div>
+        <div class="tx-item tx-3 img-btn focusElement" id="tx-3"
+             up="tx-more"
+             left="tx-2"
+             down="game-more">
+            <img src="" alt="">
+        </div>
+        <div class="tx-item tx-4 img-btn focusElement" id="tx-4" up="tx-1"
+             right="tx-5" down="game-more">
+            <img src="" alt="">
+        </div>
+        <div class="tx-item tx-5 img-btn focusElement" id="tx-5" up="tx-1"
+             left="tx-4"
+             right="tx-2" down="game-more">
+            <img src="" alt="">
+        </div>
+    </div>
+
+    <!-- 声控游戏 -->
+    <div class="game" id="game">
+        <div class="game-head module-head">
+            <img class="game-logo" src="" alt="">
+            <span class="game-title"></span>
+            <span class="game-subtitle"></span>
+            <div class="game-more focusElement" id="game-more" up="tx-3" down="game-2" data-actName="生活服务更多"
+                 data-accessopen='{"opType":"app","pkgName":"com.iflytek.yyt","clsName":"com.iflytek.yyt.SplashActivity","params":[{"key":"source","value":"entry=column-aiArea&code=game_classify","type":"String"}]}'>
+            </div>
+        </div>
+        <div class="game-1 img-btn focusElement" id="game-1" up="game-more" right="game-2" down="game-3">
+            <img src="" alt="">
+        </div>
+        <div class="game-2 img-btn focusElement" id="game-2" up="game-more" left="game-1" down="game-5">
+            <img src="" alt="">
+        </div>
+        <div class="game-3 img-btn focusElement" id="game-3" up="game-1" right="game-4" down="life-more,weather">
+            <img src="" alt="">
+        </div>
+        <div class="game-4 img-btn focusElement" id="game-4" up="game-1" left="game-3" right="game-5"
+             down="life-more,weather">
+            <img src="" alt="">
+        </div>
+        <div class="game-5 img-btn focusElement" id="game-5" up="game-2" left="game-4" down="life-more,stock">
+            <img src="" alt="">
+        </div>
+    </div>
+
+    <!-- 生活服务 -->
+    <div class="life">
+        <div class="life-head module-head">
+            <img class="life-logo" src="" alt="">
+            <span class="life-title"></span>
+            <span class="life-subtitle"></span>
+            <div class="life-more focusElement switchMore" data-type="life" id="life-more" up="game-5" down="stock"
+                 data-actName="生活服务更多"
+                 data-accessopen='{"operateType":"href","linkUrl":"./navigation.html?openSource=voiceArea&to=life"}'>
+            </div>
+        </div>
+        <div class="weather life-top-item focusElement"
+             data-accessopen='{"opType":"recognizetext","text":"tx#今天天气怎么样"}' id="weather" up="life-more,game-3"
+             right="stock" down="life-1">
+            <div id="weather_lastUpdateTime" class="life-top-item-time"></div>
+            <img id="weather_item_logo" class="weather-img" src="./assets/images/weather/big2Blizzard.png"
+                 alt="">
+            <div id="weather_cityName" class="life-top-item-title"></div>
+            <div id="weather_tempRange" class="life-top-item-subtitle"></div>
+            <div class="life-top-item-tips text-overflow-hidden">今天的天气怎么样</div>
+        </div>
+        <div class="stock life-top-item focusElement"
+             data-accessopen='{"opType":"recognizetext","text":"tx#上证指数"}' id="stock" up="life-more,game-5"
+             left="weather" down="life-3">
+            <div id="stock_lastUpdateTime" class="life-top-item-time"></div>
+            <img class="stock-img" src="./assets/images/stock.png" alt="">
+            <div class="life-top-item-title">上证指数</div>
+            <div class="life-top-item-subtitle">
+                <span id="stock_currentPrice"></span>
+                <span id="stock_riseRate"></span>
+            </div>
+            <div class="life-top-item-tips text-overflow-hidden">科大讯飞的股票</div>
+        </div>
+        <div class="life-item-app-list clearfix" id="life-item-app-list">
+            <div class="item-app focusElement" id="life-1" up="weather" right="life-2" down="life-4">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden "></div>
+            </div>
+            <div class="item-app focusElement" id="life-2" up="weather" right="life-3" down="life-5"
+                 left="life-1">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden scroll_title"></div>
+            </div>
+            <div class="item-app focusElement" id="life-3" up="stock" left="life-2" down="life-6">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+        </div>
+        <div class="life-item-app-list clearfix" id="life-more-list" style="display:none;"></div>
+    </div>
+    <!-- 实用技能 -->
+    <div class="skill">
+        <div class="skill-head module-head">
+            <img class="skill-logo" src="" alt="">
+            <span class="skill-title"></span>
+            <span class="skill-subtitle"></span>
+            <div class="skill-more focusElement switchMore" data-type="skill" id="skill-more" up="life-3" down="skill-3"
+                 data-actName="实用技能更多"
+                 data-accessopen='{"operateType":"href","linkUrl":"./navigation.html?openSource=voiceArea&to=skill"}'>
+            </div>
+        </div>
+        <div class="skill-item-list clearfix" id="skill-item-list">
+            <div class="item-app focusElement" id="skill-1" up="skill-more,life-1" right="skill-2" down="skill-4">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+            <div class="item-app focusElement" id="skill-2" up="skill-more,life-2" left="skill-1" right="skill-3"
+                 down="skill-5">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+            <div class="item-app focusElement" id="skill-3" up="skill-more,life-3" left="skill-2" down="skill-6">
+                <div class=" item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+            <div class="item-app focusElement" id="skill-4" up="skill-1" right="skill-5" down="skill-7">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+            <div class="item-app focusElement" id="skill-5" up="skill-2" right="skill-6" left="skill-4"
+                 down="skill-8,skill-7">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+            <div class="item-app focusElement" id="skill-6" up="skill-3" left="skill-5" down="skill-9,skill-8,skill-7">
+                <div class="item-app-img">
+                    <img src="" alt="">
+                </div>
+                <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+                <div class="item-app-title"></div>
+                <div class="item-app-tips scroll_title  text-overflow-hidden"></div>
+            </div>
+        </div>
+        <div class="skill-item-list clearfix" id="skill-more-list" style="display:none;"></div>
+    </div>
+</div>
+
+<div id="search-result" class="search-result">
+    <div id="search-logo"></div>
+    <div id="search-tip">为您找到以下相关内容</div>
+    <div id="search-left"></div>
+    <div id="search-right"></div>
+    <div id="search-list">
+        <div id="search-list-wrap">
+        </div>
+    </div>
+</div>
+
+<script id="appModel" type="text/html">
+    {{each data value i}}
+    <div class="item-app focusElement icon_{{value.tag}}" id="{{id}}-{{startIndex+i+1}}"
+         data-actname="{{value.actName}}" data-posid="" data-accessOpen="{{value.accessOpen}}"
+         data-pkgName="{{value.pkgName}}" data-httpUrl="{{value.httpUrl}}" data-triggerText="{{value.triggerText}}"
+         data-bubbleTip="{{value.bubbleTip}}" up="{{id}}-{{startIndex+i-2}}"
+         left="{{i%3===0?'':(id+'-'+(startIndex+i))}}"
+         down="{{id}}-{{startIndex+i+4}},{{id}}-{{startIndex+i+3}},{{id}}-{{startIndex+i+2}}{{down?(','+down+'-more'):''}}{{down?(','+down+'-'+((i)%3+1)):''}}"
+         right="{{(i+1)%3===0?'':(id+'-'+(startIndex+i+2))}}">
+        <div class="item-app-img">
+            <img src="{{value.showUrl | filterImg}}" alt="">
+        </div>
+        <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+        <div class="item-app-title">{{value.actName}}</div>
+        <div class="item-app-tips text-overflow-hidden">{{value.subTitle}}</div>
+    </div>
+    {{/each}}
+</script>
+
+<script id="searchModel" type="text/html">
+    {{each data value i}}
+    <div class="search-item focusElement" id="search-item-{{i}}"
+         left="search-item-{{i-1}}" right="search-item-{{i+1}}" data-index="{{i}}"
+         data-actname="{{value.name}}" data-posid="search-{{i+1}}"
+         data-accessOpen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=play-code-aiArea&code={{value.code}}","type":"String"}]}'
+    >
+        <div class="search-item-img" style="background-image:url({{imgUrl}}{{value.thumbHD}})">
+            <img src="./assets/images/focus-img/search.png" alt="">
+        </div>
+        <div class="search-item-title text-overflow-hidden scroll_title">{{value.name}}</div>
+    </div>
+    {{/each}}
+</script>
+
+<script src="./config.js"></script>
+<script src="./assets/config.js"></script>
+<script src="./assets/js/baseLib.js"></script>
+<script src="./assets/js/keys.js"></script>
+<script src="./assets/js/keyboard.js"></script>
+<script src="./assets/js/arttemplate.js"></script>
+<script src="./assets/js/webxiri_1.0.5.js"></script>
+<script src="./assets/js/openPlatform.js"></script>
+<script src="./assets/js/jquery-3.3.1.min.js"></script>
+<script src="./assets/js/jquery.md5.js"></script>
+<script src="./assets/js/WebViewJavascriptBridge.js"></script>
+<script src="./assets/js/index.js"></script>
+<script src="./assets/js/search.js"></script>
+</body>
+
+</html>

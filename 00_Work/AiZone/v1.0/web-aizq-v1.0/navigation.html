@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="page-view-size" content="1920*1080"/>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AI客厅</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/navigation.css">
+    <script>  (function (w, d, s) {
+        var l = 'IFlyCollector', f = d.getElementsByTagName(s)[0], j = d.createElement(s), w = window;
+        w[l] = {};
+        var c = w[l];
+        c._o = function (a) {
+            return function () {
+                (c._e = c._e || []).push([a, arguments])
+            }
+        };
+        var e = ['init', 'onEvent', 'onError', 'bindUser', 'updateCustomConfig', 'setChannel', 'setAppVersion'];
+        for (var i = 0; i < e.length; i++) {
+            c[e[i]] = c._o.call(null, e[i])
+        }
+        j.async = true;
+        j.src = 'http://logconf.iflytek.com/entry.js';
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script');</script>
+</head>
+
+<body>
+<div class="nav">
+    <div class="nav-title">语音技能</div>
+    <div class="nav-line"></div>
+    <div class="focusElement nav-btn nav-recommend" index="1" id="nav-1" class="selected" down="nav-2"
+         current="app-1-1">
+        <div>精彩推荐</div>
+    </div>
+    <div class="focusElement nav-btn nav-all" index="2" id="nav-2" down="nav-3" up="nav-1" current="app-2-1">
+        <div>全部</div>
+    </div>
+    <div class="focusElement nav-btn nav-life" index="3" id="nav-3" up="nav-2" down="nav-4" current="app-3-1">
+        <div>生活服务</div>
+    </div>
+    <div class="focusElement nav-btn nav-skill" index="4" id="nav-4" up="nav-3" current="app-4-1">
+        <div>实用技能</div>
+    </div>
+</div>
+<script id="appModel" type="text/html">
+    {{if head}}
+    <div class="focusElement item-head" id="nav-1-0" data-index="-1" data-actname="{{head.actName}}"
+         data-posid="nav-1-0" data-accessOpen="{{head.accessOpen}}" data-pkgName="{{head.pkgName}}"
+         data-httpUrl="{{head.httpUrl}}" data-triggerText="{{head.triggerText}}"
+         data-bubbleTip="{{head.bubbleTip}}">
+        <img class="content-img" src="{{head.showUrl | filterImg}}" alt="">
+    </div>
+    {{/if}}
+    {{each data value i}}
+    <div class="item-app focusElement icon_{{value.tag}}" data-index="{{i}}" id="nav-{{index}}-{{i+1}}"
+         data-actname="{{value.actName}}" data-posid="nav-{{index}}-{{i+1}}" data-accessOpen="{{value.accessOpen}}"
+         data-pkgName="{{value.pkgName}}" data-httpUrl="{{value.httpUrl}}" data-triggerText="{{value.triggerText}}"
+         data-bubbleTip="{{value.bubbleTip}}">
+        <div class="item-app-img">
+            <img src="{{value.showUrl | filterImg}}" alt="">
+        </div>
+        <img class="item-app-microphone" src="./assets/images/microphone.png" alt="">
+        <div class="item-app-title">{{value.actName}}</div>
+        <div class="item-app-tips text-overflow-hidden">{{value.subTitle}}</div>
+    </div>
+    {{/each}}
+</script>
+<div class="content" id="content">
+    <div id="nav-1-content" class="show">
+
+    </div>
+    <div id="nav-2-content">
+    </div>
+    <div id="nav-3-content">
+    </div>
+    <div id="nav-4-content">
+    </div>
+</div>
+
+<div id="search-result" class="search-result">
+    <div id="search-logo"></div>
+    <div id="search-tip">为您找到以下相关内容</div>
+    <div id="search-left"></div>
+    <div id="search-right"></div>
+    <div id="search-list">
+        <div id="search-list-wrap">
+        </div>
+    </div>
+</div>
+
+<script id="searchModel" type="text/html">
+    {{each data value i}}
+    <div class="search-item focusElement" id="search-item-{{i}}"
+         left="search-item-{{i-1}}" right="search-item-{{i+1}}" data-index="{{i}}"
+         data-actname="{{value.name}}" data-posid="search-{{i+1}}"
+         data-accessOpen='{"opType":"app","pkgName":"com.iflytek.duduclass","clsName":"com.iflytek.duduclass.SplashActivity","params":[{"key":"source","value":"entry=play-code-aiArea&code={{value.code}}","type":"String"}]}'
+    >
+        <div class="search-item-img" style="background-image:url({{imgUrl}}{{value.thumbHD}})">
+            <img src="./assets/images/focus-img/search.png" alt="">
+        </div>
+        <div class="search-item-title text-overflow-hidden scroll_title">{{value.name}}</div>
+    </div>
+    {{/each}}
+</script>
+
+<script src="./config.js"></script>
+<script src="./assets/config.js"></script>
+<script src="./assets/js/baseLib.js"></script>
+<script src="./assets/js/commom.js"></script>
+<script src="./assets/js/keys.js"></script>
+<script src="./assets/js/keyboard.js"></script>
+<script src="./assets/js/arttemplate.js"></script>
+<script src="./assets/js/webxiri_1.1.0.js"></script>
+<script src="./assets/js/openPlatform.js"></script>
+<script src="./assets/js/jquery.md5.js"></script>
+<script src="./assets/js/WebViewJavascriptBridge.js"></script>
+<script src="./assets/js/jquery-3.3.1.min.js"></script>
+<script src="./assets/js/navigation.js"></script>
+<script src="./assets/js/search.js"></script>
+</body>
+
+</html>

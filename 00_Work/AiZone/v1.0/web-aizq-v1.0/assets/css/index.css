@@ -1,0 +1,1349 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 12px;
+    font-size: 1.2rem;
+    width: 128rem;
+    height: 72rem;
+}
+
+/* 默认按钮样式（无img src） */
+.img-btn {
+    border-radius: 0.7rem;
+    background-color: rgba(236, 235, 244, 0.1);
+    background-image: url(../images/placeholder.png);
+    background-size: 50%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+html {
+    background: -webkit-linear-gradient(
+            180deg,
+            #242244 0%,
+            #312e5f 52%,
+            #172144 100%
+    );
+    background: linear-gradient(180deg, #242244 0%, #312e5f 52%, #172144 100%);
+}
+
+body {
+    background-image: url("../images/bg.png");
+    background-repeat: repeat-y;
+    background-size: 128rem 281.6rem;
+    overflow: hidden;
+}
+
+/* 获得焦点的元素的样式 */
+.currentFocusElement {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    z-index: 10;
+    transition: transform .3s ease-out;
+    -webkit-transition: -webkit-transform .3s ease-out;
+}
+
+
+/* 机器人样式 */
+.robot_img {
+    position: fixed;
+    z-index: 9999;
+    top: 55.5rem;
+    left: 2rem;
+    width: 16rem;
+    height: 16rem;
+    background-image: url(../images/animation/robot.png);
+    background-position: 0 0;
+    background-size: 160rem auto;
+    -webkit-transform: scale(0.666);
+    transform: scale(0.666);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    display: none;
+}
+
+.robot_tip {
+    position: fixed;
+    z-index: 9999;
+    top: 58.5rem;
+    left: 14.6rem;
+    height: 7rem;
+    background: #000;
+    border-radius: 0rem 2rem 2rem 2rem;
+    font-size: 30px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 7rem;
+    text-shadow: 0rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+    padding: 0 1.1rem 0 2rem;
+}
+
+.robot_tip::before {
+    content: "";
+    position: absolute;
+    width: 1.3rem;
+    height: 1.6rem;
+    left: -1.3rem;
+    top: 0rem;
+    background-image: url(../images/bubble_icon1.png);
+}
+
+.content {
+    position: relative;
+    /* 隐藏被旋转元素背面 */
+    -webkit-backface-visibility: hidden;  
+    /* 3D 旋转 */
+    -webkit-transform-style: preserve-3d; 
+}
+
+/* header 样式 */
+.header {
+    position: relative;
+    width: 100%;
+    height: 16.4rem;
+}
+
+.header-bg {
+    position: absolute;
+    width: 66.7rem;
+    height: 25rem;
+    left: 0;
+    top: 0;
+}
+
+.header-logo {
+    position: absolute;
+    width: auto;
+    height: 4.8rem;
+    left: 9.3rem;
+    top: 6.4rem;
+}
+
+.header-subtitle {
+    position: absolute;
+    width: 70rem;
+    left: 31rem;
+    top: 8.5rem;
+    height: 2.4rem;
+    font-size: 24px;
+    font-weight: 200;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.header-icon {
+    position: absolute;
+    width: 8.6rem;
+    height: 10.2rem;
+    top: 2.9rem;
+}
+
+.header-aw {
+    left: 92.3rem;
+}
+
+.header-ak {
+    left: 100.1rem;
+}
+
+.header-mine {
+    left: 108rem;
+}
+
+.header-help {
+    left: 115.7rem;
+}
+
+.header-aw.currentFocusElement,
+.header-ak.currentFocusElement,
+.header-mine.currentFocusElement,
+.header-help.currentFocusElement {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    background-size: 100%;
+    background-image: url("../images/focus-img/ys.png");
+}
+
+
+/* 首屏推荐样式 */
+/* main 样式 */
+.main {
+    position: relative;
+    /*top: 16.4rem;*/
+    height: 57rem;
+    width: 100%;
+}
+
+.main-1 {
+    position: absolute;
+    top: 0;
+    left: 8.2rem;
+    width: 54.4rem;
+    height: 27.4rem;
+}
+.main-1.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 61.8rem;
+    height: 32rem;
+    left: -3.5rem;
+    top: -2.5rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/1.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.main-2 {
+    position: absolute;
+    top: 0;
+    left: 65.4rem;
+    width: 25.8rem;
+    height: 46.2rem;
+}
+.main-2.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 52.7rem;
+    left: -2.3rem;
+    top: -3.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/2.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.main-3 {
+    position: absolute;
+    top: 0;
+    left: 94rem;
+    width: 25.8rem;
+    height: 27.3rem;
+}
+
+.main-3.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 31.9rem;
+    left: -2.2rem;
+    top: -2.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/3.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.main-4 {
+    position: absolute;
+    top: 30.1rem;
+    left: 8.2rem;
+    width: 25.8rem;
+    height: 16rem;
+}
+
+.main-5 {
+    position: absolute;
+    top: 30.1rem;
+    left: 36.8rem;
+    width: 25.8rem;
+    height: 16rem;
+}
+
+.main-6 {
+    position: absolute;
+    top: 30.1rem;
+    left: 94rem;
+    width: 25.8rem;
+    height: 16rem;
+}
+
+.main-4.currentFocusElement::after,
+.main-5.currentFocusElement::after,
+.main-6.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 19.4rem;
+    left: -2.2rem;
+    top: -1.8rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/4.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.main-8 {
+    position: absolute;
+    left: 8.2rem;
+    background-color: rgba(75, 124, 218, 1);
+}
+
+.main-9 {
+    position: absolute;
+    left: 36.9rem;
+    background-color: rgba(74, 186, 217, 1);
+}
+
+.main-10 {
+    position: absolute;
+    left: 65.4rem;
+    background-color: rgba(60, 194, 157, 1);
+}
+
+.main-11 {
+    position: absolute;
+    left: 94rem;
+    background-color: rgba(215, 138, 105, 1);
+}
+
+.main-text {
+    width: 25.8rem;
+    height: 7.28rem;
+    border-radius: 0.7rem;
+    top: 52.2rem;
+    text-align: center;
+}
+
+.main-text.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 9.7rem;
+    left: -2.2rem;
+    top: -1.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/5.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.main-text span {
+    line-height: 7.28rem;
+    font-size: 34px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0px 1px 3px rgba(104, 33, 144, 0.45);
+}
+
+/* 导航部分样式 */
+.nav-item {
+    position: absolute;
+    width: 13.9rem;
+    height: 8rem;
+    top: 49rem;
+}
+
+.nav-children {
+    left: 8.2rem;
+}
+
+.nav-book {
+    left: 24.2rem;
+}
+
+.nav-enlightenment {
+    left: 40.8rem;
+}
+
+.nav-tx {
+    left: 56.9rem;
+}
+
+.nav-game {
+    left: 73rem;
+}
+
+.nav-life {
+    left: 89.4rem;
+}
+
+.nav-skill {
+    left: 105.7rem;
+}
+
+/* 导航item获得焦点时添加背景图边框 */
+.nav-item.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 17.1rem;
+    height: 10.6rem;
+    left: -1.6rem;
+    top: -1.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/17.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+
+/* top榜单样式 */
+.toplist {
+    position: relative;
+    /*top: 73.4rem;*/
+    width: 100%;
+    height: 57.9rem;
+}
+/* header 样式 */
+.toplist-head {
+    position: absolute;
+    top: 4rem;
+    left: 9rem;
+    width: 110rem;
+}
+
+.toplist-title {
+    height: 4.4rem;
+    font-size: 44px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+}
+
+.toplist-subtitle {
+    height: 2.4rem;
+    font-size: 24px;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 1);
+    margin-left: 2rem;
+}
+
+/* 内容部分样式 */
+.toplist-item {
+    position: absolute;
+    top: 11.9rem;
+    left: 8.1rem;
+    width: 35.4rem;
+    height: 46rem;
+    background-image: url("../images/top-bg-1.png");
+}
+
+.toplist-item + .toplist-item {
+    background-image: url("../images/top-bg-2.png");
+}
+
+.toplist-item + .toplist-item + .toplist-item {
+    background-image: url("../images/top-bg-3.png");
+}
+
+.toplist-item:nth-child(3) {
+    left: 46.3rem;
+}
+
+.toplist-item:nth-child(4) {
+    left: 84.5rem;
+}
+
+.toplist-item-title {
+    position: absolute;
+    left: 8.9rem;
+    width: 18.2rem;
+    height: 6.1rem;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+    line-height: 6.1rem;
+    background-image: url("../images/toplist-bg.png");
+    background-size: 100%;
+}
+
+.toplist-item-1 {
+    position: absolute;
+    top: 6.8rem;
+    left: 1.9rem;
+    width: 31.4rem;
+    height: 14.4rem;
+}
+
+.toplist-item-1.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 36.3rem;
+    height: 17.6rem;
+    left: -2.4rem;
+    top: -1.6rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/6.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.toplist-item-text {
+    position: absolute;
+    left: 1.9rem;
+    top: 22.6rem;
+    width: 31.4rem;
+    height: 6.2rem;
+    background: rgba(36, 34, 69, 0.35);
+    border-radius: 7px;
+}
+
+.toplist-item-text.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 36.4rem;
+    height: 8.7rem;
+    left: -2.2rem;
+    top: -1.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/7.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.toplist-item-text div {
+    position: absolute;
+    top: 0;
+    text-align: left;
+    height: 6.2rem;
+    padding-left: 6.3rem;
+    font-size: 27px;
+    font-weight: 600;
+    color: rgba(255, 254, 255, 1);
+    line-height: 6.2rem;
+}
+
+.toplist-item-2 {
+    top: 22.9rem;
+}
+
+.toplist-item-3 {
+    top: 30.5rem;
+}
+
+.toplist-item-4 {
+    top: 38.1rem;
+}
+
+
+
+/* 排名图标 */
+.toplist-item-icon {
+    position: absolute;
+    width: 3.4rem;
+    height: 3.4rem;
+    left: 1.4rem;
+    top: 1.4rem;
+    z-index: 121;
+}
+
+
+/* 交互少儿样式 */
+.children {
+    position: relative;
+    width: 100%;
+    height: 64.3rem;
+}
+
+.children-head,
+.game-head,
+.skill-head,
+.book-head,
+.enlightenment-head,
+.tx-head,
+.life-head {
+    position: absolute;
+    top: 4.1rem;
+    left: 9rem;
+    width: 110rem;
+}
+
+.children-title,
+.game-title,
+.skill-title,
+.book-title,
+.enlightenment-title,
+.tx-title,
+.life-title {
+    height: 4.4rem;
+    font-size: 44px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+}
+
+.children-subtitle,
+.game-subtitle,
+.skill-subtitle,
+.book-subtitle,
+.enlightenment-subtitle,
+.tx-subtitle,
+.life-subtitle {
+    height: 2.4rem;
+    font-size: 24px;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 1);
+    margin-left: 2rem;
+}
+
+/* 更多按钮样式 */
+.children-more,
+.game-more,
+.skill-more,
+.book-more,
+.enlightenment-more,
+.tx-more,
+.life-more {
+    position: absolute;
+    top: 0.1rem;
+    left: 100.3rem;
+    width: 10.6rem;
+    height: 5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.7rem;
+    background-image: url("../images/more.png");
+}
+
+.children-1 {
+    position: absolute;
+    top: 13.5rem;
+    left: 8.1rem;
+    width: 35.4rem;
+    height: 28.2rem;
+}
+
+.children-2 {
+    position: absolute;
+    top: 13.5rem;
+    left: 46.3rem;
+    width: 35.4rem;
+    height: 16rem;
+}
+
+.children-3 {
+    position: absolute;
+    top: 13.5rem;
+    left: 84.5rem;
+    width: 35.4rem;
+    height: 28.2rem;
+}
+
+.children-4 {
+    position: absolute;
+    top: 32.3rem;
+    left: 46.3rem;
+    width: 16.3rem;
+    height: 9.6rem;
+}
+
+.children-5 {
+    position: absolute;
+    top: 32.3rem;
+    left: 65.4rem;
+    width: 16.3rem;
+    height: 9.6rem;
+}
+
+.children-1.currentFocusElement::after,
+.children-3.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 40.8rem;
+    height: 32.9rem;
+    left: -2.7rem;
+    top: -2.3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/9.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.children-2.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 40.8rem;
+    height: 19.4rem;
+    left: -2.7rem;
+    top: -1.8rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/10.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.children-4.currentFocusElement::after,
+.children-5.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 19.9rem;
+    height: 12.4rem;
+    left: -1.8rem;
+    top: -1.5rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/11.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.children_ip {
+    position: absolute;
+    top: 44.3rem;
+    width: 20rem;
+    height: 20rem;
+}
+
+.children_ip.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 18.7rem;
+    height: 18.7rem;
+    left: 0.7rem;
+    top: 0.7rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/12.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.children_ip-1 {
+    left: 6rem;
+}
+
+.children_ip-2 {
+    left: 25.2rem;
+}
+
+.children_ip-3 {
+    left: 44.4rem;
+}
+
+.children_ip-4 {
+    left: 63.6rem;
+}
+
+.children_ip-5 {
+    left: 82.8rem;
+}
+
+.children_ip-6 {
+    left: 102rem;
+}
+
+/* 互动绘本样式 */
+.book {
+    position: relative;
+    width: 100%;
+    height: 42.1rem;
+}
+
+.book-head {
+    top: 1.3rem !important;
+}
+
+.book-1 {
+    position: absolute;
+    top: 11.3rem;
+    left: 8.2rem;
+    width: 25.8rem;
+    height: 30.8rem;
+}
+
+.book-2 {
+    position: absolute;
+    top: 11.3rem;
+    left: 36.8rem;
+    width: 25.8rem;
+    height: 14rem;
+}
+
+.book-3 {
+    position: absolute;
+    top: 11.3rem;
+    left: 65.4rem;
+    width: 25.8rem;
+    height: 30.8rem;
+}
+
+.book-4 {
+    position: absolute;
+    top: 11.3rem;
+    left: 94rem;
+    width: 25.8rem;
+    height: 14rem;
+}
+
+.book-5 {
+    position: absolute;
+    top: 28.1rem;
+    left: 36.8rem;
+    width: 25.8rem;
+    height: 14rem;
+}
+
+.book-6 {
+    position: absolute;
+    top: 28.1rem;
+    left: 94rem;
+    width: 25.8rem;
+    height: 14rem;
+}
+
+.book-1.currentFocusElement::after,
+.book-3.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 35.7rem;
+    left: -2.26rem;
+    top: -2.5rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/18.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.book-2.currentFocusElement::after,
+.book-4.currentFocusElement::after,
+.book-5.currentFocusElement::after,
+.book-6.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 17.2rem;
+    left: -2.26rem;
+    top: -1.6rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/19.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+
+/* 亲子启蒙样式 */
+.enlightenment {
+    position: relative;
+    width: 100%;
+    height: 41.7rem;
+}
+
+.enlightenment-1 {
+    position: absolute;
+    top: 13.5rem;
+    left: 8.1rem;
+    width: 38.2rem;
+    height: 28.2rem;
+}
+
+.enlightenment-2 {
+    position: absolute;
+    top: 13.5rem;
+    left: 49.1rem;
+    width: 29.7rem;
+    height: 12.7rem;
+}
+
+.enlightenment-4 {
+    position: absolute;
+    top: 29rem;
+    left: 49.1rem;
+    width: 29.7rem;
+    height: 12.7rem;
+}
+
+.enlightenment-3 {
+    position: absolute;
+    top: 13.5rem;
+    left: 81.6rem;
+    width: 38.2rem;
+    height: 28.2rem;
+}
+
+.enlightenment-1.currentFocusElement::after,
+.enlightenment-3.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 43.8rem;
+    height: 32.8rem;
+    left: -2.7rem;
+    top: -2.4rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/20.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.enlightenment-2.currentFocusElement::after,
+.enlightenment-4.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 34.5rem;
+    height: 15.8rem;
+    left: -2.4rem;
+    top: -1.6rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/21.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+/* AI童学样式 */
+.tx {
+    position: relative;
+    width: 100%;
+    height: 51.2rem;
+}
+
+.tx-1 {
+    position: absolute;
+    top: 13.4rem;
+    left: 8.2rem;
+    width: 54.4rem;
+    height: 23rem;
+}
+
+.tx-2 {
+    position: absolute;
+    top: 13.4rem;
+    left: 65.4rem;
+    width: 25.8rem;
+    height: 40.1rem;
+}
+
+.tx-3 {
+    position: absolute;
+    top: 13.4rem;
+    left: 94rem;
+    width: 25.8rem;
+    height: 40.1rem;
+}
+
+.tx-4 {
+    position: absolute;
+    top: 38.9rem;
+    left: 8.2rem;
+    width: 25.8rem;
+    height: 14.6rem;
+}
+
+.tx-5 {
+    position: absolute;
+    top: 38.9rem;
+    left: 36.8rem;
+    width: 25.8rem;
+    height: 14.6rem;
+}
+
+.tx-1.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 61.8rem;
+    height: 27.2rem;
+    left: -3.8rem;
+    top: -2.1rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/22.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.tx-2.currentFocusElement::after,
+.tx-3.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 45.9rem;
+    left: -2.3rem;
+    top: -3rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/23.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.tx-4.currentFocusElement::after,
+.tx-5.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 30.2rem;
+    height: 17.9rem;
+    left: -2.4rem;
+    top: -1.6rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/24.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+
+/* 生活服务样式 */
+.life {
+    position: relative;
+    width: 100%;
+    padding-top: 33.5rem;
+}
+
+.life-top-item {
+    position: absolute;
+    top: 13.5rem;
+    left: 8.1rem;
+    width: 54.5rem;
+    height: 20rem;
+    background: rgba(236, 235, 244, 0.1);
+    border-radius: 0.7rem;
+}
+
+.life-top-item-time {
+    position: absolute;
+    top: 2rem;
+    left: 1.8rem;
+    height: 16px;
+    line-height: 16px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.weather-img {
+    position: absolute;
+    width: 13.3rem;
+    height: 13.3rem;
+    left: 5.4rem;
+    top: 4.7rem;
+}
+
+.life-top-item-title {
+    position: absolute;
+    top: 5.2rem;
+    left: 23.4rem;
+    height: 3.2rem;
+    line-height: 1;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.life-top-item-subtitle {
+    position: absolute;
+    top: 10.1rem;
+    left: 23.2rem;
+    height: 2.8rem;
+    line-height: 1;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.life-top-item-subtitle #stock_riseRate {
+    color: #de3131;
+    padding-left: 2rem;
+}
+
+.life-top-item-tips {
+    position: absolute;
+    top: 15.2rem;
+    left: 23.3rem;
+    width: 30rem;
+    height: 20px;
+    line-height: 1;
+    font-size: 20px;
+    font-weight: 200;
+    color: #ffffff;
+}
+
+.stock {
+    left: 65.4rem;
+}
+
+.stock-img {
+    position: absolute;
+    width: 12.6rem;
+    height: 9.2rem;
+    left: 6.6rem;
+    top: 6rem;
+}
+
+.item-app {
+    position: relative;
+    float: left;
+    width: 35.4rem;
+    height: 16rem;
+    margin: 2.8rem 2.8rem 0 0;
+    background: rgba(236, 235, 244, 0.1);
+    border-radius: 0.7rem;
+}
+
+.item-app-img {
+    position: absolute;
+    top: 3rem;
+    left: 3.3rem;
+    width: 10rem;
+    height: 10rem;
+    background-color: rgba(236, 235, 244, 0.1);
+    background-image: url("../images/app-placeholder.png");
+    background-size: 7.2rem 3.1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.item-app-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.item-app-title {
+    position: absolute;
+    top: 4.8rem;
+    left: 15.8rem;
+    height: 26px;
+    line-height: 1;
+    font-size: 26px;
+    font-weight: 600;
+    width: 20rem;
+    color: #ffffff;
+}
+
+.item-app-microphone {
+    position: absolute;
+    width: 1.9rem;
+    height: 2.5rem;
+    top: 9.1rem;
+    left: 15.4rem;
+}
+
+.item-app-tips {
+    position: absolute;
+    top: 9.3rem;
+    left: 18rem;
+    width: 16rem;
+    height: 20px;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 200;
+    color: rgba(228, 228, 228, 1);
+}
+
+.life-item-app-list, .skill-item-list {
+    padding-left: 8.1rem;
+}
+
+
+/* 声控游戏样式 */
+.game {
+    position: relative;
+    width: 100%;
+    height: 56.1rem;
+}
+
+.game-1 {
+    position: absolute;
+    top: 13.7rem;
+    left: 8rem;
+    width: 54.4rem;
+    height: 20rem;
+}
+
+.game-2 {
+    position: absolute;
+    top: 13.7rem;
+    left: 65.4rem;
+    width: 54.4rem;
+    height: 20rem;
+}
+
+.game-3 {
+    position: absolute;
+    top: 36.3rem;
+    left: 8.1rem;
+    width: 35.4rem;
+    height: 20rem;
+}
+
+.game-4 {
+    position: absolute;
+    top: 36.3rem;
+    left: 46.3rem;
+    width: 35.4rem;
+    height: 20rem;
+}
+
+.game-5 {
+    position: absolute;
+    top: 36.3rem;
+    left: 84.5rem;
+    width: 35.4rem;
+    height: 20rem;
+}
+
+.game-1.currentFocusElement::after,
+.game-2.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 61.6rem;
+    height: 23.8rem;
+    left: -3.6rem;
+    top: -2rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/15.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.game-3.currentFocusElement::after,
+.game-4.currentFocusElement::after,
+.game-5.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 40.7rem;
+    height: 23.8rem;
+    left: -2.6rem;
+    top: -2rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/16.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+
+/* 实用技能样式 */
+.skill {
+    position: relative;
+    width: 100%;
+    padding-top: 10.7rem;
+}
+
+
+/* focus */
+.currentFocusElement::after {
+    z-index: 100;
+}
+.game-more.currentFocusElement,
+.life-more.currentFocusElement,
+.skill-more.currentFocusElement,
+.book-more.currentFocusElement,
+.enlightenment-more.currentFocusElement,
+.tx-more.currentFocusElement,
+.children-more.currentFocusElement {
+    background-image: url("../images/focus-img/more-focus.png");
+}
+
+.life-more.selected,
+.skill-more.selected {
+    background-image: url("../images/focus-img/more-selected.png") !important;
+}
+
+.weather.currentFocusElement::after,
+.stock.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 61.8rem;
+    height: 23.8rem;
+    left: -3.6rem;
+    top: -2rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/13.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+.item-app.currentFocusElement::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 40.7rem;
+    height: 19.4rem;
+    left: -2.6rem;
+    top: -1.85rem;
+    background-size: 100%;
+    background-image: url("../images/focus-img/14.png");
+    -webkit-transform: scale(0.909);
+    transform: scale(0.909);
+}
+
+
+
+.img-btn > img:nth-child(1) {
+    border-radius: 0.7rem;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.img-btn.should_auto_height > img:nth-child(1) {
+    height: auto !important;
+}
+
+.img-btn.should_auto_height.currentFocusElement > img:nth-child(1) {
+    z-index: 101;
+}
+
+.children_ip.currentFocusElement img {
+    position: absolute;
+    z-index: 110;
+}
+
+/* .img-btn.should_auto_height {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.7rem;
+} */
+
+.phone_icon {
+    border-radius: 0 !important;
+    width: 0.28rem;
+    height: 0.37rem;
+    vertical-align: top;
+}
+
+.item-app.icon_HOT::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 30.4rem;
+    width: 4rem;
+    height: 2rem;
+    background-image: url(../images/hot.png);
+    background-size: 100% 100%;
+}
+
+.item-app.icon_NEW::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 30.4rem;
+    width: 4rem;
+    height: 2rem;
+    background-image: url(../images/new.png);
+    background-size: 100% 100%;
+}
+
+.module-head {
+    line-height: 1;
+    height: 8.4rem;
+}
+
+.module-head > img {
+    vertical-align: bottom;
+    max-height: 8.4rem;
+    width: auto;
+}

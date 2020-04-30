@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="page-view-size" content="1920*1080" />
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Cache" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>AI客厅</title>
+        <link rel="stylesheet" href="assets/css/base.css">
+        <link rel="stylesheet" href="assets/css/help.css">
+        <script>  (function (w, d, s) {
+                var l = 'IFlyCollector', f = d.getElementsByTagName(s)[0], j = d.createElement(s), w = window;
+                w[l] = {};
+                var c = w[l];
+                c._o = function (a) {
+                    return function () {
+                        (c._e = c._e || []).push([a, arguments])
+                    }
+                };
+                var e = ['init', 'onEvent', 'onError', 'bindUser', 'updateCustomConfig', 'setChannel', 'setAppVersion'];
+                for (var i = 0; i < e.length; i++) {
+                    c[e[i]] = c._o.call(null, e[i])
+                }
+                j.async = true;
+                j.src = 'http://logconf.iflytek.com/entry.js';
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script');</script>
+    </head>
+
+    <body>
+        <div id="page1" class="show">
+            <div class="btn-1 focusElement" id="next-1" right="exit-1"></div>
+            <div class="btn-2 focusElement" id="exit-1" left="next-1"></div>
+        </div>
+        <div id="page2">
+            <div class="btn-1 focusElement" id="next-2" right="exit-2"></div>
+            <div class="btn-2 focusElement" id="exit-2" left="next-2"></div>
+        </div>
+        <div id="page3">
+            <div class="btn-3 focusElement" id="btn-3"></div>
+        </div>
+
+        <script src="./config.js"></script>
+        <script src="./assets/config.js"></script>
+        <script src="./assets/js/baseLib.js"></script>
+        <script src="./assets/js/commom.js"></script>
+        <script src="./assets/js/keys.js"></script>
+        <script src="./assets/js/keyboard.js"></script>
+        <script src="./assets/js/arttemplate.js"></script>
+        <script src="./assets/js/webxiri_1.1.0.js"></script>
+        <script src="./assets/js/openPlatform.js"></script>
+        <script src="./assets/js/jquery.md5.js"></script>
+        <script src="./assets/js/WebViewJavascriptBridge.js"></script>
+        <script src="./assets/js/jquery-3.3.1.min.js"></script>
+        <script src="./assets/js/help.js"></script>
+    </body>
+
+</html>
