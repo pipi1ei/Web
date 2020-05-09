@@ -22,13 +22,91 @@
 
 
   <script>
-    var message;
-    var age
-    // alert(typeof message);
-    // alert(typeof age);
+    const {log} = console;
+    // var person = {}
+    // Object.defineProperty(person,'name',{
+    //   value: 'pipilei',
+    //   writable: false,
+    //   configurable: false
+    // })
+    // console.log(person.name);  //pipilei
+    // person.name = 'lalala';
+    // console.log(person.name);  //pipilei
+    // Object.defineProperty(person, 'name', {
+    //   // writable: true,
+    //   value: 'lalala'
+    // })
 
-    // alert(Number(null))
-    console.log(null == 0)
+    // var book = {
+    //   _year: 2004,
+    //   edition: 1
+    // }
+
+    // Object.defineProperty(book, 'year', {
+    //   get: function () {  
+    //     return this._year;
+    //   },
+    //   set: function (newValue) {  
+    //     if(newValue > 2004){
+    //       this._year = newValue;
+    //       this.edition += newValue - 2004;
+    //     }
+    //   }
+    // })
+
+    // book.year = 2005;
+    // console.log(book.edition)  // 2
+
+    var book = {};
+    Object.defineProperties(book,{
+      _year: {
+        writable: true,
+        value: 2004
+      },
+      edition: {
+        writable: true,
+        value: 2004
+      },
+      year: {
+        get: function () {  
+          return this._year;
+        },
+
+        set: function (newValue) {  
+          if(newValue>2004){
+            this._year = newValue;
+            this.edition += newValue - 2004;
+          }
+        }
+      }
+    })
+
+    var descriptor = Object.getOwnPropertyDescriptor(book, "year");
+    log(descriptor)  // {enumerable: false, configurable: false, get: ƒ, set: ƒ}
+
+    function Person(name, age){
+      this,name = name;
+      this.age = age;
+    }
+    Person.prototype = {
+      constructor: Person,
+      sayName: function () {  
+        console.log(this.name);
+      }
+    }
+
+    function A(age,name) {  
+      var o = new Object();
+      o, name = name;
+      o.age = age;
+      o.sayName = function () {
+        console.log(this.name);
+      }
+      return o;
+    }
+    var a1 = new A('123',25)
+    log(a1)
+    log(a1 instanceof A)
   </script>
 </body>
 </html>
