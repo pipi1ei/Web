@@ -9,48 +9,93 @@
   <script>
     const { log } = console;
 
-    // Object.prototype[Symbol.iterator] = function* () {  
-    //   const props = Reflect.ownKeys(this)
-    //   for(let prop of props){
-    //     yield [prop, this[prop]]
-    //   }
-    // }
+    const consoleLogLevel = 1
 
-    // let person = {
-    //   name: 'pipilei',
-    //   age: 18,
-    //   height: 188
-    // }
-
-    // for(let [key,value] of person){
-    //   log(`key = ${key}, value = ${value}`)
-    // }
-   
-    // function* numbers(){
-    //   let file = new FileReader('numbers.txt')
-    //   try{
-    //     while(!file.eof){
-    //       yield parseInt(file.readLine(), 10)
-    //     }
-    //   }finally{
-    //     file.close()
-    //   }
-    // }
-
-    function sleep(interval){
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, interval)
-      })
+    const logLevels = {
+      DEBUG: 1,
+      INFO: 2,
+      WARN: 3,
+      ERROR: 4,
     }
 
-    async function one2five(){
-      for(let i = 1; i <= 5; i++){
-        console.log(i)
-        await sleep(1000)
+    const logX = (function () {  
+      function d() {  
+        if(consoleLogLevel <= logLevels.DEBUG){
+          arguments = [ ...arguments ]
+          arguments.unshift(Symbol('debug').description)
+          console.log.apply(console, arguments)
+        }
       }
-    }
+      function i() {  
+        if (consoleLogLevel <= logLevels.INFO) {
+          arguments = [...arguments]
+          arguments.unshift(Symbol('info').description)
+          console.log.apply(console, arguments)
+        }
+      }
+      function w() {  
+        if (consoleLogLevel <= logLevels.WARN) {
+          arguments = [...arguments]
+          arguments.unshift(Symbol('warn').description)
+          console.log.apply(console, arguments)
+        }
+      }
+      function e() {  
+        if (consoleLogLevel <= logLevels.ERROR) {
+          arguments = [...arguments]
+          arguments.unshift(Symbol('error').description)
+          console.log.apply(console, arguments)
+        }
+      }
+      return {
+        d,
+        i,
+        w,
+        e
+      }
+    }())
 
-    one2five()
+    // logX.d('debug日志')
+    // logX.i('info日志')
+    // logX.w('warn日志')
+    // logX.e('error日志')
+
+
+
+    function Mouse(){}
+    Mouse.prototype.run = () => log('老鼠逃跑')
+    Mouse.prototype.eat = () => log('老鼠正在吃东西')
+
+    function Cat() {}
+    Cat.prototype.meow = () => log('喵')
+
+    // 观察者队列
+    const queueObservers = new Set()
+
+    // 注册观察者
+    const registerObserve = fn => queueObservers.add(fn)
+
+    // 拦截方法的调用，执行观察者队列中的方法
+    const observe = fn => new Proxy(fn, { 
+      apply(func, thisArg, args){
+        const result = Reflect.apply(func, thisArg, args)
+        queueObservers.forEach(observer => observer())
+        return result
+      }
+    })
+
+    const mouse = new Mouse()
+    const cat = new Cat()
+
+    // 注册老鼠的 run 方法
+    registerObserve(mouse.run)
+    // 观察猫叫
+    const meow = observe(cat.meow)
+
+    mouse.eat()
+    // 执行猫叫，会触发老鼠的逃跑方法
+    meow()
+
 </script>
 </body>
 </html>

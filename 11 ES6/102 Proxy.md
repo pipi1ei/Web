@@ -199,7 +199,7 @@
     - construct 方法返回的必须是一个对象，否则就会报错
 
 6. deleteProperty()
-  + deleteProperty 方法用于拦截 delete 操作，如果找个方法抛出错误或者返回 false，当前属性就无法被delete命名删除
+  + deleteProperty 方法用于拦截 delete 操作，如果这个方法抛出错误或者返回 false，当前属性就无法被delete命名删除
   ```javascript
     var handler = {
       deleteProperty (target, key) {

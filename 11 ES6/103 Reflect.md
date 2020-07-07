@@ -101,7 +101,7 @@
 3. Reflect.has(obj, name)
   + Reflect.has方法对应name in obj里面的in运算符。
 
-4. Reflect.has方法对应name in obj里面的in运算符。
+4. Reflect.deleteProperty(obj, name)
   + Reflect.deleteProperty方法等同于delete obj[name]，用于删除对象的属性
   ```javascript
     const myObj = { foo: 'bar' };
