@@ -91,13 +91,16 @@
       2. String[] getParameterValues(String name): 根据请求的字段名 key，返回多个字段值 value
       3. void setCharacterEncoding("编码格式")：设置请求编码
       4. getRequestDispatcher("b.jsp").forward(request, response)：请求转发的方式跳转页面 A --> B，数据保留，地址栏不会改变，任然时转发前的页面地址
-      5. getServletContext(): 获取项目的 servletContext 对象
+      5. ServletContext getServletContext(): 获取项目的 servletContext 对象, 就是 jsp 的内置对象 application
+      6. HttpSession getSession(): 获取 HttpSession 对象，就是 jsp 的内置对象 session
 
   4. response：响应对象
     - 常见方法
       1. void addCookie(Cookie cookie)：服务端向客户端增加一个 cookie
       2. void sendRedirect(String location)：重定向：页面跳转的一种方式，会导致数据丢失
       3. void setContentType(String type)：设置服务端响应的编码（contentType 类型）
+      4. void setCharacterEncoding("编码格式")：设置响应的编码, 与 request.setCharacterEncoding("编码格式") 对应
+      5. PrintWriter getWriter()：获取 PrintWriter 对象，就是 jsp 的内置对象 out
 
   5. session：保存在服务端，同一个客户请求时共享
     - 常见方法
@@ -215,3 +218,22 @@
   4. 销毁：destroy()：servlet 被系统回收时执行
   5. 卸载
   - 第一次访问 servlet 时，init 执行一次，后面就不会再执行了，每次调用 servlet 时都会执行 service() 方法，关闭 tomcat 服务时会执行一次 destroy() 方法
+
+
+### EL表达式
++ 作用：可以替代 jsp 中的 java 代码
++ 语法：${域对象.域对象中的属性.属性...级联属性}  或  ${域对象[域对象中的属性][属性][...级联属性]}。中括号中的属性要加引号
+  - 点操作符使用方便
+  - 中括号更加强大，可以包含特殊字符（. 、 -），可以获取变量值：例如存在变量 name，则可以 ${requestScope[name]}。可以访问数组：例如${requestScope[hobbies][0]}
++ empty 运算符：${empty 变量}：如果变量不存在或者为 null 则返回 true， 否则返回 false
++ EL 表达式中的隐式对象（不需要 new 的对象）
+  - 作用域访问对象（EL域对象）:如果不指定域对象，则默认根据作用域从小到大的顺序取值
+    1. pageScope
+    2. requestScope
+    3. sessionScope
+    4. applicationScope
+  - 参数访问对象：获取表单数据
+    1. ${param.参数名}：相当于 request.getParameter(参数名)
+    2. ${paramValues.参数名}：相当于 request.getParameterValues(参数名)
+  - jsp 隐式对象
+    1. pageContext：在 jsp 中可以通过 该对象可以获取其他 jsp 内置对象。因此，如果要在 EL中使用 jsp 隐式对象，则可以通过 pageContext 获取。例如${pageContext.request} 就是获取 jsp 的 request 对象
