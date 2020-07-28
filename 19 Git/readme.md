@@ -124,3 +124,12 @@
   - git checkout -b dev origin/dev : 本地创建 dev 分支并与远程 dev 分支关联
   - git pull：把最新的提交从远程抓下来
   - git branch --set-upstream-to=origin/dev dev：设置本地 dev 分支和远程 dev 分支关联
+
+
+### tag 的使用
+  - 写完一部分代码后：git add . , git commit , git tag xxx
+  - 查看tag： git tag
+  - 查看提交历史：git log
+  - 切换tag：git checkout tag名称
+  - 回退到初始状态：git reset --hard 提交的哈希值
+  - 向远程仓库 push tag：git push --tags
