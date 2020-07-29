@@ -23,9 +23,9 @@
     - text-decoration：设置文本的装饰线。none：无；underline：下划线；overline：上划线；line-through：中划线
     - letter-spacing：设置字母之间间距
     - word-spacing：设置单词之间间距
-    - text-transform：用于设置文字大小写转换。capitalize：首字母大写；uppercase：全部转成大写；lowercase：全部转成小写；none：没有任何影响
+    - text-transform：用于设置文字大小写转换。capitalize：每个单词首字母大写；uppercase：全部转成大写；lowercase：全部转成小写；none：没有任何影响
     - text-indent：设置第一行内容的缩进。一般使用 em 作为单位，1 个 em 表示相对自己一个文字大小。如果 font-size 单位是 em，则相对他的父级的文字大小
-    - text-align：设置元素*内容*在元素中的水平对齐方式。left：左对齐；right：右对齐；center：中间对齐；justify：两端对齐。块级元素无法居中对齐，因为块级元素默认独占一行，即使设置了宽度也是独占一行。所有会默认认为块级元素已经是居中对齐的。justify 对最后一行无效，想要最后一行为 justify，可以设置 text-align-last: justify
+    - text-align：设置元素*内容*在元素中的水平对齐方式。left：左对齐；right：右对齐；center：中间对齐；justify：两端对齐。块级元素无法居中对齐，因为块级元素默认独占一行，即使设置了宽度也是独占一行。所以会默认认为块级元素已经是居中对齐的。justify 对最后一行无效，想要最后一行为 justify，可以设置 text-align-last: justify
 
   + 字体属性：
     - font-size：设置字体大小，可以设置为百分百，相对于父元素文本的大小，和 em 类似。小知识：谷歌浏览器最小字体为：12px
@@ -40,10 +40,13 @@
     - 行高可以简单理解为一行文字所占的高度
     - 行高的严格定义是：两行文字基线（baseline）之间的间距。基线可以理解为四线本中的第三条线。第一条为顶线，第二条为中线，第四条为底线。两行文本底线与顶线之间的距离为行距[图片]
     - height 与 line-height 的区别：height 是元素整体的高度，line-height 是一行文字所占的高度。line-height 可以让一行文本垂直居中。原理：行距会在文本上下等分
+    - height 和 line-height 的区别：
+      - height 是元素整体的高度
+      - line-height 是元素中每一行文字所占据的高度
 
 11. css 选择器：
 
-  - 属性选择器：[title]{color:red}：选择含有 title 属性的元素 ; [title='div']{} :选择 title 属性并且值为 div 的元素；[title|='one']：选择 title 属性值恰好等于 one 或以 one 开头且后面紧跟着连字符- 的元素。[title~='one']：选择包含单词 one 的元素，one 与其他单词之间必须用空格隔开，效果与类选择器一样
+  - 属性选择器：[title]{color:red}：选择含有 title 属性的元素 ; [title='div']{} :选择 title 属性并且值为 div 的元素；[title|='one']：选择 title 属性值恰好等于 one 或以 one 开头且后面紧跟着连字符- 的元素。[title*='one']：选择包含单词 one 的元素。[title~='one']：选择包含单词 one 的元素，one 与其他单词之间必须用空格隔开，效果与类选择器一样
   - 子选择器：div > span{} ：选择 div 下的直接 span 子元素（不包括间接子元素）
   - 相邻兄弟选择器：div+p{}：选择 div 后面*紧挨*着的 p 元素（div 和 p 是兄弟关系）
   - 全体兄弟选择器：div~p{}：选择 div 后面所有的 p 元素
@@ -56,7 +59,7 @@
     - 动态伪类：:link(未访问的), :visited(访问过的), :hover, :active(激活状态，手指按下去没有松开时), :focus。
       小知识：去除 a 元素 focus 状态：<a tabindex='-1'></a> tabindex 可以调整 tab 选中顺序
       :hover 必须在:link 和 :visited 之后才会生效, :active 必须在 :hover 之后才会生效。记忆：女朋友看到 LV 之后 haha 大笑
-    - 目标伪类：:target
+    - 目标伪类：:target ：a标签点击跳到对应锚点时生效
     - 语言伪类：:lang()
     - 元素状态伪类：:enabled, :disabled, :checked
     - 结构伪类：
