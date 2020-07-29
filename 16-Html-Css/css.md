@@ -59,6 +59,7 @@
     - 动态伪类：:link(未访问的), :visited(访问过的), :hover, :active(激活状态，手指按下去没有松开时), :focus。
       小知识：去除 a 元素 focus 状态：<a tabindex='-1'></a> tabindex 可以调整 tab 选中顺序
       :hover 必须在:link 和 :visited 之后才会生效, :active 必须在 :hover 之后才会生效。记忆：女朋友看到 LV 之后 haha 大笑
+      - 细节：给 a 元素设置样式时，相当于给 a 的所有动态伪类都设置了统一的样式
     - 目标伪类：:target ：a标签点击跳到对应锚点时生效
     - 语言伪类：:lang()
     - 元素状态伪类：:enabled, :disabled, :checked
@@ -76,7 +77,7 @@
       - :only-child：是父元素中的唯一子元素（父元素下只有一个子元素）
       - :only-of-type：是父元素中的唯一的这种类型的子元素
       - :root：根元素，就是 HTML 元素
-      - :empty：选中元素内容为空的元素。
+      - :empty：选中*元素内容为空*的元素。
         <div>
             <div></div>  // 该元素会被选中
             <p>我是段落</p>
@@ -89,7 +90,7 @@
     常见的伪元素：
     :first-line, ::first-line： 第一行，（两种写法，开发中一般写两个冒号，为了和伪类区分）。只有*字体属性、颜色属性、背景属性*可以应用在::first-line 上
     ::first-letter：选中第一个字母，只有*字体属性、颜色属性、背景属性、margin 属性、padding 属性、border 属性*可以应用在::first-letter 上
-    ::before：content 属性不能省略
+    ::before：content 属性不能省略，content 可以写字符串，也可以写 url ：content: url("xxxx)
     ::after：content 属性不能省略
     ::placeholder：input元素的伪元素，可以设置 placeholder 的样式
 

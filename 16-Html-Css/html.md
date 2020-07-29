@@ -59,6 +59,8 @@
     dd（definition description）：列表中每一项的具体描述，是对dt的描述、解释、补充
     一个dt 后面一般紧跟着一个或多个dd。dt与dd是兄弟关系。dt，dd常见的组合：1.事物的名称，事物的描述。2. 问题，答案。3.类别名，归属于这类的各种事物
 
+    *注意*：ol，ul的直接子元素只能是 li
+
     列表相关的css属性有4个：list-style-type, list-style-image, list-style-position, list-style。他们都可以继承，所以设置给ol，ul，默认也会应用到li元素
     list-style-type：设置li前面标记的样式
     list-style-image：设置li前面标记的图片
