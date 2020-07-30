@@ -8,9 +8,16 @@
   <style>
     .container{
       width: 990px;
-      height: 600px;
+      /* height: 600px; */
       background-color: #f00;
       margin: 20px auto;
+    }
+
+    .container::after{
+      content: "";
+      display: block;
+      clear: both;
+      visibility: hidden;
     }
 
     .wrap{

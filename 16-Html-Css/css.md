@@ -402,7 +402,7 @@
       }
 
       .clear-fix{
-        *zoom: 1; //兼容IE6~7浏览器
+        *zoom: 1; //兼容IE6~7浏览器。zoom 是缩放的意思
       }
   
   + 定位方案对比
@@ -415,19 +415,22 @@
 + css transform 属性允许你旋转、缩放、倾斜或平移给定元素。transform 是形变的意思,形变之后元素可能会发生位移、变大，但形变的元素占据自己原来的位置。
 + *注意*：该属性对行内元素（inline element）无效，对块级元素，inline-block 元素有效
 + 常见的函数 transform function 有：
-  - 平移：translate(x, y)。
+  - *平移*：translate(x, y)。
     可以只写一个值，一个值就表示水平方向的平移。除了可以设置具体的值，也可以设置百分比，设置百分比参照的是元素本身宽高
      eg：transform: translate(100px，50px); 表示水平向右移动100px；垂直向下移动50px
-  - 缩放：scale(x, y)。默认从中心向西周缩放，可以通过设置 transform-origin 来改变缩放的原点
+
+  - *缩放*：scale(x, y)。默认从中心向西周缩放，可以通过设置 transform-origin 来改变缩放的原点
     值个数：一个值时，设置x轴和y轴方向相同的缩放；两个值时，设置x和y轴方向的缩放
     值类型：数字：1：保持不变；2：放大一倍；0.5：缩小一半。   百分比：不支持
     eg：transform: scale(2，1); 表示水平方向放大两倍，垂直方向不变
-  - 旋转：rotate(deg)
+
+  - *旋转*：rotate(deg)
     值个数：1个值，表示旋转的角度
     值类型：deg：旋转的角度；正数为顺时针，负数为逆时针
     旋转的原点可以通过 transform-origin 属性改变
     eg：transform: rotate(45deg); 表示顺时针方向旋转45度
-  - 倾斜：skew(deg, deg)
+
+  - *倾斜*：skew(deg, deg)
     值个数：1个值，表示x轴倾斜的角度；2个值：表示x轴和y轴上的倾斜
     值类型：deg：旋转的角度；正数为顺时针，负数为逆时针
     倾斜的原点可以通过 transform-origin 属性改变
