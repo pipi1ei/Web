@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav {
+      width: 220px;
+      background-color: aqua;
+    }
+
+    /* 无宽度规则：不给子元素设置宽度，让其自适应父元素的宽度 */
+    .item {
+      display: block;
+      /* width: 220px; */
+      padding: 10px 0;
+      margin: 0 10px;
+      border-bottom: 1px solid #666;
+    }
+
+    /* 父级设置text-align:center 使其内容居中，子元素宽度不超过父级时水平居中 */
+    .box {
+      width: 180px;
+      height: 50px;
+      /* line-height: 50px; */
+      background-color: blueviolet;
+      text-align: center;
+      margin-bottom: 30px;
+      
+    }
+
+    
+    .box p {
+      display: inline-block;  /* 使其表现出宽度由内容决定，不占满父元素的整行 */
+      text-align: left;       /* 内容左对齐 */
+    }
+
+    .table-box{
+      width: 400px;
+      /* overflow: hidden; */
+    }
+
+    .table-box table{
+      border-collapse: collapse;
+      /* table-layout: fixed; */
+      /* width: 400px; */
+    }
+
+    td{
+      border: 1px solid #888;
+      /* overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; */
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- 1.外部尺寸与流体特性。无宽度规则 -->
+  <div class="nav">
+    <a class="item">导航一</a>
+    <a class="item">导航二</a>
+    <a class="item">导航三</a>
+  </div>
+
+  <!-- 2. 内部尺寸与流体特性：按钮文字足够多时会在其宽度（240px）处自动换行，但实际没有换行 -->
+  <button>按钮</button>
+  <button>文字多一点</button>
+  <button>很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字</button>
+
+  <!-- 3.文字少的时候居中，多到超过父元素宽度时左对齐 -->
+  <div class="box">
+    <p>文字内容</p>
+  </div>
+  <div class="box">
+    <p>文字超过父元素宽度左对齐</p>
+  </div>
+
+  <!-- 4. 宽度收缩到最小 -->
+  <div class="table-box">
+    <table>
+      <tr>
+        <td>1列文字一列文字一列丸子</td>
+        <td>i like JavaScript and vuevuevueevue 哈哈哈哈哈哈 哈哈啊和</td>
+        <td>i like JavaScript and vuevueevuevue 哈哈哈哈哈哈 哈哈啊和</td>
+        <td>i like JavaScript and vuevuevuvuevue 哈哈哈哈哈哈 哈哈啊和</td>
+        <td>i like JavaScript and vuevuevuevuevue 哈哈哈哈哈哈 哈哈啊和</td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

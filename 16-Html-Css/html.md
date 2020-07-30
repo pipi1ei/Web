@@ -36,7 +36,7 @@
 
 6. a 元素
   - target 属性：用来控制链接是在新标签页中打开还是在当前页打开，'\_self'：当前页打开链接；'\_blank'：新标签页中打开。target 属性还有其他的值：\_parent, \_top, 具体的 name。这几个属性必须是 a 元素在 iframe 标签中才生效。\_parent：在当前 a 元素所在的 iframe 父级打开链接，\_top：在最外层的 iframe 父级打开链接，相当于当前页面
-  - a 元素和 base 元素结合使用：当多个 a 元素有几个相同的属性时，可以把这些相同的属性抽取到 base 元素中，base 元素卸载 head 标签中：
+  - a 元素和 base 元素结合使用：当多个 a 元素有几个相同的属性时，可以把这些相同的属性抽取到 base 元素中，base 元素写在 head 标签中：
     <a href='https://www.baidu.com' target='_blank'>百度一下</a>
     <a href='https://www.baidu.com?wd=adc' target='_blank'>百度搜索 abc</a>
     可以写成：
@@ -129,12 +129,14 @@
     10. form：设置所属的form元素（填写form元素的id），一旦设置了此属性，input元素即使不在form元素内部，它的数据也能提交给服务器
 
   - textarea常用属性
-    1. cols：列数
-    2. rows：行数
+    1. cols：显示的列数
+    2. rows：显示的行数
     3. resize：缩放的css设置。none：禁止缩放，horizontal：水平方向可以缩放，vertical：垂直方向可以缩放，both：水平垂直方向都可以缩放（默认值）
 
   - 布尔属性
     布尔属性可以没有属性值，写上属性名就代表使用这个属性，常见的布尔属性有：disabled、checked（用在单选框和多选框）、readonly、multiple（在select元素上添加这个属性，表示下拉框可以选中多个值）、autofocus、selected（option元素上加这个属性，下拉框默认选中的值）
+
+  - select : 设置 multiple 多选时，可以设置 size 属性显示几个选项
 
   - form的常用属性
     1. action：用于提交表单数据的url
