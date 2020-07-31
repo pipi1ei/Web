@@ -412,7 +412,7 @@
     浮动              水平布局
 
 ### css 属性 transform
-+ css transform 属性允许你旋转、缩放、倾斜或平移给定元素。transform 是形变的意思,形变之后元素可能会发生位移、变大，但形变的元素占据自己原来的位置。
++ css transform 属性允许你旋转、缩放、倾斜或平移给定元素。transform 是形变的意思,形变之后元素可能会发生位移、变大，但形变的元素占据自己原来的位置。*transform 设置多个函数时中间用空格分割*
 + *注意*：该属性对行内元素（inline element）无效，对块级元素，inline-block 元素有效
 + 常见的函数 transform function 有：
   - *平移*：translate(x, y)。
@@ -632,7 +632,7 @@
       }
 
     div{
-      font-family: "迷你简立黑";
+      font-family: "pipilei";
       font-size: 50px;
     }
   </style>
@@ -694,7 +694,7 @@
 ### 3D动画
 + css 实现3D
   1. transform-style: preserve-3d，开启3d效果
-  2. perspective: z轴距我们的距离，一般给父元素设置
+  2. perspective:视距，z轴距我们的距离，一般给父元素设置
 
 + JS 实现 3D 的库
   - three.js

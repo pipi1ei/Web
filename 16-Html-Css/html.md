@@ -201,12 +201,12 @@
       4. muted：静音
       5. loop：循环播放
 
-    - <source>元素：video 和 audio 标签的子元素，如果存在兼容性问题（浏览器不支持某些格式的视频），可以将多个视频格式的的数据源放到<source> 中，通过 src 属性指定数据的来源
+    - <source>元素：video 和 audio 标签的子元素，如果存在兼容性问题（浏览器不支持某些格式的视频），可以将多个视频格式的的数据源放到<source> 中，通过 src 属性指定数据的来源。source 是单标签
 
   + HTML5 对表单元素的扩展
     - placeholder：输入框的占位文字
     - multiple：多个值
-    - autofocus：
+    - autofocus：页面加载时自动聚焦
     对input的type值也有很多扩展：
       - date：日期，用户可以选择日期
       - time：时间，用户可以选择时间
