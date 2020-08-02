@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布者订阅者模式</title>
+</head>
+<body>
+  
+
+  <script>
+    class Dep{
+      constructor(){
+        this.subs = []
+      }
+
+      addSub(sub){
+        this.subs.push(sub)
+      }
+
+      notify(){
+        this.subs.forEach(sub => {
+          sub.update()
+        })
+      }
+    }
+
+    class Watcher{
+      constructor(name){
+        this.name = name
+      }
+
+      update(){
+        console.log( this.name + "更新了")
+      }
+    }
+
+    const dep = new Dep()
+
+    const w1 = new Watcher("张三")
+    dep.addSub(w1)
+
+    const w2 = new Watcher("李四")
+    dep.addSub(w2)
+    
+    const w3 = new Watcher("王五")
+    dep.addSub(w3)
+
+    dep.notify()
+
+  </script>
+</body>
+</html>

@@ -104,6 +104,7 @@
 
       update(){
         this.node.nodeValue = this.vm[this.name]
+        this.node.value = this.vm[this.name]
       }
     }
 
@@ -129,10 +130,12 @@
       }
 
       _compile(node){
-        if(node.nodeType === 1){     // 标签节点
+        if(node.nodeType === 1){    // 标签节点
           const attrs = node.attributes
           if(attrs.hasOwnProperty('v-model')){
             const name = attrs['v-model'].nodeValue
+            node.value = this.vm[name]
+            new Watcher(node, name, this.vm)
             node.addEventListener('input', e => {
               this.vm[name] = e.target.value
             })
