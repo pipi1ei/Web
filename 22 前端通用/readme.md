@@ -43,9 +43,10 @@
     1. 通过js获取到所有的表单数据
     2. 通过正则表达式进行表单数据的验证
     3. 发送ajax请求，服务器会返回数据，前端解析数据并且渲染（前端渲染和前端路由）
-
+## HTTP 协议
+  - 详见[https://github.com/qianguyihao/Web/blob/master/13-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/01-%E9%9D%A2%E8%AF%95%E5%BF%85%E7%9C%8B/04-HTTP%E5%8D%8F%E8%AE%AE.md]
 ### get 请求和 post 请求的区别
-  - get 请求会在 url 后面拼接上参数，用户可见，安全性不高，并且get 提交的数据有限，一般不超过1024kb（http协议对URL并没有限制，时浏览器或服务器的对get请求的限制）。GET 会被缓存，可以保留浏览器历史记录
+  - get 请求会在 url 后面拼接上参数，用户可见，安全性不高，并且get 提交的数据有限，一般不超过2kb（http协议对URL并没有限制，时浏览器或服务器的对get请求的限制）。GET 会被缓存，可以保留浏览器历史记录
   - post 请求会将请求参数放在 body 中，安全行较高，post 请求不限制提交的数据大小
 
   - 详见：[https://blog.csdn.net/zlczsw/article/details/91046081]
@@ -133,3 +134,143 @@
 1. 修改 url 的 hash：location.hash = 'aaa'
 2. 使用 HTML5 的 history ： history.pushState({},'','aaa')： 类似于入栈，可以点击浏览器的返回，
    或 history.replaceState({},'','aaa')：类似于直接替换栈顶内容
+
+
+
+## 布局
+### 三栏布局：布局高度已知为100px，两侧宽度300px，中间自适应
+  - 实现方案
+    1. 浮动
+    2. 定位
+    3. flex
+    4. table 布局
+    5. grid 布局：CSS3 中引入的布局
+  
+  - 五种方案的对比
+    1. 浮动：
+      - 优点：兼容性好
+      - 缺点：浮动元素会脱离文档流，因此需要清除浮动
+    2. 定位
+      - 优点：快捷
+      - 缺点：子元素脱离标准流，实用性差
+    3. flex 布局
+      - 优点：解决上面两个方法的不足，flex 布局比较完美。移动端基本用 flex 布局，IE8 不支持 flex
+    4. 表格布局
+      - 优点：兼容性好，IE8 中不支持 flex 情况下可使用表格布局
+      - 缺点：因为三个部分都当成了单元格来对待，此时如果中间的部分变高了，其他部分也会被迫调整高度。但是在很多场景下，我们并不需要两侧的高度增高
+    5. 网格布局
+      - CSS3 中引入的布局，很好用，代码量简化了很多。面试提到网格布局说明是对新技术有追求的
+  
+  - 延伸：如果去掉高度100px，哪些布局就不能使用了？
+    - flex 布局和表格布局仍然可用，其他布局方案不可用。
+
+
+## CSS 盒模型
+### 面试：谈谈你对 CSS 盒模型的认识
+  - 从一下几个方面回答
+    1. 基本概念：content、padding、border、margin
+    2. 标准盒模型、IE盒模型的区别。不要漏说了IE盒模型
+    3. CSS 如何设置这两种盒模型（使用 box-sizing）
+    4. JS 如何设置、获取盒模型对应的宽和高
+      - element.style.width/height：缺点：只能获取行内样式，不能获取内嵌和外链的样式
+      - window.getComputedStyle(element).width/height：通用方式
+      - element.currentStyle.width/height：IE独有方式
+      - element.getBoundingClientRect().width/height：获取一个元素的绝对位置：距离 viewport 左上角的位置
+    5. 根据盒模型解释边距重叠
+
+## BFC（块级格式化上下文）
+### BFC的原理/BFC的布局规则
+  1. BFC 内部的子元素，在垂直方向，边距会发生重叠
+  2. BFC 在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然
+  3. BFC 区域不与旁边的 float box 区域重叠（可用用来清除浮动带来的影响）（两栏自适应布局）
+  4. 计算BFC的高度时，浮动的子元素也参与计算。可以用来清除浮动
+
+### 如何生成 BFC
+  1. overflow 不为 visible。改方式最常用
+  2. float 不为 侬额
+  3. position 不为 static 或 relative
+  4. display 为：inline-block、table-cell、table-caption、flex、inline-flex
+
+
+## DOM事件
+### DOM 事件级别
+  - DOM0 的写法：
+    element.onclick = function(){
+
+    }
+  - DOM2 的写法
+    element.addEventListener('click', function(){
+
+    }, false)
+    - 上面的第三个参数中，true 表示在事件捕获阶段触发，false 表示在事件冒泡阶段触发
+  - DOM3 的写法：和 DOM2 相同，DOM3 中增加了很多事件类型：如鼠标事件、键盘事件等
+  - 为什么没有 DOM1 的写法呢？因为，在 DOM1 标准制定的时候，没有涉及与事件相关的内容
+
+### DOM 事件模型、DOM 事件流
+  - DOM 事件模型讲的就是事件捕获和冒泡
+    + 捕获：从父元素到子元素
+    + 冒泡：从子元素到父元素
+
+  - DOM 事件流讲的就是：浏览器在与当前页面做交互式，这个事件是怎么传递到页面上的，完整的事件流分三个阶段
+    1. 捕获：从 window 对象传到目标对象
+    2. 目标阶段：事件通过捕获到达目标元素，这个阶段就是目标阶段
+    3. 冒泡：从目标元素传递到 window 对象
+
+    - 说明：捕获阶段，事件传递的顺序依次是：window -> document -> body -> 父元素、子元素、目标元素。冒泡的流程与捕获相反
+
+### Event 对象的常见 api 方法：
+  - event.preventDefault()：阻止默认事件，如 a 元素点击后会默认跳转，如果设置了这个方法，就阻止了链接的默认跳转
+  - 阻止冒泡：
+    + w3c 的方法：event.stopPropagation()
+    + IE10 以下：event.cancelBubble = true
+    + 兼容代码：
+      ``` javascript
+        element.onclick = function(event){
+          event = event || window.event
+          if(event && event.stopPropagation){
+            event.stopPropagation()
+          }else{
+            event.cancelBubble = true
+          }
+        }
+      ```
+  - 设置事件优先级
+    - event.stopImmediatePropagation()
+    - 解释：我用 addEventListener 给某个按钮同时注册了事件 A、事件 B。此时，如果我单击按钮，就会依次执行 事件A 和事件B。现在要求：单击按钮，只执行事件A，不执行事件B。这时候在事件A的响应函数中使用该方法就可以了
+  - 事件委托：
+    - event.currentTarget：当前所绑定的事件对象，在事件委托中，指的是父元素
+    - event.target：当前被点击的元素。在事件委托中，指的是子元素
+
+### 自定义事件
+  - 代码如下：
+  ``` javascript
+    var myEvent = new Event('clickTest');
+    element.addEventListener('clickTest', function(){
+      console.log('自定义事件触发')
+    })
+    element.dispatchEvent(myEvent)
+  ```
+
+
+## 对象和原型链
+### 创建对象的几种方法
+  1. 对象字面量形式
+  2. 构造函数
+  3. Object.create(xxx), xxx 是创建出来的对象的原型
+  - var a = {} 其实是 var a = new Object() 的语法糖
+  - var a = [] 其实是 var a = new Array() 的语法糖
+  - function foo{} 其实是 var foo = new Function() 的语法糖
+
+### instanceof 的原理
+  - 判断对象实例的 __proto__ 属性和构造函数的 prototype 属性是否为同一个引用（是否指向同一个地址）
+  - 注意：
+    1. 虽然说，实例是由构造函数 new 出来的，但实例的 __proto__ 属性引用的是构造函数的 prototype。也就是说，实例的 __proto__ 属性与构造函数本身无关。
+    2. 在原型链上，原型的上面可能还会有原型，以此类推网上找 __proto__ 属性。如果这条链上能找到， instanceof 的返回结果也是 true
+
+### new 运算符
+  - 当 new 一个构造函数时发生了什么？
+    1. 隐式创建一个对象，对象的 __proto__ 属性指向构造函数的 prototype
+    2. 将构造函数的作用域赋给新对象（因此this 就指向了这个对象）
+    3. 执行构造函数中的代码
+    4. 如果构造函数中有显示返回一个引用值的话，就返回该引用值对象，否则就返回新对象
+ 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>继承</title>
+</head>
+<body>
+  <script>
+    function inherit(Target, Origin) {  
+      function F() {  }
+      F.prototype = Origin.prototype
+      Target.prototype = new F()
+      // Target.prototype.constructor = Target
+      Object.defineProperty(Target.prototype, 'constructor', {
+        enumerable: false,
+        value: Target
+      })
+      Target.prototype.uber = Origin
+    }
+
+    function Person(name) {  
+      this.name = name
+      this.colors = ['red', 'blue']
+    }
+
+    Person.prototype.personFunction = function () {  
+      console.log("person function")
+    }
+
+    function Student(name, grade) {  
+      Person.call(this, name)
+      this.grade = grade
+    }
+
+    inherit(Student, Person)
+
+    Student.prototype.studentFunction = function () {  
+      console.log("student function")
+    }
+
+    const student = new Student('pipilei', 13)
+    const student2 = new Student('2', 18)
+    student.colors.push('yellow')
+    console.log(student)
+    console.log(student2)
+
+  </script>
+</body>
+</html>

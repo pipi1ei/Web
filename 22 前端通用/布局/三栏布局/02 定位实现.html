@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定位实现三栏布局</title>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+
+    .layout .container{
+      position: relative;
+    }
+
+    .layout .container div{
+      height: 100px;
+    }
+
+    .left{
+      position: absolute;
+      left: 0;
+      width: 300px;
+      background-color: red;
+    }
+
+    .right{
+      position: absolute;
+      right: 0;
+      width: 300px;
+      background-color: green;
+    }
+
+    .center{
+      position: absolute;
+      left: 300px;
+      right: 300px;
+      background-color: purple;
+    }
+  </style>
+</head>
+<body>
+  <section class="layout float">
+    <article class="container">
+      <div class="left">我是left</div>
+      <div class="right">我是right</div>
+      <div class="center">我是center</div>
+      
+    </article>
+  </section>
+</body>
+</html>
