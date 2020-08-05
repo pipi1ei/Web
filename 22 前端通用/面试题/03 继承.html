@@ -16,7 +16,7 @@
         enumerable: false,
         value: Target
       })
-      Target.prototype.uber = Origin
+      Target.prototype.uber = Origin.prototype
     }
 
     function Person(name) {  
@@ -33,11 +33,25 @@
       this.grade = grade
     }
 
-    inherit(Student, Person)
+    // inherit(Student, Person)
 
-    Student.prototype.studentFunction = function () {  
-      console.log("student function")
-    }
+    // Student.prototype.studentFunction = function () {  
+    //   console.log("student function")
+    // }
+
+    
+
+    var inherit2 = (function () {  
+      function F(){}
+      return function (Target, Origin) {  
+        F.prototype = Origin.prototype
+        Target.prototype = new F()
+        Target.prototype.constructor = Target
+        Target.prototype.uber = Origin.prototype
+      }
+    }())
+
+    inherit2(Student, Person)
 
     const student = new Student('pipilei', 13)
     const student2 = new Student('2', 18)
