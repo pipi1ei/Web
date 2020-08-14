@@ -120,6 +120,11 @@
 
 + 由于上面这个特点，WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。
 
++ WeakSet 结构有以下三个方法：
+  - WeakSet.prototype.add(value)：向 WeakSet 实例添加一个新成员
+  - WeakSet.prototype.delete(value)：删除 WeakSet 实例中的指定成员
+  - WeakSet.prototype.has(value)：返回一个布尔值，表示某个值是否存在于 WeakSet 实例之中
+
 + WeakSet 的一个用处，是储存 DOM 节点，而不用担心这些节点从文档移除时，会引发内存泄漏。
 
 + 其他用处：
@@ -186,6 +191,7 @@
         ([key,value]) => map.add(key,value)
       )
     ```
++ 事实上，不仅仅是数组，任何具有 Iterator 接口、且每个成员都是一个双元素的数组的数据结构都可以当作Map构造函数的参数。这就是说，Set和Map都可以用来生成新的 Map。
 
 + 如果对同一个键多次赋值，后面的值将覆盖前面的值。
   ```javascript

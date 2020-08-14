@@ -98,7 +98,7 @@
   ```
 
 2. set()
-  + set 方法用来拦截某个属性的赋值操作，可以接受四个参数，一次为目标对象，属性名，属性值和 Proxy 实例本身。最后一个参数可选
+  + set 方法用来拦截某个属性的赋值操作，可以接受四个参数，依次为目标对象，属性名，属性值和 Proxy 实例本身。最后一个参数可选
   ```javascript
     let validator = {
       set: function(obj, prop, value) {
