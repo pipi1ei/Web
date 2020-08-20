@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
 </head>
+
 <body>
-  
+  <div class="content"></div>
+
   <script>
     const { log } = console
 
+    // 正则表达式
+    ; (function () {
+      var str = 'the-first-name'
+      var reg = /-(\w)/g
+      log(str.replace(reg, function ($, $1) {
+        return $1.toUpperCase()
+      }))
+
+      var str2 = 'aaaaabbbbbbcccc'
+      var reg2 = /(\w)\1+/g
+      log(str2.replace(reg2, '$1'))
+
+
+      var str3 = '1000000000'
+      var reg3 = /(?=(\B)(\d{3})+$)/g
+      log(str3.replace(reg3, '.'))
+    }())
+
     // Generator 函数
-    ;(function () {  
+    ; (function () {
       log('---------------- generator start -------------------')
-
-      const ob = {
-        name: 'zs',
-        sayName: function(){
-          log(this.name)
-        }
-      }
-
-      let say = ob.sayName;
-
-      say()
-      ob.sayName()
-
-
-      function* test () {  
+      function* test() {
         yield "hello"
         yield "world"
         return "ending"
@@ -39,29 +47,29 @@
       log(t.next())
       log(t.next())
 
-      function spawn(genF) {  
+      function spawn(genF) {
         return new Promise((resolve, reject) => {
           const gen = genF()
-          function step(nextF) {  
+          function step(nextF) {
             let next
-            try{
+            try {
               next = nextF()
-            }catch(e){
+            } catch (e) {
               log(e)
             }
 
-            if(next.done){
+            if (next.done) {
               return resolve(next.value)
             }
 
             Promise.resolve(next.value).then(v => {
-              step(function(){return gen.next(v)})
+              step(function () { return gen.next(v) })
             }, e => {
-              step(function () {return gen.throw(e)})
+              step(function () { return gen.throw(e) })
             })
           }
 
-          step(function(){
+          step(function () {
             return gen.next(undefined)
           })
         })
@@ -69,10 +77,10 @@
 
       log('---------------- generator end ---------------------')
     }())
-    
+
     // 观察者模式
-    ;(function () { 
-      const { log } = console 
+    ; (function () {
+      const { log } = console
       class Dep {
         constructor() {
           this.subs = new Set()
@@ -115,7 +123,7 @@
     }());
 
     // Iterator
-    ;(function () {  
+    ; (function () {
       function makeIterator(array) {
         const len = array.length
         let nextIndex = 0
@@ -149,10 +157,9 @@
         log(k + ' -> ' + v)
       }
     }())
-    
-    
 
 
   </script>
 </body>
+
 </html>
