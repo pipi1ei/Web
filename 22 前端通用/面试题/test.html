@@ -14,6 +14,72 @@
   <script>
     const { log } = console
 
+    function Obj(value) {  
+      this.value = value
+      this.next = null
+    }
+
+    Obj.prototype[Symbol.iterator] = function () { 
+      var current = this
+
+      function next() {
+        if(current){
+          var value = current.value
+          current = current.next
+          return {value, done: false}
+        }else{
+          return {value: undefined, done: true}
+        }
+      }
+
+      return {next: next}
+    }
+
+    var obj1 = new Obj(1)
+    var obj2 = new Obj(2)
+    var obj3 = new Obj(3)
+
+    obj1.next = obj2
+    obj2.next = obj3
+
+    for(let value of obj1){
+      log(value)
+    }
+
+
+    function getFoo() {  
+      return new Promise((resolve, reject) => {
+        resolve('foo')
+      })
+    }
+
+    const g = function* () {  
+      try{
+        const foo = yield getFoo()
+        log(foo)
+      }catch(e){
+        log(e)
+      }
+    }
+
+    function run(generator) {  
+      const it = generator()
+
+      function go(result) {  
+        if(result.done) return result.value
+
+        return result.value.then(res => {
+          return go(it.next(res))
+        }, err => {
+          return go(it.throw(err))
+        })
+      }
+
+      go(it.next())
+    }
+
+    run(g)
+
     // 正则表达式
     ; (function () {
       var str = 'the-first-name'
