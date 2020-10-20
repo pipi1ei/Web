@@ -4,8 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body{
+      background-color: pink;
+    }
+  </style>
 </head>
 <body>
   <!-- 模板 -->
+
+  <script>
+    function wait(){
+      return new Promise(resolve => setTimeout(resolve, 5 * 1000))
+    }
+
+    async function main(){
+      console.time()
+      const x = wait()
+      const y = wait()
+      const z = wait()
+
+      await x
+      await y
+      await z
+
+      console.timeEnd()
+    }
+
+    main()
+  </script>
 </body>
 </html>

@@ -1,1 +1,37 @@
-<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Document</title></head><body><!-- 模板 --><script src=bundle.js?cde56af23f1b17a29cd9></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: pink;
+    }
+  </style>
+<link href="main.css?2db97a9b00856a61996a" rel="stylesheet"></head>
+<body>
+  <!-- 模板 -->
+
+  <script>
+    function wait(){
+      return new Promise(resolve => setTimeout(resolve, 5 * 1000))
+    }
+
+    async function main(){
+      console.time()
+      const x = wait()
+      const y = wait()
+      const z = wait()
+
+      await x
+      await y
+      await z
+
+      console.timeEnd()
+    }
+
+    main()
+  </script>
+<script src="bundle.js?2db97a9b00856a61996a"></script></body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      min-width: 1440px;
+      background-color: yellowgreen;
+    }
+
+    /* @media screen and (min-width: 1200px){
+      .wrapper {
+        width: 1200px;
+        margin: 0 auto;
+        background-color: aquamarine;
+      }
+    } */
+
+    .wrapper {
+      width: 1200px;
+      margin: 0 auto;
+      background-color: aquamarine;
+    }
+
+    @media screen and (min-width: 1600px){
+      .wrapper {
+        width: 1500px;
+        margin: 0 auto;
+        background-color: aquamarine;
+      }
+    }
+
+    .item{
+      width: 280px;
+      height: 200px;
+      float: left;
+      border: 1px solid #888;
+      line-height: 200px;
+      text-align: center;
+      margin: 10px;
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      visibility: hidden;
+      clear: both;
+      height: 0;
+      line-height: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="wrapper clearfix">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">6</div>
+      <div class="item">7</div>
+      <div class="item">8</div>
+    </div>
+  </div>
+
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+  <script>
+    $(window).resize(function(e){
+      console.log("resize", $(window).width())
+      var width = $(window).width();
+      if(width >= 1500) {
+        $('.wrapper').css({width: 1500})
+      } else {
+        $('.wrapper').css({width: 1200})
+      }
+    }).trigger("resize")
+  </script>
+</body>
+</html>

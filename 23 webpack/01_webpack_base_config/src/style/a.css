@@ -1,0 +1,10 @@
+@import './b.css';
+
+body{
+  background-color: red;
+  /* transform: rotate(45deg); */
+}
+
+img{
+  width: 300px;
+}

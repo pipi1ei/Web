@@ -194,12 +194,12 @@
 + 克隆节点
   - clone(includeEvents)：会克隆元素及其下面的所有元素，只存在内存中，如果要在页面中显示需要追加.
     + 参数如果是 true，会把事件也克隆
-    + 参数如果是 false，会把克隆事件，默认值是 false
+    + 参数如果是 false，不会克隆事件，默认值是 false
 
 + 替换节点
   - replaceWith()：将匹配到的元素替换成指定的html或dom元素
     $("p").replaceWith("<strong>我是strong元素</strong>")：将 p 元素替换成 strong 元素
-  - replaceAll()：与 replaceWith() 作用相同，知识颠倒了replaceWith() 的操作
+  - replaceAll()：与 replaceWith() 作用相同，只是颠倒了replaceWith() 的操作
     $("<strong>我是strong元素</strong>").replaceAll("p")
   - 如果在替换之前已经为元素绑定了事件，替换后原先绑定的事件将会和被替换一起消失
 
