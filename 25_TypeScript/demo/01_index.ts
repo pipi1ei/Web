@@ -1,8 +1,15 @@
-let str:string = "你好ts";
+let tom: [string, number] = ['a', 123]
 
-let num:number = 123;
+class Animal {
+  name:string;
+  static isAnimal(a:any) {
+    return a instanceof Animal
+  }
+  constructor(name:string) {
+    this.name = name;
+  }
+}
 
-let arr:number[] = [1,2,3];
-let arr2:Array<string> = ['a','b','c']
-
-let tuple[string,number,boolean] = ['a', 123, true]
+let a = new Animal("jack");
+// a.isAnimal(a)
+Animal.isAnimal(a)
