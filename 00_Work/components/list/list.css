@@ -1,0 +1,95 @@
+.iList {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.iList-content {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  overflow-x: hidden;
+  margin-bottom: 30px;
+}
+
+.iList .iList-content ul {
+  position: relative;
+  width: 100%;
+}
+
+.iList .iList-content ul li {
+  height: 73px;
+  padding: 20px 5px;
+  text-align: center;
+  color: #373636;
+  border-bottom: 1px dashed #bdbdbd;
+}
+
+.iList .iList-content ul li:hover {
+  background-color: #e6eff9;
+}
+
+.iList .iList-content ul li a {
+  color:  #373636;;
+}
+
+
+.iList .iList-content ul li div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 32px;
+  height: 32px;
+}
+
+.iList-head ul li div {
+  font-weight: bolder;
+  background: none;
+  box-shadow: none;
+}
+
+
+
+.noData {
+  border-bottom: 1px solid #ececec;
+  text-align: center;
+  padding: 2px 5px;
+  line-height: 40px;
+  width: calc(100% - 10px);
+}
+
+.listPaging {
+  margin-top: 10px;
+  min-height: 40px;
+}
+
+.table-y-scroll {
+  display: none;
+  position: absolute;
+  width: 8px;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
+
+.y-scroll-bar {
+  border-radius: 10px;
+  background: #bababa;
+  width: 100%;
+  position: absolute;
+}
+
+.table-x-scroll {
+  display: none;
+  position: relative;
+  height: 8px;
+}
+
+.x-scroll-bar {
+  border-radius: 10px;
+  background: #bababa;
+  height: 100%;
+  position: absolute;
+}

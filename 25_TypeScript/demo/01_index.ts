@@ -1,15 +1,20 @@
-let tom: [string, number] = ['a', 123]
+const { log } = console
 
-class Animal {
-  name:string;
-  static isAnimal(a:any) {
-    return a instanceof Animal
-  }
-  constructor(name:string) {
-    this.name = name;
-  }
+// let a: number = undefined
+// let a:void = null
+interface LikeArr {
+  [index: number]:number;
+  length: number;
+  callee:Function;
 }
 
-let a = new Animal("jack");
-// a.isAnimal(a)
-Animal.isAnimal(a)
+
+
+function r(x: number): number;
+function r(x: string): string;
+function r(x: string | number): string | number {
+  if(typeof x === 'number') {
+    return x.toString()
+  } 
+  return x
+}

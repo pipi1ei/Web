@@ -1,0 +1,39 @@
+.radio i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  background: url(./imgs/radio.png) no-repeat center center;
+}
+
+.radio-list .selected i {
+  background: url(./imgs/radio-active.png) no-repeat center center;
+}
+
+.radio-list .disabled {
+  color: #999;
+  cursor: default;
+  opacity: 1;
+}
+
+.radio-list .disabled * {
+  cursor: default;
+}
+
+.radio-list span {
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.radio-list {
+  display: inline-block;
+  user-select: none;
+  width: 100%;
+}
+
+.radio-list .radio-list {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}

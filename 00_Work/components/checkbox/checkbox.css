@@ -1,0 +1,49 @@
+.checkbox-list .checkbox i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  background: url(./imgs/select.png) no-repeat center center;
+}
+
+.checkbox-list .checkbox:hover i {
+  background: url(./imgs/select-hover.png) no-repeat center center;
+}
+
+.checkbox-list {
+  display: inline-block;
+  width: 100%;
+  user-select: none;
+}
+
+.checkbox-list .disabled {
+  color: #999;
+  cursor: default;
+  opacity: 1;
+}
+
+.checkbox-list .disabled * {
+  cursor: default;
+}
+
+.checkbox-list .disabled i,
+.checkbox-list .disabled:hover i {
+  background: url(./imgs/select.png) no-repeat center center;
+}
+
+.checkbox-list .selected i, 
+.checkbox-list .selected:hover i {
+  background: url(./imgs/selected.png) no-repeat center center;
+}
+
+.checkbox-list span {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: top;
+}
+
+.checkbox-list .checkbox {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}

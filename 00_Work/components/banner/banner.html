@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./index-banner.css">
+  <title>轮播图组件</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="banner" style="width: 645px; height: 377px; margin: 100px auto;"></div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+  <script src="./index-banner.js"></script>
+  <script>
+    const dataSource = [
+      { 
+        imgUrl: './testImage/7187.jpg',
+        bannerLink: 'http://www.baidu.com',
+        desc: '第一个图片的描述'
+      },
+      { 
+        imgUrl: './testImage/7191.jpg',
+        bannerLink: 'http://www.taobao.com',
+        desc: '第二张图片的描述aaa'
+      },
+      { 
+        imgUrl: './testImage/7187.jpg',
+        bannerLink: 'http://www.baidu.com',
+        desc: '第3个图片的描述bbb'
+      },
+      { 
+        imgUrl: './testImage/7191.jpg',
+        bannerLink: 'http://www.taobao.com',
+        desc: '第4张图片的描述ddd'
+      },
+    ]
+
+    const options = {
+      id: 'banner',
+      data: dataSource,
+      interval: 2000
+    }
+
+    new Banner(options)
+  </script>
+</body>
+</html>

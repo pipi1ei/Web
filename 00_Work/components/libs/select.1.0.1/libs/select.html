@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉框组件</title>
+  <link rel="stylesheet" href="./css/select.css">
+</head>
+<body>
+  <div id="selectDemo"></div>
+
+
+  <script src="../../../../../lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+  <script src="./js/select.js"></script>
+  <script>
+    let dataSource = [
+      {id: '1', text: 'aaa'},
+      {id: '2', text: 'bbb'},
+      {id: '3', text: 'ccc'},
+      {id: '4', text: 'ddd'}
+    ]
+
+
+
+
+    new Select($('#selectDemo'), dataSource, {
+      textProperty: "text",
+      placeholder: "请选择"
+    })
+  </script>
+</body>
+</html>

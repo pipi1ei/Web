@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表组件</title>
+  <link rel="stylesheet" href="./list.css">
+  <link rel="stylesheet" href="./../paging/paging.css">
+</head>
+<body>
+  <div class="list"></div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+  <script src="./../paging/paging.js"></script>
+  <script src="./list.js"></script>
+
+  <script>
+    const itemsOptions = [
+      {name: 'name', width: 750, align: -1},
+      {name: 'ctime', width: 140, align: 1}
+    ];
+
+    const dataServer = 'http://www.zjlca.com/zjlca-web/chronicle/listPage';
+
+    const options = {
+      pagingSetting: {
+        toolbar: false,
+        showPageInfo: false
+      }
+    };
+
+    const list = new List($('#list'), itemsOptions, dataServer, options);
+
+    list.setParam = params => {
+      params.pageNum = (list.pagingSetting && list.pagingSetting.current) ? list.pagingSetting.current : 1;
+      params.numPerPage = 10;
+      params.type = 2;
+    }
+
+    list.init();
+
+  </script>
+</body>
+</html>

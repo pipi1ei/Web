@@ -1,0 +1,13 @@
+.single-select .select-list span:hover{
+  color: #fff;
+  background-color: #1890FF;
+}
+
+.single-select .select-list span.selected{
+  color: #fff;
+  background-color: #1890FF;
+}
+
+.select-body .select-input-icon{
+  width: 15px;
+}

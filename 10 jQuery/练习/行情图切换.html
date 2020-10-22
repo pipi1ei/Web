@@ -1,0 +1,1359 @@
+<head>
+  <script src="http://s.thsi.cn/js/datav/charts/latest/d3_charts.js"></script>
+  <script src="http://s.thsi.cn/js/jquery-1.9.0.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .panel {
+      width: 580px;
+      height: 530px;
+      border: 1px solid #ccc;
+      margin: 150px auto;
+    }
+
+    .chart {
+      width: 530px;
+      height: 430px;
+      margin: 0 auto;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <div class="chart" id="chart"></div>
+  </div>
+
+  <!-- <div style="width: 600px; height: 350px; background: #fff" id="chart2"></div> -->
+  <script>
+    var option;
+    document.getElementById("chart").style.width = "530x";
+    document.getElementById("chart").style.height = "430px";
+    $("#chart").html("");
+    $("#chart").prepend(
+      '<div id="hqDetail" style="height: 90px; font-size: 12px; position: relative"></div> <a id="fs" href="javascript:;">分时</a> <a id="daykline" href="javascript:;" >日线</a> <a id="weekkline" href="javascript:;" >周线</a> <a id="monthkline" href="javascript:;" >月线</a><div id="chartCanvas" style="font-family: Arial; overflow:visible; width:100%; height: 320px;"> </div>'
+    );
+
+    document.getElementById("fs").onclick = function () {
+      pchq.toggleFs();
+    };
+    document.getElementById("daykline").onclick = function () {
+      pchq.toggleKline();
+    };
+    document.getElementById("weekkline").onclick = function () {
+      pchq.toggleKline("Week");
+    };
+    document.getElementById("monthkline").onclick = function () {
+      pchq.toggleKline("Month");
+    };
+
+    var code = window.location.search.substr(1) || "hs_300367";
+
+    var totalConfigs = {
+      elementId: "chartCanvas",
+      realheadId: "hqDetail",
+      // 是否需要实时行情头部
+      enableRealhead: true,
+      color: {
+        axisLine: "#ccc",
+        abAxis: "#de422e",
+        beAxis: "#3e9663",
+        eqAxis: "#BCBCBC",
+        ma5: "#1F6195",
+        ma10: "#E0AC58",
+        ma30: "#9C73AF",
+        // 悬停十字线
+        hoverLine: "#A0A0A0",
+        hideColor: "rgba(255,255,255,0)",
+      },
+      intervalTime: 30000,
+      isKeepingGet: true,
+      code: code,
+      kline: {
+        minValueSpan: 20,
+        startValue: -45,
+      },
+      // 文字模板
+      realheadTpl: [
+        '<div style="position: absolute; top: 0;left: 0;width: 100%;font-family: DIN-Regular;">',
+        '                <div style="padding: 10px;display: block; overflow: hidden;">',
+        '                    <div style="float:left;">',
+        '                        <div style="color: <%wgtColor%>;">',
+        '                            <div style="line-height: 26px">',
+        '                                <span style="font-size: 14px;"><%name%></span>',
+        '                                <span style=""><%shortcode%></span>',
+        "                            </div>",
+        '                            <div style="line-height: 26px">',
+        '                                <span style="font-size: 22px;"><%curP%></span>',
+        "                                <span><%rate%>%    ",
+        '                                    <span style="padding:0; display: <%arrowEnable%>;margin-left: 0px; width: 16px; height: 16px; color: #3cbc98; white-space: nowrap; text-overflow: ellipsis; line-height: 16px; margin-top: 7px; float: right;<%arrowDirect%>">',
+        '                                        <svg viewBox="0 0 1024 1024" width="16" height="16">',
+        '                                            <path fill="<%wgtColor%>" stroke-linecap="round" stroke-width="2" d="M288.864 636.032 511.968 405.312 735.136 636Z"></path>',
+        "                                        </svg>",
+        "                                    </span>",
+        "                                </span>",
+        "                            </div>",
+        "                        </div>",
+        "                    </div>",
+        '                    <div style="float:left;margin-left: 16px; color: #636363;">',
+        "                        <div>",
+        '                            <div style="<%infoItemCss%>" data-hqitro="换手率"><span style="margin-right: 3px;">换手</span><span><%turnRate%>%</span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="振幅"><span style="margin-right: 3px;">振幅</span><span><%zf%>%</span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="成交量"><span style="margin-right: 3px;">量</span><span><%n%></span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="成交额"><span style="margin-right: 3px;">额</span><span><%np%></span></div>',
+        "                        </div>",
+        '                        <div style="margin-top: 3px;">',
+        '                            <div style="<%infoItemCss%>" data-hqitro="总市值"><span style="margin-right: 3px;">市值</span><span><%totalM%></span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="流通市值"><span style="margin-right: 3px;">流通</span><span><%stockM%></span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="市盈率"><span style="margin-right: 3px;">市盈</span><span><%staticSYL%></span></div>',
+        '                            <div style="<%infoItemCss%>" data-hqitro="市净率"><span style="margin-right: 3px;">市净</span><span><%sjl%></span></div>',
+        "                        </div>",
+        "                    </div>",
+        "                </div>",
+        '<div style="width: 100%; height:10px;background: #f7f7f7;"></div>',
+        "            </div>",
+      ].join(""),
+    };
+
+    var filterNum = D3Charts.hqHelper.filterNum;
+    var fsPrice_tooltip = D3Charts.hqHelper.fsPrice_tooltip;
+    var klinePrice_tooltip = D3Charts.hqHelper.klinePrice_tooltip;
+    var getStockType = D3Charts.hqHelper.getStockType;
+    var getLimitByMarket = D3Charts.hqHelper.getLimitByMarket;
+    var merge = D3Charts.util.merge;
+    var clone = D3Charts.util.clone;
+
+    function getFsOption(d, chart) {
+      var code = d.code;
+      var xData = d.xData;
+      var xTick = d.xTick;
+      var color = d.color;
+      var kData = d.kData;
+      var pre = d.pre;
+      var stockType = d.stockType;
+
+      var keepLen = stockType.keepLen;
+      var needConvertoShou = stockType.needConvertoShou;
+      var option = {
+        data: [
+          {
+            originData: kData,
+          },
+          {
+            $dataIndex: 0,
+            formatter: function (data) {
+              for (var i = 0; i < data.length; i++) {
+                xData[i] = data[i].t.split(" ")[1];
+              }
+              return xData;
+            },
+          },
+        ],
+        grid: [
+          {
+            top: 0,
+            left: 55,
+            right: 90,
+            bottom: "30%",
+            background: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+              style: {
+                stroke: color.axisLine,
+                lineWidth: 1,
+              },
+            },
+            bottomPlaceHolder: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+            },
+          },
+          {
+            top: "70%",
+            left: 55,
+            right: 90,
+            bottom: 0,
+            background: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+              style: {
+                stroke: color.axisLine,
+                lineWidth: 1,
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            type: "line",
+            aliasType: "hqline",
+            name: "fs_price",
+            $dataIndex: 0,
+            dataKey: "nowpPct",
+            color: "#53A8E2",
+            line: {
+              style: {
+                lineWidth: 1,
+              },
+            },
+            area: {
+              show: true,
+              snapToBottom: true,
+              style: {
+                opacity: 0.1,
+              },
+            },
+          },
+          {
+            type: "line",
+            aliasType: "hqline",
+            name: "fs_av",
+            $dataIndex: 0,
+            space: [20, 50],
+            dataKey: "avPct",
+            color: "#efaa50",
+            line: {
+              style: {
+                lineWidth: 1,
+              },
+            },
+          },
+          {
+            type: "hqbar",
+            name: "fs_vol",
+            hqbarType: "vol",
+            $axisIndex: [0, 3],
+            $dataIndex: 0,
+            getXKey: function (d) {
+              return d.t.split(" ")[1];
+            },
+          },
+        ],
+        axis: [
+          {
+            position: "bottom",
+            type: "band",
+            $dataIndex: 1,
+            $gridIndex: [0, 1],
+            paddingOuter: 0,
+            tick: {
+              show: false,
+            },
+            label: {
+              padding: 4,
+              inRange: true,
+              formatter: function (d) {
+                return d.substr(0, 2) + ":" + d.substr(2, 2);
+              },
+              style: {
+                fill: color.eqAxis,
+              },
+            },
+            splitLine: {
+              show: false,
+            },
+            line: {
+              show: false,
+              onZero: true,
+            },
+            tickValues: xTick,
+            ifTriggerMove: function (event) {
+              if (
+                event.axisData.match("___") ||
+                event.data.series.length === 0
+              ) {
+                return false;
+              } else {
+                return true;
+              }
+            },
+            findLastIndex: function (data, startIndex, endIndex) {
+              for (var i = startIndex; i <= endIndex; i++) {
+                if (data[i].match("___")) {
+                  i--;
+                  return i;
+                }
+              }
+
+              return endIndex;
+            },
+          },
+          {
+            position: "right",
+            type: "linear",
+            xOrY: "y",
+            symmetry: true,
+            domainScale: 1.2,
+            domainEqualZero: [-0.1, 0.1],
+            tickValues: function (domain) {
+              return [domain[0], domain[0] / 2, 0, domain[1] / 2, domain[1]];
+            },
+            splitLine: {
+              show: false,
+            },
+            label: {
+              padding: 4,
+              inside: true,
+              inRange: true,
+              style: function (v) {
+                var fill;
+
+                if (v > 0) {
+                  fill = color.abAxis;
+                } else if (v === 0) {
+                  fill = color.eqAxis;
+                } else {
+                  fill = color.beAxis;
+                }
+
+                return {
+                  fill: fill,
+                  textAlign: "right",
+                };
+              },
+              formatter: function (v) {
+                return (v * 100).toFixed(2) + "%";
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+          {
+            position: "left",
+            relyOtherAxis: true,
+            $axisIndex: 1,
+            type: "linear",
+            xOrY: "y",
+            label: {
+              padding: 4,
+              inRange: true,
+              style: function (v) {
+                var fill;
+
+                if (v > 0) {
+                  fill = color.abAxis;
+                } else if (v === 0) {
+                  fill = color.eqAxis;
+                } else {
+                  fill = color.beAxis;
+                }
+
+                return {
+                  fill: fill,
+                };
+              },
+              formatter: function (v) {
+                return ((v + 1) * pre).toFixed(2);
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+          {
+            z: 3,
+            position: "left",
+            type: "linear",
+            domainEqualZero: [0, 1],
+            xOrY: "y",
+            tickValues: function (domain) {
+              var min = Math.min(domain[0], domain[1]);
+              var max = Math.max(domain[0], domain[1]);
+              return [min, (max - min) / 2 + min, max];
+            },
+            splitLine: {
+              show: false,
+            },
+            $gridIndex: 1,
+            label: {
+              padding: 4,
+              inRange: true,
+              formatter: function (v) {
+                return filterNum(v, needConvertoShou);
+              },
+              style: {
+                fill: color.eqAxis,
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+        ],
+        axisPointer: [
+          {
+            $axisIndex: 0,
+            line: {
+              style: {
+                stroke: color.hoverLine,
+                lineDash: [2, 3],
+                lineWidth: 1,
+              },
+            },
+            label: {
+              gap: 0,
+              style: {
+                fill: "white",
+                textBorderRadius: 0,
+                textBackgroundColor: "#555",
+              },
+            },
+          },
+          {
+            $axisIndex: [2],
+            $axisPointerIndex: 0,
+            $seriesIndex: 0,
+            label: {
+              gap: 0,
+              // inside: true,
+              style: function (v) {
+                var fill;
+
+                if (v > 0) {
+                  fill = color.abAxis;
+                } else if (v === 0) {
+                  fill = color.eqAxis;
+                } else {
+                  fill = color.beAxis;
+                }
+
+                return {
+                  textPadding: 4,
+                  fill: "white",
+                  textBackgroundColor: fill,
+                  // textAlign: 'right'
+                };
+              },
+            },
+            // 指示线
+            line: {
+              style: {
+                stroke: color.hoverLine,
+                lineDash: [2, 3],
+                lineWidth: 1,
+              },
+            },
+          },
+        ],
+        tooltip: [
+          {
+            trigger: "axis",
+            $axisIndex: 0,
+            $seriesIndex: 0,
+            position: function (d) {
+              var gridModel = chart.getModel("grid", 0);
+              var globalModel = d.model.globalModel;
+              var seriesModel = globalModel.getComponentByIndex("series", 0);
+              var _data = seriesModel.getRealData(d.dataIndex);
+              var yValue = _data[1];
+              var yAxisModel = seriesModel.getAxisModel("y");
+              var y = yAxisModel.scale(yValue);
+
+              return {
+                x: gridModel.position.right + 4,
+                y: y - 8,
+              };
+            },
+            alwaysShowContent: true,
+            formatter: function (d) {
+              var data = kData[d.series[0].dataIndex];
+              var hqMarket = "HS_stock";
+              return fsPrice_tooltip(
+                data,
+                {
+                  pre: pre,
+                  keepLen: keepLen,
+                  needConvertoShou: needConvertoShou,
+                  hqMarket: hqMarket,
+                },
+                function (d) {
+                  var tpl = d.tpl;
+                  var result = d.result;
+                  return tpl.replace(/<%([^%>]+)?%>/g, function (s0, s1) {
+                    if (s1 === "t") {
+                      return (
+                        result[s1].substr(9, 2) +
+                        ":" +
+                        result[s1].substr(11, 2) +
+                        "<br/>"
+                      );
+                    } else {
+                      return (
+                        '<span style="color:' +
+                        color[result.status + "Axis"] +
+                        ';">' +
+                        result[s1] +
+                        "</span><br/>"
+                      );
+                    }
+                  });
+                }
+              );
+            },
+
+            // 浮窗的css样式
+            style: {
+              position: "absolute",
+              zIndex: 99999,
+              backgroundColor: undefined,
+              borderRadius: "0px",
+              padding: "2px",
+              color: "#555",
+              fontSize: "12px",
+              display: "none",
+            },
+          },
+        ],
+        animation: false,
+      };
+
+      var limit = getLimitByMarket(stockType);
+      if (!limit.fs.av) {
+        option.series.splice(1, 1);
+      }
+      if (!limit.fs.vol) {
+        option.grid[0].bottom = 0;
+        option.grid.pop();
+        option.axis[0].$gridIndex = 0;
+        option.axis.pop();
+        option.tooltip.pop();
+        option.series.pop();
+      }
+      return option;
+    }
+
+    function getKlineOption(d, chart) {
+      var code = d.code;
+      var color = d.color;
+      var kData = d.kData;
+      var klineCfg = d.kline;
+      var stockType = d.stockType;
+
+      var keepLen = stockType.keepLen;
+      var needConvertoShou = stockType.needConvertoShou;
+      var minValueSpan = klineCfg.minValueSpan;
+      var startValue = klineCfg.startValue;
+      var option = {
+        axis: [
+          {
+            position: "bottom",
+            type: "band",
+            $gridIndex: [0, 1],
+            xOrY: "x",
+            $dataIndex: 0,
+            dataKey: "t",
+            paddingInner: 0.3,
+            paddingOuter: 0.3,
+            barGap: 0,
+            $dataZoomIndex: 0,
+            tickValues: function (domain) {
+              var n = domain.length - 1;
+              if (n < 11) {
+                return [domain[0]];
+              } else if (n < minValueSpan) {
+                return [domain[0], domain[n]];
+              } else {
+                var split = n / 6;
+                return [
+                  domain[Math.round(n / 6)],
+                  domain[Math.round((n * 3) / 6)],
+                  domain[Math.round((n * 5) / 6)],
+                ];
+              }
+            },
+            splitLine: {
+              show: true,
+              style: {
+                stroke: color.axisLine,
+                lineDash: [3, 4],
+                lineWidth: 1,
+              },
+            },
+            label: {
+              padding: 4,
+              inRange: true,
+              style: {
+                fill: color.eqAxis,
+              },
+              formatter: function (d) {
+                return (
+                  d.substr(0, 4) + "-" + d.substr(4, 2) + "-" + d.substr(6, 2)
+                );
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+          {
+            position: "left",
+            type: "linear",
+            space: 10,
+            domainEqualZero: [-0.1, 0.1],
+            $gridIndex: 0,
+            xOrY: "y",
+            tickValues: function (domain) {
+              var min = domain[0];
+              var max = domain[1];
+              var detar = max - min;
+              return [
+                domain[0],
+                detar / 4 + domain[0],
+                (detar * 2) / 4 + domain[0],
+                (detar * 3) / 4 + domain[0],
+                domain[1],
+              ];
+            },
+            splitLine: {
+              show: false,
+            },
+            label: {
+              padding: 4,
+              style: {
+                fill: color.eqAxis,
+              },
+              formatter: function (v) {
+                return v.toFixed(keepLen);
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+          {
+            position: "left",
+            type: "linear",
+            $gridIndex: 1,
+            space: [0, 20],
+            domainEqualZero: [0, 1],
+            xOrY: "y",
+            tickValues: function (domain) {
+              var min = domain[0];
+              var max = domain[1];
+              var detar = max - min;
+              return [domain[0], (detar * 2) / 4 + domain[0], domain[1]];
+            },
+            label: {
+              padding: 4,
+              inRange: true,
+              style: {
+                fill: color.eqAxis,
+              },
+              formatter: function (v) {
+                return filterNum(v, needConvertoShou);
+              },
+            },
+            line: {
+              show: false,
+            },
+            tick: {
+              show: false,
+            },
+          },
+        ],
+        grid: [
+          {
+            left: 55,
+            top: 0,
+            right: 90,
+            bottom: "30%",
+            background: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+              style: {
+                stroke: color.axisLine,
+              },
+            },
+            topPlaceHolder: {
+              show: true,
+              height: 25,
+              borderEnable: [0, 0, 0, 0],
+            },
+            bottomPlaceHolder: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+            },
+          },
+          {
+            left: 55,
+            top: "70%",
+            right: 90,
+            bottom: 0,
+            background: {
+              show: true,
+              borderEnable: [0, 0, 0, 0],
+              style: {
+                stroke: color.axisLine,
+              },
+            },
+          },
+        ],
+        axisPointer: [
+          {
+            $axisIndex: 0,
+            line: {
+              style: {
+                stroke: color.hoverLine,
+                lineDash: [2, 3],
+                lineWidth: 1,
+              },
+            },
+            label: {
+              gap: 0,
+              style: {
+                fill: "white",
+                textBorderRadius: 0,
+                textBackgroundColor: "#555",
+              },
+            },
+          },
+          {
+            $axisIndex: [1],
+            $axisPointerIndex: 0,
+            $seriesIndex: 0,
+            valueIndex: 3,
+            line: {
+              style: {
+                stroke: color.hoverLine,
+                lineDash: [2, 3],
+                lineWidth: 1,
+              },
+            },
+            label: {
+              gap: 0,
+              style: {
+                fill: "white",
+                textBorderRadius: 0,
+                textBackgroundColor: "#555",
+              },
+            },
+          },
+        ],
+        tooltip: [
+          {
+            trigger: "axis",
+            $axisIndex: 0,
+            position: [10, 0],
+            alwaysShowContent: true,
+            formatter: function (d) {
+              return klinePrice_tooltip(
+                kData[d.series[0].dataIndex],
+                {
+                  needConvertoShou: needConvertoShou,
+                  keepLen: keepLen,
+                },
+                function (d) {
+                  var tpl = d.tpl;
+                  var maTpl = d.maTpl;
+                  var result = d.result;
+                  var data = d.data;
+                  return maTpl.replace(/<%([^%>]+)?%>/g, function (s0, s1) {
+                    if (
+                      s1 === "status" ||
+                      s1 === "openPStatus" ||
+                      s1 === "maxPStatus" ||
+                      s1 === "minPStatus"
+                    ) {
+                      return color[result[s1] + "Axis"];
+                    } else if (/^(ma[{0-9}]+Status)$/.test(s1)) {
+                      return color[s1.slice(0, -6)];
+                    } else if (/^(ma[{0-9}]+)$/.test(s1)) {
+                      return parseFloat(data[s1]).toFixed(keepLen);
+                    } else {
+                      return result[s1];
+                    }
+                  });
+                }
+              );
+            },
+            // 浮窗的css样式
+            style: {
+              position: "absolute",
+              zIndex: 99999,
+              backgroundColor: undefined,
+              borderRadius: "0px",
+              padding: "2px",
+              color: "#555",
+              fontSize: "12px",
+              display: "none",
+            },
+          },
+          {
+            trigger: "axis",
+            $axisIndex: 0,
+            position: function (d) {
+              var gridModel = chart.getModel("grid", 0);
+              var globalModel = d.model.globalModel;
+              var seriesModel = globalModel.getComponentByIndex("series", 0);
+              var _data = seriesModel.getRealData(d.dataIndex);
+              var value = _data[1];
+              var yAxisModel = seriesModel.getAxisModel("y");
+              var yValue = value[3];
+              var y = yAxisModel.scale(yValue);
+
+              return {
+                x: gridModel.position.right + 4,
+                y: y - 8,
+              };
+            },
+            alwaysShowContent: true,
+            formatter: function (d) {
+              return klinePrice_tooltip(
+                kData[d.series[0].dataIndex],
+                {
+                  needConvertoShou: needConvertoShou,
+                  keepLen: keepLen,
+                },
+                function (d) {
+                  var tpl = d.tpl.slice(0, -5);
+                  var maTpl = d.maTpl;
+                  var result = d.result;
+                  var data = d.data;
+                  tpl +=
+                    "<span>量：" +
+                    filterNum(d.data.n, needConvertoShou) +
+                    "</span>";
+
+                  return tpl.replace(/<%([^%>]+)?%>/g, function (s0, s1) {
+                    if (
+                      s1 === "status" ||
+                      s1 === "openPStatus" ||
+                      s1 === "maxPStatus" ||
+                      s1 === "minPStatus"
+                    ) {
+                      return color[result[s1] + "Axis"];
+                    } else if (/^(ma[{0-9}]+Status)$/.test(s1)) {
+                      return color[s1.slice(0, -6)];
+                    } else if (/^(ma[{0-9}]+)$/.test(s1)) {
+                      return parseFloat(data[s1]).toFixed(keepLen);
+                    } else {
+                      return result[s1] + " <br/> ";
+                    }
+                  });
+                }
+              );
+            },
+            // 浮窗的css样式
+            style: {
+              position: "absolute",
+              zIndex: 99999,
+              backgroundColor: undefined,
+              borderRadius: "0px",
+              padding: "2px",
+              color: "#555",
+              fontSize: "12px",
+              display: "none",
+            },
+          },
+        ],
+        dataZoom: [
+          {
+            $gridIndex: [0, 1],
+            // 初始 绘制的k线范围
+            // startValue: '20180115',
+            // endValue: '20180531',
+            minValueSpan: minValueSpan,
+            // maxValueSpan: 100
+            startValue: startValue,
+            pressStop: true,
+          },
+        ],
+        series: [
+          {
+            type: "hqbar",
+            name: "kline_price",
+            hqbarType: "kline",
+            $axisIndex: [0, 1],
+            $dataIndex: 0,
+          },
+          {
+            type: "hqbar",
+            name: "kline_vol",
+            hqbarType: "vol",
+            $axisIndex: [0, 2],
+            $dataIndex: 0,
+          },
+          {
+            type: "line",
+            $dataIndex: 0,
+            dataKey: "ma5",
+            name: "ma5",
+            line: {
+              show: true,
+              style: {
+                normal: {
+                  stroke: color.ma5,
+                  lineWidth: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "line",
+            $dataIndex: 0,
+            dataKey: "ma10",
+            name: "ma10",
+            line: {
+              show: true,
+              style: {
+                normal: {
+                  stroke: color.ma10,
+                  lineWidth: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "line",
+            $dataIndex: 0,
+            dataKey: "ma30",
+            name: "ma30",
+            line: {
+              show: true,
+              style: {
+                normal: {
+                  stroke: color.ma30,
+                  lineWidth: 1,
+                },
+              },
+            },
+          },
+        ],
+        markPoint: [
+          {
+            $axisIndex: [0, 1],
+            $seriesIndex: 0,
+            symbol: {
+              type: "none",
+            },
+            label: {
+              normal: {
+                show: true,
+                style: {
+                  fill: "black",
+                  textDistance: 0,
+                  position: function (d, item, position) {
+                    var gridModel = chart.getModel("grid", 0);
+
+                    if (
+                      position[0] >
+                      gridModel.position.left + gridModel.position.width / 2
+                    ) {
+                      return "left";
+                    } else {
+                      return "right";
+                    }
+                  },
+                },
+                formatter: function (item, position) {
+                  var gridModel = chart.getModel("grid", 0);
+
+                  if (
+                    position[0] >
+                    gridModel.position.left + gridModel.position.width / 2
+                  ) {
+                    return item.data[1].toFixed(keepLen) + " ←";
+                  } else {
+                    return "→ " + item.data[1].toFixed(keepLen);
+                  }
+                },
+              },
+            },
+            data: [
+              {
+                type: "max",
+                valueIndex: 1,
+              },
+              {
+                type: "min",
+                valueIndex: 2,
+              },
+            ],
+          },
+        ],
+        animation: false,
+        data: [
+          {
+            originData: kData,
+          },
+        ],
+      };
+
+      var limit = getLimitByMarket(stockType);
+      if (!limit.kline.vol) {
+        option.grid[0].bottom = 0;
+        option.axis[0].$gridIndex = 0;
+        option.axis.pop();
+        option.axisPointer[0].$axisIndex = [0, 1];
+        option.tooltip.pop();
+        option.dataZoom[0].$gridIndex = 0;
+        option.series.splice(1, 1);
+      }
+      return option;
+    }
+
+    function PcHq(configs) {
+      var defaultConfigs = {
+        // 是否需要实时行情头部
+        enableRealhead: true,
+        color: {
+          axisLine: "#ccc",
+          abAxis: "#de422e",
+          beAxis: "#3e9663",
+          eqAxis: "#444",
+          ma5: "#1F6195",
+          ma10: "#E0AC58",
+          ma30: "#9C73AF",
+          // 悬停十字线
+          hoverLine: "#A0A0A0",
+          hideColor: "rgba(255,255,255,0)",
+        },
+        intervalTime: 60000,
+        isKeepingGet: true,
+        code: "hs_300033",
+      };
+      this.configs = merge(clone(configs), defaultConfigs);
+    }
+
+    // 渲染
+    PcHq.prototype.renderRealhead = function (realheadData, hoverData) {
+      var data;
+
+      if (hoverData) {
+        data = merge(clone(hoverData), this.realheadData);
+      } else {
+        data = realheadData;
+      }
+      // if (!data) {return;}
+
+      // curP : "38.25"
+      // curPStatus : "ab"
+      // dynamicSYL : "68.234"
+      // isStop : 0
+      // keepLen : 2
+      // maxP : "38.85"
+      // maxPStatus : "ab"
+      // minP : "37.92"
+      // minPStatus : "be"
+      // n : "2.8万"
+      // name : "同花顺"
+      // np : "1.1亿"
+      // openP : "38.00"
+      // openPStatus : "be"
+      // rate : "0.18"
+      // rateP : "0.07"
+      // shortcode : "300033"
+      // sjl : "7.49"
+      // staticSYL : "28.338"
+      // stockM : "101亿"
+      // totalM : "206亿"
+      // turnRate : "1.08"
+      // yesterdayP : "38.18"
+      // zf : "2.44"
+      console.log(data);
+
+      var $dom = $("#" + this.configs.realheadId);
+      var color = this.configs.color;
+      var htmlStr = this.configs.realheadTpl;
+      var infoItemCss =
+        "display: inline-block; width: 80px; line-height: 26px;";
+      var boxColor = {
+        ab: color.abAxis,
+        eq: color.eqAxis,
+        be: color.beAxis,
+      };
+
+      data.curP = data.curP === "" ? "00.00" : data.curP;
+      data.wgtColor = boxColor[data.curPStatus];
+      data.wgtStopStr = data.isStop ? " 停牌" : "";
+      data.arrowEnable = /^(ab|be)/.test(data.curPStatus) ? "inline" : "none";
+      data.arrowDirect = /^(ab)/.test(data.curPStatus)
+        ? ""
+        : "transform: scale(-1); margin-top:9px;";
+      var calcWidth =
+        ($dom.width() - 300) / 4 > 70 ? ($dom.width() - 300) / 4 : 70;
+      data.infoItemCss = infoItemCss + "width: " + calcWidth + "px;";
+
+      htmlStr = htmlStr.replace(/<%([^%>]+)?%>/g, function (s0, s1) {
+        return data[s1];
+      });
+
+      var wrapCss =
+        "position: absolute; top: 0;left: 0;width: 100%;font-family: DIN-Regular; height: 90px; overflow: hidden;";
+      var boxSpaceCss = "padding: 10px; verflow: hidden;";
+
+      var realheadbox = $dom.find(".hxc3-wgt-toggle");
+      if (realheadbox.length) {
+        realheadbox.html("");
+      } else {
+        realheadbox = $(
+          '<div class="hxc3-wgt-toggle" style="' +
+            wrapCss +
+            '"><div style="' +
+            boxSpaceCss +
+            '"></div></div>'
+        ).appendTo($dom);
+      }
+      realheadbox.html(
+        '<div style="' + boxSpaceCss + '">' + htmlStr + "</div>"
+      );
+    };
+
+    // 绘制实时行情头部
+    PcHq.prototype.drawRealhead = function () {
+      var configs = this.configs;
+      var code = configs.code;
+
+      var that = this;
+
+      var realdata = {
+        type: "othersHq",
+        dType: "realhead",
+        code: code,
+        isKeepingGet: configs.isKeepingGet,
+        intervalTime: configs.intervalTime,
+      };
+
+      // 港美股盘前，盘后特殊状态
+      // var stockstatus = new Stockstatus({
+      //     stockTypeObj: this.stockType
+      // });
+
+      // 获得数据
+      var realheadProvider = D3Charts.getDataPool().register(realdata);
+      D3Charts.getDataPool().offAction(
+        realheadProvider,
+        "PROVIDER_UPDATE.mhxreal"
+      );
+      D3Charts.getDataPool().onAction(
+        realheadProvider,
+        "PROVIDER_UPDATE.mhxreal",
+        function (d) {
+          if (d.data) {
+            var data = d.data.afterArrage;
+            // stockstatus.initStatus(d.data.remoteData.items);
+
+            that.realheadData = data;
+            that.renderRealhead(data);
+          }
+        }
+      );
+    };
+
+    // 绘制分时tab, 私有
+    PcHq.prototype._drawFs = function () {
+      var configs = this.configs;
+      var chart = this.chart;
+      var that = this;
+
+      var code = configs.code;
+      var color = configs.color;
+
+      that.hqRemoveLoading();
+
+      // fs数据配置
+      var fsdata = {
+        type: "fsToday",
+        code: code,
+        isKeepingGet: configs.isKeepingGet,
+        // 间隔多久更新一次(推荐大于60秒,因为现在服务端缓存是1分钟)
+        intervalTime: 60000,
+      };
+
+      // 获得数据
+      var fsProvider = D3Charts.getDataPool().register(fsdata);
+      D3Charts.getDataPool().offAction(fsProvider, "PROVIDER_UPDATE.mhxfs");
+      D3Charts.getDataPool().onAction(
+        fsProvider,
+        "PROVIDER_UPDATE.mhxfs",
+        function (d) {
+          if (d.data) {
+            var data = d.data[code];
+            var pre = parseFloat(data.preClosePrice);
+            var kData = data.dataArray;
+            var xDataObj = D3Charts.hqHelper.getXData(
+              data.stockType,
+              data.totalTimeNum,
+              data.tradeTime
+            );
+            var fsOption = getFsOption(
+              {
+                code: code,
+                xData: xDataObj.xData,
+                xTick: xDataObj.xTick,
+                color: color,
+                kData: kData,
+                pre: pre,
+                stockType: data.stockType,
+              },
+              chart
+            );
+            chart.setOption(fsOption);
+
+            var axisModel = chart.getModel("axis", 0);
+            var tooltipModel = chart.getModel("tooltip", 0);
+            var tooltipView;
+            if (tooltipModel) {
+              tooltipView = chart.getViewOfComponentModel(tooltipModel);
+            }
+            chart.registerAction(axisModel, "AXIS_OUT", function (d) {
+              var lastData = d.lastData;
+              if (lastData) {
+                tooltipModel && tooltipView.showTooltip(tooltipModel, lastData);
+              }
+            });
+          }
+        }
+      );
+    };
+
+    // 绘制kline tab, 私有
+    PcHq.prototype._drawKline = function (klineType) {
+      var configs = this.configs;
+      var chart = this.chart;
+      var that = this;
+
+      klineType = klineType || "Day";
+      var code = configs.code;
+      var color = configs.color;
+
+      // kline数据配置
+      var klinedata = {
+        type: "klineLast",
+        dType: "qfq" + klineType,
+        code: code,
+        ma: [5, 10, 30],
+        sliceDays: -360,
+      };
+
+      // 获得数据
+      var klineProvider = D3Charts.getDataPool().register(klinedata);
+
+      D3Charts.getDataPool().offAction(
+        klineProvider,
+        "PROVIDER_UPDATE.mhxkline"
+      );
+      D3Charts.getDataPool().onAction(
+        klineProvider,
+        "PROVIDER_UPDATE.mhxkline",
+        function (d) {
+          if (d.fetchStatus.msg !== "success") return;
+          that.hqRemoveLoading();
+
+          var kData = d.data.dataArray;
+
+          var klineOption = getKlineOption(
+            {
+              code: code,
+              color: color,
+              kData: kData,
+              stockType: d.data.stockType,
+              kline: configs.kline,
+            },
+            chart
+          );
+          chart.setOption(klineOption);
+
+          var axisModel = chart.getModel("axis", 0);
+          var tooltipModel = chart.getModel("tooltip", 0);
+          var tooltipModel2 = chart.getModel("tooltip", 1);
+          var tooltipView = chart.getViewOfComponentModel(tooltipModel);
+          var tooltipView2 = chart.getViewOfComponentModel(tooltipModel2);
+          chart.registerAction(axisModel, "AXIS_OUT", function (d) {
+            var lastData = d.lastData;
+            if (lastData) {
+              tooltipView.showTooltip(tooltipModel, lastData);
+              tooltipView2.showTooltip(tooltipModel2, lastData);
+            }
+          });
+        }
+      );
+    };
+
+    // 切换到分时tab
+    PcHq.prototype.toggleFs = function () {
+      this.hqAddLoading();
+
+      // 如果是在大量请求时，使用下面的切换
+      // 原数据不再做缓存
+      // D3Charts.getDataPool().removeProvider('.mhxkline');
+      D3Charts.getDataPool().offAction(".mhxkline");
+
+      this._drawFs();
+    };
+
+    // 切换到kline tab
+    PcHq.prototype.toggleKline = function (klineType) {
+      this.hqAddLoading();
+
+      // 如果是在大量请求时，使用下面的切换
+      // 原数据不再做缓存
+      // D3Charts.getDataPool().removeProvider('.mhxfs');
+      D3Charts.getDataPool().offAction(".mhxfs");
+
+      this._drawKline(klineType);
+    };
+
+    // 移除loading图标
+    PcHq.prototype.hqRemoveLoading = function () {
+      // console.log('加载完成')
+    };
+
+    // 可添加loading图标
+    PcHq.prototype.hqAddLoading = function () {
+      // var dom = this.chart.getDom();
+      // console.log('加载中...')
+    };
+
+    PcHq.prototype.init = function (type) {
+      type = type || "fs";
+      var elementId = this.configs.elementId;
+      var chart = D3Charts.init(elementId);
+      this.chart = chart;
+      this.stockType = getStockType(this.configs.code);
+
+      if (this.configs.enableRealhead) {
+        this.drawRealhead();
+      }
+      // this.toggleKline();
+
+      switch (type) {
+        case "fs":
+          this.toggleFs();
+          break;
+        case "daykline":
+          this.toggleKline();
+          break;
+        case "weekkline":
+          this.toggleKline("Week");
+          break;
+        case "monthkline":
+          this.toggleKline("Month");
+          break;
+        default:
+          this.toggleFs();
+      }
+    };
+
+    var pchq = new PcHq(totalConfigs);
+    pchq.init("daykline");
+  </script>
+</body>

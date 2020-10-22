@@ -1,0 +1,114 @@
+.select-body {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+.select-body .select-input-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 13px;
+  right: 5px;
+  cursor: pointer;
+  background: url(../images/icon-select-down.jpg) no-repeat;
+}
+
+.select-body input{
+  width: 156px;
+  border-radius: 3px;
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  color: #555;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 4px 6px;
+  padding-right: 25px;
+  vertical-align: middle;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-body .placeholder{
+  color: #888;
+}
+
+.select-body .select-list{
+  position: absolute;
+  z-index: 2;
+  top: 35px;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0 0 5px 3px rgba(224, 224, 224, .5);
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  max-height: 262px;
+}
+
+.select-body .hide{
+  display: none;
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.select-body .select-list span,
+.select-body .select-list .checkbox-list span{
+  display: block;
+  cursor: pointer;
+  line-height: 26px;
+  padding: 0 6px;
+  font-size: 12px;
+  color: #333;
+  margin: 0;
+}
+
+.select-item,
+.item-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-body .select-list .checkbox span{
+  padding-left: 22px;
+}
+
+.single-select .select-list span:hover,
+.single-select .select-list span.selected{
+  color: #fff;
+  background-color: #318ce1;
+}
+
+.select-body .select-list .checkbox {
+  position: relative;
+}
+
+.select-body .select-list .checkbox i {
+  position: absolute;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  top: 8px;
+  margin-right: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+  background: url(../images/select.gif) no-repeat;
+}
+
+.select-body .select-list .selected i,
+.select-body .select-list .selected:hover i {
+  background: url(../images/selected.gif);
+}
+
+.multi-select .select-list .placeholderItem {
+  display: none;
+}
+
+.select-body .select-list .placeholderItem {
+  color: #888;
+}

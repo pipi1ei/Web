@@ -1,0 +1,88 @@
+.ifind-paging-container {
+  float: right;
+  color: #666;
+  font-size: 12px;
+}
+
+.ifind-paging-container ul {
+  padding: 0;
+  margin: 0;
+}
+
+.ifind-paging-container ul {
+  list-style: none;
+}
+.ifind-paging-container li {
+  float: left;
+  padding: 3px 10px;
+  margin-left: 5px;
+  color: #666;
+  line-height: 25px;
+}
+
+.ifind-paging-container li.ifind-pager {
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.ifind-paging-container li.ifind-pager:hover,
+.ifind-paging-container li.focus {
+  background-color: #288df0;
+  color: #fff;
+}
+
+.ifind-paging-container li.ifind-paging-ellipse {
+  border: none;
+}
+
+.ifind-paging-container li.ifind-paging-toolbar {
+  padding: 0;
+}
+
+.ifind-paging-container li.ifind-paging-toolbar select {
+  height: 30px;
+  border: 1px solid #ddd;
+  color: #666;
+  cursor: pointer;
+  width: auto;
+  padding: 3px 5px;
+}
+
+.ifind-paging-container li.ifind-paging-toolbar input {
+  line-height: 28px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 30px;
+  margin: 0 0 0 5px;
+  vertical-align: middle;
+}
+
+.ifind-paging-container li.ifind-paging-toolbar a {
+  text-decoration: none;
+  display: inline-block;
+  height: 30px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  border-radius: 2px;
+  line-height: 28px;
+  padding: 0 10px;
+  cursor: pointer;
+  margin-left: 5px;
+  color: #666;
+}
+
+.ifind-paging-container li.ifind-pager-disabled,
+.ifind-paging-container li.ifind-pager-disabled:hover {
+  background-color: #f6f6f6 !important;
+  cursor: default !important;
+  border: none !important;
+  color: #ddd !important;
+}
+
+.ifind-paging-info-container {
+  float: left;
+  line-height: 32px;
+}

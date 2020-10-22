@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格滚动</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 800px;
+      margin: 100px auto;
+      background-color: aqua;
+      height: 200px;
+      overflow-y: hidden;  /* 重要 */
+    }
+
+    table {
+      width: 100%;  /* 重要 */
+      table-layout: fixed; /* 重要 */
+      border-spacing: 0;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    table th {
+      color: #666;
+      padding: 8px 6px;
+      border: 1px solid #e8e8e8;
+      background: #f1f1f1;
+      overflow: hidden;
+      white-space: nowrap;
+      line-height: 28px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 100px;">序号</th>
+          <th style="width: 100px;">股票代码</th>
+          <th style="width: 100px;">公司简称</th>
+          <th style="width: 100px;">推送报告期</th>
+          <th style="width: 100px;">优先级</th>
+          <th style="width: 100px;">actid号</th>
+          <th style="width: 100px;">actid名单人数</th>
+          <th style="width: 100px;">去重后人数</th>
+          <th style="width: 100px;">实推人数</th>
+          <th style="width: 100px;">推送日期</th>
+          <th style="width: 100px;">推送时间</th>
+          <th style="width: 100px;">状态</th>
+          <th style="width: 100px;">操作</th>
+        </tr>
+
+      </thead>
+    </table>
+  </div>
+</body>
+</html>

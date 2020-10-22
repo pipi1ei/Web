@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分页示例</title>
+  <link rel="stylesheet" href="./paging.css">
+</head>
+<body>
+  <div id="paging"></div>
+
+  <script src="../../../lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+  <script src="./paging.js"></script>
+
+  <script>
+    let a = {}
+    console.log($.isEmptyObject(a));
+
+    var name = 'Tom';
+    (function() {
+      if(typeof name == 'undefined') {
+        var name = 'Jack'
+        console.log('Goodbye' + name)
+      } else {
+        console.log('Hello' + name)
+      }
+    })()
+
+    const paging = new Paging($('#paging'), {
+      pagesize: 10,
+      current: 1,
+      count: 72,
+      prevTpl: "上一页",
+      nextTpl: "下一页",
+      firstTpl: "首页",
+      lastTpl: "尾页",
+      ellipseTpl: "...",
+      showPageInfo: true,
+      toolbar: true,
+      pageSizeList: [10, 20, 30, 50],
+      callback: (current, size, count) => {
+        console.log("callback")
+      }
+    })
+  </script>
+</body>
+</html>

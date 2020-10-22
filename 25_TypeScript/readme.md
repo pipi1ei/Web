@@ -34,13 +34,13 @@
         alert('My name is Tom');
       }
     ```
-  - 声明一个 void 类型的变量没有什么用，因为你只能将它赋值为 undefined 和 null
+  - 声明一个 void 类型的变量没有什么用，因为你只能将它赋值为 undefined 和 null。实际情况是 undefined 可以复制给 void 类型的变量，而 null 不行
 5. null 和 undefined
-  - 与 void 的区别是，undefined 和 null 是所有类型的子类型。也就是说 undefined 类型的变量，可以赋值给 number 类型的变量：
+  - 与 void 的区别是，*undefined 和 null 是所有类型的子类型*。也就是说 undefined 类型的变量，可以赋值给 number 类型的变量：
   ```typescript
-    // 这样不会报错
+    // 这样不会报错，但编译器上会报错
     let num: number = undefined;
-    // 这样也不会报错
+    // 这样也不会报错，但编译器上会报错
     let u = undefined;
     let x: number = u;
   ```
@@ -76,6 +76,16 @@
     anyThing.setName('Jerry').sayHello();
   ```
   - 变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型：
+  ```typescript
+    let a;
+    a = '123';
+    a = true;
+
+    // 相当于
+    let a:any;
+    a = '123';
+    a = true;
+  ```
 
 10. 联合类型
 - 联合类型（Union Types）表示取值可以为多种类型中的一种。
@@ -146,7 +156,7 @@
       }
     ```
   + 注意
-    - 一旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集：
+    - **一旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集**：
     ```typescript
       interface Person {
         name: string;
@@ -162,7 +172,7 @@
     ```
     - 上例中，任意属性的值允许是 string，但是可选属性 age 的值却是 number，number 不是 string 的子属性，所以报错了。
   
-  + 一个接口中只能定义一个任意属性。如果接口中有多个类型的属性，则可以在任意属性中使用联合类型：
+  + **一个接口中只能定义一个任意属性。如果接口中有多个类型的属性，则可以在任意属性中使用联合类型**：
     ```typescript
       interface Person {
         name: string;
@@ -193,7 +203,7 @@
 
       tom.id = 1234; // 报错：Cannot assign to 'id' because it is a constant or a read-only property.
     ```
-    - 注意：只读的约束存在于第一次给对象赋值的时候，而不是第一次给只读属性赋值的时候：
+    - 注意：**只读的约束存在于第一次给对象赋值的时候，而不是第一次给只读属性赋值的时候**：
       ```typescript
         interface Person {
           readonly id: number;

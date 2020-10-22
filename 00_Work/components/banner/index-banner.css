@@ -1,0 +1,100 @@
+.index-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.index-banner .banner-show {
+  height: 100%;
+}
+
+.index-banner .banner-show .banner {
+  float: left;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transition: all .5s ease;
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+.index-banner .banner-desc-wrapper {
+  position: absolute;
+  overflow: hidden;
+  bottom: 0px;
+  height: 45px;
+  width: 100%;
+  padding: 10px 10px 0;
+  background: rgba(0, 0, 0, .8);
+}
+
+.index-banner .banner-desc-wrapper .banner-desc {
+  float: left;
+  width: 80%;
+  height: 100%;
+}
+
+.index-banner .banner-desc-wrapper .banner-desc .desc-item {
+  display: none;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.index-banner .banner-desc-wrapper .banner-desc .desc-item.active {
+  display: inline-block;
+}
+
+.index-banner .banner-desc-wrapper .progress {
+  float: right;
+  width: 20%;
+  height: 100%;
+  text-align: right;
+  padding-top: 10px;
+}
+
+.index-banner .banner-desc-wrapper .progress .progress-item {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  background: #9d9d9d;
+  margin-right: 14px;
+  cursor: pointer;
+}
+
+.index-banner .banner-desc-wrapper .progress .progress-item.active {
+  background: #74afff;
+}
+
+.index-banner .banner-desc-wrapper .progress .progress-item span {
+  position: absolute;
+  height: 3px;
+  left: 0;
+  top: 0;
+  width: 0px;
+  background: #fff;
+}
+
+.index-banner .btn-item {
+  position: absolute;
+  top: calc(50% - 20px);
+  background: #fff;
+  width: 25px;
+  height: 46px;
+  cursor: pointer;
+}
+
+.index-banner .btn-item.left {
+  left: 10px;
+  background: url(./img/prev.png) no-repeat center center;
+}
+
+.index-banner .btn-item.right {
+  right: 10px;
+  background: url(./img/next.png) no-repeat center center;
+}
+

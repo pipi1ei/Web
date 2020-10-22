@@ -1,0 +1,103 @@
+.ifind-loading-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.ifind-loading-container .ifind-loading-img {
+  margin-top: 25%;
+  margin-left: 45%;
+  width: 100px;
+  text-align: center;
+}
+
+.ifind-loading-container .ifind-loading-img img {
+  margin: 0 auto;
+  animation: rotate 2000ms linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.ifind-loading-overlay1 {
+  position: absolute;
+  background: rgba(0, 0, 0, .05);
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dmp-tip-container {
+  min-width: 200px;
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -30px;
+  z-index: 9999;
+  background-color: #313132;
+  color: #f4f7fa;
+  border: 1px solid #e2e2e2;
+  align-items: center;
+  border-radius: 5px;
+  padding-right: 10px;
+}
+
+.dmp-tip-text {
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+.dmp-tip-text i {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+}
+
+.dmp-tip-text p {
+  padding-left: 30px;
+}
+
+.dmp-tip-text .success {
+  background: url(./imgs/success.png) no-repeat;
+  background-size: 16px 16px;
+}
+
+.dmp-tip-text .failure {
+  background: url(./imgs/error-filling.png) no-repeat;
+  background-size: 16px 16px;
+}
+
+.dmp-tip-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.1;
+  z-index: 9998;
+  filter: alpha(opacity=10);
+  display: none;
+}

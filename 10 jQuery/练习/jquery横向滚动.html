@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+        width:100%;
+        height:30px;
+        line-height:30px;
+        overflow:hidden;
+    }
+    .box-container{
+        cursor: move;
+        white-space:nowrap;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .box-container a.mumber {
+        text-decoration:none;
+        color:#333;
+        padding:0 0 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="box-container">
+        <a  class="mumber">person1</a>
+        <a class="mumber">person2</a>
+        <a class="mumber">person3</a>
+        <a class="mumber">person5</a>
+        <a class="mumber">person6</a>
+        <a class="mumber">person7</a>
+        <a class="mumber">person8</a>
+        <a class="mumber">person9</a>
+        <a class="mumber">person10</a>
+        <a class="mumber">person11</a>
+        <a class="mumber">person12</a>
+        <a class="mumber">person13</a>
+        <a class="mumber">person14</a>
+        <a class="mumber">person15</a>
+        <a class="mumber">person16</a>
+        <a class="mumber">person17</a>
+        <a class="mumber">person18</a>
+        <a class="mumber">person19</a>
+        <a class="mumber">person20</a>
+        <a class="mumber">person21</a>
+        <a class="mumber">person22</a>
+    </div>
+  </div>　
+
+  <script src="../../lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+  <script>
+    $(function(){
+      
+        var boxContainer = $('.box .box-container'),
+            box = $('.box'),
+            boxWidth = box.width(),
+            mumber = boxContainer.find('a.mumber'),
+            mumberWidth = mumber.width()+20,
+            length = mumber.length,
+            boxContainerWidth = mumberWidth*length;
+        boxContainer.css('width',boxContainerWidth);
+        //当外容器宽度大于内部容器宽度，直接返回
+        console.log(123)
+        if(parseInt(boxWidth)>=parseInt(boxContainerWidth))return false;
+        boxContainer.on('mousedown',function(e){
+            var posX = e.screenX;//鼠标点击时候的位置
+            console.log({posX})
+            $(document).on('mousemove',function(e){
+                var posL = e.clientX,//滚动后鼠标的位置
+                    // moveX = posL - posX,//鼠标拖动距离
+                    moveX = posX - posL,//鼠标拖动距离
+                    currentScroll = box.scrollLeft();//当前的scrollLeft值
+                
+                console.log({posL})
+
+                currentScroll += moveX;
+                box.scrollLeft( currentScroll)
+            })
+            //清空事件
+            $(document).on('mouseup',function(){
+                $(this).unbind();
+            })
+        })
+    })
+  </script>
+</body>
+</html>
