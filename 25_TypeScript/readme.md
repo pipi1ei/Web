@@ -580,9 +580,430 @@
 ### 枚举
 - 枚举（Enum）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等。 
 - 枚举使用 *enum* 关键字来定义：
+- 枚举成员会被赋值从 0 开始递增的数字，同时也会对枚举值到枚举名进行反向映射
+  ```typescript
+    enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat };
+  ```
+- 上面的例子会被编译为：
+  ```javascript
+    var Days;
+    (function(){
+      Days[Days['Sun'] = 0] = 'Sun';
+      Days[Days['Mon'] = 0] = 'Mon';
+      Days[Days['Tue'] = 0] = 'Tue';
+      Days[Days['Wed'] = 0] = 'Wed';
+      Days[Days['Thu'] = 0] = 'Thu';
+      Days[Days['Fri'] = 0] = 'Fri';
+      Days[Days['Sat'] = 0] = 'Sat';
+    })(Days || (Days = {}))
+  ```
+- 也可以给枚举项手动赋值，未手动赋值的枚举项会接着上一个枚举项递增。
+  ```typescript
+    enum Days {Sun = 7, Mon = 1, Tue, Wed, Thu, Fri, Sat};
+  ```
+
+- 常数项和计算所得项
+  + 枚举项有两种类型：常数项（constant member）和计算所得项（computed member）。
+  + 前面我们所举的例子都是常数项，下面一个典型的计算所得项的例子：
+    ```typescript
+    <!-- "Blue".length 就是一个计算所得项。 -->
+      enum Color { Red, Green, Blue = "Blue".length }
+    ```
+  + 注意：**如果紧接在计算所得项后面的是未手动赋值的项，那么它就会因为无法获得初始值而报错**
+
+- 常数枚举
+  + 常数枚举是使用 const enum 定义的枚举类型：
+  ```typescript
+    const enum Directions {
+      Up,
+      Down,
+      Left,
+      Right
+    }
+  ```
+  + 常数项枚举与普通枚举的区别是：它会在编译阶段被删除，并且不能包含计算所得项
+
+- 外部枚举
+  + 外部枚举（Ambient Enums）是使用 declare enum 定义的枚举类型：
+  ```typescript
+    declare enum Directions {
+      Up,
+      Down,
+      Left,
+      Right
+    }
+  ```
+  + declare 定义的类型只会用于编译时的检查，编译结果中会被删除。
+  + 外部枚举和声明语句一样，常出现在声明文件中
+  + 同时使用 declare 和 const 也是可以的
 
 
+### 类
+- 类的概念
+  + 类（Class）：定义了一件事物的抽象特点，包含它的属性和方法
+  + 对象（Object）：类的实例，通过 new 生成
+  + 面向对象（OOP）的三大特性：封装、继承、多态
+      - 封装（Encapsulation）：将对数据的操作细节隐藏起来，只暴露对外的接口。外界调用端不需要（也不可能）知道细节，就能通过对外提供的接口来访问该对象，同时也保证了外界无法任意更改对象内部的数据
+      - 继承（Inheritance）：子类继承父类，子类除了拥有父类的所有特性外，还有一些更具体的特性
+      - 多态（Polymorphism）：由继承而产生了相关的不同的类，对同一个方法可以有不同的响应。比如 Cat 和 Dog 都继承自 Animal，但是分别实现了自己的 eat 方法。此时针对某一个实例，我们无需了解它是 Cat 还是 Dog，就可以直接调用 eat 方法，程序会自动判断出来应该如何执行 eat
+  + 存取器（getter & setter）：用以改变属性的读取和赋值行为
+  + 修饰符（Modifiers）：修饰符是一些关键字，用于限定成员或类型的性质。比如 public 表示公有属性或方法
+  + 抽象类（Abstract Class）：抽象类是供其他类继承的基类，抽象类不允许被实例化。抽象类中的抽象方法必须在子类中被实现
+  + 接口（Interfaces）：不同类之间公有的属性或方法，可以抽象成一个接口。接口可以被类实现（implements）。一个类只能继承自另一个类，但是可以实现多个接口
 
-```typescript
+- ES7 中类的用法
+  + ES6 中实例的属性只能通过构造函数中的 this.xxx 来定义，ES7 提案中可以直接在类里面定义：
+    ```typescript
+      class Animal {
+        name = "Tom";
+        constructor() {
+          // ...
+        }
+      }
 
-```
+      let a = new Animal();
+      console.log(a.name)  // Tom
+    ```
+  + 静态属性：使用 static 定义一个属性
+    ```typescript
+      class Animal {
+        static num = 42;
+        constructor() {
+          // ...
+        }
+      }
+
+      console.log(Animal.num)  // 42
+    ```
+
+- TypeScript 中类的用法
+  + 修饰词：public、private、protected
+    - public：修饰的属性或方法是公有的，可以在任何地方被访问到，*默认所有的属性和方法都是 public 的*
+    - private：修饰的属性或方法是私有的，*不能在声明它的类外部访问*
+    - protected：修饰的属性或方法是受保护的，*只能在类和子类中被访问到*
+  ```typescript
+    // public
+    class A {
+      public name;
+      constructor(name) {
+        this.name = name
+      }
+    }
+    let a = new A('Jack');
+    log(a.name); // Jack
+    a.name = 'Tom';
+    log(a.name); // Tom
+
+    // private
+    class A {
+      private name;
+      constructor(name) {
+        this.name = name
+      }
+    }
+    let a = new A('Jack');
+    log(a.name); // Jack
+    a.name = 'Tom'; // 报错：Property 'name' is private and only accessible within class 'Animal'.
+
+    // protected
+    class A {
+      protected name;
+      constructor(name) {
+        this.name = name
+      }
+    }
+    class B extends A {
+      constructor(name) {
+        super(name);
+        log(this.name)
+      }
+    }
+  ```
+  + **当构造函数被修饰为 private 时，该类不允许被继承和实例化**
+  + **当构造函数修饰为 protected 时，该类只允许被继承：**
+
+  + 参数属性：
+    - readonly：只读属性关键字，*只允许出现在属性声明或索引签名或构造函数中*
+    - 修饰符和readonly还可以使用在构造函数参数中，等同于类中定义该属性同时给该属性赋值，使代码更简洁。
+    ```typescript
+      class A {
+        // public name: string;
+        constructor(readonly name){
+          // this.name = name
+        }
+      }
+    ```
+    - 注意：如果 readonly 关键字和其他访问修饰符同时出现的话，需要写在后面
+
+  + 抽象类
+    - abstract 用于定义抽象类和其中的抽象方法
+    - 抽象类是不允许被实例化的
+    - 抽象类中的抽象方法必须被子类实现
+
+
+### 类与接口
+  - 接口可以用于对【对象的形状】进行描述，还可以*对类的一部分行为进行抽象*
+  - 类实现接口
+    + 举例来说，门是一个类，防盗门是门的子类。如果防盗门有个报警的功能，可以简单给防盗门添加一个报警的方法。这时候如果有另外一个类：车，也有报警的功能，这时候就报报警这个功能提取出来作为一个接口，防盗门和车都去实现它
+    ```typescript
+      interface Alarm {
+        alert(): void;
+      }
+
+      class Door {}
+      class SecurityDoor extends Door implements Alarm {
+        alert() {
+          console.log('SecurityDoor alert')
+        }
+      }
+
+      class Car implements Alarm {
+        alert() {
+          console.log('Car alert')
+        }
+      }
+    ```
+    + 一个类可以实现多个接口
+    ```typescript
+      interface Alarm {
+        alert(): void;
+      }
+
+      interface Light {
+        lightOn(): void;
+        lightOff(): void;
+      }
+
+      class Car implements Alarm, Light {
+        alert() {
+          console.log('car alert')
+        }
+
+        lightOn() {
+          console.log('car lightOn')
+        }
+
+        lightOff() {
+          console.log('car lightOff')
+        }
+      }
+    ```
+
+  - 接口继承接口
+    ```typescript
+      interface Alarm {
+        alert(): void;
+      }
+
+      interface LightableAlarm extends Alarm {
+        lightOn(): void;
+        lightOff(): void;
+      }
+    ```
+
+  - 接口继承类
+    + 常见的面向对象语言中，接口是不能继承类的，但是在 TypeScript 中却是可以的
+    ```typescript
+      class Point {
+        x: number;
+        y: number;
+        constructor(x: number, y:number) {
+          this.x = x;
+          this.y = y;
+        }
+      }
+
+      interface Point3d extends Point {
+        z: number;
+      }
+
+      let point3d: Point3d = {x: 1, y: 2, z: 3};
+    ```
+
+    + 为什么接口能继承类呢？实际上，在声明 class Point 时，除了会创建一个名为 Point 的类之外，同时也创建了名为 Point 的类型，而接口实际上继承的是 Point 的类型。可以理解为下面的例子。所以接口继承类与接口继承接口没有本质上的区别
+    ```typescript
+      class Point {
+        x: number;
+        y: number;
+        constructor(x: number, y:number) {
+          this.x = x;
+          this.y = y;
+        }
+      }
+
+      interface PointInstanceType {
+        x: number;
+        y: number;
+      }
+    ```
+
+    + 值得注意的是：PointInstanceType 相较于 Point，缺少了 constructor 构造方法。这是因为声明 Point 类时*创建的 Point 类型是不包含构造函数的*。另外，除了构造函数是不包含的，*静态属性和静态方法也是不包含的*
+    ```typescript
+      class Point {
+        // 静态属性：坐标系原点
+        static origin = new Point(0, 0);
+
+        // 静态方法：计算与原点的距离
+        static distanceToOrigin(p: Point) {
+          return Math.sqrt(p.x * p.x + p.y * p.y);
+        }
+
+        // 示例属性，坐标x轴的值和y轴的值
+        x: number;
+        y: number;
+
+        constructor(x: number, y: number){
+          this.x = x;
+          this.y = y;
+        }
+
+        // 示例方法：打印此点
+        printPoint() {
+          console.log(this.x, this.y);
+        }
+      }
+
+      interface PointInstanceType {
+        x: number;
+        y: number;
+        printPoint(): void;
+      }
+    ```
+
+
+### 泛型
+- 泛型是指在定义函数、接口或类的时候，不预先指定具体的类型，而是在使用的时候在指定类型的一种特性
+- 简单的例子：实现一个函数，可以创建一个指定长度的数组，同时将每一项都填充一个默认值
+  ```typescript
+    function createArray(length:number, value:any): Array<any> {
+    let result = [];
+    for(let i = 0; i < length; i++) {
+      result[i] = value;
+    }
+    return result;
+  }
+  ```
+- 上例中，使用了数组泛型来定义返回值的类型。上面代码有个明显的缺陷是：它并没有准确的定义返回值的类型，Array<any> 允许数组的每一项为任意类型，但我们的预期是数组中的每一项都是参数 value 类型。这时候泛型就派上用场了
+  ```typescript
+    function createArray<T>(length: number, value: T): Array<T> {
+      let result: T[] = [];
+      for(let i = 0; i < length; i++) {
+        result[i] = value;
+      }
+      return result;
+    }
+
+    createArray<string>(3, 'x');  // ['x', 'x', 'x']
+  ```
+- 上例中，在函数名后面添加了 <T> ，其中 T 用来代指任意的输入类型，在后面输入的 value: T 和 输出 Array<T> 中就可以使用了。接着在调用时可以指定它为具体的 string 类型，也可以不指定，让类型推论自动推算出来
+
+- 多个类型参数
+  + 定义泛型的时候，可以定义多个类型参数
+  ```typescript
+    function swap<T, U>(tuple: [T, U]): [U, T] {
+      return [tuple[1], tuple[0]];
+    }
+
+    swap(['seven', 7]) // [7, 'seven']
+  ```
+
+- 泛型约束
+  + 在函数内部使用泛型的时候，由于事先不知道它是哪种类型，所以不能随意的操作它的属性或方法
+  ```typescript
+    function loggingIdentity<T>(arg: T): T {
+      console.log(arg.length);   // 报错：Property 'length' does not exist on type 'T'.
+      return arg;
+    }
+  ```
+  + 这时，我们可以对泛型进行约束
+  ```typescript
+    interface Lengthwise {
+      length: number;
+    }
+
+    function loggingIdentity<T extends Lengthwise>(arg: T): T {
+      console.log(arg.length);
+      return arg;
+    }
+  ```
+  + 上例中，使用 extends 约束了泛型 T 必须符合接口 Lengthwise 的形状，也就是必须包含 length 属性。此时如果调用 loggingIdentity 时，传入的参数不包含 length 属性，会在编译阶段报错
+  ```typescript
+    interface Lengthwise {
+      length: number;
+    }
+
+    function loggingIdentity<T extends Lengthwise>(arg: T): T {
+      console.log(arg.length);
+      return arg;
+    }
+
+    loggingIdentity(7); // 报错：Argument of type '7' is not assignable to parameter of type 'Lengthwise'.
+  ```
+  + 多个类型参数之间也可以互相约束
+  ```typescript
+    function copy<T extends U, U>(target: T, source: U): T {
+      for(let key in source) {
+        target[key] = (<T>source)[key]
+      }
+      return target;
+    }
+
+    let x = {a: 1, b: 2, c: 3}
+    copy(x, {b: 10, c: 20});
+  ```
+
+- 泛型接口
+  + 之前学习过，可以使用接口的方式来定义一个函数需要符合的形状：
+  ```typescript
+    interface SearchFunc {
+      (source: string, substring: string): boolean;
+    }
+
+    let mySearchFunc: SearchFunc = function(source: string, substring: string): boolean {
+    return source.search(substring) !== -1;
+  }
+  ```
+  + 也可以用含有泛型的接口来定义函数的形状
+  ```typescript
+    interface CreateArrayFunc {
+      <T>(length: number, value: T): Array<T>;
+    }
+
+    let createArray: CreateArrayFunc = function<T>(length: number, value: T): Array<T> {
+      let result: T[] = [];
+      for(let i = 0 ; i < length; i++) {
+        result[i] = value;
+      }
+      return result;
+    }
+
+    // 进一步，我们可以把泛型参数提前到接口名上：
+    interface CreateArrayFunc<T> {
+      (length: number, value: T): Array<T>;
+    }
+  ```
+
+- 泛型类
+  + 与泛型接口类似，泛型也可以用于类的定义中
+  ```typescript
+    class GenericNumber<T> {
+        zeroValue: T;
+        add: (x: T, y: T) => T;
+    }
+
+    let myGenericNumber = new GenericNumber<number>();
+    myGenericNumber.zeroValue = 0;
+    myGenericNumber.add = function(x, y) { return x + y; };
+  ```
+
+- 泛型参数的默认类型
+ + 在 TypeScript 2.3 以后，我们可以为泛型中的类型参数指定默认类型。当使用泛型时没有在代码中直接指定类型参数，从实际值参数中也无法推测出时，这个默认类型就会起作用。
+  ```typescript
+  function createArray<T = string>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+  }
+  ```
