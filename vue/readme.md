@@ -63,6 +63,69 @@ let app = new Vue({
 - 数组语法：<h1 :style="[baseStyles, overridingStyles]">{{ msg }}</h1>
   baseStyles:{color:'red'}; overridingStyles:{fontSize: '100px'}
 
+### 条件渲染
+- v-if：用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
+  `<h1 v-if="awesome">Vue is awesome</h1>`
+  + 在 `<template>` 元素上使用 v-if 条件渲染分组
+    - 因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。
+    `<template v-if="ok">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </template>`
+  + 用 key 管理可复用的元素
+    - vue 会尽可能高效的渲染元素，通常会复用已有的元素，而不是从头开始渲染。如果用户不想要复用元素，可以给相同的元素添加 key 来区分
+    ```html
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username-input">
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email-input">
+      </template>
+    ```
+
+- v-if 与 v-show 的区别：v-if 在条件为假的时候不会渲染元素。而 v-show 无论条件真假都会渲染元素，只是通过 display 这个 css 属性来控制元素的显示和隐藏。另外，v-show 不支持在 `<template>` 元素上面使用
+- v-if 与 v-for 一起使用: 当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级。
+
+### 列表渲染
+- v-for
+  + 语法：`<li v-for="(item, index) in items" :key="item.message"></li>`
+  + 可以用 of 替代 in 作为分隔符
+    - `<div v-for="item of items"></div>`
+  + 在 v-for 中使用对象：
+    ``` HTML
+      <ul id="v-for-object" class="demo">
+        <li v-for="(value, name) in object">
+          {{ name }} - {{ value }}
+        </li>
+      </ul>
+    ```
+    ```JS
+      new Vue({
+        el: '#v-for-object',
+        data: {
+          object: {
+            title: 'How to do lists in Vue',
+            author: 'Jane Doe',
+            publishedAt: '2016-04-10'
+          }
+        }
+      })
+
+      // 结果
+      'title - How to do lists in Vue'
+      'author - Jane Doe'
+      'publishedAt - 2016-04-10'
+    ```
+
+  + key 的使用
+    - 为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key attribute：
+    - 注意：**不要使用对象或数组之类的非基本类型值作为 v-for 的 key。请用字符串或数值类型的值。**
+
+
+
 ### 计算属性
 
 1.  基本用法: 在 vue 实例中定义 computed 属性: computed:{ fullName: function(){ return this.firstName + ' ' + this.lastName } }
@@ -132,8 +195,8 @@ let app = new Vue({
 其他数组方法不是响应式的，如果想要使用响应式，可以使用 Vue.set() 方法
 
 ### v-model 原理
-
-v-model 用于表单元素双向绑定数据
+- v-model 用于表单元素双向绑定数据
+  + 注意：v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。
 
 - v-model 其实是个语法糖,它背后本质上包含两个操作
 
@@ -248,6 +311,29 @@ v-model 用于表单元素双向绑定数据
   - 在子组件中，通过 $emit() 来触发事件
   - 在父组件中，通过 v-on 来监听子组件事件
 
+3. 传入一个对象的所有 property
+  - 如果想要将一个对象的所有 property 都作为 prop 传入到子组件，可以使用不带参数的 v-bind
+  ```JS
+    post: {
+      id: 1,
+      title: 'title'
+    }
+  ```
+  ```HTML
+    <my-component v-bind="post"></my-component>
+    // 等价于
+    <my-component v-bind:id="post.id" v-bind:title="post.title"></my-component>
+  ```
+
+4. 单向数据流：
+  - prop 属性传递的数据都是从父组件流向子组件，父组件 prop 的更新会向下流动到子组件，反过来则不行。每次父组件发生变更时，子组件中所有的 prop 都将刷新为最新的值。这意味着不能在子组件中修改 prop 的值，否则会在控制台发出警告
+  - 注意：在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。
+
+5. 非 Prop 的 Attribute
+  - 一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute。
+  - 因为显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。这也是为什么组件可以接受任意的 attribute，而这些 attribute 会被添加到这个组件的根元素上。
+
+
 ### 组件中 props 属性驼峰名的问题：
 
 在组件中 props 属性中使用 驼峰名来命名属性，在使用组件时绑定的属性名使用驼峰形式会报错，应使用 - 符号转换，因为 html 元素属性不区分大小写
@@ -260,6 +346,24 @@ v-model 用于表单元素双向绑定数据
   - $children 方式：this.$children 是一个数组类型 ，它包含所有子组件对象
   - $refs 方式：使用 this.$refs 返回一个对象，默认返回空对象，必须在组件上添加 ref 属性
 - 子组件访问父组件: 使用 $parent 访问该子组件的父组件， 使用 $root 访问根组件
+
+### 动态组件
+- 有的时候，在不同组件之间进行动态切换是非常有用的，比如在一个多标签的界面里。这时可以通过 Vue 的 `<component>` 元素加一个特殊的 is 属性来实现。
+  + 组件会在 `currentTabComponent` 改变时改变，currentTabComponent 可以是一个已注册的组件的名称或是一个组件的选项对象
+  `<component v-bind:is="currentTabComponent"></component>`
+  + is 属性可以用于常规 html 元素，但这些元素将被视为组件，这意味着所有的 attribute 都会作为 DOM attribute 被绑定。
+
+- 解析 DOM 模板时的注意事项
+  + 有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。如果想在这些特定的元素中使用组件的话就可以使用 is 属性
+  ```HTML
+    <table>
+      <tr is="blog-post-row"></tr>
+    </table>
+  ```
+  + 如果我们从以下来源使用模板的话，这条限制是不存在的：
+    - 字符串: (例如：template: '...')
+    - 单文件组件（.vue）
+    - <script type="text/x-template">
 
 ## 组件化高级
 

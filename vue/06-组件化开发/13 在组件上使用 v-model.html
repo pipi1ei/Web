@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <custom-input v-model="value"></custom-input>
+    {{ value }}
+  </div>
+
+  <template id="custom">
+    <div>
+      <input :value="value" @input="$emit('input', $event.target.value)" />
+      <button @click="cValue += 1">change</button>
+      <p>{{cValue}}</p>
+      <!-- 不要使用下面这种方式修改 value， 会报错，应该在父组件中修改 value 的值 -->
+      <!-- <input v-model="value" /> -->
+    </div>
+  </template>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        value: 'pipilei'
+      },
+      components: {
+        customInput: {
+          template: "#custom",
+          props: ['value'],
+          data() {
+            return {
+              cValue: this.value
+            }
+          }
+          
+        }
+      }
+    })
+  </script>
+</body>
+</html>

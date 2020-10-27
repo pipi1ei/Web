@@ -13,6 +13,36 @@
   <script src="./paging.js"></script>
 
   <script>
+
+    $.ajax({
+      url: 'http://dev.ihou.com/fujianmobile/IPTV-Interfaces-data/pictureToPhrase/queryRule',
+      async: true,
+      contentType: 'application/json',
+      dataType: 'json',
+      type: 'post',
+      headers: {
+        secretMsg: '123456789',
+        requestTime: new Date().getTime(),
+        channelId: 'C350201'
+      },
+      data: {
+        channelId: 'C350201',
+        ssid: '',
+        area: '',
+        account: '',
+        stbId: '1101440031737A8F4708rrrr',
+        checkPoint: 1,
+        gameName: ''
+      },
+      success: function(res){
+        console.log(res)
+      },
+      error: function(e) {
+        console.log(e)
+      }
+    })
+
+
     let a = {}
     console.log($.isEmptyObject(a));
 
