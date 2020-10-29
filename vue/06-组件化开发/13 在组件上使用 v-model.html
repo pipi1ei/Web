@@ -11,6 +11,11 @@
     {{ value }}
   </div>
 
+  <div id="app2">
+    <base-checkbox v-model="checkValue"></base-checkbox>
+    <div>{{ checkValue }}</div>
+  </div>
+
   <template id="custom">
     <div>
       <input :value="value" @input="$emit('input', $event.target.value)" />
@@ -37,6 +42,31 @@
             }
           }
           
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app2',
+      data: {
+        checkValue: false
+      },
+      components: {
+        'base-checkbox': {
+          model: {
+            prop: 'checked',
+            event: 'change'
+          },
+          props: {
+            checked: Boolean
+          },
+          template: `
+            <input
+              type="checkbox"
+              :checked="checked"
+              @change="$emit('change', $event.target.checked)"
+            >
+          `
         }
       }
     })

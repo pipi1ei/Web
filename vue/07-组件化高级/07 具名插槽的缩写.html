@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cpn>
+      <template #header>
+        <h3>我是header</h3>
+      </template>
+      <template #main="{ main }">
+        <h3>我是main, {{ main.name }}</h3>
+      </template>
+      <template #footer>
+        <h3>我是footer</h3>
+      </template>
+    </cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <header>
+        <slot name="header">
+          header
+        </slot>
+      </header>
+      <main>
+        <slot name="main" :main="main">
+          main
+        </slot>
+      </main>
+      <footer>
+        <slot name="footer">
+          footer
+        </slot>
+      </footer>
+    </div>
+  </template>
+
+  <script>
+    new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn',
+          data(){
+            return {
+              main: {
+                name: '主体内容'
+              }
+            }
+          }
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

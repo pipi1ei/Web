@@ -301,6 +301,17 @@ let app = new Vue({
     - Date
     - Function
     - Symbol
+  - prop 验证：
+    ```JS
+      // 自定义验证函数
+      propA: {
+        validator: function(value) {
+          // 这个值必须匹配下列字符串中的一个
+          return ['success', 'warning', 'danger'].indexOf(value) !== -1
+        }
+      }
+    ```
+    + 注意：**那些 prop 会在一个组件实例创建之前进行验证，所以实例的 property (如 data、computed 等) 在 default 或 validator 函数中是不可用的。**
 
 2.  子组件向父组件传递数据：通过自定义事件向父组件发送消息
 
@@ -310,6 +321,92 @@ let app = new Vue({
 - 自定义事件流程：
   - 在子组件中，通过 $emit() 来触发事件
   - 在父组件中，通过 v-on 来监听子组件事件
+
+- 将原生事件绑定到组件
+  + 你可能有很多次想要在一个组件的*根元素*上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符：`<base-input v-on:focus.native="onFocus"></base-input>`
+  + 有时候上述方式是有用的，但 base-input 组件的根元素是 label 元素，这时候父级的 .native 监听器将会失效，它不会报错，但 onFocus 处理函数也不会调用
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value']
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs",
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+          >
+        </label>
+      `
+    })
+  ```
+  + 为了解决这个问题，Vue 提供了一个 $listeners 属性，它是一个对象，里面包含了作用在这个组件上的所有监听器。例如： 
+  ```JS
+    {
+      focus: function(event) { /* ... */ },
+      input: function(event) { /* ... */ }
+    }
+  ```
+  + 有了这个 $listeners property，你就可以配合 v-on="$listeners" 将所有的事件监听器指向这个组件的某个特定的子元素。对于类似 <input> 的你希望它也可以配合 v-model 工作的组件来说，为这些监听器创建一个类似下述 inputListeners 的计算属性通常是非常有用的：
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      computed: {
+        inputListeners() {
+          let vm = this;
+          return Object.assign({},
+            // 我们从父级添加所有的监听器
+            vm.$listeners,
+            // 然后我们添加自定义监听器，
+            {
+              // 这里确保组件配合 `v-model` 的工作
+              input: function(event) {
+                vm.$emit('input', event.target.value)
+              }
+            }
+          )
+        }
+      }
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs",
+            :value="value"
+            v-on="inputListeners"
+          >
+        </label>
+      `
+    })
+  ```
+
+- .sync 修饰符
+  + 我们通过 prop 传递数据给子组件时，如果子组件直接修改这个值，控制台会报错。这时候可以使用 update:propName 的模式触发事件。举个例子：，在一个包含 title 属性的组件中，我们可以用以下方法表达对其赋新值的意图：
+    ```JS
+      this.$emit('update:title', newTitle)
+    ```
+  + 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
+    ```HTML
+      <text-document
+        :title="doc.title"
+        @update:title="doc.title = $event"
+      ></text-document>
+    ```
+  + 为了方便起见，我们为这种模式提供一个缩写，即 .sync 修饰符：
+    ```HTML
+      <text-document v-bind:title.sync="doc.title"></text-document>
+    ```
+  + 注意：.sync 修饰符的 v-bind 不能和表达式一起使用 (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)
+  + 当我们用一个对象同时设置多个 prop 的时候，也可以将这个 .sync 修饰符和 v-bind 配合使用：
+    ```HTML
+      <text-document v-bind.sync="doc"></text-document>
+    ```
+
+
+  + 2.3.0 新增：
+
 
 3. 传入一个对象的所有 property
   - 如果想要将一个对象的所有 property 都作为 prop 传入到子组件，可以使用不带参数的 v-bind
@@ -333,6 +430,48 @@ let app = new Vue({
   - 一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute。
   - 因为显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。这也是为什么组件可以接受任意的 attribute，而这些 attribute 会被添加到这个组件的根元素上。
 
+6. 禁用 Attribute 继承
+  - 如果你不希望组件的根元素继承 attribute，你可以在组件的选项中设置 inheritAttrs: false。例如：
+  ```JS
+    Vue.component('my-component', {
+      inheritAttrs: false
+      // ...
+    })
+  ```
+  - 如果 inheritAttrs 为 true，那么子组件的根元素就会继承父组件传过来的属性，**但排除 子组件 props 中声明的属性**
+  - 这尤其适合配合实例的 $attrs 属性使用，该属性包含了传递给一个组件的 attribute 名和 attribute 值，例如：
+  ```JS
+    {
+      required: true,
+      placeholder: 'Enter your username'
+    }
+  ```
+  - 有了 inheritAttrs: false 和 $attrs，你就可以手动决定这些 attribute 会被赋予哪个元素。在撰写基础组件的时候是常会用到的：
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      template: `
+        <label>
+          {{ label }}
+          <input 
+            v-bind="$attrs"
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+          />
+        </label>
+      `
+    })
+  ```
+  - 这个模式允许你在使用基础组件的时候更像是使用原始的 HTML 元素，而不会担心哪个元素是真正的根元素：
+    ```HTML
+      <base-input
+        v-model="username"
+        required
+        placeHolder="Enter your username"
+      ></base-input>
+    ```
+
 
 ### 组件中 props 属性驼峰名的问题：
 
@@ -346,6 +485,34 @@ let app = new Vue({
   - $children 方式：this.$children 是一个数组类型 ，它包含所有子组件对象
   - $refs 方式：使用 this.$refs 返回一个对象，默认返回空对象，必须在组件上添加 ref 属性
 - 子组件访问父组件: 使用 $parent 访问该子组件的父组件， 使用 $root 访问根组件
+
+## 组件化高级
+### 自定义组件的 v-model 属性
+- vue2.2.0+ 新增：一个组件上的 v-model 属性默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 属性用于不同目的。*model 选项可以用来避免这样的冲突*
+```JS
+  Vue.component('base-checkbox', {
+    model: {
+      prop: 'checked',
+      event: 'change'
+    },
+    props: {
+      checked: Boolean
+    },
+    template: `
+      <input
+        type="checkbox"
+        :checked="checked"
+        @change="$emit('change', $event.target.checked)"
+      >
+    `
+  })
+```
+- 在上面的自定义组件使用 v-model 绑定的就是 checked 属性和 change 事件了
+```HTML
+  <base-checkbox v-model="lovingVue"></base-checkbox>
+```
+  + 这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当 `<base-checkbox>` 触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的值将会被更新。
+- 注意：*仍然需要在组件的 props 选项里声明 checked 这个 prop。*
 
 ### 动态组件
 - 有的时候，在不同组件之间进行动态切换是非常有用的，比如在一个多标签的界面里。这时可以通过 Vue 的 `<component>` 元素加一个特殊的 is 属性来实现。
@@ -365,14 +532,224 @@ let app = new Vue({
     - 单文件组件（.vue）
     - <script type="text/x-template">
 
-## 组件化高级
+### 异步组件
+- 在大型应用中，我们可能需要将应用分割成小一些的代码块，并且只在需要的时候才从服务器加载一个模块。为了简化，Vue 允许以一个工厂函数的方式定义你的组件，这个工厂函数会异步解析你的组件定义。Vue 只有在这个组件需要被渲染的时候才会触发该工厂函数，且会把结果缓存起来供未来重渲染。例如：
+  ```JS
+    Vue.component('async-example', function(resolve, reject) {
+      setTimeout(function() {
+        // 向 `resolve` 回调传递组件定义
+        resolve({
+          template: '<div>我是异步组件</div>'
+        })
+      }, 1000)
+    })
+  ```
+- 这个工厂函数会收到一个 resolve 回调，这个回调函数会在你从服务器得到组件定义的时候被调用。你也可以调用 reject(reason) 来表示加载失败。这里的 setTimeout 是为了演示用的
+- 也可以将异步组件和 webpack 的 code-splitting 功能一起使用
+  ```JS
+    Vue.component('async-webpack-example', function(resolve) {
+      // 这个特殊的 `require` 语法将会告诉 webpack自动将你的构建代码切割成多个包，这些包会通过 Ajax 请求加载
+      require(['./my-async-component'], resolve);
+    })
+  ```
+- 也可以在工厂函数中返回一个 Promise，所以把 webpack 2 和 ES2015 语法加在一起，我们可以这样使用动态导入：
+  ```JS
+    Vue.component('async-webpack-example', () => import('./my-async-component'))
+  ```
+- 当使用局部注册的时候，你也可以直接提供一个返回 Promise 的函数：
+  ```JS
+    new Vue({
+      // ...
+      components: {
+        'my-component': () => import('./my-async-component')
+      }
+    })
+  ```
+
+- 处理加载状态：
+  + 这里的异步组件工厂函数也可以返回一个如下格式的对象：
+  ```JS
+    const AsyncComponent = () => ({
+      // 需要加载的组件 (应该是一个 `Promise` 对象)
+      component: import('./MyComponent.vue'),
+      // 异步组件加载时使用的组件
+      loading: LoadingComponent,
+      // 加载失败时使用的组件
+      error: ErrorComponent,
+      // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+      delay: 200,
+      // 如果提供了超时时间且组件加载也超时了，
+      // 则使用加载失败时使用的组件。默认值是：`Infinity`
+      timeout: 3000
+    })
+  ```
+
 
 ### 插槽的使用
+- 在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 *(即 v-slot 指令)。它取代了 slot 和 slot-scope* 这两个目前已被废弃但未被移除且仍在文档中的 attribute。
+  + 用法：
+  ```HTML
+    <!-- 组件模板 -->
+    <div class="container">
+      <header>
+        <slot name="header"></slot>
+      </header>
+      <main>
+        <slot></slot>
+      </main>
+      <footer>
+        <slot name="footer"></slot>
+      </footer>
+    </div>
+
+    <!-- 使用 -->
+    <base-layout>
+      <template v-slot:header>
+        <h1>Here might be a page title</h1>
+      </template>
+
+      <p>A paragraph for the main content.</p>
+      <p>And another one.</p>
+
+      <template v-slot:footer>
+        <p>Here's some contact info</p>
+      </template>
+    </base-layout>
+  ```
+
+- 具名插槽的缩写：
+  + 2.6.0新增：跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：
+  + 然而，和其它指令一样，该缩写只在其有参数的时候才可用。这意味着以下语法是无效的：
+  ```HTML
+    <!-- 这样会触发一个警告 -->
+    <current-user #="{ user }">
+      {{ user.firstName }}
+    </current-user>
+
+    <!-- 如果你希望使用缩写的话，你必须始终以明确插槽名取而代之： -->
+    <current-user #default="{ user }">
+      {{ user.firstName }}
+    </current-user>
+  ```
 
 1. 基本用法：在组件模板中添加 <slot></slot> 标签
+  - 注意：如果组件中没有包含 <slot> 元素，那么在使用这个组件时，该组件起始标签和结束标签之间的所有内容会被抛弃
 2. 插槽的默认值： <slot><button>按钮</button></slot>
 3. 如果有多个值，同时放入到组件进行替换是，一起作为替换元素
 4. 作用域插槽：父组件替换插槽的标签，但是内容由子组件来提供
+  - 在作用域插槽中，子组件可以将数据通过作用域插槽传递到父组件作用域内
+  - 例子：在父组件中想要使用子组件的 user 属性，那么在子组件的 <slot> 标签上动态绑定一个 user 属性，这个属性称为 插槽 prop，在父级作用域中，可以使用带值的 v-slot 来定义子组件提供的 插槽prop 的名字
+  ```HTML
+    <!-- 子组件 -->
+    <div>
+      <slot :user="user">
+        {{ user.name }}
+      </slot>
+    </div>
+
+    <!-- 父组件 -->
+    <current-user>
+      <template v-slot:default="slotProps">
+        {{ slotProps.user.name }}
+      </template>
+    </current-user>
+  ```
+
+  - 独占默认插槽的缩写语法：
+    + 对应子组件中的默认插槽，父组件在使用默认插槽的属性时，可以不需要插槽的 default 名字，上面的例子可以使用如下写法：
+    ```HTML
+      <current-user>
+        <template v-slot="slotProps">
+          {{ slotProps.user.name }}
+        </template>
+      </current-user>
+    ```
+    + 注意：**默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确。只要出现多个插槽，请使用完整的写法：v-slot:slotName="propName"**
+
+  - 解构插槽 prop
+    + 作用域插槽的内部工作原理是将你的插槽内容包裹在一个拥有单个参数的函数里
+    ```JS
+      function(slotProps){
+        // 插槽内容
+      }
+    ```
+    + 这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop，如下：
+    ```HTML
+      <current-user v-slot="{ user }">
+        {{ user.firstName }}
+      </current-user>
+
+      <!-- 也可以将 user 重命名 -->
+      <current-user v-slot="{ user: person }">
+        {{ user.firstName }}
+      </current-user>
+
+      <!-- 也可以给定默认值 -->
+      <current-user v-slot="{ user = {firstName: 'pipilei'} }">
+        {{ user.firstName }}
+      </current-user>
+    ```
+
+### 处理边界情况
+- 依赖注入
+  + 在父子组件之间，甚至包含更多层级的组件之间，如果子组件想访问父组件或子组件想访问父组件的方法，需要使用 $refs 和 $parent。使用 $parent property 无法很好的扩展到更深层级的嵌套组件上。这也是依赖注入的用武之地，它用到了两个新的实例选项：provide 和 inject。
+  + provide 选项允许我们指定我们想要提供给后代组件的数据/方法。
+    ```JS
+      provide: function () {
+        return {
+          getMap: this.getMap
+        }
+      }
+    ```
+  + 然后在任何后代组件里，我们都可以使用 inject 选项来接收指定的我们想要添加在这个实例上的 property：
+    ```JS
+      inject: ['getMap']
+    ```
+
+- 程序化的事件侦听器
+  + 现在，你已经知道了 $emit 的用法，它可以被 v-on 侦听，但是 Vue 实例同时在其事件接口中提供了其它的方法。我们可以：
+    - 通过 $on(eventName, eventHandler) 侦听一个事件
+    - 通过 $once(eventName, eventHandler) 一次性侦听一个事件
+    - 通过 $off(eventName, eventHandler) 停止侦听一个事件
+  + 你通常不会用到这些，但是当你需要在一个组件实例上手动侦听事件时，它们是派得上用场的。它们也可以用于代码组织工具。例如，你可能经常看到这种集成一个第三方库的模式：
+    ```JS
+      // 一次性将这个日期选择器附加到一个输入框上
+      // 它会被挂载到 DOM 上。
+      mounted: function () {
+        // Pikaday 是一个第三方日期选择器的库
+        this.picker = new Pikaday({
+          field: this.$refs.input,
+          format: 'YYYY-MM-DD'
+        })
+      },
+      // 在组件被销毁之前，
+      // 也销毁这个日期选择器。
+      beforeDestroy: function () {
+        this.picker.destroy()
+      }
+    ```
+  + 这里有两个潜在的问题：
+    1. 它需要在这个组件实例中保存这个 picker，如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+    2. 我们的建立代码独立于我们的清理代码，这使得我们比较难于程序化地清理我们建立的所有东西。
+  + 你应该通过一个程序化的侦听器解决这两个问题：
+    ```JS
+      mounted: function () {
+        var picker = new Pikaday({
+          field: this.$refs.input,
+          format: 'YYYY-MM-DD'
+        })
+
+        this.$once('hook:beforeDestroy', function () {
+          picker.destroy()
+        })
+      }
+    ```
+
+
+## 过渡 & 动画
+### 进入/离开 & 列表过渡
+### 状态过渡
+
 
 ## 前端模块化
 

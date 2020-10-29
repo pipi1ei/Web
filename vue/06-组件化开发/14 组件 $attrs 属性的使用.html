@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <father :is-open="isOpen" :row="row"></father>
+  </div>
+
+
+  <template id="father">
+    <temp-com 
+      :is-show="isOpen"
+      :row="row"
+      name="aaa"
+    ></temp-com>
+  </template>
+
+  <template id="temp">
+    <div style="margin: 20px; border: 2px solid red; padding: 20px">
+      <p>中间组件</p>
+      <son v-bind="$attrs"></son>
+    </div>
+  </template>
+
+  <template id="son">
+    <div style="border: 2px solid green; padding: 20px; margin: 20px">
+      <p>儿子组件</p>
+      <p>传给儿子的数据：{{ row.name }} - {{ row.age }}</p>
+    </div>
+  </template>
+
+  <script>
+    Vue.component('father', {
+      template: '#father',
+      props: ['is-open', 'row'],
+      mounted(){
+        console.log("father", this.$attrs);
+      },
+      components: {
+        'temp-com': {
+          template: '#temp',
+          inheritAttrs: false,
+          mounted(){
+            console.log("temp", this.$attrs);
+          },
+          components: {
+            'son': {
+              template: '#son',
+              inheritAttrs: true,
+              props: ['is-show', 'row'],
+              mounted(){
+                console.log("son", this.$attrs);
+              },
+            }
+          }
+        }
+      }
+    })
+
+
+    new Vue({
+      el: '#app',
+      data: {
+        isOpen: true,
+        row: {
+          name: 'pipilei',
+          age: 20
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

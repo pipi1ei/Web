@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <text-doc 
+      :title.sync="doc.title"
+    ></text-doc>
+    {{ doc.title }}
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        doc: {
+          title: 'pipilei'
+        }
+      },
+      components: {
+        'text-doc': {
+          props: ['title'],
+          template: `
+            <div>
+              <p @click="titleClick">{{ title }}</p>  
+            </div>
+          `,
+          methods: {
+            titleClick(){
+              // this.title = 'lalala'
+              this.$emit('update:title', 'lalala')
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
