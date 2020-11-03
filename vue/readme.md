@@ -748,8 +748,271 @@ let app = new Vue({
 
 ## 过渡 & 动画
 ### 进入/离开 & 列表过渡
-### 状态过渡
+#### 单元素、组件的过渡
+- Vue 提供了 transition 的封装组件，在下列情形中，可以给任何元素和组件添加进入/离开过渡
+  + 条件渲染（使用了v-if）
+  + 条件展示（使用了v-show）
+  + 动态组件
+  + 组件根节点
+- 例子：
+  ```HTML
+    <div id="demo">
+      <button @click="show = !show">Toggle</button>
+      <transition name="fade">
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+  ```
+  ```JS
+    new Vue({
+      el: "#demo",
+      data: {
+        show: true
+      }
+    })
+  ``` 
+  ```css
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity .5s;
+    }
 
+    .fade-enter,
+    .fade-leave-to {
+      opacity: 0;
+    }
+  ```
+- 当插入或删除包含在 transition 组件中的元素时，Vue 将会做如下处理：
+  + 自动嗅探目标元素是否使用了 css 过渡或动画，如果是，在适当的时机添加/删除 css 类名。
+  + 如果过渡组件提提供了 javascript 钩子函数，这些钩子函数将在恰当的时机被调用
+  + 如果没有找到 javascript 钩子并且没有监测到 css 过渡/动画，DOM 操作（插入/删除）在下一帧中立即执行。（注意：此指浏览器逐帧动画机制，和 Vue 的 nextTick 不同）
+
+- 过渡的类名
+  + v-enter：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之前生效，在元素被插入之后的下一帧失效
+  + v-enter-active：定义过渡生效时的状态。在整个进入过渡阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移出。这个类可以被用来定义进入过渡的过程期间，延迟和曲线函数
+  + v-enter-to：2.1.8版本及以上定义的过渡状态。在元素被插入之后下一帧生效（于此同时，v-enter 被移出），在过渡/动画完成之后移出。
+  + v-leave：定义离开过渡的开始状态。在离开过渡被触发的时刻生效，下一帧被移出。
+  + v-leave-active：定义离开过渡生效时的状态。在整个离开过渡阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移出。这个类可以被用来定义过渡的过程时间，延迟和曲线函数。
+  + v-leave-to：2.1.8及以上版本定义的离开过渡的结束状态。在离开过渡被触发之后下一帧生效（于此同时，v-leave被删除），在过渡/动画完成之后移出。
+
+- css过渡
+  ```HTML
+    <div id="example-1">
+      <button @click="show = !show">
+        Toggle render
+      </button>
+      <transition name="slide-fade">
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+  ```
+  ```JS
+    new Vue({
+      el: '#example-1',
+      data: {
+        show: true
+      }
+    })
+  ```
+  ```CSS
+    /* 可以设置不同的进入和离开动画 */
+    /* 设置持续时间和动画函数 */
+    .slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+      transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+  ```
+
+- css 动画
+  + CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。
+
+- 自定义过渡类名
+  + 可以通过以下属性来自定义过渡类名
+    - enter-class
+    - enter-active-class
+    - enter-to-class (2.1.8+)
+    - leave-class
+    - leave-active-class
+    - leave-to-class (2.1.8+)
+  + 他们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css 结合使用十分有用。
+    ```HTML
+      <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+      <div id="example-3">
+        <button @click="show = !show">
+          Toggle render
+        </button>
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated tada"
+          leave-active-class="animated bounceOutRight"
+        >
+          <p v-if="show">hello</p>
+        </transition>
+      </div>
+    ```
+    ```JS
+      new Vue({
+        el: '#example-3',
+        data: {
+          show: true
+        }
+      })
+    ```
+  
+- JavaScript 钩子
+  ```HTML
+    <transition
+      v-on:before-enter="beforeEnter"
+      v-on:enter="enter"
+      v-on:after-enter="afterEnter"
+      v-on:enter-cancelled="enterCancelled"
+
+      v-on:before-leave="beforeLeave"
+      v-on:leave="leave"
+      v-on:after-leave="afterLeave"
+      v-on:leave-cancelled="leaveCancelled"
+    >
+      <!-- ... -->
+    </transition>
+  ```
+  ```JS
+    // ...
+    methods: {
+      // --------
+      // 进入中
+      // --------
+
+      beforeEnter: function (el) {
+        // ...
+      },
+      // 当与 CSS 结合使用时
+      // 回调函数 done 是可选的
+      enter: function (el, done) {
+        // ...
+        done()
+      },
+      afterEnter: function (el) {
+        // ...
+      },
+      enterCancelled: function (el) {
+        // ...
+      },
+
+      // --------
+      // 离开时
+      // --------
+
+      beforeLeave: function (el) {
+        // ...
+      },
+      // 当与 CSS 结合使用时
+      // 回调函数 done 是可选的
+      leave: function (el, done) {
+        // ...
+        done()
+      },
+      afterLeave: function (el) {
+        // ...
+      },
+      // leaveCancelled 只用于 v-show 中
+      leaveCancelled: function (el) {
+        // ...
+      }
+    }
+  ```
+  + 当只用 JavaScript 过渡的时候，在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
+  + 推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css="false"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
+
+- 过渡模式
+  + in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+  + out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+
+- 列表过渡
+  + 使用 <transition-group> 组件。不同于 <transition>，它会以一个真实元素呈现：默认为一个 <span>。你也可以通过 tag attribute 更换为其他元素。过渡模式不可用，因为我们不再相互切换特有的元素。内部元素总是需要提供唯一的 key attribute 值。CSS 过渡的类将会应用在内部的元素中，而不是这个组/容器本身。
+  ```html
+    <div id="list-demo" class="demo">
+      <button v-on:click="add">Add</button>
+      <button v-on:click="remove">Remove</button>
+      <transition-group name="list" tag="p">
+        <span v-for="item in items" v-bind:key="item" class="list-item">
+          {{ item }}
+        </span>
+      </transition-group>
+    </div>
+  ```
+  ```css
+    .list-item {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .list-enter-active, .list-leave-active {
+      transition: all 1s;
+    }
+    .list-enter, .list-leave-to
+    /* .list-leave-active for below version 2.1.8 */ {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  ```
+  ```js
+    new Vue({
+      el: '#list-demo',
+      data: {
+        items: [1,2,3,4,5,6,7,8,9],
+        nextNum: 10
+      },
+      methods: {
+        randomIndex: function () {
+          return Math.floor(Math.random() * this.items.length)
+        },
+        add: function () {
+          this.items.splice(this.randomIndex(), 0, this.nextNum++)
+        },
+        remove: function () {
+          this.items.splice(this.randomIndex(), 1)
+        },
+      }
+    })
+  ```
+
+### 状态过渡
+- 状态动画与侦听器
+  + 例子：
+  ```html
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+
+    <div id="animated-number-demo">
+      <input v-model.number="number" type="number" step="20">
+      <p>{{ animatedNumber }}</p>
+    </div>
+  ```
+  ```js
+    new Vue({
+      el: '#animated-number-demo',
+      data: {
+        number: 0,
+        tweenedNumber: 0
+      },
+      computed: {
+        animatedNumber: function() {
+          return this.tweenedNumber.toFixed(0);
+        }
+      },
+      watch: {
+        number: function(newValue) {
+          gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
+        }
+      }
+    })
+  ```
 
 ## 前端模块化
 

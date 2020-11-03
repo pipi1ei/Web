@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <script>
+    const myMixin = {
+      data() {
+        return {
+          message: 'mixin message',
+          foo: 'foo'
+        }
+      },
+      created() {
+        console.log('mixin created')
+      },
+      methods: {
+        hello() {
+          console.log('mixin methods hello')
+        },
+        fooMethod() {
+          console.log('mixin methods foo')
+        }
+      }
+    }
+
+    const vm = new Vue({
+      mixins: [myMixin],
+      data: {
+        message: 'self message',
+        bar: 'bar'
+      },
+      created() {
+        console.log('self created')
+        console.log(this.$data)
+      },
+      methods: {
+        hello() {
+          console.log('self methods hello')
+        },
+        barMethod() {
+          console.log('self methods bar')
+        }
+      }
+    })
+
+    vm.hello()
+    vm.barMethod()
+    vm.fooMethod()
+  </script>
+</body>
+</html>

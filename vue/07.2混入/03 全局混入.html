@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    Vue.mixin({
+      created() {
+        console.log(this.$options)
+        console.log(Vue.config.optionMergeStrategies)
+        let myOption = this.$options.myOption;
+        if(myOption) {
+          console.log(myOption)
+        }
+      }
+    })
+
+    const vm = new Vue({
+      el: '#app',
+      myOption: 'hello',
+      data: {
+        name: 'pipilei'
+      },
+      methods: {
+        test() {
+          console.log('test')
+        }
+      }
+    })
+  </script>
+</body>
+</html>

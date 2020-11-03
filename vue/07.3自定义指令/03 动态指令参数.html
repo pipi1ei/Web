@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <p type="text" v-demo:[position]="200">啦啦啦啦</p>
+  </div>
+  
+  <script>
+    Vue.directive('demo', {
+      bind(el, binding, vnode) {
+        el.style.position = 'fixed'
+        var s = (binding.arg == 'left' ? 'left' : 'top')
+        el.style[s] = binding.value + 'px'
+      }
+    })
+
+    new Vue({
+      el: '#app',
+      data: {
+        position: 'left'
+      }
+    })
+  </script>
+</body>
+</html>
