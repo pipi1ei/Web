@@ -94,7 +94,7 @@ export default {
   },
   computed: {
     showSubMenu(){
-      return this.$store.state.userInfo.userId == '1';
+      return this.$store.state.userInfo.roleId == '1';
     }
   },
   watch: {

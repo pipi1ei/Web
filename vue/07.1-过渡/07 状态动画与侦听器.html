@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="number" step="20" v-model.number="number">
+    <p>{{ animatedNumber }}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        number: 0,
+        tweenedNumber: 0
+      },
+      computed: {
+        animatedNumber() {
+          return this.tweenedNumber.toFixed(0)
+        }
+      },
+      watch: {
+        number(newValue) {
+          gsap.to(this.$data, {duration: 0.5, tweenedNumber: newValue});
+        }
+      }
+    })
+  </script>
+</body>
+</html>

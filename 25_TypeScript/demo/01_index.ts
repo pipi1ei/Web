@@ -112,18 +112,14 @@ let createArray: CreateArrayFunc = function<T>(length: number, value: T): Array<
   return result;
 } 
 
-// class GenericNumber<T> {
-//   zeroValue: T;
-//   add(x: T, y: T): T {
-//     return x + y;
-//   };
-//   constructor(zeroValue: T) {
-//     this.zeroValue = zeroValue;
-//   }
-// }
-
-// let myGenericNumber = new GenericNumber<number>(0);
-// myGenericNumber.zeroValue = 0;
-// myGenericNumber.add = function(x: number, y: number) {
-//   return x + y;
-// }
+declare namespace jQuery {
+  function ajax(url:string, setting?: any):void;
+  const version: number;
+  class Event {
+    blur(eventType: EventType): void;
+  }
+  enum EventType {
+    CustomClick
+  }
+}
+var myName = 'tom';

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container{
+      min-height: 500px;
+    }
+
+    .left {
+      /* float: left; */
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 500px;
+      padding: 50px 20px;
+      
+    }
+
+    .right {
+      
+      overflow: hidden;
+      padding-left: 12px;
+      padding-top: 20px;
+      margin-left: 200px;
+      border-left: 1px solid #999;
+    }
+
+    ul > li {
+      padding: 10px 8px;
+      color: #666;
+      font-size: 14px;
+      position: relative;
+      padding-left: 25px;
+      cursor: pointer;
+    }
+
+    ul > li:hover {
+      color: blue;
+    }
+
+    ul > li.active::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      background-color: blue;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+    }
+
+    .item{
+      padding-top: 30px;
+      height: 600px;
+      border-bottom: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <ul>
+        <li class="active" id="userLi" data-id="user">用户总体分析</li>
+        <li id="areaLi" data-id="area">地域分布情况</li>
+        <li id="hisLi" data-id="his">历史增长统计</li>
+        <li id="addLi" data-id="add">新增客户列表</li>
+      </ul>
+    </div>
+    <div class="right">
+      <div class="item">
+        <h3 id="user">用户总体分析</h3>
+      </div>
+      <div class="item">
+        <h3 id="area">地域分布情况</h3>
+      </div>
+      <div class="item">
+        <h3 id="his">历史增长统计</h3>
+      </div>
+      <div class="item">
+        <h3 id="add">新增客户列表</h3>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+  <script>
+    const { log } = console;
+
+    $(function(){
+      let userH,
+        areaH,
+        hisH,
+        addH;
+
+      let $h = $('.item h3');
+      userH = $h.eq(0).offset().top;
+      areaH = $h.eq(1).offset().top;
+      hisH = $h.eq(2).offset().top;
+      addH = $h.eq(3).offset().top;
+
+      log({userH, areaH, hisH, addH})
+
+      $(window).on('scroll', function(e) {
+        let $window = $(this);
+        let scrollTop = $window.scrollTop()
+        scrollTop += 200;
+        if(scrollTop >= userH && scrollTop < areaH) {
+          $('#userLi').addClass('active').siblings().removeClass('active')
+        } else if(scrollTop >= areaH && scrollTop < hisH) {
+          $('#areaLi').addClass('active').siblings().removeClass('active')
+        } else if(scrollTop >= hisH && scrollTop < addH) {
+          $('#hisLi').addClass('active').siblings().removeClass('active')
+        } else {
+          $('#addLi').addClass('active').siblings().removeClass('active')
+        }
+      }).trigger('scroll')
+
+      $('.left').on('click', 'ul li', function(){
+        let $this = $(this);
+        let id = $this.data('id');
+        let scrollTop = $('#' + id).offset().top - 20;
+        $('html, body').animate({'scrollTop': scrollTop}, 'slow')
+      })
+    })
+
+   
+  </script>
+</body>
+</html>

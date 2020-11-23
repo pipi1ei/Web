@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cpn>
+      <template v-slot:header>
+        <h3>头部标题</h3>
+        <p>头部内容</p>
+      </template>
+
+      <template v-slot:default>
+        <h3>中间标题</h3>
+        <p>中间内容</p>
+      </template>
+
+      <template v-slot:footer>
+        <h3>尾部标题</h3>
+        <p>尾部内容</p>
+      </template>
+    </cpn>
+  </div>
+
+  <template id="cpn">
+    <div class="container">
+      <header>
+        <slot name="header"></slot>
+      </header>
+      <main>
+        <slot></slot>
+      </main>
+      <footer>
+        <slot name="footer"></slot>
+      </footer>
+    </div>
+  </template>
+
+  <script>
+    new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn'
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

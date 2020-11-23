@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <p type="text" v-demo:foo.a.b="message"></p>
+  </div>
+  
+  <script>
+    Vue.directive('demo', {
+      bind(el, binding, vnode) {
+        const s = JSON.stringify;
+        el.innerHTML = 
+          'name: '       + s(binding.name) + '<br>' +
+          'value: '      + s(binding.value) + '<br>' +
+          'expression: ' + s(binding.expression) + '<br>' +
+          'argument: '   + s(binding.arg) + '<br>' +
+          'modifiers: '  + s(binding.modifiers) + '<br>' +
+          'vnode keys: ' + Object.keys(vnode).join(', ')
+      }
+    })
+
+    new Vue({
+      el: '#app',
+      data: {
+        message: 'hello!'
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cpn></cpn>
+    <cpn>
+      <template v-slot:default="slotProps">
+        <span v-for="item in slotProps.list">{{ item }} - </span>
+      </template>
+    </cpn>
+    <!-- 解构写法 -->
+    <cpn>
+      <template v-slot:default="{ list }">
+        <span v-for="item in list">{{ item }} , </span>
+      </template>
+    </cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <p>作用域插槽使用 v-slot </p>
+      <slot :list="list">
+        <ul>
+          <li v-for="item in list">{{ item }}</li>
+        </ul>
+      </slot>
+    </div>
+  </template>
+
+  <script>
+    new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn',
+          data(){
+            return {
+              list: ['java', 'c++', 'js', 'ts']
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

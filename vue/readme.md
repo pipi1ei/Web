@@ -63,6 +63,69 @@ let app = new Vue({
 - 数组语法：<h1 :style="[baseStyles, overridingStyles]">{{ msg }}</h1>
   baseStyles:{color:'red'}; overridingStyles:{fontSize: '100px'}
 
+### 条件渲染
+- v-if：用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
+  `<h1 v-if="awesome">Vue is awesome</h1>`
+  + 在 `<template>` 元素上使用 v-if 条件渲染分组
+    - 因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。
+    `<template v-if="ok">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </template>`
+  + 用 key 管理可复用的元素
+    - vue 会尽可能高效的渲染元素，通常会复用已有的元素，而不是从头开始渲染。如果用户不想要复用元素，可以给相同的元素添加 key 来区分
+    ```html
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username-input">
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email-input">
+      </template>
+    ```
+
+- v-if 与 v-show 的区别：v-if 在条件为假的时候不会渲染元素。而 v-show 无论条件真假都会渲染元素，只是通过 display 这个 css 属性来控制元素的显示和隐藏。另外，v-show 不支持在 `<template>` 元素上面使用
+- v-if 与 v-for 一起使用: 当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级。
+
+### 列表渲染
+- v-for
+  + 语法：`<li v-for="(item, index) in items" :key="item.message"></li>`
+  + 可以用 of 替代 in 作为分隔符
+    - `<div v-for="item of items"></div>`
+  + 在 v-for 中使用对象：
+    ``` HTML
+      <ul id="v-for-object" class="demo">
+        <li v-for="(value, name) in object">
+          {{ name }} - {{ value }}
+        </li>
+      </ul>
+    ```
+    ```JS
+      new Vue({
+        el: '#v-for-object',
+        data: {
+          object: {
+            title: 'How to do lists in Vue',
+            author: 'Jane Doe',
+            publishedAt: '2016-04-10'
+          }
+        }
+      })
+
+      // 结果
+      'title - How to do lists in Vue'
+      'author - Jane Doe'
+      'publishedAt - 2016-04-10'
+    ```
+
+  + key 的使用
+    - 为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key attribute：
+    - 注意：**不要使用对象或数组之类的非基本类型值作为 v-for 的 key。请用字符串或数值类型的值。**
+
+
+
 ### 计算属性
 
 1.  基本用法: 在 vue 实例中定义 computed 属性: computed:{ fullName: function(){ return this.firstName + ' ' + this.lastName } }
@@ -132,8 +195,8 @@ let app = new Vue({
 其他数组方法不是响应式的，如果想要使用响应式，可以使用 Vue.set() 方法
 
 ### v-model 原理
-
-v-model 用于表单元素双向绑定数据
+- v-model 用于表单元素双向绑定数据
+  + 注意：v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。
 
 - v-model 其实是个语法糖,它背后本质上包含两个操作
 
@@ -238,6 +301,17 @@ v-model 用于表单元素双向绑定数据
     - Date
     - Function
     - Symbol
+  - prop 验证：
+    ```JS
+      // 自定义验证函数
+      propA: {
+        validator: function(value) {
+          // 这个值必须匹配下列字符串中的一个
+          return ['success', 'warning', 'danger'].indexOf(value) !== -1
+        }
+      }
+    ```
+    + 注意：**那些 prop 会在一个组件实例创建之前进行验证，所以实例的 property (如 data、computed 等) 在 default 或 validator 函数中是不可用的。**
 
 2.  子组件向父组件传递数据：通过自定义事件向父组件发送消息
 
@@ -247,6 +321,157 @@ v-model 用于表单元素双向绑定数据
 - 自定义事件流程：
   - 在子组件中，通过 $emit() 来触发事件
   - 在父组件中，通过 v-on 来监听子组件事件
+
+- 将原生事件绑定到组件
+  + 你可能有很多次想要在一个组件的*根元素*上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符：`<base-input v-on:focus.native="onFocus"></base-input>`
+  + 有时候上述方式是有用的，但 base-input 组件的根元素是 label 元素，这时候父级的 .native 监听器将会失效，它不会报错，但 onFocus 处理函数也不会调用
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value']
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs",
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+          >
+        </label>
+      `
+    })
+  ```
+  + 为了解决这个问题，Vue 提供了一个 $listeners 属性，它是一个对象，里面包含了作用在这个组件上的所有监听器。例如： 
+  ```JS
+    {
+      focus: function(event) { /* ... */ },
+      input: function(event) { /* ... */ }
+    }
+  ```
+  + 有了这个 $listeners property，你就可以配合 v-on="$listeners" 将所有的事件监听器指向这个组件的某个特定的子元素。对于类似 <input> 的你希望它也可以配合 v-model 工作的组件来说，为这些监听器创建一个类似下述 inputListeners 的计算属性通常是非常有用的：
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      computed: {
+        inputListeners() {
+          let vm = this;
+          return Object.assign({},
+            // 我们从父级添加所有的监听器
+            vm.$listeners,
+            // 然后我们添加自定义监听器，
+            {
+              // 这里确保组件配合 `v-model` 的工作
+              input: function(event) {
+                vm.$emit('input', event.target.value)
+              }
+            }
+          )
+        }
+      }
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs",
+            :value="value"
+            v-on="inputListeners"
+          >
+        </label>
+      `
+    })
+  ```
+
+- .sync 修饰符
+  + 我们通过 prop 传递数据给子组件时，如果子组件直接修改这个值，控制台会报错。这时候可以使用 update:propName 的模式触发事件。举个例子：，在一个包含 title 属性的组件中，我们可以用以下方法表达对其赋新值的意图：
+    ```JS
+      this.$emit('update:title', newTitle)
+    ```
+  + 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
+    ```HTML
+      <text-document
+        :title="doc.title"
+        @update:title="doc.title = $event"
+      ></text-document>
+    ```
+  + 为了方便起见，我们为这种模式提供一个缩写，即 .sync 修饰符：
+    ```HTML
+      <text-document v-bind:title.sync="doc.title"></text-document>
+    ```
+  + 注意：.sync 修饰符的 v-bind 不能和表达式一起使用 (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)
+  + 当我们用一个对象同时设置多个 prop 的时候，也可以将这个 .sync 修饰符和 v-bind 配合使用：
+    ```HTML
+      <text-document v-bind.sync="doc"></text-document>
+    ```
+
+
+  + 2.3.0 新增：
+
+
+3. 传入一个对象的所有 property
+  - 如果想要将一个对象的所有 property 都作为 prop 传入到子组件，可以使用不带参数的 v-bind
+  ```JS
+    post: {
+      id: 1,
+      title: 'title'
+    }
+  ```
+  ```HTML
+    <my-component v-bind="post"></my-component>
+    // 等价于
+    <my-component v-bind:id="post.id" v-bind:title="post.title"></my-component>
+  ```
+
+4. 单向数据流：
+  - prop 属性传递的数据都是从父组件流向子组件，父组件 prop 的更新会向下流动到子组件，反过来则不行。每次父组件发生变更时，子组件中所有的 prop 都将刷新为最新的值。这意味着不能在子组件中修改 prop 的值，否则会在控制台发出警告
+  - 注意：在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。
+
+5. 非 Prop 的 Attribute
+  - 一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute。
+  - 因为显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。这也是为什么组件可以接受任意的 attribute，而这些 attribute 会被添加到这个组件的根元素上。
+
+6. 禁用 Attribute 继承
+  - 如果你不希望组件的根元素继承 attribute，你可以在组件的选项中设置 inheritAttrs: false。例如：
+  ```JS
+    Vue.component('my-component', {
+      inheritAttrs: false
+      // ...
+    })
+  ```
+  - 如果 inheritAttrs 为 true，那么子组件的根元素就会继承父组件传过来的属性，**但排除 子组件 props 中声明的属性**
+  - 这尤其适合配合实例的 $attrs 属性使用，该属性包含了传递给一个组件的 attribute 名和 attribute 值，例如：
+  ```JS
+    {
+      required: true,
+      placeholder: 'Enter your username'
+    }
+  ```
+  - 有了 inheritAttrs: false 和 $attrs，你就可以手动决定这些 attribute 会被赋予哪个元素。在撰写基础组件的时候是常会用到的：
+  ```JS
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      template: `
+        <label>
+          {{ label }}
+          <input 
+            v-bind="$attrs"
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+          />
+        </label>
+      `
+    })
+  ```
+  - 这个模式允许你在使用基础组件的时候更像是使用原始的 HTML 元素，而不会担心哪个元素是真正的根元素：
+    ```HTML
+      <base-input
+        v-model="username"
+        required
+        placeHolder="Enter your username"
+      ></base-input>
+    ```
+
 
 ### 组件中 props 属性驼峰名的问题：
 
@@ -262,13 +487,532 @@ v-model 用于表单元素双向绑定数据
 - 子组件访问父组件: 使用 $parent 访问该子组件的父组件， 使用 $root 访问根组件
 
 ## 组件化高级
+### 自定义组件的 v-model 属性
+- vue2.2.0+ 新增：一个组件上的 v-model 属性默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 属性用于不同目的。*model 选项可以用来避免这样的冲突*
+```JS
+  Vue.component('base-checkbox', {
+    model: {
+      prop: 'checked',
+      event: 'change'
+    },
+    props: {
+      checked: Boolean
+    },
+    template: `
+      <input
+        type="checkbox"
+        :checked="checked"
+        @change="$emit('change', $event.target.checked)"
+      >
+    `
+  })
+```
+- 在上面的自定义组件使用 v-model 绑定的就是 checked 属性和 change 事件了
+```HTML
+  <base-checkbox v-model="lovingVue"></base-checkbox>
+```
+  + 这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当 `<base-checkbox>` 触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的值将会被更新。
+- 注意：*仍然需要在组件的 props 选项里声明 checked 这个 prop。*
+
+### 动态组件
+- 有的时候，在不同组件之间进行动态切换是非常有用的，比如在一个多标签的界面里。这时可以通过 Vue 的 `<component>` 元素加一个特殊的 is 属性来实现。
+  + 组件会在 `currentTabComponent` 改变时改变，currentTabComponent 可以是一个已注册的组件的名称或是一个组件的选项对象
+  `<component v-bind:is="currentTabComponent"></component>`
+  + is 属性可以用于常规 html 元素，但这些元素将被视为组件，这意味着所有的 attribute 都会作为 DOM attribute 被绑定。
+
+- 解析 DOM 模板时的注意事项
+  + 有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。如果想在这些特定的元素中使用组件的话就可以使用 is 属性
+  ```HTML
+    <table>
+      <tr is="blog-post-row"></tr>
+    </table>
+  ```
+  + 如果我们从以下来源使用模板的话，这条限制是不存在的：
+    - 字符串: (例如：template: '...')
+    - 单文件组件（.vue）
+    - <script type="text/x-template">
+
+### 异步组件
+- 在大型应用中，我们可能需要将应用分割成小一些的代码块，并且只在需要的时候才从服务器加载一个模块。为了简化，Vue 允许以一个工厂函数的方式定义你的组件，这个工厂函数会异步解析你的组件定义。Vue 只有在这个组件需要被渲染的时候才会触发该工厂函数，且会把结果缓存起来供未来重渲染。例如：
+  ```JS
+    Vue.component('async-example', function(resolve, reject) {
+      setTimeout(function() {
+        // 向 `resolve` 回调传递组件定义
+        resolve({
+          template: '<div>我是异步组件</div>'
+        })
+      }, 1000)
+    })
+  ```
+- 这个工厂函数会收到一个 resolve 回调，这个回调函数会在你从服务器得到组件定义的时候被调用。你也可以调用 reject(reason) 来表示加载失败。这里的 setTimeout 是为了演示用的
+- 也可以将异步组件和 webpack 的 code-splitting 功能一起使用
+  ```JS
+    Vue.component('async-webpack-example', function(resolve) {
+      // 这个特殊的 `require` 语法将会告诉 webpack自动将你的构建代码切割成多个包，这些包会通过 Ajax 请求加载
+      require(['./my-async-component'], resolve);
+    })
+  ```
+- 也可以在工厂函数中返回一个 Promise，所以把 webpack 2 和 ES2015 语法加在一起，我们可以这样使用动态导入：
+  ```JS
+    Vue.component('async-webpack-example', () => import('./my-async-component'))
+  ```
+- 当使用局部注册的时候，你也可以直接提供一个返回 Promise 的函数：
+  ```JS
+    new Vue({
+      // ...
+      components: {
+        'my-component': () => import('./my-async-component')
+      }
+    })
+  ```
+
+- 处理加载状态：
+  + 这里的异步组件工厂函数也可以返回一个如下格式的对象：
+  ```JS
+    const AsyncComponent = () => ({
+      // 需要加载的组件 (应该是一个 `Promise` 对象)
+      component: import('./MyComponent.vue'),
+      // 异步组件加载时使用的组件
+      loading: LoadingComponent,
+      // 加载失败时使用的组件
+      error: ErrorComponent,
+      // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+      delay: 200,
+      // 如果提供了超时时间且组件加载也超时了，
+      // 则使用加载失败时使用的组件。默认值是：`Infinity`
+      timeout: 3000
+    })
+  ```
+
 
 ### 插槽的使用
+- 在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 *(即 v-slot 指令)。它取代了 slot 和 slot-scope* 这两个目前已被废弃但未被移除且仍在文档中的 attribute。
+  + 用法：
+  ```HTML
+    <!-- 组件模板 -->
+    <div class="container">
+      <header>
+        <slot name="header"></slot>
+      </header>
+      <main>
+        <slot></slot>
+      </main>
+      <footer>
+        <slot name="footer"></slot>
+      </footer>
+    </div>
+
+    <!-- 使用 -->
+    <base-layout>
+      <template v-slot:header>
+        <h1>Here might be a page title</h1>
+      </template>
+
+      <p>A paragraph for the main content.</p>
+      <p>And another one.</p>
+
+      <template v-slot:footer>
+        <p>Here's some contact info</p>
+      </template>
+    </base-layout>
+  ```
+
+- 具名插槽的缩写：
+  + 2.6.0新增：跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：
+  + 然而，和其它指令一样，该缩写只在其有参数的时候才可用。这意味着以下语法是无效的：
+  ```HTML
+    <!-- 这样会触发一个警告 -->
+    <current-user #="{ user }">
+      {{ user.firstName }}
+    </current-user>
+
+    <!-- 如果你希望使用缩写的话，你必须始终以明确插槽名取而代之： -->
+    <current-user #default="{ user }">
+      {{ user.firstName }}
+    </current-user>
+  ```
 
 1. 基本用法：在组件模板中添加 <slot></slot> 标签
+  - 注意：如果组件中没有包含 <slot> 元素，那么在使用这个组件时，该组件起始标签和结束标签之间的所有内容会被抛弃
 2. 插槽的默认值： <slot><button>按钮</button></slot>
 3. 如果有多个值，同时放入到组件进行替换是，一起作为替换元素
 4. 作用域插槽：父组件替换插槽的标签，但是内容由子组件来提供
+  - 在作用域插槽中，子组件可以将数据通过作用域插槽传递到父组件作用域内
+  - 例子：在父组件中想要使用子组件的 user 属性，那么在子组件的 <slot> 标签上动态绑定一个 user 属性，这个属性称为 插槽 prop，在父级作用域中，可以使用带值的 v-slot 来定义子组件提供的 插槽prop 的名字
+  ```HTML
+    <!-- 子组件 -->
+    <div>
+      <slot :user="user">
+        {{ user.name }}
+      </slot>
+    </div>
+
+    <!-- 父组件 -->
+    <current-user>
+      <template v-slot:default="slotProps">
+        {{ slotProps.user.name }}
+      </template>
+    </current-user>
+  ```
+
+  - 独占默认插槽的缩写语法：
+    + 对应子组件中的默认插槽，父组件在使用默认插槽的属性时，可以不需要插槽的 default 名字，上面的例子可以使用如下写法：
+    ```HTML
+      <current-user>
+        <template v-slot="slotProps">
+          {{ slotProps.user.name }}
+        </template>
+      </current-user>
+    ```
+    + 注意：**默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确。只要出现多个插槽，请使用完整的写法：v-slot:slotName="propName"**
+
+  - 解构插槽 prop
+    + 作用域插槽的内部工作原理是将你的插槽内容包裹在一个拥有单个参数的函数里
+    ```JS
+      function(slotProps){
+        // 插槽内容
+      }
+    ```
+    + 这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop，如下：
+    ```HTML
+      <current-user v-slot="{ user }">
+        {{ user.firstName }}
+      </current-user>
+
+      <!-- 也可以将 user 重命名 -->
+      <current-user v-slot="{ user: person }">
+        {{ user.firstName }}
+      </current-user>
+
+      <!-- 也可以给定默认值 -->
+      <current-user v-slot="{ user = {firstName: 'pipilei'} }">
+        {{ user.firstName }}
+      </current-user>
+    ```
+
+### 处理边界情况
+- 依赖注入
+  + 在父子组件之间，甚至包含更多层级的组件之间，如果子组件想访问父组件或子组件想访问父组件的方法，需要使用 $refs 和 $parent。使用 $parent property 无法很好的扩展到更深层级的嵌套组件上。这也是依赖注入的用武之地，它用到了两个新的实例选项：provide 和 inject。
+  + provide 选项允许我们指定我们想要提供给后代组件的数据/方法。
+    ```JS
+      provide: function () {
+        return {
+          getMap: this.getMap
+        }
+      }
+    ```
+  + 然后在任何后代组件里，我们都可以使用 inject 选项来接收指定的我们想要添加在这个实例上的 property：
+    ```JS
+      inject: ['getMap']
+    ```
+
+- 程序化的事件侦听器
+  + 现在，你已经知道了 $emit 的用法，它可以被 v-on 侦听，但是 Vue 实例同时在其事件接口中提供了其它的方法。我们可以：
+    - 通过 $on(eventName, eventHandler) 侦听一个事件
+    - 通过 $once(eventName, eventHandler) 一次性侦听一个事件
+    - 通过 $off(eventName, eventHandler) 停止侦听一个事件
+  + 你通常不会用到这些，但是当你需要在一个组件实例上手动侦听事件时，它们是派得上用场的。它们也可以用于代码组织工具。例如，你可能经常看到这种集成一个第三方库的模式：
+    ```JS
+      // 一次性将这个日期选择器附加到一个输入框上
+      // 它会被挂载到 DOM 上。
+      mounted: function () {
+        // Pikaday 是一个第三方日期选择器的库
+        this.picker = new Pikaday({
+          field: this.$refs.input,
+          format: 'YYYY-MM-DD'
+        })
+      },
+      // 在组件被销毁之前，
+      // 也销毁这个日期选择器。
+      beforeDestroy: function () {
+        this.picker.destroy()
+      }
+    ```
+  + 这里有两个潜在的问题：
+    1. 它需要在这个组件实例中保存这个 picker，如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+    2. 我们的建立代码独立于我们的清理代码，这使得我们比较难于程序化地清理我们建立的所有东西。
+  + 你应该通过一个程序化的侦听器解决这两个问题：
+    ```JS
+      mounted: function () {
+        var picker = new Pikaday({
+          field: this.$refs.input,
+          format: 'YYYY-MM-DD'
+        })
+
+        this.$once('hook:beforeDestroy', function () {
+          picker.destroy()
+        })
+      }
+    ```
+
+
+## 过渡 & 动画
+### 进入/离开 & 列表过渡
+#### 单元素、组件的过渡
+- Vue 提供了 transition 的封装组件，在下列情形中，可以给任何元素和组件添加进入/离开过渡
+  + 条件渲染（使用了v-if）
+  + 条件展示（使用了v-show）
+  + 动态组件
+  + 组件根节点
+- 例子：
+  ```HTML
+    <div id="demo">
+      <button @click="show = !show">Toggle</button>
+      <transition name="fade">
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+  ```
+  ```JS
+    new Vue({
+      el: "#demo",
+      data: {
+        show: true
+      }
+    })
+  ``` 
+  ```css
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity .5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+      opacity: 0;
+    }
+  ```
+- 当插入或删除包含在 transition 组件中的元素时，Vue 将会做如下处理：
+  + 自动嗅探目标元素是否使用了 css 过渡或动画，如果是，在适当的时机添加/删除 css 类名。
+  + 如果过渡组件提提供了 javascript 钩子函数，这些钩子函数将在恰当的时机被调用
+  + 如果没有找到 javascript 钩子并且没有监测到 css 过渡/动画，DOM 操作（插入/删除）在下一帧中立即执行。（注意：此指浏览器逐帧动画机制，和 Vue 的 nextTick 不同）
+
+- 过渡的类名
+  + v-enter：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之前生效，在元素被插入之后的下一帧失效
+  + v-enter-active：定义过渡生效时的状态。在整个进入过渡阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移出。这个类可以被用来定义进入过渡的过程期间，延迟和曲线函数
+  + v-enter-to：2.1.8版本及以上定义的过渡状态。在元素被插入之后下一帧生效（于此同时，v-enter 被移出），在过渡/动画完成之后移出。
+  + v-leave：定义离开过渡的开始状态。在离开过渡被触发的时刻生效，下一帧被移出。
+  + v-leave-active：定义离开过渡生效时的状态。在整个离开过渡阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移出。这个类可以被用来定义过渡的过程时间，延迟和曲线函数。
+  + v-leave-to：2.1.8及以上版本定义的离开过渡的结束状态。在离开过渡被触发之后下一帧生效（于此同时，v-leave被删除），在过渡/动画完成之后移出。
+
+- css过渡
+  ```HTML
+    <div id="example-1">
+      <button @click="show = !show">
+        Toggle render
+      </button>
+      <transition name="slide-fade">
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+  ```
+  ```JS
+    new Vue({
+      el: '#example-1',
+      data: {
+        show: true
+      }
+    })
+  ```
+  ```CSS
+    /* 可以设置不同的进入和离开动画 */
+    /* 设置持续时间和动画函数 */
+    .slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+      transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+  ```
+
+- css 动画
+  + CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。
+
+- 自定义过渡类名
+  + 可以通过以下属性来自定义过渡类名
+    - enter-class
+    - enter-active-class
+    - enter-to-class (2.1.8+)
+    - leave-class
+    - leave-active-class
+    - leave-to-class (2.1.8+)
+  + 他们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css 结合使用十分有用。
+    ```HTML
+      <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+      <div id="example-3">
+        <button @click="show = !show">
+          Toggle render
+        </button>
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated tada"
+          leave-active-class="animated bounceOutRight"
+        >
+          <p v-if="show">hello</p>
+        </transition>
+      </div>
+    ```
+    ```JS
+      new Vue({
+        el: '#example-3',
+        data: {
+          show: true
+        }
+      })
+    ```
+  
+- JavaScript 钩子
+  ```HTML
+    <transition
+      v-on:before-enter="beforeEnter"
+      v-on:enter="enter"
+      v-on:after-enter="afterEnter"
+      v-on:enter-cancelled="enterCancelled"
+
+      v-on:before-leave="beforeLeave"
+      v-on:leave="leave"
+      v-on:after-leave="afterLeave"
+      v-on:leave-cancelled="leaveCancelled"
+    >
+      <!-- ... -->
+    </transition>
+  ```
+  ```JS
+    // ...
+    methods: {
+      // --------
+      // 进入中
+      // --------
+
+      beforeEnter: function (el) {
+        // ...
+      },
+      // 当与 CSS 结合使用时
+      // 回调函数 done 是可选的
+      enter: function (el, done) {
+        // ...
+        done()
+      },
+      afterEnter: function (el) {
+        // ...
+      },
+      enterCancelled: function (el) {
+        // ...
+      },
+
+      // --------
+      // 离开时
+      // --------
+
+      beforeLeave: function (el) {
+        // ...
+      },
+      // 当与 CSS 结合使用时
+      // 回调函数 done 是可选的
+      leave: function (el, done) {
+        // ...
+        done()
+      },
+      afterLeave: function (el) {
+        // ...
+      },
+      // leaveCancelled 只用于 v-show 中
+      leaveCancelled: function (el) {
+        // ...
+      }
+    }
+  ```
+  + 当只用 JavaScript 过渡的时候，在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
+  + 推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css="false"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
+
+- 过渡模式
+  + in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+  + out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+
+- 列表过渡
+  + 使用 <transition-group> 组件。不同于 <transition>，它会以一个真实元素呈现：默认为一个 <span>。你也可以通过 tag attribute 更换为其他元素。过渡模式不可用，因为我们不再相互切换特有的元素。内部元素总是需要提供唯一的 key attribute 值。CSS 过渡的类将会应用在内部的元素中，而不是这个组/容器本身。
+  ```html
+    <div id="list-demo" class="demo">
+      <button v-on:click="add">Add</button>
+      <button v-on:click="remove">Remove</button>
+      <transition-group name="list" tag="p">
+        <span v-for="item in items" v-bind:key="item" class="list-item">
+          {{ item }}
+        </span>
+      </transition-group>
+    </div>
+  ```
+  ```css
+    .list-item {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .list-enter-active, .list-leave-active {
+      transition: all 1s;
+    }
+    .list-enter, .list-leave-to
+    /* .list-leave-active for below version 2.1.8 */ {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  ```
+  ```js
+    new Vue({
+      el: '#list-demo',
+      data: {
+        items: [1,2,3,4,5,6,7,8,9],
+        nextNum: 10
+      },
+      methods: {
+        randomIndex: function () {
+          return Math.floor(Math.random() * this.items.length)
+        },
+        add: function () {
+          this.items.splice(this.randomIndex(), 0, this.nextNum++)
+        },
+        remove: function () {
+          this.items.splice(this.randomIndex(), 1)
+        },
+      }
+    })
+  ```
+
+### 状态过渡
+- 状态动画与侦听器
+  + 例子：
+  ```html
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+
+    <div id="animated-number-demo">
+      <input v-model.number="number" type="number" step="20">
+      <p>{{ animatedNumber }}</p>
+    </div>
+  ```
+  ```js
+    new Vue({
+      el: '#animated-number-demo',
+      data: {
+        number: 0,
+        tweenedNumber: 0
+      },
+      computed: {
+        animatedNumber: function() {
+          return this.tweenedNumber.toFixed(0);
+        }
+      },
+      watch: {
+        number: function(newValue) {
+          gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
+        }
+      }
+    })
+  ```
 
 ## 前端模块化
 
