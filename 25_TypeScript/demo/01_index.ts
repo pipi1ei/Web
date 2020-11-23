@@ -110,7 +110,7 @@ let createArray: CreateArrayFunc = function<T>(length: number, value: T): Array<
     result[i] = value;
   }
   return result;
-}
+} 
 
 // class GenericNumber<T> {
 //   zeroValue: T;

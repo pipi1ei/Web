@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <!-- <h2>Hello World</h2>
+  <button>改变文本</button> -->
+
+    <div>Header</div>
+    <div id="app">App</div>
+    <div>Footer</div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- 注意：使用jsx语法开发时，并且希望script中的jsx的代码被解析，必须在script标签中添加 type="text/babel" -->
+  <script type="text/babel">
+    // <h2>Hello World</h2> 就是 jsx 语法
+    // jsx 特点：多个标签最外层只能有一个标签
+    let message = 'hello world'
+
+    function btnClick() {
+      console.log('按钮点击了')
+      
+      message = 'hello React'   // 这种方式界面不会发生改变
+      render()
+    }
+
+    function render() {
+      ReactDOM.render(
+        <div>
+          <h2>{message}</h2>
+          <button onClick={btnClick}>改变文字</button>
+        </div>,
+        document.getElementById('app')
+      )
+    }
+
+    render()
+  </script> 
+</body>
+</html>
