@@ -29,7 +29,7 @@
   + 比如当下很多浏览器并不支持ES6的语法，使用Babel工具可以将ES6语法转化成浏览器可以识别的ES5语法
 
 - react 和 babel 的关系
-  + 默认情况下开发react其实可以不同babel
+  + 默认情况下开发react其实可以不用babel
   + 但是前提是我们使用 React.createElement 来编写代码，它编写的代码非常繁琐且可读性差
   + 我们可以使用 jsx（JavaScript XML）的语法，并且babel帮助我们转换成React.createElement 
 

@@ -3,176 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <style>
-    .box{
-      width: 500px;
-      margin: 50px auto;
-      border: 1px solid #999;
-      overflow: hidden;
-    }
-
-    .inner1 {
-      float: left;
-      width: 200px;
-      background-color: aqua;
-      height: 100%;
-      padding-bottom: 9999px;
-      margin-bottom: -9999px;
-    }
-
-    .inner2 {
-      margin-left: 200px;
-      background-color: #f00;
-    }
-
-    .add {
-      position: relative;
-      margin-right: 20px;
-      display: inline-block;
-    }
-
-    .add::before {
-      content: '';
-      position: absolute;
-      width: 1px;
-      height: 12px;
-      background-color: red;
-      right: -5px;
-      top: 5px;
-    }
-
-    .add::after {
-      content: '';
-      position: absolute;
-      width: 1px;
-      height: 12px;
-      background-color: red;
-      right: -5px;
-      top: 5px;
-    }
-
-  </style>
-  <script src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
-  <div class="box">
-    <div class="inner1">123</div>
-    <div class="inner2">很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字很多的文字</div>
-  </div>
-  <div>lalalallalalalalalallalalalalalallalalalalalallalalalalalallalalalalalallalalalalalallalalalalalallalalalalalallalalalalalallalala</div>
+  <div id="app"></div>
 
-  <p class="add" style="color: #4288fa" data-name="789">123.45%</p>
-
-  <script>
+  <script type="text/babel">
     
-    function a(arr, prop, emptyList = [undefined, null, '', '-']) {
-      if(arr && arr.length) {
-        return arr.every(item => emptyList.some(emptyItem => item[prop] === emptyItem))
-      } 
-      return true   
-    }
-
-    let arrx = [
-      {
-        name: '-',
-        a: 'la'
-      },
-      {
-        name: ''
-      },
-      {
-        name: ''
-      },
-    ]
-    console.log('xxxx ==', a(arrx, 'a'))
-
-    function objKeyIsAllEmpty(obj) {
-      let result = true
-      if(isObject(obj)) {
-        if(Object.keys(obj).length) {
-          for(let key in obj) {
-            const item = obj[key]
-            if(isObject(item) || isArray(item)) {
-              result = objKeyIsAllEmpty(item)
-            } else {
-              if(item !== '' && item !== null) {
-                result = false
-              }
-            }
-            if(!result) {
-              return false
-            }
-          }
-        }
-      } else if(isArray(obj)) {
-        if(obj.length) {
-          for(item of obj) {
-            if(isObject(item) || isArray(item)) {
-              result = objKeyIsAllEmpty(item)
-            } else {
-              if(item !== '' && item !== null) {
-                result = false
-              }
-            }
-            if(!result) {
-              return false
-            }
-          }
+    // 组件化方式
+    class App extends React.Component {
+      constructor() {
+        super()
+        // this.message = 'hello world'
+        this.state = {
+          message: 'hello world'
         }
       }
-      return result
-    }
 
-    function isObject(obj) {
-      return Object.prototype.toString.call(obj) == '[object Object]'
-    }
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>  
+            <button onClick={this.handleBtnClick.bind(this)}>改变文本</button>
+          </div>
+        )
+      }
 
-    function isArray(obj) {
-      return Object.prototype.toString.call(obj) == '[object Array]'
-    }
-
-    let obj1 = {}
-    let obj2 = {
-      b: '',
-      c: {name: 'aaa'},
-      d: []
-    }
-    let obj3 = {
-      a: '',
-      b: null,
-      c: {
-        a: '',
-        d: [{name: ''}]
+      handleBtnClick() {
+        this.setState({
+          message: this.state.message === 'hello world' ? 'hello React' : 'hello world'
+        })
       }
     }
 
-    let arr0 = ['', 1]
-    let arr1 = []
-    let arr2 = [1, 2]
-    let arr3 = [{
-      a: '',
-      b: ''
-    }, {
-      a: '',
-      b: ''
-    }]
+    ReactDOM.render(<App/>, document.getElementById('app'))
 
-    // console.log(objKeyIsAllEmpty(obj1))
-    // console.log(objKeyIsAllEmpty(obj2))
-    // console.log(objKeyIsAllEmpty(obj3))
-    // console.log(objKeyIsAllEmpty(arr1))
-    // console.log(objKeyIsAllEmpty(arr2))
-    // console.log(objKeyIsAllEmpty(arr3))
-    // console.log(objKeyIsAllEmpty(arr0))
-    // console.log(Object.prototype.toString.call({}))
-    // console.log(Object.prototype.toString.call([]))
-
-    // let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    let temp = arr.splice(0, 12)
-    console.log({temp, arr})
   </script>
 </body>
 </html>
