@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <create-com></create-com>
+  </div>
+
+  <script>
+    const MyComponent = Vue.extend({
+      template:`
+        <div>
+          <h3>我是 my-component 组件</h3>
+          <p>{{ value }}</p>
+        </div>
+      `,
+      props: {
+        value: String
+      }
+    })
+
+    Vue.component('create-com', {
+      render(h) {
+        return h(
+          'div',
+          { attrs: {name: 'pipilei'} },
+          [
+            '我是div里的内容',
+            h('h1', '一则头条'),
+            h(MyComponent, {props: {value: 'hahaha'}})
+          ]
+        )
+      }
+    })
+
+    new Vue({
+      el: '#app'
+    })
+
+  </script>
+</body>
+</html>

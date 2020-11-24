@@ -37,7 +37,10 @@
       el: '#app',
       components: {
         cpn: {
-          template: '#cpn'
+          template: '#cpn',
+          created() {
+            console.log(this.$slots)
+          }
         }  
       }
     })
