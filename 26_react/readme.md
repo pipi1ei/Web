@@ -37,3 +37,72 @@
   + CDN 引入
   + 下载后本地依赖
   + npm（后续在脚手架中使用）
+
+### 基本使用-hello react
+- 导入三个包：
+```html
+<!-- crossorigin 的作用是源码内部发生的错误能在控制台上显示出来 -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+```
+
+- hello react
+```html
+  <div id="app"></div>
+  <script type="text/babel">
+    let message = 'hello world'
+
+    function btnClick() {
+      console.log('按钮点击了')
+      
+      message = 'hello React'   // 这种方式界面不会发生改变
+      render()
+    }
+
+    function render() {
+      ReactDOM.render(
+        <div>
+          <h2>{message}</h2>
+          <button onClick={btnClick}>改变文字</button>
+        </div>,
+        document.getElementById('app')
+      )
+    }
+
+    render()
+  </script>
+```
+- 组件形式实现
+```html
+  <div id="app"></div>
+
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message = 'hello world'
+        }
+      }
+
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <button onClick={this.btnClick.bind(this)}>改变文本</button>
+          </div>
+        )
+      }
+
+      btnClick() {
+        // setState 方法来源于父类
+        this.setState({
+          message: 'hello react'
+        })
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script>
+```
