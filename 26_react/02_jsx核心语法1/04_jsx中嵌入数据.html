@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          // 可以直接显示
+          message: 'hello world',
+          age: 18,
+          movies: ['盗梦空间', '火影忍者', '海贼王'],
+
+          // 不能直接显示，需要转成字符串
+          flag: true,
+          empty1: undefined,
+          empty2: null,
+
+          // 不支持
+          person: {
+            name: 'pipilei',
+            age: 18
+          }
+        }
+      }
+      
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <h2>{this.state.age}</h2>
+            <h2>{this.state.movies}</h2>
+
+            <h2>{this.state.flag}</h2>
+            <h2>{this.state.empty1}</h2>
+            <h2>{this.state.empty2}</h2>
+
+            {/* <h2>{this.state.person}</h2> */} 
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script> 
+</body>
+</html>

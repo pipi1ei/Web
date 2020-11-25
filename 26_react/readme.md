@@ -106,3 +106,49 @@
     ReactDOM.render(<App/>, document.getElementById('app'))
   </script>
 ```
+
+## JSX
+### 认识 JSX
+```js
+  const element = <h2>hello world</h2>
+  ReactDOM.render(element, document.getElementById('app'))
+```
+- 上面这段 element 变量的声明右侧赋值的标签语法是什么呢？
+  + 它不是一段字符串（因为没有引号包裹），它看起来是一段HTML元素，但是在 js 中是不能给一个变量直接赋值html的，需要在 script 标签中添加 type="text/babel"，同时引入 babel 包。这其实就是一段 jsx 语法
+
+- jsx 是什么？
+  + JSX 是一种 JavaScript 的语法扩展，也在很多地方称之为 JavaScript XML，因为看起来就是一段 XML 语法
+  + 它用于描述我们的UI界面，并且完全可以和 JavaScript 融合在一起使用
+  + 它不同于 vue 中的模板语法，你不需要专门学习一种模板语法中的一些指令（如：v-if，b-bind 等）
+
+- 为什么 React 选择了 JSX
+  + React 认为渲染逻辑本质上与其他UI逻辑存在内在耦合
+    - 比如UI需要绑定事件（button，a 元素等）
+    - 比如UI中需要展示状态数据，在某些状态发生改变时，又需要改变UI
+  + 它们之间密不可分，所以 React 没有将标记分离到不同的文件中，而是将它们组合到了一起，这个地方就是组件（Component）
+
+- JSX其实是嵌入到JavaScript中的一种结构语法
+
+### JSX的书写规范
+- JSX 的顶层只能有一个根元素，所以我们很多时候会在外层包裹一个 div 元素（或者使用后面学习的 Fragment）
+- 为了方便阅读，通常在 jsx 的最外层包裹一个小括号()，这样可以方便阅读，并且 jsx 可以换行书写
+- jsx 中的标签可以是单标签，也可以是双标签，单标签必须以 /> 结尾
+
+- jsx 中如何写注释：`{/* 注释内容 */}`
+  ```html
+    <script type="text/babel">
+      (
+        <div>
+          {/* 我是一段注释 */}
+          <h2>hello world</h2>
+        </div>
+      )
+    </script>
+  ```
+
+- jsx 中嵌入变量
+  + 情况一：当变量是 Number，String，Array 类型时，可以直接显示
+  + 情况二：当变量时 null，undefined，Boolean类型时，内容为空
+    - 如果希望显示 null, undefined, Boolean ，则需要转换成字符串
+    - 转换的方式有很多，比如 toString 方法，和空字符串拼接，String()方法等
+  + 情况三：对象类型不能作为子元素（not valid as React child）
