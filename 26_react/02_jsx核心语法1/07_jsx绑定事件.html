@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: 'hello world',
+          count: 100
+        }
+
+        this.btn2Click = this.btn2Click.bind(this)
+      }
+      
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <h2>{this.state.count}</h2>
+            {/* 方案一：显示绑定this */}
+            <button onClick={this.btn1Click.bind(this)}>+</button>
+            {/* 方案二：在构造函数中绑定this */}
+            <button onClick={this.btn2Click}>-</button>
+            {/* 方案三：定义函数时使用箭头函数 */}
+            <button onClick={this.btn3Click}>=</button>
+            {/* 方案四(推荐)：使用箭头函数调用组件内的方法 */}
+            <button onClick={() => this.btn4Click()}>*2</button>
+          </div>
+        )
+      }
+
+      btn1Click() {
+        console.log('btn1Click')
+        this.setState({
+          count: this.state.count + 1
+        })
+      }
+
+      btn2Click() {
+        console.log('btn2Click')
+        this.setState({
+          count: this.state.count - 1
+        })
+      }
+
+      btn3Click = () => {
+        console.log('btn3Click', this.state.count)
+      }
+
+      btn4Click() {
+        console.log('btn4Click')
+        this.setState({
+          count: this.state.count * 2
+        })
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script> 
+</body>
+</html>

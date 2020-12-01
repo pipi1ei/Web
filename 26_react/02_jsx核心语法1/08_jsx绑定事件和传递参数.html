@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: 'hello world',
+          movies: ['海王', '海贼王', '火影忍者', '死神']
+        }
+      }
+      
+      render() {
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <ul>
+              {
+                this.state.movies.map((item, index) => {
+                  return (
+                    <li 
+                      key={index}
+                      className="item"
+                      onClick={e => this.itemClick(e, item, index)}
+                    >
+                      {item}
+                    </li> 
+                  )
+                })
+              }
+            </ul>
+          </div>
+        )
+      }
+
+      itemClick(e, item, index) {
+        console.log('li 被点击了', item, index, e)
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script> 
+</body>
+</html>

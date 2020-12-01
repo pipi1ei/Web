@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    function getImgWithSize(imgUrl, size) {
+      return `${imgUrl}?param=${size}y${size}`
+    }
+
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: 'hello world',
+          title: '标题',
+          imgUrl: 'http://p1.music.126.net/LSRuQ41KTobByAc-XHuQSA==/109951165470281204.jpg?param=200y200',
+          active: true
+        }
+      }
+      
+      render() {
+        const {imgUrl, title, active} = this.state
+
+        return (
+          <div>
+            <h2>{this.state.message}</h2>
+            <h2 title={title}>我是标题</h2>
+            <img src={getImgWithSize(imgUrl, 230)} />
+
+            {/* 绑定class */}
+            <div className="box title">我是div元素</div>
+            <div className={"box title " + active ? 'active' : ''}>我是div元素</div>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script> 
+</body>
+</html>
