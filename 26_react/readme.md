@@ -448,7 +448,7 @@ createElement 需要传递三个参数：
 
   - ReactElement 最终形成的树结构就是虚拟 DOM
 
-  - 整个转换过程：jsx --> ReactElement 对象 --> 真实 DOM
+  - 整个转换过程：jsx --> React.createElement函数 --> ReactElement 对象 --> ReactDOM.render --> 真实 DOM
 
 - 为什么采用虚拟 DOM，而不是直接修改真实 DOM 呢
 
@@ -467,5 +467,7 @@ createElement 需要传递三个参数：
   - 这种编程方式赋予了 React 声明式的 API：你只需要告诉 React 希望让 UI 是什么状态，React 来确保 DOM 和这些状态是匹配的
   - 你不需要直接进行 DOM 操作，就可以从手动更改 DOM、属性操作、事件处理中解放出来
 
+### 阶段案例 - 购物车案例
+- 详见：./02_jsx核心语法1/11_购物车综合案例.html
 
 ### React 脚手架

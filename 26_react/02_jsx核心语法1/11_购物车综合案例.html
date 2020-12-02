@@ -168,14 +168,9 @@
        *  删除书本
        */
       deleted(id) {
-        const newBooks = []
-        this.state.books.map(book => {
-          if(book.id !== id) {
-            newBooks.push(book) 
-          }
-        })
+        const books = [...this.state.books]
         this.setState({
-          books: newBooks
+          books: books.filter(book => id !== book.id)
         })
       }
 
