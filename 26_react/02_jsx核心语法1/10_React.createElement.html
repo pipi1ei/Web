@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    class App extends React.Component {
+
+      /**
+       * jsx 模板：
+       * <div className="app">
+          <div className="header">
+            <h1 title="标题">我是网站标题</h1>
+          </div>
+          <div className="content">
+            <h2>我是h2元素</h2>
+            <button onClick={e => console.log("+1")}>+1</button>
+            <button onClick={e => console.log("+1")}>-1</button>
+          </div>
+          <div className="footer">
+            <p>我是网站的尾部</p>
+          </div>
+        </div>
+       * */
+      render() {
+        const result = React.createElement('div', {className: 'app'}, 
+          React.createElement('div', {className: 'header'}, 
+            React.createElement('h1', {title: '标题'}, '我是网站标题')
+          ),
+          React.createElement('div', {className: 'content'},
+            React.createElement('h2', null, '我是h2元素'),
+            React.createElement('button', {onClick: e => console.log('+1')}, '+1'),
+            React.createElement('button', {onClick: e => console.log('-1')}, '-1')
+          ),
+          React.createElement('div', {className: 'footer'},
+            React.createElement('p', null, '我是网站的尾部')
+          )
+        )
+
+        console.log(result)
+        return result
+      }
+    }
+
+    ReactDOM.render(React.createElement(App, null), document.getElementById('app'))
+  </script>
+</body>
+</html>

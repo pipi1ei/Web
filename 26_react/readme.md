@@ -466,3 +466,6 @@ createElement 需要传递三个参数：
   - 在这个理念中，UI 以一种理想化的或者虚拟化的方式保存在内存中，并且它是一个相对简单的 javascript 对象，我们可以通过 ReactDOM.render 让虚拟 DOM 和真实 DOM 同步起来，这个过程叫做协调
   - 这种编程方式赋予了 React 声明式的 API：你只需要告诉 React 希望让 UI 是什么状态，React 来确保 DOM 和这些状态是匹配的
   - 你不需要直接进行 DOM 操作，就可以从手动更改 DOM、属性操作、事件处理中解放出来
+
+
+### React 脚手架

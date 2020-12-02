@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    订阅视图 - 1：<span class="box-1"></span><br/>
+    订阅视图 - 2：<span class="box-2"></span>
+  </div>
+
+  <script>
+    // 订阅器模型
+    let Dep = {
+      // 存储
+      clientList: {},
+      listen: function(key, fn) {
+        // if(!this.clientList[key]) {
+        //   this.clientList[key] = []
+        // }
+        // this.clientList[key].push(fn)
+        (this.clientList[key] || (this.clientList[key] = [])).push(fn)
+      },
+      trigger: function() {
+        let key = Array.prototype.shift.call(arguments),
+            fns = this.clientList[key];
+
+        console.log({key, arguments})
+
+        if(!fns || fns.length == 0) {
+          return false
+        }
+
+        for(let i = 0, fn; fn = fns[i++];) {
+          fn.apply(this, arguments)
+        }
+      }
+    }
+    
+    // 劫持方法
+    let dataHijack = function({data, tag, dataKey, selector}) {
+      let value = '',
+          el = document.querySelector(selector);
+
+      Object.defineProperty(data, dataKey, {
+        get: function() {
+          console.log('获取数据')
+          return value
+        },
+
+        set: function(newValue) {
+          console.log('设置新值')
+          value = newValue;
+          // 发布消息给模板
+          Dep.trigger(tag, newValue);
+        }
+      });
+
+      // 订阅数据
+      Dep.listen(tag, function(text) {
+        el.innerHTML = text;
+      })
+    }
+  </script>
+
+  <script>
+    let dataObj = {}
+    dataHijack({
+      data: dataObj,
+      tag: 'view-1',
+      dataKey: 'one',
+      selector: '.box-1'
+    })
+
+    dataHijack({
+      data: dataObj,
+      tag: 'view-2',
+      dataKey: 'two',
+      selector: '.box-2'
+    })
+
+    dataObj.one = 'one one one'
+    dataObj.two = 'two two'
+  </script>
+</body>
+</html>
