@@ -512,8 +512,8 @@ createElement 需要传递三个参数：
 ### 阶段案例 - 购物车案例
 - 详见：./02_jsx核心语法1/11_购物车综合案例.html
 
-### React 脚手架
-#### 认识脚手架
+## React 脚手架
+### 认识脚手架
 - 前端工程的复杂化：
 如果只是开发几个小的demo程序，那么不需要考虑以下复杂的问题：
   + 目录结构如何划分
@@ -543,7 +543,7 @@ createElement 需要传递三个参数：
 这里我们主要是学习React，所以我们还是以React的脚手架工具：create-react-app 作为讲解；
 
 
-#### create-react-app
+### create-react-app
 - 安装react脚手架：`npm install -g create-react-app`
 - 创建React项目
   + 创建命令： `create-react-app 项目名称`
