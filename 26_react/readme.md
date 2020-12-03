@@ -239,6 +239,48 @@ ReactDOM.render(element, document.getElementById("app"));
 - jsx 绑定事件
 
   - jsx 中绑定事件时需要绑定 this，一般使用以下方式
+    1. 显式绑定this
+    ```jsx
+      <button onClick={this.btnClick.bind(this)}>按钮</button>
+      // 或在constructor 中显示绑定
+      constructor(props) {
+        super(props)
+        this.btnClick = this.btnClick.bind(this)
+      }
+      <button onClick={this.btnClick}>按钮</button>
+    ```
+    2. class fields 模式
+    ``` jsx
+      class App extends React.Component {
+        constructor(props) {
+          super(props)
+        }
+
+        render() {
+          return (<button onClick={this.btnClick}>按钮</button>)
+        }
+
+        btnClick = () => {
+          // doSomething
+        }
+      }
+    ```
+    3. 使用箭头函数调用组件内的方法(推荐), 这种方式还可以传递参数
+    ``` jsx
+      class App extends React.Component {
+        constructor(props) {
+          super(props)
+        }
+
+        render() {
+          return (<button onClick={e => this.btnClick('arg1', 'arg2')}>按钮</button>)
+        }
+
+        btnClick = (arg1, arg2) => {
+          // doSomething
+        }
+      }
+    ```
 
 - react 条件渲染
   - 在某些情况下，界面内容会根据不同的情况显示不同的内容，或者决定是否渲染某部分内容
@@ -253,31 +295,31 @@ ReactDOM.render(element, document.getElementById("app"));
 
     ```jsx
     class App extends React.Component {
-        constructor(props) {
-            super(prorps)
-            this.state = {
-                userName: 'pipilei',
-                isLogin: false
-            }
+      constructor(props) {
+        super(props)
+        this.state = {
+          userName: 'pipilei',
+          isLogin: false
         }
+      }
 
-        render() {
-            const {userName, isLogin} = this.state
-            const nameDisplay = isLogin ? 'block' : 'none'
+      render() {
+        const {userName, isLogin} = this.state
+        const nameDisplay = isLogin ? 'block' : 'none'
 
-            return (
-              <div>
-                    <h2 style={{display: nameDispaly}}>{userName}</h2>
-                    <button onClick={() => {this.toggleLogin()}>{isLogin ? "退出" : "登陆"}</button>
-                </div>
-            )
-        }
+        return (
+          <div>
+            <h2 style={{display: nameDisplay}}>{userName}</h2>
+            <button onClick={() => {this.toggleLogin()}>{isLogin ? "退出" : "登陆"}</button>
+          </div>
+        )
+      }
 
-        toggleLogin() {
-          this.setState({
-                isLogin: !this.state.isLogin
-            })
-        }
+      toggleLogin() {
+        this.setState({
+          isLogin: !this.state.isLogin
+        })
+      }
     }
 
     ```
@@ -471,3 +513,85 @@ createElement 需要传递三个参数：
 - 详见：./02_jsx核心语法1/11_购物车综合案例.html
 
 ### React 脚手架
+#### 认识脚手架
+- 前端工程的复杂化：
+如果只是开发几个小的demo程序，那么不需要考虑以下复杂的问题：
+  + 目录结构如何划分
+  + 如何管理文件之间的相互依赖
+  + 管理第三方模块的依赖
+  + 项目发布前如何压缩、打包
+
+现在的前端项目已经越来越复杂了：
+  + 不再是在 HTML 中引入几个 css、js 文件或者第三方的 js 文件这么简单
+  + 比如 css 可能是 less，sass 等预处理器编写，我们需要将它们转成 css 才能被浏览器解析
+  + 比如 javascript 代码不再只是编写在几个文件中，而是通过模块化的方式，被组成在成百上千个文件中，我们需要通过模块化的技术来管理它们之间的相互依赖
+  + 比如项目依赖很多第三方库，如何更好的管理它们（比如管理它们的依赖、版本升级等）
+
+为了解决上面这些问题，我们需要再去学习一些工具
+  + 比如 babel、webpack、gulp。配置它们转换规则，打包依赖，热更新等一系列内容，你会发现还没有开始做项目，就面临了一系列工程化的问题
+
+- 脚手架是什么？
+编程中提到的脚手架（Scaffold），其实是一种工具，帮我们可以快速生成项目的工程化结构：
+  + 每个项目做出完成的效果不同，但它们的基本结构是相似的
+  + 既然相似，就没有必要每次都从零开始搭建，完全可以使用一些工具，帮助我们生成基本的工程化模板
+  + 不同的项目，在这个模板的基础上进行项目开发或者进行一些简单的配置即可
+  + 这样也可以间接的保证项目的结构一致性，方便后期的维护
+
+总结：**脚手架让项目从搭建到开发，再到部署，整个流程变得快速和便捷**
+
+脚手架的作用是帮助我们生成一个通用的目录结构，并且已经将我们所需的工程环境配置好
+这里我们主要是学习React，所以我们还是以React的脚手架工具：create-react-app 作为讲解；
+
+
+#### create-react-app
+- 安装react脚手架：`npm install -g create-react-app`
+- 创建React项目
+  + 创建命令： `create-react-app 项目名称`
+  + 上面的创建方式，默认使用 yarn 来管理整个项目包相关的依赖的
+  + 如果希望使用 npm，也可以在参数后面加上：--use-npm
+- 创建完成后，进入对应的项目目录，就可以将项目跑起来
+  + cd 项目目录
+  + yarn start
+- 目录结构分析：
+  test-react
+  ├─ README.md // readme说明文档
+  ├─ package.json // 对整个应用程序的描述：包括应用名称、版本号、一些依赖包、以及项目的启动、打包等等（node管理项目必备文件）
+  ├─ public
+  │    ├─ favicon.ico // 应用程序顶部的icon图标
+  │    ├─ index.html // 应用的index.html入口文件
+  │    ├─ logo192.png // 被在manifest.json中使用
+  │    ├─ logo512.png // 被在manifest.json中使用
+  │    ├─ manifest.json // 和Web app配置相关
+  │    └─ robots.txt // 指定搜索引擎可以或者无法爬取哪些文件
+  ├─ src
+  │    ├─ App.css // App组件相关的样式
+  │    ├─ App.js // App组件的代码文件
+  │    ├─ App.test.js // App组件的测试代码文件
+  │    ├─ index.css // 全局的样式文件
+  │    ├─ index.js // 整个应用程序的入口文件
+  │    ├─ logo.svg // 刚才启动项目，所看到的React图标
+  │    ├─ serviceWorker.js // 默认帮助我们写好的注册PWA相关的代码
+  │    └─ setupTests.js // 测试初始化文件
+  └─ yarn.lock
+
+  整个目录结构都比较好理解，只有一个 PWA 相关的概念：
+    + PWA 全称 Progressive Web App，即渐进式 WEB 应用
+    + 一个PWA应用首先应该是一个网页，可以通过 web 技术编写出一个网页应用，随后添加上 App Manifest 和 Service Worker 来实现 PWA 的安装和离线等功能
+    + 这种 web存在的形式，我们也称之为 Web App
+  
+  PWA 解决了哪些问题？
+    + 可以添加至主屏幕，点击主屏幕图标可以实现启动动画以及隐藏地址栏
+    + 实现离线缓存功能，即使用户手机没网络，依然可以使用一些离线功能
+    + 实现了消息推送等一系列类似于 Native App 相关的功能
+
+- webpack配置
+  我们说过React的脚手架是基于Webpack来配置的：
+    + webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)；
+    + 当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle；
+  
+  但是，很奇怪：我们并没有在目录结构中看到任何webpack相关的内容？
+    + 原因是脚手架将webpack相关的配置隐藏起来了（Vue 从 Vue Cli3 开始也是进行了隐藏）
+  
+  如果我们希望看到webpack的配置信息，应该怎么做呢？
+    + 我们可以执行一个package.json 文件中的脚本：`"eject": "react-scripts eject"`
+    + 这个操作是不可逆的，所以在执行过程中会给我们提示
