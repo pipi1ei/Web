@@ -595,3 +595,5 @@ createElement 需要传递三个参数：
   如果我们希望看到webpack的配置信息，应该怎么做呢？
     + 我们可以执行一个package.json 文件中的脚本：`"eject": "react-scripts eject"`
     + 这个操作是不可逆的，所以在执行过程中会给我们提示
+    + 执行完上述命令后悔产生config文件夹和scripts 文件夹，它们里面的内容就是 webpack 的相关配置
+  
