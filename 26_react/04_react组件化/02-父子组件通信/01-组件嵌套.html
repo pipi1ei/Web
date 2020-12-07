@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    function Header() {
+      return (
+        <h2>Header</h2>
+      )
+    }
+
+    function Main() {
+      return (
+        <div>
+          <Banner/>
+          <ProductList/>  
+        </div>
+      )
+    }
+
+    function Banner() {
+      return <div>Banner</div>
+    }
+
+    function ProductList() {
+      return (
+        <ul>
+          <li>商品1</li>
+          <li>商品2</li>
+          <li>商品3</li>
+          <li>商品4</li>
+          <li>商品5</li>
+        </ul>
+      )
+    }
+
+    function Footer() {
+      return <h2>Footer</h2>
+    }
+
+    class App extends React.Component {
+
+      render() {
+        return(
+          <div>
+            <Header />
+            <Main/>
+            <Footer/>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script>
+</body>
+</html>

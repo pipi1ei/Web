@@ -235,3 +235,253 @@ React的组件相对于Vue更加的灵活和多样，按照不同的方式可以
   + getDerivedStateFromProps：state 的值在任何时候都依赖于 props时使用；该方法返回一个对象来更新state；
   + getSnapshotBeforeUpdate：在React更新DOM之前回调的一个函数，可以获取DOM更新前的一些信息（比如说滚动位置）；
   + shouldComponentUpdate：该生命周期函数很常用，但是我们等待讲性能优化时再来详细讲解； 
+
+
+## 父子组件通信
+### 认识组件的嵌套
+组件之间存在嵌套关系：
+
+- 在之前的案例中，我们只是创建了一个组件App；
+- 如果我们一个应用程序将所有的逻辑都放在一个组件中，那么这个组件就会变成非常的臃肿和难以维护；
+- 所以组件化的核心思想应该是对组件进行拆分，拆分成一个个小的组件；
+- 再将这些组件组合嵌套在一起，最终形成我们的应用程序；
+我们来分析一下下面代码的嵌套逻辑：
+```jsx
+  function Header() {
+    return (
+      <h2>Header</h2>
+    )
+  }
+
+  function Main() {
+    return (
+      <div>
+        <Banner/>
+        <ProductList/>  
+      </div>
+    )
+  }
+
+  function Banner() {
+    return <div>Banner</div>
+  }
+
+  function ProductList() {
+    return (
+      <ul>
+        <li>商品1</li>
+        <li>商品2</li>
+        <li>商品3</li>
+        <li>商品4</li>
+        <li>商品5</li>
+      </ul>
+    )
+  }
+
+  function Footer() {
+    return <h2>Footer</h2>
+  }
+
+  class App extends React.Component {
+
+    render() {
+      return(
+        <div>
+          <Header />
+          <Main/>
+          <Footer/>
+        </div>
+      )
+    }
+  }
+
+  ReactDOM.render(<App/>, document.getElementById('app'))
+```
+上面的嵌套关系如下：
+  - App 组件是 Header、Main、Footer组件的父组件
+  - Main 组件是 Banner、ProductList组件的父组件
+
+在开发过程中，我们会经常遇到需要组件之间相互进行通信：
+  - 比如App可能使用了多个Header，每个地方的Header展示的内容不同，那么我们就需要使用者传递给Header一些数据，让其进行展示；
+  - 又比如我们在Main中一次性请求了Banner数据和ProductList数据，那么就需要传递给他们来进行展示；
+  - 也可能是子组件中发生了事件，需要由父组件来完成某些操作，那就需要子组件向父组件传递事件；
+
+父组件在展示子组件，可能会传递一些数据给子组件：
+  - 父组件通过 属性=值 的形式来传递给子组件数据；
+  - 子组件通过 props 参数获取父组件传递过来的数据；
+
+### 父组件传递子组件
+1. 子组件是 class 组件
+我们这里先演示子组件是class组件：
+```jsx
+  class ChildCpn1 extends React.Component {
+    constructor(props) {
+      super()
+      this.props = props
+    }
+
+    render() {
+      const {name, age, height} = this.props
+
+      return (
+        <div>
+          <h2>我是class子组件</h2>  
+          <p>展示父组件传递过来的数据：{name} {age} {height}</p>
+        </div>
+      )
+    }
+  }
+
+  class App extends React.Component {
+    render() {
+      return(
+        <div>
+          <ChildCpn1 name="pipi1ei" age="18" height="180" />
+        </div>
+      )
+    }
+  }
+```
+按照上面的结构，我们每个子组件都需要写一个构造器来完成：`this.props = props`，其实可以不用这样，我们可以调用 `super(props)`，我们来看一下 Component 的源码：
+```js
+  function Component(props, context, updater) {
+    this.props = props;
+    this.context = context;
+    // If a component has string refs, we will assign a different object later.
+    this.refs = emptyObject;
+     // We initialize the default updater but the real one gets injected by the renderer.
+    this.updater = updater;
+  }
+```
+  - 这里我们先不关心 context，updater，我们发现传入的 props 会被设置到this中（父类的对象），那么子类就可以继承过来
+
+所以我们的构造方法可以换成下面的写法：
+```js
+  constructor(props) {
+    super(props);
+  }
+```
+
+甚至可以省略，因为如果不指定构造方法，则使用默认的构造函数，对于基类，默认构造函数是：
+```js
+  constructor() {}
+```
+
+对于派生类，默认构造函数是：
+```js
+  constructor(...args) {
+    super(...args);
+  }
+```
+
+2. 子组件是 function 组件
+```jsx
+  function ChildCpn2(props) {
+    const {name, age, height} = props
+
+    return (
+      <div>
+        <h2>我是function类型的子组件</h2>  
+        <p>展示父组件传递过来的数据：{name} {age} {height}</p>
+      </div>
+    )
+  }
+
+  class App extends React.Component {
+    render() {
+      return(
+        <div>
+          <ChildCpn2 name="why" age="18" height="1.88"/>
+          <ChildCpn2 name="kobe" age="30" height="1.98"/>
+        </div>
+      )
+    }
+  }
+```
+functional组件相对来说比较简单，因为不需要有构造方法，也不需要有this的问题。
+
+3. 参数验证 propTypes
+对于传递给子组件的数据，有时候我们可能希望进行验证，特别是对于大型项目来说：
+  - 当然，如果项目中默认继承了 Flow 或 TypeScript，那么就可以直接进行类型验证
+  - 但是，即使我们没有使用 Flow 或 Typescript，也可以通过 **prop-types** 库来进行参数验证
+
+从 React v15.5 开始，React.PropTypes已移入另一个包中：prop-types 库
+我们对之前的class组件进行验证：
+```js
+ChildCpn1.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  height: PropTypes.number
+}
+```
+这时候，控制台就会报出警告
+
+如果没有传递参数，我们希望有默认值可以使用 defaultProps
+```js
+ChildCpn1.defaultProps = {
+  name: "王小波",
+  age: 40,
+  height: 1.92
+}
+```
+
+### 子组件传递父组件
+某些情况，我们也需要子组件向父组件传递消息：
+  - 在vue中是通过自定义事件来完成的；
+  - 在React中同样是通过props传递消息，只是让父组件给子组件传递一个回调函数，在子组件中调用这个函数即可；
+
+我们这里来完成一个案例：
+  - 将计数器案例进行拆解；
+  - 将按钮封装到子组件中：CounterButton；
+  - CounterButton发生点击事件，将内容传递到父组件中，修改counter的值；
+
+```jsx
+  function CounterButton(props) {
+    const {operator, btnClick} = props
+    return <button onClick={btnClick}>{operator}</button>
+  }
+
+  class App extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        counter: 0
+      }
+    }
+
+    render() {
+      return(
+        <div>
+          <h2>当前计数：{this.state.counter}</h2>
+          <CounterButton operator="+1" btnClick={e => this.changeCounter(1)} />
+          <CounterButton operator="-1" btnClick={e => this.changeCounter(-1)} />
+        </div>
+      )
+    }
+
+    changeCounter(count) {
+      this.setState({
+        counter: this.state.counter + count
+      })
+    }
+  }
+```
+
+### 组件通信练习
+- 详见：./04_react组件化/04-component-communicate-demo
+
+### React 插槽的实现
+1. 为什么使用插槽？
+在开发中，我们抽取了一个组件，但是为了让这个组件具备更强的通用性，我们不能将组件中的内容限制为固定的div、span等等这些元素。
+我们应该让使用者可以决定某一块区域到底存放什么内容。
+举个栗子：假如我们定制一个通用的导航组件 - NavBar
+  - 这个组件分成三块区域：左边-中间-右边，每块区域的内容是不固定；
+  - 左边区域可能显示一个菜单图标，也可能显示一个返回按钮，可能什么都不显示；
+  - 中间区域可能显示一个搜索框，也可能是一个列表，也可能是一个标题，等等；
+  - 右边可能是一个文字，也可能是一个图标，也可能什么都不显示；
+
+这种需求在Vue当中有一个固定的做法是通过slot来完成的，React呢？
+  - React对于这种需要插槽的情况非常灵活；
+  - 有两种方案可以实现：children和props；
+
+- 详见：./04_react组件化/05-react-slot
