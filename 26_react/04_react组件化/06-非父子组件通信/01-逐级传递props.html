@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    function ProfileHeader(props) {
+      return (
+        <div>
+          <h2>用户昵称：{props.nickname}</h2>  
+          <h2>用户等级：{props.level}</h2>  
+        </div>
+      )
+    }
+
+    class Profile extends React.Component {
+      render() {
+        return (
+          <div>
+            <ProfileHeader {...this.props} />  
+            <ul>
+              <li>设置1</li>  
+              <li>设置2</li>  
+              <li>设置3</li>  
+              <li>设置4</li>  
+              <li>设置5</li>  
+            </ul>
+          </div>
+        )
+      }
+    }
+
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          nickname: 'pipi1ei',
+          level: 99
+        }
+      }
+
+      render() {
+        const { nickname, level } = this.state
+        return(
+          <div>
+            <Profile nickname={nickname} level={level} />
+            <h2>其他内容</h2>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script>
+</body>
+</html>

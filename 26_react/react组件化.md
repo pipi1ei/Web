@@ -485,3 +485,555 @@ ChildCpn1.defaultProps = {
   - 有两种方案可以实现：children和props；
 
 - 详见：./04_react组件化/05-react-slot
+
+
+## 非父子组件通信
+### Context 的使用
+1. Context应用场景
+非父子组件数据的共享：
+- 在开发中，比较常见的数据传递方式是通过 props 属性自上而下（由父到子）进行传递
+- 但对于有些场景，比如一些数据需要在多个组件之间进行共享（地区偏好、UI主题、用户登录状态等），如果我们在顶层的 App 中定义这些信息，之后一层层传递下去，那么对于一些中间层不需要的组件来说，是一种冗余的操作
+
+```jsx
+import React, { Component } from 'react'
+
+function ProfileHeader(props) {
+  return (
+    <div>
+      <h2>用户名：{props.nickname}</h2>
+      <h2>用户等级：{props.level}</h2>
+    </div>
+  )
+}
+
+class Profile extends Component {
+  render() {
+    return (
+      <div>
+        <ProfileHeader nickname={this.props.nickname} level={this.props.level} />
+        <ul>
+          <li>设置1</li>
+          <li>设置2</li>
+          <li>设置3</li>
+          <li>设置4</li>
+          <li>设置5</li>
+        </ul>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      nickname: 'pipilei',
+      level: 99
+    }
+  }
+
+  render() {
+    const { nickname, level } = this.state
+
+    return (
+      <div>
+        <Profile nickname={nickname} level={level} />
+        <h2>其他内容</h2>
+      </div>
+    )
+  }
+}
+```
+
++ 补充个小知识点：Spread Attributes
+下面两种写法是等价的：
+```jsx
+  function App1() {
+    return <Greeting firstName="Ben" lastName="Hector" />
+  }
+
+  function App2() {
+    const props = { firstName: "Ben", lastName: "Hector" }
+    return <Greeting {...props} />
+  }
+```
+
+那么我们上面的Profile的传递代码可以修改为如下代码：
+```jsx
+  <ProfileHeader {...this.props}/>
+```
+
+但是，如果层级更多的话，一层层传递是非常麻烦，并且代码是非常冗余的：
+  - react 提供了一个API：Context
+  - Context 提供了一种在组件之间共享此类值的方式，而不必显示地通过组件树的逐层传递props
+  - Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据，例如当前用户的登陆状态
+
+2. Context 相关API
+- React.createContext
+  ```jsx
+  const MyContext = React.createContext(defaultValue)
+  ```
+  + 创建一个需要共享的 Context 对象：
+    - 如果一个组件订阅了 Context，那么这个组件会从离自身最近的那个匹配的 Provider 中读取到当前 Context 的值
+    - defaultValue 是组件在顶层查找过程中没有找到对应的 Provider，那么就使用默认值
+
+- Context.Provider
+  ```jsx
+    <MyContext.Provider value={/* 某个值 */}>
+  ```
+  + 每个Context对象都会返回一个Provider React 组件，它允许消费组件订阅 Context 的变化
+    - Provider 接收一个value属性，传递给消费组件
+    - 一个 Provider 可以和多个消费组件有对应关系
+    - 多个 Provider 也可以嵌套使用，里面的会覆盖外层数据
+  当Provider value 的值发生变化时，它内部的所有消费组件都会重新渲染
+
+- Class.contextType
+  ```jsx
+    class MyClass extends React.Component {
+      componentDidMount() {
+        let value = this.context;
+        /* 在组件挂载完成后，使用 MyContext 组件的值来执行一些有副作用的操作 */
+      }
+      componentDidUpdate() {
+        let value = this.context;
+        /* ... */
+      }
+      componentWillUnmount() {
+        let value = this.context;
+        /* ... */
+      }
+      render() {
+        let value = this.context;
+        /* 基于 MyContext 组件的值进行渲染 */
+      }
+    }
+    MyClass.contextType = MyContext;
+  ```
+  挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象：
+    + 这能让你使用 this.context 来消费最近 Context 上的那个值；
+    + 你可以在任何生命周期中访问到它，包括 render 函数中；
+
+- Context.Consumer
+  ```jsx
+    <MyContext.Consumer>
+      {value => /* 基于 context 值进行渲染 */}
+    </MyContext.Consumer>
+  ```
+  这里，React 组件也可以订阅到 context 变更。这能让你在 函数式组件 中完成订阅 context。
+    + 这里需要 函数作为子元素（function as child）这种做法；
+    + 这个函数接收当前的 context 值，返回一个 React 节点；
+
+3. Context 的使用过程
+  ```jsx
+  import React, { Component } from 'react'
+
+  const userContext = React.createContext({nickname: '默认', level: 0})
+
+  class ProfileHeader extends Component {
+    render() {
+      return (
+        <div>
+          <h2>用户昵称：{this.context.nickname}</h2>
+          <h2>用户等级：{this.context.level}</h2>
+        </div>
+      )
+    }
+  }
+  ProfileHeader.contextType = userContext;
+
+  class Profile extends Component {
+    render() {
+      return (
+        <div>
+          <ProfileHeader />
+          <ul>
+            <li>设置1</li>  
+            <li>设置2</li>  
+            <li>设置3</li>  
+            <li>设置4</li>  
+            <li>设置5</li>  
+          </ul>
+        </div>
+      )
+    }
+  }
+
+  export default class App extends Component {
+    render() {
+      return (
+        <div>
+          <userContext.Provider value={{nickname: 'pipilei', level: 99}}>
+            <Profile />
+          </userContext.Provider>
+          <h2>其他内容</h2>
+        </div>
+      )
+    }
+  };
+  ```
+
+  - 什么时候使用 defaultValue 呢？如果出现了如下代码：
+    + <Profile />并没有作为 UserContext.Provider 的子组件；
+    ```jsx
+      <Profile />
+      <userContext.Provider value={{nickname: 'pipilei', level: 99}}>
+      </userContext.Provider>
+    ```
+
+  - 什么时候使用 Consumer 呢？
+    + 1.当使用value的组件是一个函数式组件时；
+    + 2.当组件中需要使用多个Context时；
+    演练一：
+    ```jsx
+      function ProfileHeader() {
+        return (
+          <div>
+            <UserContext.Consumer>
+              {
+                value => {
+                  return (
+                    <div>
+                      <h2>用户昵称：{value.nickname}</h2>
+                      <h2>用户等级：{value.level}</h2>
+                    </div>
+                  )
+                }
+              }
+            </UserContext.Consumer>
+          </div>
+        )
+      }
+    ```
+
+    演练二：
+    1. 创建一个新的 Context
+    ```jsx
+      const ThemeContext = React.createContext({ color: "black" });
+    ```
+
+    2. Provider的嵌套
+    ```jsx
+      <UserContext.Provider value={{ nickname: "why", level: 99 }}>
+        <ThemeContext.Provider value={{color: "red"}}>
+          <Profile />
+        </ThemeContext.Provider>
+      </UserContext.Provider>
+    ```
+
+    3. 使用Consumer的嵌套
+    ```jsx
+      <UserContext.Consumer>
+        {value => {
+          return (
+            <ThemeContext.Consumer>
+              {
+                theme => (
+                  <div>
+                    <h2 style={theme}>用户昵称: {value.nickname}</h2>
+                    <h2 style={theme}>用户等级: {value.level}</h2>
+                  </div>
+                )
+              }
+            </ThemeContext.Consumer>
+          )
+        }}
+      </UserContext.Consumer>
+    ```
+
+
+### 事件总线
+前面通过Context主要实现的是数据的共享，但是在开发中如果有跨组件之间的事件传递，应该如何操作呢？
+  - 在Vue中我们可以通过Vue的实例，快速实现一个事件总线（EventBus），来完成操作；
+  - 在React中，我们可以依赖一个使用较多的库 events 来完成对应的操作；
+
+我们可以通过npm或者yarn来安装events：`yarn add events;`
+
+events常用的API：
+  - 创建 EventEmit 对象：eventBus 对象
+  - 发出事件：eventBus.emit("事件名称", 参数列表)
+  - 监听事件：eventBus.addListener("事件名称", 监听函数)
+  - 移除事件：eventBus.removeListener("事件名称", 监听函数)
+
+- 案例练习
+```jsx
+import React, { Component } from 'react';
+import { EventEmitter } from "events";
+
+const eventBus = new EventEmitter();
+
+class ProfileHeader extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={e => this.btnClick()}>按钮</button>
+      </div>
+    )
+  }
+
+  btnClick() {
+    eventBus.emit("headerClick", "why", 18);
+  }
+}
+
+
+
+class Profile extends Component {
+  render() {
+    return (
+      <div>
+        <ProfileHeader />
+        <ul>
+          <li>设置1</li>
+          <li>设置2</li>
+          <li>设置3</li>
+          <li>设置4</li>
+          <li>设置5</li>
+        </ul>
+      </div>
+    )
+  }
+}
+
+export default class App extends Component {
+
+  componentDidMount() {
+    eventBus.addListener("headerClick", this.headerClick)
+  }
+
+  headerClick(name, age) {
+    console.log(name, age);
+  }
+
+  componentWillUnmount() {
+    eventBus.removeListener("headerClick", this.headerClick);
+  }
+
+  render() {
+    return (
+      <div>
+        <Profile/>
+        <h2>其他内容</h2>
+      </div>
+    )
+  }
+}
+```
+
+## 受控组件和非受控组件
+### refs 的使用
+在 react 开发模式中，通常情况下不需要、也不建议直接操作原生DOM，但是某些特殊的情况，确实需要获取到DOM进行操作
+  - 管理焦点，文本选择或媒体播放
+  - 触发强制动画
+  - 继承第三番DOM库
+
+1. 创建 ref 的方式
+如何创建refs来获取对应的DOM呢？目前有三种方式：
+  - 方式一：传入字符串
+    + 使用时通过 `this.refs.传入的字符串` 格式获取对应的元素
+  - 方式二：传入一个对象
+    + 对象是通过 React.createRef() 方式创建出来的
+    + 使用时获取到创建的对象其中有一个 current 属性就是对应的元素
+  - 方式三：传入一个函数
+    + 该函数会在DOM被挂载的时候回调，这个函数会传入一个对象，我们可以自己保存
+    + 使用时，直接拿到之前保存的对象即可
+
+  代码演练：
+  ```jsx
+    import React, { PureComponent, createRef } from 'react'
+
+    export default class App extends PureComponent {
+      constructor(props) {
+        super(props);
+
+        this.titleRef = createRef();
+        this.titleEl = null;
+      }
+
+      render() {
+        return (
+          <div>
+            <h2 ref="title">String Ref</h2>
+            <h2 ref={this.titleRef}>Hello Create Ref</h2>
+            <h2 ref={element => this.titleEl = element}>Callback Ref</h2>
+
+            <button onClick={e = this.changeText()}>改变文本</button>
+          </div>
+        )
+      }
+
+      changeText() {
+        this.refs.title.innerHTML = '你好啊，李银河'
+        this.titleRef.current.innerHTML = '你好啊，李银河'
+        this.titleEl.innerHTML = '你好啊，李银河'
+      }
+    }
+  ```
+
+2. ref 节点的类型
+ref 的值根据节点的类型而有所不同：
+- 当 ref 属性用于HTML元素时，构造函数使用 React.createRef() 创建的 ref 接受底层DOM元素作为其 current 属性
+- 当 ref 属性用在自定义 class 组件时，ref对象接收组件的挂载实例作为其current属性
+- 你不能在函数组件上使用 ref 属性，因为他们没有实例；
+
+这里我们演示一下ref引用一个class组件对象：
+```jsx
+import React, { PureComponent, createRef } from 'react'
+
+class Counter extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      counter: 0
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>当前计数： {this.state.counter}</h2>
+        <button onClick={e => this.increment()}>+1</button>
+      </div>
+    )
+  }
+
+  increment() {
+    this.setState({
+      counter: this.state.counter + 1
+    })
+  }
+}
+
+export class App extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.counterRef = createRef()
+  }
+
+  render() {
+    return(
+      <div>
+        <Counter ref={this.counterRef} />
+        <button onClick={e => this.increment()}>App+1</button>
+      </div>
+    )
+  }
+
+  increment() {
+    this.counterRef.current.increment()
+  }
+}
+```
+
+### 受控组件
+1. 认识受控组件
+- 默认提交表单方式
+在React中，HTML表单的处理方式和普通的DOM元素不太一样：表单元素通常会保存在一些内部的state。
+比如下面的HTML表单元素：
+  + 这个处理方式是DOM默认处理HTML表单的行为，在用户点击提交时会提交到某个服务器中，并且刷新页面；
+  + 在React中，并没有禁止这个行为，它依然是有效的；
+  + 但是通常情况下会使用JavaScript函数来方便的处理表单提交，同时还可以访问用户填写的表单数据；
+  + 实现这种效果的标准方式是使用“受控组件”；
+  ```html
+    <form>
+      <label>
+        名字：
+        <input type="text" name="name" />
+      </label>
+      <input type="submit" value="提交" />
+    </form>
+  ```
+
+- 受控组件提交表单
+在 HTML 中，表单元素（如<input>、 <textarea> 和 <select>）之类的表单元素通常自己维护 state，并根据用户输入进行更新。
+而在 React 中，可变状态（mutable state）通常保存在组件的 state 属性中，并且只能通过使用 setState()来更新。
+  + 我们将两者结合起来，使React的state成为“唯一数据源”；
+  + 渲染表单的 React 组件还控制着用户输入过程中表单发生的操作；
+  + 被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”；
+
+  例如，如果我们想让前一个示例在提交时打印出名称，我们可以将表单写为受控组件：
+  ```jsx
+    import React, { PureComponent } from 'react'
+
+    export default class App extends PureComponent {
+      constructor(props) {
+        super(props);
+
+        this.state = {
+          username: ""
+        }
+      }
+
+      render() {
+        const { username } = this.state
+
+        return (
+          <div>
+            <form onSubmit={e => this.handleSubmit()}>
+              <label>
+                用户名：
+                <input type="text" id="username" value={username} onChange={e => this.handleUsernameChange()} />
+              </label>
+              <input type="submit" value="提交"/>
+            </form>
+          </div>
+        )
+      }
+
+      handleUsernameChange(e) {
+        this.setState({
+          username: e.target.value
+        })
+      }
+
+      handleSubmit(e) {
+        console.log(this.username)
+        e.preventDefault()
+      }
+    }
+  ```
+  由于在表单元素上设置了 value 属性，因此显示的值将始终为 this.state.value，这使得 React 的 state 成为唯一数据源。
+  由于 handleUsernameChange 在每次按键时都会执行并更新 React 的 state，因此显示的值将随着用户输入而更新。
+
+
+### 非受控组件
+React推荐大多数情况下使用 受控组件 来处理表单数据：
+  + 一个受控组件中，表单数据是由 React 组件来管理的；
+  + 另一种替代方案是使用非受控组件，这时表单数据将交由 DOM 节点来处理；
+如果要使用非受控组件中的数据，那么我们需要使用 ref 来从DOM节点中获取表单数据。
+
+我们来进行一个简单的演练：
+  + 使用ref来获取input元素；
+  + 在非受控组件中通常使用defaultValue来设置默认值；
+
+```jsx
+import React, { PureComponent, createRef } from 'react'
+
+export default class App extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.usernameRef = createRef();
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <label htmlFor="">
+            用户:<input defaultValue="username" type="text" name="username" ref={this.usernameRef}/>
+          </label>
+          <input type="submit" value="提交"/>
+        </form>
+      </div>
+    )
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.usernameRef.current.value);
+  }
+}
+```
+- 同样，<input type="checkbox"> 和 <input type="radio"> 支持 defaultChecked，<select> 和 <textarea> 支持 defaultValue。
