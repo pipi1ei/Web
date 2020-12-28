@@ -819,6 +819,45 @@ export default class App extends Component {
 }
 ```
 
+### 临时知识补充
+在进行React开发中，有一个很奇怪的现象：
+  - 在调用super()的时候，我没有传入props，但是在下面的render函数中我依然可以使用；
+  - 如果你自己编写一个基础的类，可以尝试一下：这种情况props应该是undefined的；
+  ```jsx
+    class ChildCpn extends Component {
+      constructor(props) {
+        super();
+      }
+
+      render() {
+        const {name, age, height} = this.props;
+        return (
+          <h2>子组件展示数据: {name + " " + age + " " + height}</h2>
+        )
+      }
+    }
+  ```
+为什么这么神奇呢？
+  - 之所以可以，恰恰是因为React担心你的代码会出现上面这种写法而进行了一些 骚操作；
+  - React不管你有没有通过super将props设置到当前的对象中，它都会重新给你设置一遍；
+
+如何验证呢？
+  - 这就需要通过源码来验证了；
+  - React的源码packages中有提供一个Test Renderer的package；
+  - 这个 package 提供了一个 React 渲染器，用于将 React 组件渲染成纯 JavaScript 对象，不需要依赖 DOM 或原生移动环境；
+
+查看源码：
+![源码1](./img/01.jpg)
+我们来看一下这个组件是怎么被创建出来的：
+  - 我们找到其中的render函数；
+  ![源码2](./img/02.jpg)
+  - render函数中有这样的一段代码；
+    + 这个_instance实例就是组件对象；
+  ![源码3](./img/03.jpg)
+  - 我们再看一下，它在哪里重新赋值的：
+    + 这里还包括通过this._instance的方式回调生命周期函数；
+  ![源码4](./img/04.jpg)
+
 ## 受控组件和非受控组件
 ### refs 的使用
 在 react 开发模式中，通常情况下不需要、也不建议直接操作原生DOM，但是某些特殊的情况，确实需要获取到DOM进行操作
