@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    import styles from "App.modules.css"
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          
+        }
+      }
+
+      render() {
+        return(
+          <div className="app">
+            <h2 className={styles.title}>我是App的标题</h2>
+            <p className={styles.desc}>我是App中的一段文字描述</p>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('app'))
+  </script>
+</body>
+</html>

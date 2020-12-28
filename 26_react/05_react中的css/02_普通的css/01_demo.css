@@ -1,0 +1,9 @@
+.title {
+  color: red;
+  font-size: 20px;
+}
+
+.desc {
+  color: green;
+  text-decoration: underline;
+}
