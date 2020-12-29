@@ -595,7 +595,7 @@ createElement 需要传递三个参数：
   如果我们希望看到webpack的配置信息，应该怎么做呢？
     + 我们可以执行一个package.json 文件中的脚本：`"eject": "react-scripts eject"`
     + 这个操作是不可逆的，所以在执行过程中会给我们提示
-    + 执行完上述命令后悔产生config文件夹和scripts 文件夹，它们里面的内容就是 webpack 的相关配置
+    + 执行完上述命令后会产生config文件夹和scripts 文件夹，它们里面的内容就是 webpack 的相关配置
   
 
 ## Ant-Design
@@ -882,4 +882,274 @@ export default class App extends PureComponent {
   }
 }
 
+```
+
+## React 过渡动画
+在开发中，我们想要给一个组件的显示和消失添加某种过渡动画，可以很好的增加用户的体验。
+当然，我们可以通过原生的css来实现这些过渡动画，但是 react 社区为我们提供了 react-transition-group 用来完成过渡动画
+### react-transition-group介绍
+React 曾为开发者提供过动画插件 `react-addons-css-transition-group`，后来由社区维护，形成了现在的 `react-transition-group
+这个库可以帮我们方便的实现组件的*入场*和*离场*动画，使用时需要进行额外的安装
+  - npm 方式: `npm install react-transition-group --save`
+  - yarn 方式：`yarn add react-transition-group`
+
+react-transition-group 本身非常小，不会为我们应用程序增加过多的负担
+react-transition-group 主要包含四个组件
+  - Transition
+    + 该组件是一个和平台无关的组件（不一定要结合 css）
+    + 在前端开发中，我们一般是结合css来完成动画，所以比较常用的是 CSSTransition
+  - CSSTransition
+    + 在前端开发中，通常使用CSSTransition来完成过渡动画效果
+  - SwitchTransition
+    + 两个组件显示和隐藏切换时，使用该组件
+  - TransitionGroup
+    + 将多个动画组件包裹在其中，一般用于列表中元素的动画；
+
+### react-transition-group使用
+1. CSSTransition
+CSSTransition 是基于 Transition组件构建的
+  - CSSTransition 的执行过程中，有三个状态：appear、enter、exit
+  - 它们有三种状态，需要定义对应的css样式
+    + 第一种：开始状态：对应的类是 -appear，-enter，-exit
+    + 第二种：执行动画：对应的类是 -appear-active、-enter-active、-exit-active；
+    + 第三种：执行结束：对应的类是 -appear-done、-enter-done、-exit-done；
+
+CSSTransition 常见对应的属性
+  - in：触发进入或者退出状态
+    + 如果添加了 `unmountOnExit={true}`，那么该组件会在执行退出动画结束后被移除掉
+    + 当 in 为 true 时，触发进入状态，会添加 -enter、-enter-active 的 class 来执行动画，当动画执行结束后，会移除这两个 class，并且添加 -enter-done 的class
+    + 当 in 为 false 时，触发退出状态，会添加 -exit、-exit-active 的 class 开始执行动画，当动画执行结束后，会移除这两个 class，并且添加 -exit-done 的class
+  
+  - classNames：动画class的名称
+    + 决定了在编写css时，对应的class名称，比如：card-enter、card-enter-active、card-enter-done
+
+  - timeout：过渡动画的时间
+  - appear：是否在初次进入添加动画（需要和in同时为true）
+  - 其他属性可以参考官网来学习：https://reactcommunity.org/react-transition-group/transition
+
+CSSTransition 对应的钩子函数：主要为了检测动画的执行过程，来完成一些javascript操作
+  - onEnter：在进入动画之前被触发
+  - onEntering：在进入动画时被触发
+  - onEntered：在进入动画结束后被触发
+  ```jsx
+  import './App.css'
+
+  import { CSSTransition } from 'react-transition-group';
+
+  import { Card, Avatar, Button } from 'antd';
+  import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+
+  const { Meta } = Card;
+
+  export default class App extends PureComponent {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        isShowCard: true
+      }
+    }
+
+    render() {
+      return (
+        <div>
+          <Button type="primary" onClick={e => this.setState({isShowCard: !this.state.isShowCard})}>显示/隐藏</Button>
+          <CSSTransition 
+            in={this.state.isShowCard}
+            classNames="card"
+            timeout={1000}
+            unmountOnExit={true}
+            onEnter={el => console.log("进入动画前")}
+            onEntering={el => console.log("进入动画")}
+            onEntered={el => console.log("进入动画后")}
+            onExit={el => console.log("退出动画前")}
+            onExiting={el => console.log("退出动画")}
+            onExited={el => console.log("退出动画后")}
+          >
+            <Card
+              style={{ width: 300 }}
+              cover={
+                <img
+                  alt="example"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                />
+              }
+              actions={[
+                <SettingOutlined key="setting" />,
+                <EditOutlined key="edit" />,
+                <EllipsisOutlined key="ellipsis" />,
+              ]}
+            >
+              <Meta
+                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Card>
+          </CSSTransition>
+        </div>
+      )
+    }
+  }
+  ```
+  对应的css样式如下
+  ```css
+  .card-enter, .card-appear {
+    opacity: 0;
+    transform: scale(.8);
+  }
+
+  .card-enter-active, .card-appear-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  .card-exit {
+    opacity: 1;
+  }
+
+  .card-exit-active {
+    opacity: 0;
+    transform: scale(.8);
+    transition: opacity 300ms, transform 300ms;
+  }
+  ```
+
+2. SwitchTransition
+SwitchTransition可以完成两个组件之间切换的炫酷动画：
+  - 比如我们有一个按钮需要在on和off之间切换，我们希望看到on先从左侧退出，off再从右侧进入；
+  - 这个动画在vue中被称之为 vue transition modes；
+  - react-transition-group中使用SwitchTransition来实现该动画；
+
+SwitchTransition中主要有一个属性：mode，有两个值
+  - in-out：表示新组件先进入，旧组件再移除；
+  - out-in：表示就组件先移除，新组建再进入；
+
+如何使用SwitchTransition呢？
+  - SwitchTransition组件里面要有CSSTransition或者Transition组件，不能直接包裹你想要切换的组件；
+  - SwitchTransition里面的CSSTransition或Transition组件不再像以前那样接受in属性来判断元素是何种状态，取而代之的是key属性；
+
+我们来演练一个按钮的入场和出场效果：
+```jsx
+import { SwitchTransition, CSSTransition } from "react-transition-group";
+
+export default class SwitchAnimation extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOn: true
+    }
+  }
+
+  render() {
+    const {isOn} = this.state;
+
+    return (
+      <SwitchTransition mode="out-in">
+        <CSSTransition classNames="btn"
+                       timeout={500}
+                       key={isOn ? "on" : "off"}>
+          {
+          <button onClick={this.btnClick.bind(this)}>
+            {isOn ? "on": "off"}
+          </button>
+        }
+        </CSSTransition>
+      </SwitchTransition>
+    )
+  }
+
+  btnClick() {
+    this.setState({isOn: !this.state.isOn})
+  }
+}
+```
+对应的css代码
+```css
+.btn-enter {
+  transform: translate(100%, 0);
+  opacity: 0;
+}
+
+.btn-enter-active {
+  transform: translate(0, 0);
+  opacity: 1;
+  transition: all 500ms;
+}
+
+.btn-exit {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+.btn-exit-active {
+  transform: translate(-100%, 0);
+  opacity: 0;
+  transition: all 500ms;
+}
+```
+
+3. TransitionGroup
+当我们有一组动画时，需要将这些CSSTransition放入到一个TransitionGroup中来完成动画：
+```jsx
+import React, { PureComponent } from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+export default class GroupAnimation extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      friends: []
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <TransitionGroup>
+          {
+            this.state.friends.map((item, index) => {
+              return (
+                <CSSTransition classNames="friend" timeout={300} key={index}>
+                  <div>{item}</div>
+                </CSSTransition>
+              )
+            })
+          }
+        </TransitionGroup>
+        <button onClick={e => this.addFriend()}>+friend</button>
+      </div>
+    )
+  }
+
+  addFriend() {
+    this.setState({
+      friends: [...this.state.friends, "coderwhy"]
+    })
+  }
+}
+```
+
+对应的css代码
+```css
+.friend-enter, .friend-appear {
+  opacity: 0;
+}
+
+.friend-enter-active, .friend-appear-active {
+  opacity: 1;
+  transition: all .5s;
+}
+
+.friend-exit {
+  opacity: 1;
+}
+
+.friend-exit-active {
+  opacity: 0;
+  transition: all .5s;
+}
 ```
