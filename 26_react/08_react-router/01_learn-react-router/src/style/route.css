@@ -1,0 +1,7 @@
+.active-route {
+  color: greenyellow;
+}
+
+a.active {
+  color: pink;
+}
