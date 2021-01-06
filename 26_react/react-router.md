@@ -401,23 +401,23 @@ export default withRouter(App)
 这里的history来自哪里呢？是否和之前使用的window.history一样呢？
 我们发现withRouter的高阶函数来自react-router-dom：
 - 实际上来自react-router的包；
-![react-router_01.jpg](react-router_01.jpg)
+![react-router_01.jpg](./img/react-router_01.jpg)
 withRouter函数：
-![react-router_02.jpg](react-router_02.jpg)
+![react-router_02.jpg](./img/react-router_02.jpg)
 history对象来自哪里呢？
   - 实际来自上面代码的context；
-  ![react-router_03.jpg](react-router_03.jpg)
+  ![react-router_03.jpg](./img/react-router_03.jpg)
 这个context的值来自哪里呢？
   - 来自于context.Consumer的value中；
-  ![react-router_04.jpg](react-router_04.jpg)
+  ![react-router_04.jpg](./img/react-router_04.jpg)
 this.props.history来自哪里呢？
   - 来自BrowserRouter或者HashRouter在创建时，传入的值；
   - 又传递给了Router，Router的子组件可以通过该context获取到这个值；
-  ![react-router_05.jpg](react-router_05.jpg)
+  ![react-router_05.jpg](./img/react-router_05.jpg)
 createBrowserHistory来自哪里呢？
-![react-router_06.jpg](react-router_06.jpg)
+![react-router_06.jpg](./img/react-router_06.jpg)
 执行push操作的本质：
-![react-router_07.jpg](react-router_07.jpg)
+![react-router_07.jpg](./img/react-router_07.jpg)
 
 3. 传递参数
 传递参数有三种方式：
@@ -624,4 +624,4 @@ export default class About extends PureComponent {
   ```
 
 查看renderRoutes的源码也是非常简单的：
-![react-router_08.jpg](react-router_08.jpg)
+![react-router_08.jpg](./img/react-router_08.jpg)
