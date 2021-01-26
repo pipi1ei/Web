@@ -6,7 +6,7 @@ import App3 from './EventsApp';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App3 />
+    <App2 />
   </React.StrictMode>,
   document.getElementById('root')
 );

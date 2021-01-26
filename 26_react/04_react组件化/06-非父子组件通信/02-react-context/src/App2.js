@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 const UserContext = React.createContext({nickname: '默认', level: 1})
 const ThemeContext = React.createContext({color: 'black'})
 
-
 function ProfileHeader() {
   return (
     <div>
@@ -17,6 +16,7 @@ function ProfileHeader() {
                     <div>
                       <h2 style={theme}>用户昵称：{value.nickname}</h2>
                       <h2 style={theme}>用户等级：{value.level}</h2>
+                      <h2 style={theme}>颜色：{theme.color}</h2>
                     </div>
                   )
                 }
@@ -46,14 +46,16 @@ class Profile extends Component {
   }
 }
 
-export default function App() {
-  return (
-    // <UserContext.ProfileHeader value={{nickname: 'pipi2ei', level: 100}}>
-    //   <ThemeContext.Provider value={{color: 'red'}}>
-    //   <Profile />
-    //   </ThemeContext.Provider>
-    // </UserContext.ProfileHeader>
-
-    <Profile />
-  )
+export default class App2 extends Component {
+  render() {
+    return (
+      <UserContext.Provider value={{nickname: 'pipi2ei', level: 100}}>
+        <ThemeContext.Provider value={{color: 'red'}}>
+          <Profile />
+        </ThemeContext.Provider>
+      </UserContext.Provider>
+  
+      // <Profile />
+    )
+  }
 }
