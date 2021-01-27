@@ -153,3 +153,39 @@
     }
   ```
 - 执行npm run build, less就可以自动转换成css，并且页面也会生效了
+
+
+### file-loader
+#### 案例准备
+- 为了演示我们项目中可以加载图片，我们需要在项目中使用图片，比较常见的使用图片的方式是两种：
+  + img元素，设置src属性
+  + 其他元素（比如div），设置background-image的css属性
+  ```js
+    // img 元素
+    const zznhImg = require('../img/zznh.png');
+    const zznhImage = new Image();
+    zznhImage.src = zznhImg;
+    element.appendChild(zznhImage);
+
+    // 增加一个div，用于存图片
+    const bgDiv = document.createElement('div');
+    div.style.width = '200px';
+    div.style.height = '200px';
+    div.style.display = 'inline-block';
+    div.className = 'bg-image';
+    div.style.backgroundColor = 'red';
+    element.appendChild(bgDiv);
+  ```
+  ```css
+    .bg-image {
+      background-image: url("../img/nhlt.png");
+      background-size: contain;
+    }
+  ```
+- 这个时候，打包会报错
+
+#### file-loader
+- 要处理jpg、png等格式的图片，我们也需要有对应的loader：file-loader
+  + file-loader的作用就是帮助我们处理**import/require()方式**引入的一个文件资源，并且会将它放到我们**输出的文件夹**中；
+  + 当然我们待会儿可以学习如何修改它的名字和所在文件夹；
+- 安装file-loader：`npm install file-loader -D`
