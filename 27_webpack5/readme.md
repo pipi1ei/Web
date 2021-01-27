@@ -194,3 +194,115 @@ webpack的安装目前分为两个：webpack、webpack-cli
     ]
   ``` 
 - 我们编写了多个条件之后，多个条件之间是什么关系呢？
+
+
+
+### 认识PostCSS工具
+- 什么是PostCSS呢
+  + PostCSS是一个通过JavaScript来转换样式的工具；
+  + 这个工具可以帮助我们进行一些CSS的转换和适配，比如自动添加浏览器前缀、css样式的重置；
+  + 但是实现这些工具，我们需要借助于PostCSS对应的插件；
+- 如何使用PostCSS呢？主要就是两个步骤：
+  1. 第一步：查找PostCSS在构建工具中的扩展，比如webpack中的postcss-loader；
+  2. 第二步：选择可以添加你需要的PostCSS相关的插件；
+
+#### 命令行使用postcss
+- 当然，我们能不能也直接在终端使用PostCSS呢
+  + 也是可以的，但是我们需要单独安装一个工具postcss-cli
+- 我们可以安装一下它们：postcss、postcss-cli：`npm install postcss postcss-cli -D`
+- 我们编写一个需要添加前缀的css：
+  + [https://autoprefixer.github.io/](https://autoprefixer.github.io/)
+  + 我们可以在上面的网站中查询一些添加css属性的样式；
+    ```css
+      :fullscreen {
+        color: red;
+      }
+
+      .content: {
+        user-select: none;
+      }
+    ```
+
+#### 插件autoprefixer
+- 因为我们需要添加前缀，所以要安装autoprefixer：`npm install autoprefixer -D` 
+- 直接使用使用postcss工具，并且制定使用autoprefixer
+  + `npx postcss --use autoprefixer -o end.css ./src/css/style.css`
+- 转化之后的css样式如下
+  ```css
+    :-ms-fullscreen {
+    }
+
+    :full-screen {
+    }
+
+    .content {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  ```
+
+#### postcss-loader
+- 真实开发中我们必然不会直接使用命令行工具来对css进行处理，而是可以借助于构建工具
+  + 在webpack中使用postcss就是使用postcss-loader来处理的
+- 我们来安装postcss-loader：`npm install postcss-loader -D`
+- 我们修改加载css的loader：（配置文件已经过多，给出一部分了）
+  + 注意：因为postcss需要有对应的插件才会起效果，所以我们需要配置它的plugin；
+  ```js
+    {
+      loader: "postcss-loader",
+      options: {
+        postcssOptions: {
+          plugins: [
+            require('autoprefixer')
+          ]
+        }
+      }
+    }
+  ```
+
+#### 单独的postcss配置文件
+- 当然，我们也可以将这些配置信息放到一个单独的文件中进行管理：
+  + 在根目录下创建postcss.config.js
+  ```js
+    module.exports = {
+      plugins: [
+        require('autoprefixer')
+      ]
+    }
+  ```
+
+#### postcss-preset-env
+- 事实上，在配置postcss-loader时，我们配置插件并不需要使用autoprefixer
+- 我们可以使用另外一个插件：postcss-preset-env
+  + postcss-preset-env也是一个postcss的插件；
+  + 它可以帮助我们将一些现代的CSS特性，转成大多数浏览器认识的CSS，并且会根据目标浏览器或者运行时环境添加所需的polyfill；
+  + 也包括会自动帮助我们添加autoprefixer（所以相当于已经内置了autoprefixer）
+- 首先，我们需要安装postcss-preset-env：`npm install postcss-preset-env -D`
+- 之后，我们直接修改掉之前的autoprefixer即可：
+  ```js
+    plugins: [
+      require('postcss-preset-env')
+    ]
+  ```
+- **注意：**我们在使用某些postcss插件时，也可以直接传入字符串
+  ```js
+    module.exports = {
+      plugins: [
+        "postcss-preset-env"
+      ]
+    }
+  ```
+
+#### 举个例子
+- 我们举一个例子：
+  + 我们这里在使用十六进制的颜色时设置了8位；
+  + 但是某些浏览器可能不认识这种语法，我们最好可以转成RGBA的形式；
+  + 但是autoprefixer是不会帮助我们转换的；
+  + 而postcss-preset-env就可以完成这样的功能；
+  ```css
+    .content {
+      color: #12345678;
+    }
+  ```

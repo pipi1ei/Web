@@ -14,13 +14,22 @@
   <div id="app">
     <h1>{{ html }}</h1>
     <h1 v-html='html'></h1>
+    <h1 v-html='str'></h1>
+    <h1 v-html='sttr'></h1>
   </div>
 
   <script>
     let app = new Vue({
       el: '#app',
       data: {
-        html: '<ul><li>你好</li><li>你好</li></ul>'
+        html: '<ul><li>你好</li><li>你好</li></ul>',
+        str: '应收帐款周转速度减慢\\n资产使用效率稍微下降\\n存货资产变现能力明显减弱'
+      },
+
+      computed: {
+        sttr() {
+          return this.str.replace(/\\n/g, '<br>')
+        }
       }
     })
   </script>
