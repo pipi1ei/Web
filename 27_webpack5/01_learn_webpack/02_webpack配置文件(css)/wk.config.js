@@ -19,6 +19,7 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
+              // 在解析css文件时遇到 @import 语法导入其他css文件时，使用上一个loader再解析一次
               importLoaders: 1
             }
           },
