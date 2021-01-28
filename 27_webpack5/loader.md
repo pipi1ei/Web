@@ -189,3 +189,183 @@
   + file-loader的作用就是帮助我们处理**import/require()方式**引入的一个文件资源，并且会将它放到我们**输出的文件夹**中；
   + 当然我们待会儿可以学习如何修改它的名字和所在文件夹；
 - 安装file-loader：`npm install file-loader -D`
+- 配置处理图片的 rule：
+  ```js
+    {
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      use: {
+        loader: "file-loader"
+      }
+    }
+  ```
+
+#### 文件的名称规则
+- 有时候我们处理后的文件名称按照一定的规则进行显示：
+  + 比如保留原来的文件名、扩展名，同时为了防止重复，包含一个hash值等；
+- 这个时候我们可以使用PlaceHolders来完成，webpack给我们提供了大量的PlaceHolders来显示不同的内容：
+  + [https://webpack.js.org/loaders/file-loader/#placeholders](https://webpack.js.org/loaders/file-loader/#placeholders)
+  + 我们可以在文档中查阅自己需要的placeholder；
+- 我们这里介绍几个最常用的placeholder：
+  + [ext]： 处理文件的扩展名；
+  + [name]：处理文件的名称；
+  + [hash]：文件的内容，使用MD4的散列函数处理，生成的一个128位的hash值（32个十六进制）；
+  + [contentHash]：在file-loader中和[hash]结果是一致的（在webpack的一些其他地方不一样，后面会讲到）；
+  + [hash:<length>]：截图hash的长度，默认32个字符太长了；
+  + [path]：文件相对于webpack配置文件的路径；
+
+#### 设置文件名称
+- 那么我们可以按照如下的格式编写：
+  + 这个也是vue的写法；
+```js
+  {
+    test: /\.(png|jpe?g|gif|svg)$/i,
+    use: {
+      loader: "file-loader",
+      options: {
+        name: "img/[name].[hash:8].[ext]"
+      }
+    }
+  }
+```
+
+#### 设置文件的存放路径
+- 当然，我们刚才通过 img/ 已经设置了文件夹，这个也是vue、react脚手架中常见的设置方式：
+  + 其实按照这种设置方式就可以了；
+  + 当然我们也可以通过outputPath来设置输出的文件夹；
+  ```js
+    {
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      use: {
+        loader: "file-loader",
+        options: {
+          name: "[name].[hash:8].[ext]",
+          outputPath: "img"
+        }
+      }
+    }
+  ```
+
+### url-loader
+- url-loader和file-loader的工作方式是相似的，但是可以将较小的文件，转成**base64的URI。**
+- 安装url-loader：`npm install url-loader -D`
+- 使用
+  ```js
+    {
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      use: {
+        loader: "url-loader",
+        options: {
+          name: "[name].[hash:8].[ext]",
+          outputPath: "img"
+        }
+      }
+    }
+  ```
+- 显示结果是一样的，并且图片可以正常显示；
+- 但是在dist文件夹中，我们会看不到图片文件：
+  + 这是因为我的两张图片的大小分别是38kb和295kb；
+  + 默认情况下url-loader会将所有的图片文件转成base64编码
+
+#### url-loader的limit
+- 但是开发中我们往往是**小的图片需要转换**，但是**大的图片直接使用图片**即可
+  + 这是因为小的图片转换base64之后可以和页面一起被请求，减少不必要的请求过程；
+  + 而大的图片也进行转换，反而会影响页面的请求速度；
+- 那么，我们如何可以限制哪些大小的图片转换和不转换呢？
+  + url-loader有一个options属性**limit**，可以用于设置转换的限制；
+  + 下面的代码38kb的图片会进行base64编码，而295kb的不会；
+  ```js
+    {
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      use: {
+        loader: "url-loader",
+        options: {
+          name: "img/[name].[hash:8].[ext]",
+          limit: 100 * 1024
+        }
+      }
+    }
+  ```
+
+### asset module type
+#### asset module type的介绍
+- 我们当前使用的webpack版本是webpack5：
+  + 在webpack5之前，加载这些资源我们需要使用一些loader，比如raw-loader 、url-loader、file-loader；
+  + 在webpack5之后，我们可以直接使用**资源模块类型（asset module type）**，来替代上面的这些loader；
+- **资源模块类型(asset module type)**，通过添加 4 种新的模块类型，来替换所有这些 loader：
+  + **asset/resource** 发送一个单独的文件并导出 URL。之前通过使用 file-loader 实现；
+  + **asset/inline** 导出一个资源的 data URI。之前通过使用 url-loader 实现；
+  + **asset/source** 导出资源的源代码。之前通过使用 raw-loader 实现；
+  + **asset** 在导出一个 data URI 和发送一个单独的文件之间自动选择。之前通过使用 url-loader，并且配置资源
+体积限制实现；
+
+#### Asset module type的使用
+- 比如加载图片，我们可以使用下面的方式：
+```js
+  {
+    test: /\.(png|jpe?g|gif|svg)$/i,
+    type: "asset/resource"
+  }
+```
+- 但是，如何可以自定义文件的输出路径和文件名呢？
+  + 方式一：修改output，添加assetModuleFilename属性；
+  ```js
+    output: {
+      filename: "js/bundle.js",
+      path: path.resolve(__dirname, "./dist"),
+      assetModuleFilename: "img/[name].[hash:8].[ext]"
+    }
+  ```
+  + 方式二：在Rule中，添加一个generator属性，并且设置filename；
+  ```js
+    {
+      test: /\.(png|jpe?g|gif|svg)$/i,
+      type: "asset/resource",
+      generator: {
+        filename: "img/[name].[hash:8].[ext]"
+      }
+    }
+  ```
+
+#### url-loader的limit效果
+- 我们需要两个步骤来实现：
+  + 步骤一：将type修改为asset；
+  + 步骤二：添加一个parser属性，并且制定dataUrl的条件，添加maxSize属性；
+  ```js
+    rules: [
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
+        generator: {
+          filename: "img/[name].[hash:8].[ext]"
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 100 * 1024
+          }
+        }
+      }
+    ]
+  ```
+
+#### 加载字体文件
+- 如果我们需要使用某些**特殊的字体或者字体图标**，那么我们会引入**很多字体相关的文件**，这些文件的处理也是一样
+的
+- 首先，我从阿里图标库中下载了几个字体图标，放在 font 目录下
+- 在component中引入，并且添加一个i元素用于显示字体图标：
+```js
+  const iEl = document.createElement('i');
+  iEl.className = 'iconfont icon-ashbin';
+  element.appendChild(iEl);
+```
+#### 字体的打包
+- 这个时候打包会报错，因为无法正确的处理eot、ttf、woff等文件：
+  + 我们可以选择使用file-loader来处理，也可以选择直接使用webpack5的资源模块类型来处理；
+  ```js
+    {
+      test: /\.(ttf|woff2?|eot)$/i,
+      type: "asset/resource",
+      generator: {
+        filename: "font/[name].[hash:6].[ext]"
+      }
+    }
+  ```
