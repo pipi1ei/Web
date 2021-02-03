@@ -42,7 +42,7 @@
 #### 生成的index.html分析
 - 我们会发现，现在自动在dist文件夹中，生成了一个index.html的文件：
   + 该文件中也自动添加了我们打包的bundle.js文件；
-  ![webpackhtmlplugin](./assets/img/02_webpackhtmlplugin.png)
+  ![htmlwebpackplugin](./assets/img/02_htmlwebpackplugin.png)
 - 这个文件是如何生成的呢？
   + 默认情况下是根据**ejs的一个模板**来生成的；
   + 在html-webpack-plugin的源码中，有一个default_index.ejs模块；
