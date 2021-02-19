@@ -461,3 +461,7 @@ webpack的安装目前分为两个：webpack、webpack-cli
   + **测试阶段**：推荐使用 source-map或者cheap-module-source-map
     - 测试阶段我们也希望在浏览器下看到正确的错误提示；
   + **发布阶段**：false、缺省值（不写）
+
+
+### babel
+#### 为什么需要babel？
