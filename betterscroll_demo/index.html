@@ -5,69 +5,64 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    .wrapper {
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
+    #app {
       width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
+      height: 400px;
     }
 
-    .container {
+    .img {
+      display: block;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 20px;
+    }
+
+    .scale {
+      transform: rotate(180deg);
+    }
+
+    .box1, .box2 {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 50px;
+      height: 150px;
+      position: relative;
+    }
+
+    .inner1, .inner2 {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      top: 50px;
-      width: 78.7%;
-      height: 82.4%;
+      margin-left: -21px;
+      /* top: 20px; */
+      margin-left: 10px;
+      width: 42px;
+      height: 42px;
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKqADAAQAAAABAAAAKgAAAADUGqULAAACcUlEQVRYCe1WPW8TQRCdsaMokYJEEYUqRILGOBU5FySu4B+kgSIUQQhqKCIoIlEBEkhADYUFMQU0/AAkqOxQ3JnOTgMSpCJKBxFg4Rtm7Iy0t+bO57OFBNprdnc+3759Xi+A+xwDjgHHgGPAMeAY+J8ZQHNzRDRRb7RuI+C62ImgisdmNlfm57+bceOe13d3p/HLwS2CcL1XGyvLXmETETvaKwK07rfuEtBNdcrIAe8pN7VaXjrxybSPa15rfFzA8McrAjgdqYlwr+wVb6gtp5PeSJeia2ZVCoQ//Xf+zlnbN+q6W5Nr94Hkwnqq2sMCqmZ7pNkO0OvtoHnd9mRd14PmNanJVMymqWEBxUp8EuVDgge1oFUVTcXHJXsktxY0t1j/DxlkPj6anpo+NBeHP6YKn/dF027POSmTbmP12N+genTq1OXFRWyrKwJUjXLEIeH95B3jfh7w/JlS4a3mJY2iRz7ql8lHjZ0c0sayV2S2o98fgUpILdg5x/fTi+TC8AsRNla84qNo2ehK9MhHzRuHiajHXOE+IF4oe4U3plXnsUAlYJijwrkjV+37VvRIe18fj0NKiUAFbK/ZtyfM7pqs4z6+ThqTMLlaKp38LDG+/+F4G9p8P9JSXE7Xjvgc52au2Ju0cwYC1YRhdCs5o+hRe5pjaqCSlFa3hw0y69EEqPOhgEpSat1qB2vkhpmutqGBSt+0urUw8v9iOj325bEhE1AtlE63Eh1/P2qtQeNIQKX4YN0m34+DAKp/ZKBdsDFPNS6eSY8KzhzHAlQKim5h7+AOvxf0nfDsbzy6zc24uWPAMeAYcAw4BhwD/y4DvwHhVw4N0udolgAAAABJRU5ErkJggg==) no-repeat 50%/100% 100%;
+      transform: rotate(0deg);
+      transition: transform .3s linear,-webkit-transform .3s linear;
+      transform-origin: center center;
     }
 
-    .img-c {
-      width: 100%;
-      height: 100%;
-      /* overflow-y: auto; */
-      overflow: hidden;
-    }
-
-    .img-c img {
-      width: 100%;
-    }
-
-    .tip {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 50px;
-      background-color: yellow;
+    .inner2 {
+      transform: rotate(180deg);
+      /* top: 80px; */
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <div class="img-c">
-        <img src="./demo.png" alt="">
-      </div>
-      <div class="tip">提示</div>
+  <div id="app">
+    <div class="box1">
+      <img class="img" src="./demo_2.png" alt="">
+      <img class="img scale" src="./demo_2.png" alt="">
+    </div>
+  
+    <div class="box2">
+      <!-- <i class="inner1"></i> -->
+      <i class="inner2"></i>
     </div>
   </div>
-
-  <script>
-    // let scroll = new BScroll('.img-c', {
-    //   scrollY: true,
-    //   click: true
-    // })
-  </script>
+  
   <script src="./build/bundle.js"></script>
 </body>
 </html>
