@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "mime": "^2.4.4",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   }
 }
